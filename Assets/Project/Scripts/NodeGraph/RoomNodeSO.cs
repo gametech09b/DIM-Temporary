@@ -14,6 +14,8 @@ namespace DungeonGunner
         public RoomNodeTypeSO roomNodeType;
         [HideInInspector] public RoomNodeTypeListSO roomNodeTypeList;
 
+
+
         #region Editor
 #if UNITY_EDITOR
         [HideInInspector] public Rect rect;
@@ -50,10 +52,10 @@ namespace DungeonGunner
             GUILayout.BeginArea(rect, nodeStyle);
             EditorGUI.BeginChangeCheck();
 
-            int selected = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
-            int selection = EditorGUILayout.Popup("", selected, GetRoomNodeTypesToDisplay());
+            int defaultSelectedType = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
+            int selectTypePopup = EditorGUILayout.Popup("", defaultSelectedType, GetRoomNodeTypesToDisplay());
 
-            roomNodeType = roomNodeTypeList.list[selection];
+            roomNodeType = roomNodeTypeList.list[selectTypePopup];
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -122,6 +124,11 @@ namespace DungeonGunner
             {
                 ProcessLeftClickDownEvent();
             }
+
+            if (currentEvent.button == 1)
+            {
+                ProcessRightClickDownEvent(currentEvent);
+            }
         }
 
 
@@ -134,6 +141,18 @@ namespace DungeonGunner
 
             isSelected = !isSelected;
         }
+
+
+
+        /// <summary>
+        /// Process right click down event
+        /// </summary>
+        /// <param name="currentEvent"></param>
+        public void ProcessRightClickDownEvent(Event currentEvent)
+        {
+            roomNodeGraph.SetNodeToDrawConnectionLineFrom(this, currentEvent.mousePosition);
+        }
+
 
 
         /// <summary>
@@ -155,24 +174,26 @@ namespace DungeonGunner
         /// <param name="currentEvent"></param>
         public void ProcessLeftClickDragEvent(Event currentEvent)
         {
-            if (isSelected)
+            if (!isSelected)
             {
-                isLeftClickDragging = true;
-                DragNode(currentEvent.delta);
-                GUI.changed = true;
+                return;
             }
+            
+            isLeftClickDragging = true;
+            DragNode(currentEvent.delta);
         }
 
 
 
         /// <summary>
-        /// Drag node
+        /// Handle dragging the node
         /// </summary>
         /// <param name="delta"></param>
         public void DragNode(Vector2 delta)
         {
             rect.position += delta;
             EditorUtility.SetDirty(this);
+            GUI.changed = true;
         }
 
 
@@ -196,10 +217,41 @@ namespace DungeonGunner
         /// </summary>
         public void ProcessLeftClickUpEvent()
         {
+            if (isSelected)
+            {
+                isSelected = false;
+            }
+
             if (isLeftClickDragging)
             {
                 isLeftClickDragging = false;
             }
+        }
+
+
+
+        public bool AddChildRoomNodeIDToRoomNode(string childRoomNodeID)
+        {
+            if (!childRoomNodeIDList.Contains(childRoomNodeID))
+            {
+                childRoomNodeIDList.Add(childRoomNodeID);
+                return true;
+            }
+
+            return false;
+        }
+
+
+
+        public bool AddParentRoomNodeIDToRoomNode(string parentRoomNodeID)
+        {
+            if (!parentRoomNodeIDList.Contains(parentRoomNodeID))
+            {
+                parentRoomNodeIDList.Add(parentRoomNodeID);
+                return true;
+            }
+
+            return false;
         }
 #endif
         #endregion

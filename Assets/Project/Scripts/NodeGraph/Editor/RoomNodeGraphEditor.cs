@@ -6,16 +6,30 @@ namespace DungeonGunner
 {
     public class RoomNodeGraphEditor : EditorWindow
     {
-        private GUIStyle roomNodeStyle;
         private static RoomNodeGraphSO currentRoomNodeGraph;
         private RoomNodeSO currentRoomNode;
         private RoomNodeTypeListSO roomNodeTypeList;
 
-        // node layout values
-        private const float nodeWidth = 160f;
-        private const float nodeHeight = 75f;
-        private const int nodePadding = 25;
-        private const int nodeBorder = 12;
+        // room node view values
+        private GUIStyle roomNodeStyle;
+        private const float roomNodeWidth = 160f;
+        private const float roomNodeHeight = 75f;
+        private const int roomNodePadding = 25;
+        private const int roomNodeBorder = 12;
+
+        // line view values
+        private const float lineThickness = 3f;
+        private const float lineArrowSize = 6f;
+
+
+
+        [MenuItem("Room Node Graph Editor", menuItem = "Window/Dungeon Editor/Room Node Graph Editor")]
+        private static void OpenWindow()
+        {
+            GetWindow<RoomNodeGraphEditor>("Room Node Graph Editor");
+        }
+
+
 
         private void OnEnable()
         {
@@ -23,18 +37,22 @@ namespace DungeonGunner
             roomNodeStyle = new GUIStyle();
             roomNodeStyle.normal.background = EditorGUIUtility.Load("node1") as Texture2D;
             roomNodeStyle.normal.textColor = Color.white;
-            roomNodeStyle.padding = new RectOffset(nodePadding, nodePadding, nodePadding, nodePadding);
-            roomNodeStyle.border = new RectOffset(nodeBorder, nodeBorder, nodeBorder, nodeBorder);
+            roomNodeStyle.padding = new RectOffset(roomNodePadding, roomNodePadding, roomNodePadding, roomNodePadding);
+            roomNodeStyle.border = new RectOffset(roomNodeBorder, roomNodeBorder, roomNodeBorder, roomNodeBorder);
 
             // load room node type list
             roomNodeTypeList = GameResources.Instance.roomNodeTypeList;
         }
 
+
+
         private void OnGUI()
         {
             if (currentRoomNodeGraph != null)
             {
+                DrawDraggedLine();
                 ProcessEvents(Event.current);
+                DrawRoomConnections();
                 DrawRoomNodes();
             }
 
@@ -44,11 +62,117 @@ namespace DungeonGunner
             }
         }
 
-        [MenuItem("Room Node Graph Editor", menuItem = "Window/Dungeon Editor/Room Node Graph Editor")]
-        private static void OpenWindow()
+
+
+        /// <summary>
+        /// Draw line from roomNodeToDrawLineFrom to mouse position
+        /// </summary>
+        private void DrawDraggedLine()
         {
-            GetWindow<RoomNodeGraphEditor>("Room Node Graph Editor");
+            if (currentRoomNodeGraph.linePosition == Vector2.zero)
+            {
+                return;
+            }
+
+            Vector2 startPosition = currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center;
+            Vector2 endPosition = currentRoomNodeGraph.linePosition;
+            Color color = Color.white;
+
+            Handles.DrawBezier(
+                startPosition, endPosition,
+                startPosition, endPosition,
+                color, null, lineThickness
+            );
         }
+
+
+
+        /// <summary>
+        /// Draw connections between room nodes
+        /// </summary>
+        private void DrawRoomConnections()
+        {
+            foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+            {
+                if (roomNode.childRoomNodeIDList.Count <= 0)
+                {
+                    return;
+                }
+
+                foreach (string childRoomNodeID in roomNode.childRoomNodeIDList)
+                {
+                    if (!currentRoomNodeGraph.roomNodeDictionary.ContainsKey(childRoomNodeID))
+                    {
+                        return;
+                    }
+
+                    DrawConnectionLine(roomNode, currentRoomNodeGraph.roomNodeDictionary[childRoomNodeID]);
+                    GUI.changed = true;
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Draw line between two room nodes
+        /// </summary>
+        /// <param name="parentRoomNode"></param>
+        /// <param name="childRoomNode"></param>
+        private void DrawConnectionLine(RoomNodeSO parentRoomNode, RoomNodeSO childRoomNode)
+        {
+            Color color = Color.white;
+
+            // line view
+            Vector2 startPosition = parentRoomNode.rect.center;
+            Vector2 endPosition = childRoomNode.rect.center;
+
+            // arrow view
+            Vector2 direction = endPosition - startPosition;
+            Vector2 middlePoint = (startPosition + endPosition) / 2f;
+
+            Vector2 arrowHeadPoint = middlePoint + direction.normalized * lineArrowSize;
+            Vector2 arrowTailPoint1 = middlePoint - new Vector2(-direction.y, direction.x).normalized * lineArrowSize;
+            Vector2 arrowTailPoint2 = middlePoint + new Vector2(-direction.y, direction.x).normalized * lineArrowSize;
+
+            // draw line
+            Handles.DrawBezier(
+                startPosition, endPosition,
+                startPosition, endPosition,
+                color, null, lineThickness
+            );
+
+            // draw arrow
+            Handles.DrawBezier(
+                arrowHeadPoint, arrowTailPoint1,
+                arrowHeadPoint, arrowTailPoint1,
+                color, null, lineThickness
+            );
+            Handles.DrawBezier(
+                arrowHeadPoint, arrowTailPoint2,
+                arrowHeadPoint, arrowTailPoint2,
+                color, null, lineThickness
+            );
+
+            GUI.changed = true;
+        }
+
+
+
+        /// <summary>
+        /// Draw room nodes in the RoomNodeGraph window
+        /// </summary>
+        private void DrawRoomNodes()
+        {
+            foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+            {
+                roomNode.Draw(roomNodeStyle);
+            }
+
+            GUI.changed = true;
+        }
+
+
 
         /// <summary>
         /// Open the window when double clicking on a RoomNodeGraphSO asset
@@ -61,15 +185,94 @@ namespace DungeonGunner
         {
             RoomNodeGraphSO roomNodeGraph = EditorUtility.InstanceIDToObject(instanceID) as RoomNodeGraphSO;
 
-            if (roomNodeGraph != null)
+            if (roomNodeGraph == null)
             {
-                OpenWindow();
-
-                currentRoomNodeGraph = roomNodeGraph;
-
-                return true;
+                return false;
             }
-            return false;
+
+            OpenWindow();
+            currentRoomNodeGraph = roomNodeGraph;
+
+            return true;
+        }
+
+
+
+        /// <summary>
+        /// Process all events
+        /// </summary>
+        /// <param name="currentEvent"></param>
+        private void ProcessEvents(Event currentEvent)
+        {
+            if (currentRoomNode == null || !currentRoomNode.isLeftClickDragging)
+            {
+                currentRoomNode = IsMouseOverRoomNode(currentEvent);
+            }
+
+            if (currentRoomNode == null || currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
+            {
+                ProcessRoomNodeGraphEvents(currentEvent);
+            }
+            else
+            {
+                currentRoomNode.ProcessEvents(currentEvent);
+            }
+        }
+
+
+
+        private RoomNodeSO IsMouseOverRoomNode(Event currentEvent)
+        {
+            foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+            {
+                if (roomNode.rect.Contains(currentEvent.mousePosition))
+                {
+                    return roomNode;
+                }
+            }
+
+            return null;
+        }
+
+
+
+        /// <summary>
+        /// Process RoomNodeGraph events
+        /// </summary>
+        /// <param name="currentEvent"></param>
+        private void ProcessRoomNodeGraphEvents(Event currentEvent)
+        {
+            switch (currentEvent.type)
+            {
+                case EventType.MouseDown:
+                    ProcessMouseDownEvent(currentEvent);
+                    break;
+
+                case EventType.MouseDrag:
+                    ProcessMouseDragEvent(currentEvent);
+                    break;
+
+                case EventType.MouseUp:
+                    ProcessMouseUpEvent(currentEvent);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
+
+        /// <summary>
+        /// Process mouse down events on the RoomNodeGraph (not over a node)
+        /// </summary>
+        /// <param name="currentEvent"></param>
+        private void ProcessMouseDownEvent(Event currentEvent)
+        {
+            if (currentEvent.button == 1)
+            {
+                ShowContextMenu(currentEvent.mousePosition);
+            }
         }
 
 
@@ -111,96 +314,120 @@ namespace DungeonGunner
 
             currentRoomNodeGraph.roomNodeList.Add(roomNode);
 
-            roomNode.Initialize(new Rect(mousePosition, new Vector2(nodeWidth, nodeHeight)), currentRoomNodeGraph, roomNodeType);
+            roomNode.Initialize(new Rect(mousePosition, new Vector2(roomNodeWidth, roomNodeHeight)), currentRoomNodeGraph, roomNodeType);
 
             AssetDatabase.AddObjectToAsset(roomNode, currentRoomNodeGraph);
             AssetDatabase.SaveAssets();
+
+            currentRoomNodeGraph.OnValidate();
         }
 
 
 
         /// <summary>
-        /// Draw room nodes in the RoomNodeGraph window
+        /// Process mouse drag events on the RoomNodeGraph
         /// </summary>
-        private void DrawRoomNodes()
+        /// <param name="currentEvent"></param>
+        private void ProcessMouseDragEvent(Event currentEvent)
         {
-            foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+            if (currentEvent.button == 1)
             {
-                roomNode.Draw(roomNodeStyle);
+                ProcessRightClickDragEvent(currentEvent);
             }
+        }
 
+
+
+        /// <summary>
+        /// Process right click drag events on the RoomNodeGraph
+        /// </summary>
+        /// <param name="currentEvent"></param>
+        private void ProcessRightClickDragEvent(Event currentEvent)
+        {
+            if (currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
+            {
+                DragConnectingLine(currentEvent.delta);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Drag the connecting line from a room node to the mouse position
+        /// </summary>
+        /// <param name="delta"></param>
+        private void DragConnectingLine(Vector2 delta)
+        {
+            currentRoomNodeGraph.linePosition += delta;
             GUI.changed = true;
         }
 
 
 
         /// <summary>
-        /// Process all events
+        /// Process mouse up events on the RoomNodeGraph
         /// </summary>
         /// <param name="currentEvent"></param>
-        private void ProcessEvents(Event currentEvent)
-        {
-            if (currentRoomNode == null || !currentRoomNode.isLeftClickDragging)
-            {
-                currentRoomNode = IsMouseOverRoomNode(currentEvent);
-            }
-
-            if (currentRoomNode == null)
-            {
-                ProcessRoomNodeGraphEvents(currentEvent);
-            }
-            else
-            {
-                currentRoomNode.ProcessEvents(currentEvent);
-            }
-        }
-
-
-
-        private RoomNodeSO IsMouseOverRoomNode(Event currentEvent)
-        {
-            foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
-            {
-                if (roomNode.rect.Contains(currentEvent.mousePosition))
-                {
-                    return roomNode;
-                }
-            }
-
-            return null;
-        }
-
-
-
-        /// <summary>
-        /// Process RoomNodeGraph events
-        /// </summary>
-        /// <param name="currentEvent"></param>
-        private void ProcessRoomNodeGraphEvents(Event currentEvent)
-        {
-            switch (currentEvent.type)
-            {
-                case EventType.MouseDown:
-                    ProcessMouseDownEvent(currentEvent);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-
-
-        /// <summary>
-        /// Process mouse down events on the RoomNodeGraph (not over a node)
-        /// </summary>
-        /// <param name="currentEvent"></param>
-        private void ProcessMouseDownEvent(Event currentEvent)
+        private void ProcessMouseUpEvent(Event currentEvent)
         {
             if (currentEvent.button == 1)
             {
-                ShowContextMenu(currentEvent.mousePosition);
+                ProcessRightClickUpEvent(currentEvent);
             }
+        }
+
+
+
+        /// <summary>
+        /// Process right click up events on the RoomNodeGraph
+        /// </summary>
+        /// <param name="currentEvent"></param>
+        private void ProcessRightClickUpEvent(Event currentEvent)
+        {
+            if (currentRoomNodeGraph.roomNodeToDrawLineFrom == null)
+            {
+                return;
+            }
+
+            RoomNodeSO roomNodeToConnectTo = IsMouseOverRoomNode(currentEvent);
+
+            if (roomNodeToConnectTo != null)
+            {
+                ConnectRoomNodes(currentRoomNodeGraph.roomNodeToDrawLineFrom, roomNodeToConnectTo);
+            }
+
+            ClearLineDrag();
+        }
+
+
+
+        /// <summary>
+        /// Connect two room nodes
+        /// </summary>
+        /// <param name="roomNodeFrom"></param>
+        /// <param name="roomNodeTo"></param>
+        private void ConnectRoomNodes(RoomNodeSO roomNodeFrom, RoomNodeSO roomNodeTo)
+        {
+            if (roomNodeFrom == roomNodeTo)
+            {
+                return;
+            }
+
+            if (roomNodeFrom.AddChildRoomNodeIDToRoomNode(roomNodeTo.id))
+            {
+                roomNodeTo.AddParentRoomNodeIDToRoomNode(roomNodeFrom.id);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Clear the line drag
+        /// </summary>
+        private void ClearLineDrag()
+        {
+            currentRoomNodeGraph.roomNodeToDrawLineFrom = null;
+            currentRoomNodeGraph.linePosition = Vector2.zero;
         }
     }
 }

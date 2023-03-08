@@ -27,6 +27,8 @@ namespace DungeonGunner
         [Space(10)]
         [Header("Dungeon")]
         #endregion
+
+        
         #region Tooltip
         [Tooltip("Populate with the dungeon RoomNodeTypeListSO")]
         #endregion

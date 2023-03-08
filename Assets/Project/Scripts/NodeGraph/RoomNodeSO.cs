@@ -52,10 +52,18 @@ namespace DungeonGunner
             GUILayout.BeginArea(rect, nodeStyle);
             EditorGUI.BeginChangeCheck();
 
-            int defaultSelectedType = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
-            int selectTypePopup = EditorGUILayout.Popup("", defaultSelectedType, GetRoomNodeTypesToDisplay());
+            if (parentRoomNodeIDList.Count > 0 || roomNodeType.isEntrance)
+            {
+                EditorGUILayout.LabelField(roomNodeType.roomNodeTypeName);
+            }
+            else
+            {
 
-            roomNodeType = roomNodeTypeList.list[selectTypePopup];
+                int defaultSelectedType = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
+                int selectTypePopup = EditorGUILayout.Popup("", defaultSelectedType, GetRoomNodeTypesToDisplay());
+
+                roomNodeType = roomNodeTypeList.list[selectTypePopup];
+            }
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -178,7 +186,7 @@ namespace DungeonGunner
             {
                 return;
             }
-            
+
             isLeftClickDragging = true;
             DragNode(currentEvent.delta);
         }

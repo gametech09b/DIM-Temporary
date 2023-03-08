@@ -8,6 +8,7 @@ namespace DungeonGunner
     {
         private GUIStyle roomNodeStyle;
         private static RoomNodeGraphSO currentRoomNodeGraph;
+        private RoomNodeSO currentRoomNode;
         private RoomNodeTypeListSO roomNodeTypeList;
 
         // node layout values
@@ -139,7 +140,34 @@ namespace DungeonGunner
         /// <param name="currentEvent"></param>
         private void ProcessEvents(Event currentEvent)
         {
-            ProcessRoomNodeGraphEvents(currentEvent);
+            if (currentRoomNode == null || !currentRoomNode.isLeftClickDragging)
+            {
+                currentRoomNode = IsMouseOverRoomNode(currentEvent);
+            }
+
+            if (currentRoomNode == null)
+            {
+                ProcessRoomNodeGraphEvents(currentEvent);
+            }
+            else
+            {
+                currentRoomNode.ProcessEvents(currentEvent);
+            }
+        }
+
+
+
+        private RoomNodeSO IsMouseOverRoomNode(Event currentEvent)
+        {
+            foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+            {
+                if (roomNode.rect.Contains(currentEvent.mousePosition))
+                {
+                    return roomNode;
+                }
+            }
+
+            return null;
         }
 
 

@@ -152,12 +152,12 @@ namespace DungeonGunner
         {
             if (currentEvent.button == 0)
             {
-                ProcessLeftClickDownEvent();
+                ProcessMouseDownLeft();
             }
 
             if (currentEvent.button == 1)
             {
-                ProcessRightClickDownEvent(currentEvent);
+                ProcessMouseDownRight(currentEvent);
             }
         }
 
@@ -165,7 +165,7 @@ namespace DungeonGunner
         /// <summary>
         /// Process left click down event
         /// </summary>
-        public void ProcessLeftClickDownEvent()
+        public void ProcessMouseDownLeft()
         {
             Selection.activeObject = this;
 
@@ -178,7 +178,7 @@ namespace DungeonGunner
         /// Process right click down event
         /// </summary>
         /// <param name="currentEvent"></param>
-        public void ProcessRightClickDownEvent(Event currentEvent)
+        public void ProcessMouseDownRight(Event currentEvent)
         {
             roomNodeGraph.SetNodeToDrawConnectionLineFrom(this, currentEvent.mousePosition);
         }
@@ -193,7 +193,7 @@ namespace DungeonGunner
         {
             if (currentEvent.button == 0)
             {
-                ProcessLeftClickDragEvent(currentEvent);
+                ProcessMouseDragLeft(currentEvent);
             }
         }
 
@@ -202,7 +202,7 @@ namespace DungeonGunner
         /// Process left click drag event
         /// </summary>
         /// <param name="currentEvent"></param>
-        public void ProcessLeftClickDragEvent(Event currentEvent)
+        public void ProcessMouseDragLeft(Event currentEvent)
         {
             if (!isSelected)
             {
@@ -236,7 +236,7 @@ namespace DungeonGunner
         {
             if (currentEvent.button == 0)
             {
-                ProcessLeftClickUpEvent();
+                ProcessMouseUpLeft();
             }
         }
 
@@ -245,7 +245,7 @@ namespace DungeonGunner
         /// <summary>
         /// Process left click up event
         /// </summary>
-        public void ProcessLeftClickUpEvent()
+        public void ProcessMouseUpLeft()
         {
             if (isLeftClickDragging)
             {

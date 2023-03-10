@@ -15,6 +15,8 @@ namespace DungeonGunner
         private Vector2 graphDrag;
 
         // grid view values
+        private Color gridColor = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Inspector).name == "DarkSkin"
+                                    ? Color.black : Color.gray;
         private const float gridLargeSpacing = 100f;
         private const float gridSmallSpacing = 25f;
 
@@ -73,31 +75,6 @@ namespace DungeonGunner
 
 
 
-        private void OnGUI()
-        {
-            if (currentRoomNodeGraph != null)
-            {
-                Color gridColor = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Inspector).name == "DarkSkin"
-                                    ? Color.black : Color.gray;
-                DrawBackgroundGrid(gridColor);
-
-                DrawDraggedLine();
-
-                ProcessEvents(Event.current);
-
-                DrawRoomConnections();
-
-                DrawRoomNodes();
-            }
-
-            if (GUI.changed)
-            {
-                Repaint();
-            }
-        }
-
-
-
         /// <summary>
         /// Handle Selection.selectionChanged event
         /// </summary>
@@ -122,6 +99,10 @@ namespace DungeonGunner
 
 
 
+        /// <summary>
+        /// Draw the background grid
+        /// </summary>
+        /// <param name="color"></param>
         private void DrawBackgroundGrid(Color color)
         {
             DrawGrid(gridSmallSpacing, color, 0.2f);
@@ -130,6 +111,12 @@ namespace DungeonGunner
 
 
 
+        /// <summary>
+        /// Draw the grid
+        /// </summary>
+        /// <param name="gridSpacing"></param>
+        /// <param name="gridColor"></param>
+        /// <param name="gridOpacity"></param>
         private void DrawGrid(float gridSpacing, Color gridColor, float gridOpacity)
         {
             int verticalLineCount = Mathf.CeilToInt((position.width + gridSpacing) / gridSpacing);
@@ -158,6 +145,93 @@ namespace DungeonGunner
             }
 
             Handles.color = Color.white;
+        }
+
+
+
+        /// <summary>
+        /// Draw line from roomNodeToDrawLineFrom to mouse position
+        /// </summary>
+        private void DrawDraggedLine()
+        {
+            if (currentRoomNodeGraph.linePosition == Vector2.zero)
+            {
+                return;
+            }
+
+            Vector2 startPosition = currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center;
+            Vector2 endPosition = currentRoomNodeGraph.linePosition;
+            Color color = Color.white;
+
+            Handles.DrawBezier(
+                startPosition, endPosition,
+                startPosition, endPosition,
+                color, null, lineThickness
+            );
+        }
+
+
+
+        /// <summary>
+        /// Process all events
+        /// </summary>
+        /// <param name="currentEvent"></param>
+        private void ProcessEvents(Event currentEvent)
+        {
+            graphDrag = Vector2.zero;
+
+            // FIXME: Devonly
+            #region DevOnly
+            if (currentEvent.type == EventType.KeyDown && currentEvent.keyCode == KeyCode.Delete)
+            {
+                DeleteSelectedRoomNodes();
+            }
+            else if (currentEvent.type == EventType.KeyDown && currentEvent.keyCode == KeyCode.Z)
+            {
+                CreateRoomNode((object)currentEvent.mousePosition, roomNodeTypeList.list.Find(x => x.isCorridor));
+            }
+            #endregion
+
+            if (currentRoomNode == null || !currentRoomNode.isLeftClickDragging)
+            {
+                currentRoomNode = IsMouseOverRoomNode(currentEvent);
+            }
+
+            if (currentRoomNode == null || currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
+            {
+                ProcessRoomNodeGraphEvents(currentEvent);
+            }
+            else
+            {
+                currentRoomNode.ProcessEvents(currentEvent);
+            }
+        }
+
+
+
+        /// <summary>
+        /// Process RoomNodeGraph events
+        /// </summary>
+        /// <param name="currentEvent"></param>
+        private void ProcessRoomNodeGraphEvents(Event currentEvent)
+        {
+            switch (currentEvent.type)
+            {
+                case EventType.MouseDown:
+                    ProcessMouseDownEvent(currentEvent);
+                    break;
+
+                case EventType.MouseDrag:
+                    ProcessMouseDragEvent(currentEvent);
+                    break;
+
+                case EventType.MouseUp:
+                    ProcessMouseUpEvent(currentEvent);
+                    break;
+
+                default:
+                    break;
+            }
         }
 
 
@@ -197,29 +271,6 @@ namespace DungeonGunner
             AssetDatabase.SaveAssets();
 
             currentRoomNodeGraph.OnValidate();
-        }
-
-
-
-        /// <summary>
-        /// Draw line from roomNodeToDrawLineFrom to mouse position
-        /// </summary>
-        private void DrawDraggedLine()
-        {
-            if (currentRoomNodeGraph.linePosition == Vector2.zero)
-            {
-                return;
-            }
-
-            Vector2 startPosition = currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center;
-            Vector2 endPosition = currentRoomNodeGraph.linePosition;
-            Color color = Color.white;
-
-            Handles.DrawBezier(
-                startPosition, endPosition,
-                startPosition, endPosition,
-                color, null, lineThickness
-            );
         }
 
 
@@ -337,84 +388,6 @@ namespace DungeonGunner
 
 
         /// <summary>
-        /// Process all events
-        /// </summary>
-        /// <param name="currentEvent"></param>
-        private void ProcessEvents(Event currentEvent)
-        {
-            graphDrag = Vector2.zero;
-
-
-            if (currentEvent.keyCode == KeyCode.Delete)
-            {
-                DeleteSelectedRoomNodes();
-            }
-
-            if (currentRoomNode == null || !currentRoomNode.isLeftClickDragging)
-            {
-                currentRoomNode = IsMouseOverRoomNode(currentEvent);
-            }
-
-            if (currentRoomNode == null || currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
-            {
-                ProcessRoomNodeGraphEvents(currentEvent);
-            }
-            else
-            {
-                currentRoomNode.ProcessEvents(currentEvent);
-            }
-        }
-
-
-
-        /// <summary>
-        /// Check if mouse is over a room node
-        /// </summary>
-        /// <param name="currentEvent"></param>
-        /// <returns></returns>
-        private RoomNodeSO IsMouseOverRoomNode(Event currentEvent)
-        {
-            foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
-            {
-                if (roomNode.rect.Contains(currentEvent.mousePosition))
-                {
-                    return roomNode;
-                }
-            }
-
-            return null;
-        }
-
-
-
-        /// <summary>
-        /// Process RoomNodeGraph events
-        /// </summary>
-        /// <param name="currentEvent"></param>
-        private void ProcessRoomNodeGraphEvents(Event currentEvent)
-        {
-            switch (currentEvent.type)
-            {
-                case EventType.MouseDown:
-                    ProcessMouseDownEvent(currentEvent);
-                    break;
-
-                case EventType.MouseDrag:
-                    ProcessMouseDragEvent(currentEvent);
-                    break;
-
-                case EventType.MouseUp:
-                    ProcessMouseUpEvent(currentEvent);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-
-
-        /// <summary>
         /// Process mouse down events on the RoomNodeGraph (not over a node)
         /// </summary>
         /// <param name="currentEvent"></param>
@@ -422,12 +395,12 @@ namespace DungeonGunner
         {
             if (currentEvent.button == 0)
             {
-                ProcessLeftClickDownEvent(currentEvent);
+                ProcessMouseDownLeft(currentEvent);
             }
 
             if (currentEvent.button == 1)
             {
-                ProcessRightClickDownEvent(currentEvent);
+                ProcessMouseDownRight(currentEvent);
             }
         }
 
@@ -437,7 +410,7 @@ namespace DungeonGunner
         /// Process left mouse down events on the RoomNodeGraph (not over a node)
         /// </summary>
         /// <param name="currentEvent"></param>
-        private void ProcessLeftClickDownEvent(Event currentEvent)
+        private void ProcessMouseDownLeft(Event currentEvent)
         {
             ClearLineDrag();
             ClearAllSelectedRoomNodes();
@@ -449,7 +422,7 @@ namespace DungeonGunner
         /// Process right mouse down events on the RoomNodeGraph (not over a node)
         /// </summary>
         /// <param name="currentEvent"></param>
-        private void ProcessRightClickDownEvent(Event currentEvent)
+        private void ProcessMouseDownRight(Event currentEvent)
         {
             if (currentRoomNodeGraph.roomNodeToDrawLineFrom == null)
             {
@@ -599,18 +572,22 @@ namespace DungeonGunner
         {
             if (currentEvent.button == 0)
             {
-                ProcessLeftClickDragEvent(currentEvent);
+                ProcessMouseDragLeft(currentEvent);
             }
 
             if (currentEvent.button == 1)
             {
-                ProcessRightClickDragEvent(currentEvent);
+                ProcessMouseDragRight(currentEvent);
             }
         }
 
 
 
-        private void ProcessLeftClickDragEvent(Event currentEvent)
+        /// <summary>
+        /// Process left mouse drag events on the RoomNodeGraph
+        /// </summary>
+        /// <param name="currentEvent"></param>
+        private void ProcessMouseDragLeft(Event currentEvent)
         {
             DragGraph(currentEvent.delta);
         }
@@ -635,7 +612,7 @@ namespace DungeonGunner
         /// Process right mouse drag events on the RoomNodeGraph
         /// </summary>
         /// <param name="currentEvent"></param>
-        private void ProcessRightClickDragEvent(Event currentEvent)
+        private void ProcessMouseDragRight(Event currentEvent)
         {
             if (currentRoomNodeGraph.roomNodeToDrawLineFrom == null) return;
 
@@ -664,7 +641,7 @@ namespace DungeonGunner
         {
             if (currentEvent.button == 1)
             {
-                ProcessRightClickUpEvent(currentEvent);
+                ProcessMouseUpRight(currentEvent);
             }
         }
 
@@ -672,7 +649,7 @@ namespace DungeonGunner
         /// Process right mouse up events on the RoomNodeGraph
         /// </summary>
         /// <param name="currentEvent"></param>
-        private void ProcessRightClickUpEvent(Event currentEvent)
+        private void ProcessMouseUpRight(Event currentEvent)
         {
             if (currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
             {
@@ -715,6 +692,26 @@ namespace DungeonGunner
         {
             currentRoomNodeGraph.roomNodeToDrawLineFrom = null;
             currentRoomNodeGraph.linePosition = Vector2.zero;
+        }
+
+
+
+        /// <summary>
+        /// Check if mouse is over a room node
+        /// </summary>
+        /// <param name="currentEvent"></param>
+        /// <returns></returns>
+        private RoomNodeSO IsMouseOverRoomNode(Event currentEvent)
+        {
+            foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+            {
+                if (roomNode.rect.Contains(currentEvent.mousePosition))
+                {
+                    return roomNode;
+                }
+            }
+
+            return null;
         }
     }
 }

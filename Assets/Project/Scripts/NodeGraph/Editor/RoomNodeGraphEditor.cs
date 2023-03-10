@@ -11,6 +11,13 @@ namespace DungeonGunner
         private RoomNodeSO currentRoomNode;
         private RoomNodeTypeListSO roomNodeTypeList;
 
+        private Vector2 graphOffset;
+        private Vector2 graphDrag;
+
+        // grid view values
+        private const float gridLargeSpacing = 100f;
+        private const float gridSmallSpacing = 25f;
+
         // room node view values
         private GUIStyle roomNodeStyle;
         private GUIStyle roomNodeSelectedStyle;
@@ -70,9 +77,16 @@ namespace DungeonGunner
         {
             if (currentRoomNodeGraph != null)
             {
+                Color gridColor = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Inspector).name == "DarkSkin"
+                                    ? Color.black : Color.gray;
+                DrawBackgroundGrid(gridColor);
+
                 DrawDraggedLine();
+
                 ProcessEvents(Event.current);
+
                 DrawRoomConnections();
+
                 DrawRoomNodes();
             }
 
@@ -104,6 +118,46 @@ namespace DungeonGunner
             {
                 currentRoomNodeGraph = roomNodeGraph;
             }
+        }
+
+
+
+        private void DrawBackgroundGrid(Color color)
+        {
+            DrawGrid(gridSmallSpacing, color, 0.2f);
+            DrawGrid(gridLargeSpacing, color, 0.3f);
+        }
+
+
+
+        private void DrawGrid(float gridSpacing, Color gridColor, float gridOpacity)
+        {
+            int verticalLineCount = Mathf.CeilToInt((position.width + gridSpacing) / gridSpacing);
+            int horizontalLineCount = Mathf.CeilToInt((position.height + gridSpacing) / gridSpacing);
+
+            Handles.color = new Color(gridColor.r, gridColor.g, gridColor.b, gridOpacity);
+
+            graphOffset += graphDrag * 0.5f;
+
+            Vector3 gridOffset = new Vector3(graphOffset.x % gridSpacing, graphOffset.y % gridSpacing, 0);
+
+            for (int i = 0; i < verticalLineCount; i++)
+            {
+                Vector3 start = new Vector3(gridSpacing * i, -gridSpacing, 0) + gridOffset;
+                Vector3 end = new Vector3(gridSpacing * i, position.height, 0f) + gridOffset;
+
+                Handles.DrawLine(start, end);
+            }
+
+            for (int i = 0; i < horizontalLineCount; i++)
+            {
+                Vector3 start = new Vector3(-gridSpacing, gridSpacing * i, 0) + gridOffset;
+                Vector3 end = new Vector3(position.width, gridSpacing * i, 0f) + gridOffset;
+
+                Handles.DrawLine(start, end);
+            }
+
+            Handles.color = Color.white;
         }
 
 
@@ -288,6 +342,9 @@ namespace DungeonGunner
         /// <param name="currentEvent"></param>
         private void ProcessEvents(Event currentEvent)
         {
+            graphDrag = Vector2.zero;
+
+
             if (currentEvent.keyCode == KeyCode.Delete)
             {
                 DeleteSelectedRoomNodes();
@@ -540,10 +597,36 @@ namespace DungeonGunner
         /// <param name="currentEvent"></param>
         private void ProcessMouseDragEvent(Event currentEvent)
         {
+            if (currentEvent.button == 0)
+            {
+                ProcessLeftClickDragEvent(currentEvent);
+            }
+
             if (currentEvent.button == 1)
             {
                 ProcessRightClickDragEvent(currentEvent);
             }
+        }
+
+
+
+        private void ProcessLeftClickDragEvent(Event currentEvent)
+        {
+            DragGraph(currentEvent.delta);
+        }
+
+
+
+        private void DragGraph(Vector2 delta)
+        {
+            graphDrag = delta;
+
+            foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+            {
+                roomNode.DragNode(delta);
+            }
+
+            GUI.changed = true;
         }
 
 

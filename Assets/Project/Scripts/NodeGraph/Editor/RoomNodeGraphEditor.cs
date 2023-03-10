@@ -683,9 +683,10 @@ namespace DungeonGunner
             {
                 RoomNodeSO roomNodeToConnectTo = IsMouseOverRoomNode(currentEvent);
 
-                if (roomNodeToConnectTo == null) return;
-
-                ConnectRoomNodes(currentRoomNodeGraph.roomNodeToDrawLineFrom, roomNodeToConnectTo);
+                if (roomNodeToConnectTo != null)
+                {
+                    ConnectRoomNodes(currentRoomNodeGraph.roomNodeToDrawLineFrom, roomNodeToConnectTo);
+                }
             }
 
             ClearLineDrag();

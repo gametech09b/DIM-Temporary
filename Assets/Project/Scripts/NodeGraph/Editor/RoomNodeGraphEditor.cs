@@ -409,6 +409,8 @@ namespace DungeonGunner
         {
             GenericMenu genericMenu = new GenericMenu();
             genericMenu.AddItem(new GUIContent("Create Room Node"), false, CreateRoomNode, mousePosition);
+            genericMenu.AddSeparator("");
+            genericMenu.AddItem(new GUIContent("Select All Room Nodes"), false, SelectAllRoomNodes);
             genericMenu.ShowAsContext();
         }
 
@@ -424,6 +426,23 @@ namespace DungeonGunner
                 if (roomNode.isSelected)
                 {
                     roomNode.isSelected = false;
+                    GUI.changed = true;
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Select all room nodes
+        /// </summary>
+        private void SelectAllRoomNodes()
+        {
+            foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+            {
+                if (!roomNode.isSelected)
+                {
+                    roomNode.isSelected = true;
                     GUI.changed = true;
                 }
             }

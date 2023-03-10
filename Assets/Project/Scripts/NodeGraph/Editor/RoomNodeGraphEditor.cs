@@ -15,8 +15,7 @@ namespace DungeonGunner
         private Vector2 graphDrag;
 
         // grid view values
-        private Color gridColor = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Inspector).name == "DarkSkin"
-                                    ? Color.black : Color.gray;
+        private Color gridColor;
         private const float gridLargeSpacing = 100f;
         private const float gridSmallSpacing = 25f;
 
@@ -42,8 +41,34 @@ namespace DungeonGunner
 
 
 
+        /// <summary>
+        /// Handle double click on RoomNodeGraphSO asset
+        /// </summary>
+        /// <param name="instanceID"></param>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        [OnOpenAsset(0)]
+        public static bool OnDoubleClickAsset(int instanceID, int line)
+        {
+            RoomNodeGraphSO roomNodeGraph = EditorUtility.InstanceIDToObject(instanceID) as RoomNodeGraphSO;
+
+            if (roomNodeGraph == null)
+            {
+                return false;
+            }
+
+            OpenWindow();
+            currentRoomNodeGraph = roomNodeGraph;
+
+            return true;
+        }
+
+
         private void OnEnable()
         {
+            gridColor = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Inspector).name == "DarkSkin"
+                                    ? Color.black : Color.gray;
+
             // subscribe to selection change event
             Selection.selectionChanged += OnSelectionChanged;
 
@@ -71,6 +96,31 @@ namespace DungeonGunner
         {
             // unsubscribe from selection change event
             Selection.selectionChanged -= OnSelectionChanged;
+        }
+
+
+
+        private void OnGUI()
+        {
+            if (currentRoomNodeGraph != null)
+            {
+                Color gridColor = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Inspector).name == "DarkSkin"
+                                    ? Color.black : Color.gray;
+                DrawBackgroundGrid(gridColor);
+
+                DrawDraggedLine();
+
+                ProcessEvents(Event.current);
+
+                DrawRoomConnections();
+
+                DrawRoomNodes();
+            }
+
+            if (GUI.changed)
+            {
+                Repaint();
+            }
         }
 
 
@@ -364,30 +414,6 @@ namespace DungeonGunner
 
 
         /// <summary>
-        /// Open the window when double clicking on a RoomNodeGraphSO asset
-        /// </summary>
-        /// <param name="instanceID"></param>
-        /// <param name="line"></param>
-        /// <returns></returns>
-        [OnOpenAsset(0)]
-        public static bool OnDoubleClickAsset(int instanceID, int line)
-        {
-            RoomNodeGraphSO roomNodeGraph = EditorUtility.InstanceIDToObject(instanceID) as RoomNodeGraphSO;
-
-            if (roomNodeGraph == null)
-            {
-                return false;
-            }
-
-            OpenWindow();
-            currentRoomNodeGraph = roomNodeGraph;
-
-            return true;
-        }
-
-
-
-        /// <summary>
         /// Process mouse down events on the RoomNodeGraph (not over a node)
         /// </summary>
         /// <param name="currentEvent"></param>
@@ -644,6 +670,8 @@ namespace DungeonGunner
                 ProcessMouseUpRight(currentEvent);
             }
         }
+
+
 
         /// <summary>
         /// Process right mouse up events on the RoomNodeGraph

@@ -255,19 +255,11 @@ namespace DungeonGunner
 
 
 
-        public bool AddChildRoomNodeIDToRoomNode(string childRoomNodeID)
-        {
-            if (!IsChildRoomValid(childRoomNodeID))
-            {
-                return false;
-            }
-
-            childRoomNodeIDList.Add(childRoomNodeID);
-            return true;
-        }
-
-
-
+        /// <summary>
+        /// Check if the child room node is valid
+        /// </summary>
+        /// <param name="childNodeRoomID"></param>
+        /// <returns></returns>
         public bool IsChildRoomValid(string childNodeRoomID)
         {
             // barrier 1
@@ -310,6 +302,29 @@ namespace DungeonGunner
 
 
 
+        /// <summary>
+        /// Add child room node id to room node
+        /// </summary>
+        /// <param name="childRoomNodeID"></param>
+        /// <returns></returns>
+        public bool AddChildRoomNodeIDToRoomNode(string childRoomNodeID)
+        {
+            if (!IsChildRoomValid(childRoomNodeID))
+            {
+                return false;
+            }
+
+            childRoomNodeIDList.Add(childRoomNodeID);
+            return true;
+        }
+
+
+
+        /// <summary>
+        /// Remove child room node id from room node
+        /// </summary>
+        /// <param name="childRoomNodeID"></param>
+        /// <returns></returns>
         public bool RemoveChildRoomNodeIDFromRoomNode(string childRoomNodeID)
         {
             if (childRoomNodeIDList.Contains(childRoomNodeID))
@@ -323,6 +338,11 @@ namespace DungeonGunner
 
 
 
+        /// <summary>
+        /// Add parent room node id to room node
+        /// </summary>
+        /// <param name="parentRoomNodeID"></param>
+        /// <returns></returns>
         public bool AddParentRoomNodeIDToRoomNode(string parentRoomNodeID)
         {
             if (!parentRoomNodeIDList.Contains(parentRoomNodeID))
@@ -336,6 +356,11 @@ namespace DungeonGunner
 
 
 
+        /// <summary>
+        /// Remove parent room node id from room node
+        /// </summary>
+        /// <param name="parentRoomNodeID"></param>
+        /// <returns></returns>
         public bool RemoveParentRoomNodeIDToRoomNode(string parentRoomNodeID)
         {
             if (parentRoomNodeIDList.Contains(parentRoomNodeID))

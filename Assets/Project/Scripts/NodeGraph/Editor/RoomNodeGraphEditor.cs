@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -176,17 +177,11 @@ namespace DungeonGunner
         {
             foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
             {
-                if (roomNode.childRoomNodeIDList.Count <= 0)
-                {
-                    return;
-                }
+                if (roomNode.childRoomNodeIDList.Count <= 0) continue;
 
                 foreach (string childRoomNodeID in roomNode.childRoomNodeIDList)
                 {
-                    if (!currentRoomNodeGraph.roomNodeDictionary.ContainsKey(childRoomNodeID))
-                    {
-                        return;
-                    }
+                    if (!currentRoomNodeGraph.roomNodeDictionary.ContainsKey(childRoomNodeID)) continue;
 
                     DrawConnectionLine(roomNode, currentRoomNodeGraph.roomNodeDictionary[childRoomNodeID]);
                     GUI.changed = true;
@@ -293,6 +288,11 @@ namespace DungeonGunner
         /// <param name="currentEvent"></param>
         private void ProcessEvents(Event currentEvent)
         {
+            if (currentEvent.keyCode == KeyCode.Delete)
+            {
+                DeleteSelectedRoomNodes();
+            }
+
             if (currentRoomNode == null || !currentRoomNode.isLeftClickDragging)
             {
                 currentRoomNode = IsMouseOverRoomNode(currentEvent);
@@ -310,6 +310,11 @@ namespace DungeonGunner
 
 
 
+        /// <summary>
+        /// Check if mouse is over a room node
+        /// </summary>
+        /// <param name="currentEvent"></param>
+        /// <returns></returns>
         private RoomNodeSO IsMouseOverRoomNode(Event currentEvent)
         {
             foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
@@ -372,7 +377,7 @@ namespace DungeonGunner
 
 
         /// <summary>
-        /// 
+        /// Process left mouse down events on the RoomNodeGraph (not over a node)
         /// </summary>
         /// <param name="currentEvent"></param>
         private void ProcessLeftClickDownEvent(Event currentEvent)
@@ -384,7 +389,7 @@ namespace DungeonGunner
 
 
         /// <summary>
-        /// 
+        /// Process right mouse down events on the RoomNodeGraph (not over a node)
         /// </summary>
         /// <param name="currentEvent"></param>
         private void ProcessRightClickDownEvent(Event currentEvent)
@@ -409,8 +414,14 @@ namespace DungeonGunner
         {
             GenericMenu genericMenu = new GenericMenu();
             genericMenu.AddItem(new GUIContent("Create Room Node"), false, CreateRoomNode, mousePosition);
+
             genericMenu.AddSeparator("");
             genericMenu.AddItem(new GUIContent("Select All Room Nodes"), false, SelectAllRoomNodes);
+
+            genericMenu.AddSeparator("");
+            genericMenu.AddItem(new GUIContent("Delete Selected Room Node Links"), false, DeleteSelectedRoomNodeLinks);
+            genericMenu.AddItem(new GUIContent("Delete Selected Room Nodes"), false, DeleteSelectedRoomNodes);
+
             genericMenu.ShowAsContext();
         }
 
@@ -423,11 +434,10 @@ namespace DungeonGunner
         {
             foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
             {
-                if (roomNode.isSelected)
-                {
-                    roomNode.isSelected = false;
-                    GUI.changed = true;
-                }
+                if (!roomNode.isSelected) continue;
+
+                roomNode.isSelected = false;
+                GUI.changed = true;
             }
         }
 
@@ -440,11 +450,85 @@ namespace DungeonGunner
         {
             foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
             {
-                if (!roomNode.isSelected)
+                if (roomNode.isSelected) continue;
+
+                roomNode.isSelected = true;
+                GUI.changed = true;
+            }
+        }
+
+
+
+        /// <summary>
+        /// Delete selected room node links
+        /// </summary>
+        private void DeleteSelectedRoomNodeLinks()
+        {
+            foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+            {
+                if (roomNode.childRoomNodeIDList.Count <= 0) continue;
+                if (!roomNode.isSelected) continue;
+
+                string roomNodeID = roomNode.id;
+                for (int i = roomNode.childRoomNodeIDList.Count - 1; i >= 0; i--)
                 {
-                    roomNode.isSelected = true;
-                    GUI.changed = true;
+                    string childRoomNodeID = roomNode.childRoomNodeIDList[i];
+                    RoomNodeSO childRoomNode = currentRoomNodeGraph.GetRoomNodeByID(childRoomNodeID);
+
+                    if (childRoomNode == null) continue;
+                    if (!childRoomNode.isSelected) continue;
+
+                    roomNode.RemoveChildRoomNodeIDFromRoomNode(childRoomNodeID);
+                    childRoomNode.RemoveParentRoomNodeIDToRoomNode(roomNodeID);
                 }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Delete selected room nodes
+        /// </summary>
+        private void DeleteSelectedRoomNodes()
+        {
+            Queue<RoomNodeSO> roomNodeToDeleteQueue = new Queue<RoomNodeSO>();
+
+            foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+            {
+                if (!roomNode.isSelected) continue;
+                if (roomNode.roomNodeType.isEntrance) continue;
+
+                roomNodeToDeleteQueue.Enqueue(roomNode);
+
+                string roomNodeID = roomNode.id;
+                foreach (string childRoomNodeID in roomNode.childRoomNodeIDList)
+                {
+                    RoomNodeSO childRoomNode = currentRoomNodeGraph.GetRoomNodeByID(childRoomNodeID);
+
+                    if (childRoomNode == null) continue;
+
+                    childRoomNode.RemoveParentRoomNodeIDToRoomNode(roomNodeID);
+                }
+
+                foreach (string parentRoomNodeID in roomNode.parentRoomNodeIDList)
+                {
+                    RoomNodeSO parentRoomNode = currentRoomNodeGraph.GetRoomNodeByID(parentRoomNodeID);
+
+                    if (parentRoomNode == null) continue;
+
+                    parentRoomNode.RemoveParentRoomNodeIDToRoomNode(roomNodeID);
+                }
+            }
+
+            while (roomNodeToDeleteQueue.Count > 0)
+            {
+                RoomNodeSO roomNodeToDelete = roomNodeToDeleteQueue.Dequeue();
+
+                currentRoomNodeGraph.roomNodeDictionary.Remove(roomNodeToDelete.id);
+                currentRoomNodeGraph.roomNodeList.Remove(roomNodeToDelete);
+
+                DestroyImmediate(roomNodeToDelete, true);
+                AssetDatabase.SaveAssets();
             }
         }
 
@@ -465,15 +549,14 @@ namespace DungeonGunner
 
 
         /// <summary>
-        /// Process right click drag events on the RoomNodeGraph
+        /// Process right mouse drag events on the RoomNodeGraph
         /// </summary>
         /// <param name="currentEvent"></param>
         private void ProcessRightClickDragEvent(Event currentEvent)
         {
-            if (currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
-            {
-                DragConnectingLine(currentEvent.delta);
-            }
+            if (currentRoomNodeGraph.roomNodeToDrawLineFrom == null) return;
+
+            DragConnectingLine(currentEvent.delta);
         }
 
 
@@ -502,23 +585,18 @@ namespace DungeonGunner
             }
         }
 
-
-
         /// <summary>
-        /// Process right click up events on the RoomNodeGraph
+        /// Process right mouse up events on the RoomNodeGraph
         /// </summary>
         /// <param name="currentEvent"></param>
         private void ProcessRightClickUpEvent(Event currentEvent)
         {
-            if (currentRoomNodeGraph.roomNodeToDrawLineFrom == null)
+            if (currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
             {
-                return;
-            }
+                RoomNodeSO roomNodeToConnectTo = IsMouseOverRoomNode(currentEvent);
 
-            RoomNodeSO roomNodeToConnectTo = IsMouseOverRoomNode(currentEvent);
+                if (roomNodeToConnectTo == null) return;
 
-            if (roomNodeToConnectTo != null)
-            {
                 ConnectRoomNodes(currentRoomNodeGraph.roomNodeToDrawLineFrom, roomNodeToConnectTo);
             }
 

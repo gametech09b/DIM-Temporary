@@ -59,10 +59,32 @@ namespace DungeonGunner
             else
             {
 
-                int defaultSelectedType = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
-                int selectTypePopup = EditorGUILayout.Popup("", defaultSelectedType, GetRoomNodeTypesToDisplay());
+                int currentSelectedTypeIndex = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
+                int newSelectedTypeIndex = EditorGUILayout.Popup("", currentSelectedTypeIndex, GetRoomNodeTypesToDisplay());
 
-                roomNodeType = roomNodeTypeList.list[selectTypePopup];
+                roomNodeType = roomNodeTypeList.list[newSelectedTypeIndex];
+
+                RoomNodeTypeSO currentSelectedType = roomNodeTypeList.list[currentSelectedTypeIndex];
+                RoomNodeTypeSO newSelectedType = roomNodeTypeList.list[newSelectedTypeIndex];
+
+                // check invalid
+                if (currentSelectedType.isCorridor && !newSelectedType.isCorridor
+                || !currentSelectedType.isCorridor && newSelectedType.isCorridor
+                || !currentSelectedType.isBossRoom && newSelectedType.isBossRoom)
+                {
+                    if (childRoomNodeIDList.Count <= 0) return;
+
+                    for (int i = childRoomNodeIDList.Count - 1; i >= 0; i--)
+                    {
+                        string childRoomNodeID = childRoomNodeIDList[i];
+                        RoomNodeSO childRoomNode = roomNodeGraph.GetRoomNodeByID(childRoomNodeID);
+
+                        if (childRoomNode == null) continue;
+
+                        RemoveChildRoomNodeIDFromRoomNode(childRoomNodeID);
+                        childRoomNode.RemoveParentRoomNodeIDToRoomNode(id);
+                    }
+                }
             }
 
             if (EditorGUI.EndChangeCheck())
@@ -282,7 +304,21 @@ namespace DungeonGunner
 
             if (currentRoomNodeType.isBossRoom && isBossRoomNodeAlreadyConnected) return false;
 
+            // valid
             return true;
+        }
+
+
+
+        public bool RemoveChildRoomNodeIDFromRoomNode(string childRoomNodeID)
+        {
+            if (childRoomNodeIDList.Contains(childRoomNodeID))
+            {
+                childRoomNodeIDList.Remove(childRoomNodeID);
+                return true;
+            }
+
+            return false;
         }
 
 
@@ -292,6 +328,19 @@ namespace DungeonGunner
             if (!parentRoomNodeIDList.Contains(parentRoomNodeID))
             {
                 parentRoomNodeIDList.Add(parentRoomNodeID);
+                return true;
+            }
+
+            return false;
+        }
+
+
+
+        public bool RemoveParentRoomNodeIDToRoomNode(string parentRoomNodeID)
+        {
+            if (parentRoomNodeIDList.Contains(parentRoomNodeID))
+            {
+                parentRoomNodeIDList.Remove(parentRoomNodeID);
                 return true;
             }
 

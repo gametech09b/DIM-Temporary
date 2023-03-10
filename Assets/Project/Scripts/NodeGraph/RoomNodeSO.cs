@@ -225,11 +225,6 @@ namespace DungeonGunner
         /// </summary>
         public void ProcessLeftClickUpEvent()
         {
-            if (isSelected)
-            {
-                isSelected = false;
-            }
-
             if (isLeftClickDragging)
             {
                 isLeftClickDragging = false;
@@ -240,13 +235,54 @@ namespace DungeonGunner
 
         public bool AddChildRoomNodeIDToRoomNode(string childRoomNodeID)
         {
-            if (!childRoomNodeIDList.Contains(childRoomNodeID))
+            if (!IsChildRoomValid(childRoomNodeID))
             {
-                childRoomNodeIDList.Add(childRoomNodeID);
-                return true;
+                return false;
             }
 
-            return false;
+            childRoomNodeIDList.Add(childRoomNodeID);
+            return true;
+        }
+
+
+
+        public bool IsChildRoomValid(string childNodeRoomID)
+        {
+            // barrier 1
+            if (id == childNodeRoomID) return false;
+            if (childRoomNodeIDList.Contains(childNodeRoomID)) return false;
+            if (parentRoomNodeIDList.Contains(childNodeRoomID)) return false;
+
+
+            // barrier 2
+            RoomNodeSO currentRoomNode = roomNodeGraph.GetRoomNodeByID(childNodeRoomID);
+            RoomNodeTypeSO currentRoomNodeType = currentRoomNode.roomNodeType;
+
+            if (currentRoomNode.parentRoomNodeIDList.Count > 0) return false;
+
+
+            // barrier 3
+            if (currentRoomNodeType.isNone) return false;
+            if (currentRoomNodeType.isCorridor && roomNodeType.isCorridor) return false;
+            if (!currentRoomNodeType.isCorridor && !roomNodeType.isCorridor) return false;
+            if (currentRoomNodeType.isCorridor && childRoomNodeIDList.Count >= Settings.maxChildCorridors) return false;
+            if (currentRoomNodeType.isEntrance) return false;
+            if (!currentRoomNodeType.isCorridor && childRoomNodeIDList.Count > 0) return false;
+
+
+            //  barrier 4
+            bool isBossRoomNodeAlreadyConnected = false;
+            foreach (RoomNodeSO roomNode in roomNodeGraph.roomNodeList)
+            {
+                if (roomNode.roomNodeType.isBossRoom && roomNode.parentRoomNodeIDList.Count > 0)
+                {
+                    isBossRoomNodeAlreadyConnected = true;
+                }
+            }
+
+            if (currentRoomNodeType.isBossRoom && isBossRoomNodeAlreadyConnected) return false;
+
+            return true;
         }
 
 

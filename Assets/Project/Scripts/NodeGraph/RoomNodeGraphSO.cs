@@ -34,6 +34,21 @@ namespace DungeonGunner
         }
 
 
+        /// <summary>
+        /// Get the room node by room node ID
+        /// </summary>
+        /// <param name="roomNodeID"></param>
+        /// <returns></returns>
+        public RoomNodeSO GetRoomNodeByID(string roomNodeID)
+        {
+            if (roomNodeDictionary.TryGetValue(roomNodeID, out RoomNodeSO roomNode))
+            {
+                return roomNode;
+            }
+            return null;
+        }
+
+
 
         #region Editor
 #if UNITY_EDITOR

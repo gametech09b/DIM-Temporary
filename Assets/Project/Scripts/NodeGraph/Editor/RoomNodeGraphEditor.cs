@@ -371,6 +371,10 @@ namespace DungeonGunner
 
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currentEvent"></param>
         private void ProcessLeftClickDownEvent(Event currentEvent)
         {
             ClearLineDrag();
@@ -380,7 +384,7 @@ namespace DungeonGunner
 
 
         /// <summary>
-        /// Process mouse up events on the RoomNodeGraph (not over a node)
+        /// 
         /// </summary>
         /// <param name="currentEvent"></param>
         private void ProcessRightClickDownEvent(Event currentEvent)

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,23 +10,20 @@ namespace DungeonGunner
         [HideInInspector] public string guid;
 
         #region Header Prefab
-
         [Space(10)]
         [Header("Prefab")]
-
         #endregion Header Prefab
-
         #region Tooltip
         [Tooltip("The gameobject prefab for the room (this will contain all the tilemaps for the room and environment game objects")]
         #endregion Tooltip
         public GameObject prefab;
-        private GameObject previousPrefab; // this is used to regenerate the guid if the so is copied and the prefab is changed
+        [HideInInspector] public GameObject previousPrefab; // this is used to regenerate the guid if the so is copied and the prefab is changed
+
 
         #region Header Config
         [Space(10)]
         [Header("Config")]
         #endregion Header Config
-
         #region Tooltip
         [Tooltip("The room node type SO. The room node types correspond to the room nodes used in the room node graph.  The exceptions being with corridors.  In the room node graph there is just one corridor type 'Corridor'.  For the room templates there are 2 corridor node types - CorridorNS and CorridorEW.")]
         #endregion Tooltip
@@ -48,12 +44,10 @@ namespace DungeonGunner
         #endregion Tooltip
         [SerializeField] private List<Doorway> doorwayList;
 
-
         #region Tooltip
         [Tooltip("Each possible spawn position (used for enemies and chests) for the room in tilemap coordinates should be added to this array")]
         #endregion Tooltip
         public Vector2Int[] spawnPositionArray;
-
 
         /// <summary>
         /// Returns the list of Entrances for the room template
@@ -76,12 +70,10 @@ namespace DungeonGunner
             }
 
             HelperUtilities.ValidateCheckEnumerableValues(this, nameof(doorwayList), doorwayList);
-
-            // Check spawn positions populated
             HelperUtilities.ValidateCheckEnumerableValues(this, nameof(spawnPositionArray), spawnPositionArray);
         }
+
 #endif
         #endregion Validation
-
     }
 }

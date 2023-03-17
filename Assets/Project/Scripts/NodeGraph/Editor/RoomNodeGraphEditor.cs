@@ -11,13 +11,16 @@ namespace DungeonGunner
         private RoomNodeSO currentRoomNode;
         private RoomNodeTypeListSO roomNodeTypeList;
 
+
         private Vector2 graphOffset;
         private Vector2 graphDrag;
+
 
         // grid view values
         private Color gridColor;
         private const float gridLargeSpacing = 100f;
         private const float gridSmallSpacing = 25f;
+
 
         // room node view values
         private GUIStyle roomNodeStyle;
@@ -26,6 +29,7 @@ namespace DungeonGunner
         private const float roomNodeHeight = 75f;
         private const int roomNodePadding = 25;
         private const int roomNodeBorder = 12;
+
 
         // line view values
         private const float lineThickness = 3f;

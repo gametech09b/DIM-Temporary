@@ -37,6 +37,12 @@ namespace DungeonGunner
             bool error = false;
             int count = 0;
 
+            if (enumerableToCheck == null)
+            {
+                Debug.Log($"{fieldName} is null in object {thisObject.name.ToString()}");
+                return true;
+            }
+
             foreach (var item in enumerableToCheck)
             {
                 if (item == null)
@@ -44,7 +50,8 @@ namespace DungeonGunner
                     Debug.Log($"{fieldName} contains a null value in object {thisObject.name.ToString()}");
                     error = true;
                 }
-                else {
+                else
+                {
                     count++;
                 }
             }

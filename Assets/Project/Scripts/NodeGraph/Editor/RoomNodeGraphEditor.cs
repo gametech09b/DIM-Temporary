@@ -234,7 +234,7 @@ namespace DungeonGunner
         {
             graphDrag = Vector2.zero;
 
-            // FIXME: Devonly
+            // FIXME: Development only
             #region DevOnly
             if (currentEvent.type == EventType.KeyDown && currentEvent.keyCode == KeyCode.Delete)
             {

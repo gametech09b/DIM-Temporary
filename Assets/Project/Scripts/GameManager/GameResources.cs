@@ -26,8 +26,15 @@ namespace DungeonGunner
         [Space(10)]
         [Header("Dungeon")]
 
-
         [Tooltip("Populate with the dungeon RoomNodeTypeListSO")]
         public RoomNodeTypeListSO roomNodeTypeList;
+
+
+
+        [Space(10)]
+        [Header("Materials")]
+
+        [Tooltip("Dimmed Material")]
+        public Material dimmedMaterial;
     }
 }

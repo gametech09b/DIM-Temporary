@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,7 +38,7 @@ namespace DungeonGunner
         /// </summary>
         /// <param name="roomNodeID"></param>
         /// <returns></returns>
-        public RoomNodeSO GetRoomNodeByID(string roomNodeID)
+        public RoomNodeSO GetRoomNode(string roomNodeID)
         {
             if (roomNodeDictionary.TryGetValue(roomNodeID, out RoomNodeSO roomNode))
             {
@@ -48,6 +47,34 @@ namespace DungeonGunner
             return null;
         }
 
+
+
+        /// <summary>
+        /// Get the room node by room node type
+        /// </summary>
+        /// <param name="roomNodeType"></param>
+        /// <returns></returns>
+        public RoomNodeSO GetRoomNode(RoomNodeTypeSO roomNodeType)
+        {
+            foreach (RoomNodeSO roomNode in roomNodeList)
+            {
+                if (roomNode.roomNodeType == roomNodeType)
+                {
+                    return roomNode;
+                }
+            }
+            return null;
+        }
+
+
+
+        public IEnumerable<RoomNodeSO> GetChildRoomNodes(RoomNodeSO parentRoomNode)
+        {
+            foreach (string childRoomNodeID in parentRoomNode.childRoomNodeIDList)
+            {
+                yield return GetRoomNode(childRoomNodeID);
+            }
+        }
 
 
         #region Editor

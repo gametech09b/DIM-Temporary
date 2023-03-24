@@ -533,7 +533,7 @@ namespace DungeonGunner
                 for (int i = roomNode.childRoomNodeIDList.Count - 1; i >= 0; i--)
                 {
                     string childRoomNodeID = roomNode.childRoomNodeIDList[i];
-                    RoomNodeSO childRoomNode = currentRoomNodeGraph.GetRoomNodeByID(childRoomNodeID);
+                    RoomNodeSO childRoomNode = currentRoomNodeGraph.GetRoomNode(childRoomNodeID);
 
                     if (childRoomNode == null) continue;
                     if (!childRoomNode.isSelected) continue;
@@ -563,7 +563,7 @@ namespace DungeonGunner
                 string roomNodeID = roomNode.id;
                 foreach (string childRoomNodeID in roomNode.childRoomNodeIDList)
                 {
-                    RoomNodeSO childRoomNode = currentRoomNodeGraph.GetRoomNodeByID(childRoomNodeID);
+                    RoomNodeSO childRoomNode = currentRoomNodeGraph.GetRoomNode(childRoomNodeID);
 
                     if (childRoomNode == null) continue;
 
@@ -572,7 +572,7 @@ namespace DungeonGunner
 
                 foreach (string parentRoomNodeID in roomNode.parentRoomNodeIDList)
                 {
-                    RoomNodeSO parentRoomNode = currentRoomNodeGraph.GetRoomNodeByID(parentRoomNodeID);
+                    RoomNodeSO parentRoomNode = currentRoomNodeGraph.GetRoomNode(parentRoomNodeID);
 
                     if (parentRoomNode == null) continue;
 

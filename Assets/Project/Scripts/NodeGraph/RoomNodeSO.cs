@@ -77,7 +77,7 @@ namespace DungeonGunner
                     for (int i = childRoomNodeIDList.Count - 1; i >= 0; i--)
                     {
                         string childRoomNodeID = childRoomNodeIDList[i];
-                        RoomNodeSO childRoomNode = roomNodeGraph.GetRoomNodeByID(childRoomNodeID);
+                        RoomNodeSO childRoomNode = roomNodeGraph.GetRoomNode(childRoomNodeID);
 
                         if (childRoomNode == null) continue;
 
@@ -269,7 +269,7 @@ namespace DungeonGunner
 
 
             // barrier 2
-            RoomNodeSO currentRoomNode = roomNodeGraph.GetRoomNodeByID(childNodeRoomID);
+            RoomNodeSO currentRoomNode = roomNodeGraph.GetRoomNode(childNodeRoomID);
             RoomNodeTypeSO currentRoomNodeType = currentRoomNode.roomNodeType;
 
             if (currentRoomNode.parentRoomNodeIDList.Count > 0) return false;

@@ -7,7 +7,7 @@ namespace DungeonGunner
     [CreateAssetMenu(fileName = "Room_", menuName = "Scriptable Objects/Dungeon/Room")]
     public class RoomTemplateSO : ScriptableObject
     {
-        [HideInInspector] public string guid;
+        [HideInInspector] public string id;
 
 
 
@@ -53,9 +53,9 @@ namespace DungeonGunner
         private void OnValidate()
         {
             // Set unique GUID, if empty or the prefab changes
-            if (guid == "" || previousPrefab != prefab)
+            if (id == "" || previousPrefab != prefab)
             {
-                guid = GUID.Generate().ToString();
+                id = GUID.Generate().ToString();
                 previousPrefab = prefab;
                 EditorUtility.SetDirty(this);
             }

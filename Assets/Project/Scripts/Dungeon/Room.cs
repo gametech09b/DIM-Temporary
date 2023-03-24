@@ -15,6 +15,7 @@ namespace DungeonGunner
         public Vector2Int templateUpperBounds;
         public Vector2Int[] spawnPositionArray;
         public List<string> childRoomIDList;
+        public string parentRoomID;
         public List<Doorway> doorwayList;
         public bool isPositioned;
         public InstantiatedRoom instantiatedRoom;

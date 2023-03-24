@@ -32,10 +32,12 @@ namespace DungeonGunner
             HandleGameState();
 
             // FIXME: Development only
+            #region DevOnly
             if (Input.GetKeyDown(KeyCode.R))
             {
                 gameState = GameState.GAME_STARTED;
             }
+            #endregion
         }
 
 

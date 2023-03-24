@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2708e4084c4a1534ba646096300f778c, type: 3}
   m_Name: Room_CorridorEW_Sorcery_1
   m_EditorClassIdentifier: 
-  guid: f0034020133ff2c418df700b3903fbe0
+  id: d89d7ee7a2a59814b973e8a51a4a0c3d
   prefab: {fileID: 4327421925113694216, guid: 1902c16e066e4ce408376f0b4d5b43a4, type: 3}
   previousPrefab: {fileID: 4327421925113694216, guid: 1902c16e066e4ce408376f0b4d5b43a4, type: 3}
   roomNodeType: {fileID: 11400000, guid: 3d0e54f19a637f8449e24964786af149, type: 2}

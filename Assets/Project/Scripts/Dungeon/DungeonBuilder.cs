@@ -73,7 +73,7 @@ namespace DungeonGunner
 
                 if (dungeonBuildSuccessful)
                 {
-                    InstantiateRoomGameobjects();
+                    InstantiateRoomGameObjects();
                 }
             }
 
@@ -213,7 +213,7 @@ namespace DungeonGunner
                 if (unconnectedAvailableParentDoorwayList.Count == 0)
                 {
                     // If no more doorways to try then overlap failure.
-                    return false; // room overlaps
+                    return true; // room overlaps
                 }
 
                 Doorway currentDoorway = unconnectedAvailableParentDoorwayList[UnityEngine.Random.Range(0, unconnectedAvailableParentDoorwayList.Count)];
@@ -242,7 +242,7 @@ namespace DungeonGunner
                 }
             }
 
-            return true;  // no room overlaps
+            return false;  // no room overlaps
 
         }
 
@@ -621,9 +621,24 @@ namespace DungeonGunner
         /// <summary>
         /// Instantiate the dungeon room gameobjects from the prefabs
         /// </summary>
-        private void InstantiateRoomGameobjects()
+        private void InstantiateRoomGameObjects()
         {
+            foreach (KeyValuePair<string, Room> roomDictionaryKVP in roomDictionary)
+            {
+                Room room = roomDictionaryKVP.Value;
 
+                Vector3 roomPosition = new Vector3(room.lowerBounds.x - room.templateLowerBounds.x, room.lowerBounds.y - room.templateLowerBounds.y, 0f);
+
+                GameObject instantiatedRoomGameObject = Instantiate(room.prefab, roomPosition, Quaternion.identity, transform);
+
+                RoomGameObject roomGameObjectComponent = instantiatedRoomGameObject.GetComponent<RoomGameObject>();
+
+                roomGameObjectComponent.room = room;
+
+                roomGameObjectComponent.Init(instantiatedRoomGameObject);
+
+                room.roomGameObject = roomGameObjectComponent;
+            }
         }
 
 
@@ -671,13 +686,13 @@ namespace DungeonGunner
             // Destroy instantiated dungeon gameobjects and clear dungeon manager room dictionary
             if (roomDictionary.Count > 0)
             {
-                foreach (KeyValuePair<string, Room> keyvaluepair in roomDictionary)
+                foreach (KeyValuePair<string, Room> roomDictionaryKVP in roomDictionary)
                 {
-                    Room room = keyvaluepair.Value;
+                    Room room = roomDictionaryKVP.Value;
 
-                    if (room.instantiatedRoom != null)
+                    if (room.roomGameObject != null)
                     {
-                        Destroy(room.instantiatedRoom.gameObject);
+                        Destroy(room.roomGameObject.gameObject);
                     }
                 }
 

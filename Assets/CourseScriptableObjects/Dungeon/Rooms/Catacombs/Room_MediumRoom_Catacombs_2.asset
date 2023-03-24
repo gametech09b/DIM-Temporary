@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2708e4084c4a1534ba646096300f778c, type: 3}
   m_Name: Room_MediumRoom_Catacombs_2
   m_EditorClassIdentifier: 
-  guid: 04619105fba4fd841aa04f544f4eccf7
+  id: 3082db478764b9f46974f3b65db96a29
   prefab: {fileID: 4327421925113694216, guid: 67fee00fd96e7d24a8ed1a06afb4738e, type: 3}
   previousPrefab: {fileID: 4327421925113694216, guid: 67fee00fd96e7d24a8ed1a06afb4738e, type: 3}
   roomNodeType: {fileID: 11400000, guid: 46016af31d25b8a4192a150ccd9fe560, type: 2}

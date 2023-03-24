@@ -18,7 +18,7 @@ namespace DungeonGunner
         public string parentRoomID;
         public List<Doorway> doorwayList;
         public bool isPositioned;
-        public InstantiatedRoom instantiatedRoom;
+        public RoomGameObject roomGameObject;
         public bool isLit = false;
         public bool isCleared = false;
         public bool isVisited = false;

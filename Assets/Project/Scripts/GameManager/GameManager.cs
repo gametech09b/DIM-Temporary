@@ -51,6 +51,8 @@ namespace DungeonGunner
             {
                 case GameState.GAME_STARTED:
                     PlayDungeonLevel(currentDungeonLevelIndex);
+                    gameState = GameState.PLAYING_LEVEL;
+
                     break;
 
                 case GameState.PLAYING_LEVEL:
@@ -86,7 +88,12 @@ namespace DungeonGunner
 
         private void PlayDungeonLevel(int dungeonLevelIndex)
         {
+            bool dungeonBuiltSuccessfully = DungeonBuilder.Instance.GenerateDungeon(dungeonLevelList[dungeonLevelIndex]);
 
+            if (!dungeonBuiltSuccessfully)
+            {
+                Debug.LogError("Couldn't build dungeon from specified rooms and node graphs");
+            }
         }
 
 

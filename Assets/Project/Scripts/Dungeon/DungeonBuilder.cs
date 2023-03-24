@@ -587,9 +587,9 @@ namespace DungeonGunner
                 newDoorway.doorPrefab = doorway.doorPrefab;
                 newDoorway.isConnected = doorway.isConnected;
                 newDoorway.isUnavailable = doorway.isUnavailable;
-                newDoorway.doorwayStartCopyPosition = doorway.doorwayStartCopyPosition;
-                newDoorway.doorwayCopyTileWidth = doorway.doorwayCopyTileWidth;
-                newDoorway.doorwayCopyTileHeight = doorway.doorwayCopyTileHeight;
+                newDoorway.startCopyPosition = doorway.startCopyPosition;
+                newDoorway.copyTileWidth = doorway.copyTileWidth;
+                newDoorway.copyTileHeight = doorway.copyTileHeight;
 
                 newDoorwayList.Add(newDoorway);
             }

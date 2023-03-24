@@ -13,19 +13,19 @@ namespace DungeonGunner
 
         [Space(10)]
         [Header("The Upper Left Position To Start Copying From")]
-        public Vector2Int doorwayStartCopyPosition;
+        public Vector2Int startCopyPosition;
 
 
 
         [Space(10)]
         [Header("The width of tiles in the doorway to copy over")]
-        public int doorwayCopyTileWidth;
+        public int copyTileWidth;
 
 
 
         [Space(10)]
         [Header("The height of tiles in the doorway to copy over")]
-        public int doorwayCopyTileHeight;
+        public int copyTileHeight;
 
 
 

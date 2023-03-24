@@ -38,6 +38,8 @@ namespace DungeonGunner
         {
             PopulateTilemapVariables(roomGameObject);
 
+            BlockOffUnconnectedDoorways();
+
             DisableCollisionTilemapRenderer();
         }
 
@@ -74,6 +76,113 @@ namespace DungeonGunner
                 else if (tilemap.CompareTag("minimapTilemap"))
                 {
                     minimapTilemap = tilemap;
+                }
+            }
+        }
+
+
+
+        private void BlockOffUnconnectedDoorways()
+        {
+            foreach (Doorway doorway in room.doorwayList)
+            {
+                if (doorway.isConnected) continue;
+
+                if (collisionTilemap != null)
+                {
+                    BlockDoorwayOnTilemapLayer(doorway, collisionTilemap);
+                }
+
+                if (groundTilemap != null)
+                {
+                    BlockDoorwayOnTilemapLayer(doorway, groundTilemap);
+                }
+
+                if (decorationTilemap1 != null)
+                {
+                    BlockDoorwayOnTilemapLayer(doorway, decorationTilemap1);
+                }
+
+                if (decorationTilemap2 != null)
+                {
+                    BlockDoorwayOnTilemapLayer(doorway, decorationTilemap2);
+                }
+
+                if (frontTilemap != null)
+                {
+                    BlockDoorwayOnTilemapLayer(doorway, frontTilemap);
+                }
+
+                if (minimapTilemap != null)
+                {
+                    BlockDoorwayOnTilemapLayer(doorway, minimapTilemap);
+                }
+            }
+        }
+
+
+
+        private void BlockDoorwayOnTilemapLayer(Doorway doorway, Tilemap tilemap)
+        {
+            switch (doorway.orientation)
+            {
+                case Orientation.NORTH:
+                case Orientation.SOUTH:
+                    BlockDoorwayHorizontally(doorway, tilemap);
+                    break;
+
+                case Orientation.EAST:
+                case Orientation.WEST:
+                    BlockDoorwayVertically(doorway, tilemap);
+                    break;
+
+                case Orientation.NONE:
+                    break;
+            }
+        }
+
+
+
+        private void BlockDoorwayHorizontally(Doorway doorway, Tilemap tilemap)
+        {
+            Vector2Int startPosition = doorway.startCopyPosition;
+
+            for (int xPosition = 0; xPosition < doorway.copyTileWidth; xPosition++)
+            {
+                for (int yPosition = 0; yPosition < doorway.copyTileHeight; yPosition++)
+                {
+                    Vector3Int tileToCopyPosition = new Vector3Int(startPosition.x + xPosition, startPosition.y - yPosition, 0);
+
+                    Matrix4x4 transformMatrix = tilemap.GetTransformMatrix(tileToCopyPosition);
+
+                    TileBase tileToCopy = tilemap.GetTile(tileToCopyPosition);
+
+                    Vector3Int tileToPastePosition = new Vector3Int(startPosition.x + 1 + xPosition, startPosition.y - yPosition, 0);
+                    tilemap.SetTile(tileToPastePosition, tileToCopy);
+                    tilemap.SetTransformMatrix(tileToPastePosition, transformMatrix);
+                }
+            }
+        }
+
+
+
+        private void BlockDoorwayVertically(Doorway doorway, Tilemap tilemap)
+        {
+            Vector2Int startPosition = doorway.startCopyPosition;
+
+            for (int xPosition = 0; xPosition < doorway.copyTileWidth; xPosition++)
+            {
+                for (int yPosition = 0; yPosition < doorway.copyTileHeight; yPosition++)
+                {
+                    Vector3Int tileToCopyPosition = new Vector3Int(startPosition.x + xPosition, startPosition.y - yPosition, 0);
+
+                    Matrix4x4 transformMatrix = tilemap.GetTransformMatrix(tileToCopyPosition);
+
+                    TileBase tileToCopy = tilemap.GetTile(tileToCopyPosition);
+
+                    Vector3Int tileToPastePosition = new Vector3Int(startPosition.x + xPosition, startPosition.y - 1 - yPosition, 0);
+                    tilemap.SetTile(tileToPastePosition, tileToCopy);
+                    tilemap.SetTransformMatrix(tileToPastePosition, transformMatrix);
                 }
             }
         }

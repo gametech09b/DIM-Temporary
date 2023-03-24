@@ -22,33 +22,33 @@ MonoBehaviour:
   - position: {x: 17, y: 64}
     orientation: 0
     doorPrefab: {fileID: 0}
-    doorwayStartCopyPosition: {x: 14, y: 64}
-    doorwayCopyTileWidth: 5
-    doorwayCopyTileHeight: 9
+    startCopyPosition: {x: 14, y: 64}
+    copyTileWidth: 5
+    copyTileHeight: 9
     isConnected: 0
     isUnavailable: 0
   - position: {x: 17, y: 3}
     orientation: 2
     doorPrefab: {fileID: 0}
-    doorwayStartCopyPosition: {x: 14, y: 6}
-    doorwayCopyTileWidth: 5
-    doorwayCopyTileHeight: 4
+    startCopyPosition: {x: 14, y: 6}
+    copyTileWidth: 5
+    copyTileHeight: 4
     isConnected: 0
     isUnavailable: 0
   - position: {x: 46, y: 32}
     orientation: 1
     doorPrefab: {fileID: 0}
-    doorwayStartCopyPosition: {x: 43, y: 38}
-    doorwayCopyTileWidth: 4
-    doorwayCopyTileHeight: 8
+    startCopyPosition: {x: 43, y: 38}
+    copyTileWidth: 4
+    copyTileHeight: 8
     isConnected: 0
     isUnavailable: 0
   - position: {x: -13, y: 32}
     orientation: 3
     doorPrefab: {fileID: 0}
-    doorwayStartCopyPosition: {x: -13, y: 38}
-    doorwayCopyTileWidth: 4
-    doorwayCopyTileHeight: 8
+    startCopyPosition: {x: -13, y: 38}
+    copyTileWidth: 4
+    copyTileHeight: 8
     isConnected: 0
     isUnavailable: 0
   spawnPositionArray:

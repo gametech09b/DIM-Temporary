@@ -26,6 +26,25 @@ namespace DungeonGunner
 
 
         /// <summary>
+        /// Null value validation
+        /// </summary>
+        /// <param name="thisObject"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="objectToCheck"></param>
+        /// <returns></returns>
+        public static bool ValidateCheckNullValue(Object thisObject, string fieldName, Object objectToCheck)
+        {
+            if (objectToCheck == null)
+            {
+                Debug.Log($"{fieldName} is null in object {thisObject.name.ToString()}");
+                return true;
+            }
+            return false;
+        }
+
+
+
+        /// <summary>
         /// Empty or contains null values IEnumerable validation
         /// </summary>
         /// <param name="thisObject"></param>
@@ -63,6 +82,23 @@ namespace DungeonGunner
             }
 
             return error;
+        }
+
+
+
+        public static bool ValidateCheckPositiveValue(Object thisObject, string fieldName, int valueToCheck, bool isZeroAllowed = false)
+        {
+            if (valueToCheck < 0)
+            {
+                Debug.Log($"{fieldName} is negative in object {thisObject.name.ToString()}");
+                return true;
+            }
+            else if (valueToCheck == 0 && !isZeroAllowed)
+            {
+                Debug.Log($"{fieldName} is zero in object {thisObject.name.ToString()}");
+                return true;
+            }
+            return false;
         }
     }
 }

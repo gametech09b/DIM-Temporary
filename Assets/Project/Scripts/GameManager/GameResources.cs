@@ -32,6 +32,14 @@ namespace DungeonGunner
 
 
         [Space(10)]
+        [Header("Player")]
+
+        [Tooltip("Populate with the player CurrentPlayerSO")]
+        public CurrentPlayerSO currentPlayer;
+
+
+
+        [Space(10)]
         [Header("Materials")]
 
         [Tooltip("Dimmed Material")]

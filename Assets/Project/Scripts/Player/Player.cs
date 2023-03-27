@@ -9,6 +9,7 @@ namespace DungeonGunner
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(SortingGroup))]
+    [RequireComponent(typeof(Health))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(BoxCollider2D))]

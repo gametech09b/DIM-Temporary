@@ -100,5 +100,28 @@ namespace DungeonGunner
             }
             return false;
         }
+
+
+
+        public static Vector3 GetNearestSpawnPoint(Vector3 position)
+        {
+            Room currentRoom = GameManager.Instance.GetCurrentRoom();
+
+            Grid grid = currentRoom.roomGameObject.grid;
+
+            Vector3 nearestSpawnPosition = new Vector3(10000f, 10000f, 0);
+
+            foreach (Vector2Int spawnPositionGrid in currentRoom.spawnPositionArray)
+            {
+                Vector3 spawnPositionWorld = grid.CellToWorld((Vector3Int)spawnPositionGrid);
+
+                if (Vector3.Distance(spawnPositionWorld, position) < Vector3.Distance(nearestSpawnPosition, position))
+                {
+                    nearestSpawnPosition = spawnPositionWorld;
+                }
+            }
+
+            return nearestSpawnPosition;
+        }
     }
 }

@@ -30,5 +30,16 @@ namespace DungeonGunner
             childRoomIDList = new List<string>();
             doorwayList = new List<Doorway>();
         }
+
+
+
+        public Vector3 GetMiddlePosition()
+        {
+            Vector3 middlePosition = new Vector3();
+            middlePosition.x = (lowerBounds.x + upperBounds.x) / 2f;
+            middlePosition.y = (lowerBounds.y + upperBounds.y) / 2f;
+
+            return middlePosition;
+        }
     }
 }

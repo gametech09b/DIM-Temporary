@@ -16,7 +16,33 @@ namespace DungeonGunner
         [Tooltip("The current dungeon level")]
         [SerializeField] private int currentDungeonLevelIndex;
 
+        private Room currentRoom;
+        private Room previousRoom;
+        private PlayerDetailSO currentPlayerDetail;
+        private Player currentPlayer;
+
         [HideInInspector] public GameState gameState;
+
+
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            currentPlayerDetail = GameResources.Instance.currentPlayer.playerDetail;
+
+            InstantiatePlayer();
+        }
+
+
+
+        private void InstantiatePlayer()
+        {
+            GameObject currentPlayerGameObject = Instantiate(currentPlayerDetail.characterPrefab);
+
+            currentPlayer = currentPlayerGameObject.GetComponent<Player>();
+            currentPlayer.Init(currentPlayerDetail);
+        }
 
 
 
@@ -94,6 +120,32 @@ namespace DungeonGunner
             {
                 Debug.LogError("Couldn't build dungeon from specified rooms and node graphs");
             }
+
+            Vector3 currentRoomMiddlePosition = currentRoom.GetMiddlePosition();
+            Vector3 nearestSpawnPoint = HelperUtilities.GetNearestSpawnPoint(currentRoomMiddlePosition);
+            currentPlayer.transform.position = nearestSpawnPoint;
+        }
+
+
+
+        public Room GetCurrentRoom()
+        {
+            return currentRoom;
+        }
+
+
+
+        public void SetCurrentRoom(Room room)
+        {
+            previousRoom = currentRoom;
+            currentRoom = room;
+        }
+
+
+
+        public Player GetCurrentPlayer()
+        {
+            return currentPlayer;
         }
 
 

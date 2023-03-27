@@ -540,6 +540,8 @@ namespace DungeonGunner
             {
                 room.parentRoomID = "";
                 room.isVisited = true;
+
+                GameManager.Instance.SetCurrentRoom(room);
             }
             else
             {

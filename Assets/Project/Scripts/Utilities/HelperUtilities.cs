@@ -126,15 +126,34 @@ namespace DungeonGunner {
 
 
 
-        public static bool ValidateCheckPositiveValue(UnityEngine.Object thisObject, string fieldName, int valueToCheck, bool isZeroAllowed = false) {
-            if (valueToCheck < 0) {
+        public static bool ValidateCheckPositiveValue(UnityEngine.Object thisObject, string fieldName, float value, bool isZeroAllowed = false) {
+            if (value < 0) {
                 Debug.Log($"{fieldName} is negative in object {thisObject.name.ToString()}");
                 return true;
-            } else if (valueToCheck == 0 && !isZeroAllowed) {
+            } else if (value == 0 && !isZeroAllowed) {
                 Debug.Log($"{fieldName} is zero in object {thisObject.name.ToString()}");
                 return true;
             }
             return false;
+        }
+
+
+
+        public static bool ValidateCheckPositiveRange(UnityEngine.Object thisObject, string fieldNameMinimum, string fieldNameMaximum, float minimumValue, float maximumValue, bool isZeroAllowed = false) {
+            bool error = false;
+
+            if (minimumValue > maximumValue) {
+                Debug.Log($"{fieldNameMinimum} is greater than {fieldNameMaximum} in object {thisObject.name.ToString()}");
+                error = true;
+            }
+
+            if (ValidateCheckPositiveValue(thisObject, fieldNameMinimum, minimumValue, isZeroAllowed))
+                error = true;
+
+            if (ValidateCheckPositiveValue(thisObject, fieldNameMaximum, maximumValue, isZeroAllowed))
+                error = true;
+
+            return error;
         }
 
 

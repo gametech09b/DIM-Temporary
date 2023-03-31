@@ -7,12 +7,18 @@ namespace DungeonGunner {
         [Tooltip("The transform of the player's weapon shoot position")]
         [SerializeField] private Transform weaponShootPointTransform;
 
+        [Tooltip("MovementDetailSO")]
+        [SerializeField] private MovementDetailSO movementDetail;
+
         private Player player;
+        private float moveSpeed;
 
 
 
         private void Awake() {
             player = GetComponent<Player>();
+
+            moveSpeed = movementDetail.GetMoveSpeed();
         }
 
 
@@ -26,7 +32,16 @@ namespace DungeonGunner {
 
 
         private void MovementInput() {
-            player.idleEvent.CallOnIdleEvent();
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            float verticalInput = Input.GetAxisRaw("Vertical");
+
+            Vector2 directionVector = new Vector2(horizontalInput, verticalInput).normalized;
+
+            if (directionVector != Vector2.zero) {
+                player.moveByVelocityEvent.CallOnMovementByVelocity(directionVector, moveSpeed);
+            } else {
+                player.idleEvent.CallOnIdleEvent();
+            }
         }
 
 
@@ -56,5 +71,15 @@ namespace DungeonGunner {
 
             player.aimEvent.CallOnAimEvent(playerDirection, playerAngle, weaponAngle, weaponDirectionVector);
         }
+
+
+
+        #region Validation
+#if UNITY_EDITOR
+        private void OnValidate() {
+            HelperUtilities.ValidateCheckNullValue(this, nameof(movementDetail), movementDetail);
+        }
+#endif
+        #endregion
     }
 }

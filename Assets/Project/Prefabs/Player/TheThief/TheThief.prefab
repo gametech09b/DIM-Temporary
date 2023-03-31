@@ -99,5 +99,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: WeaponAnchorPosition
       objectReference: {fileID: 0}
+    - target: {fileID: 7371344933394062430, guid: 9d1de63b728f2484b99e99657e76879b, type: 3}
+      propertyPath: movementDetail
+      value: 
+      objectReference: {fileID: 11400000, guid: 4615afb042e3c3f4790d89f7bd11a90d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d1de63b728f2484b99e99657e76879b, type: 3}

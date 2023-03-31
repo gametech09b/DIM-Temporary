@@ -21,6 +21,8 @@ namespace DungeonGunner {
         public void OnEnable() {
             player.idleEvent.OnIdle += IdleEvent_OnIdle;
             player.aimEvent.OnAim += AimEvent_OnAim;
+
+            player.moveByVelocityEvent.OnMoveByVelocity += MoveByVelocityEvent_OnMoveByVelocity;
         }
 
 
@@ -28,6 +30,8 @@ namespace DungeonGunner {
         public void OnDisable() {
             player.idleEvent.OnIdle -= IdleEvent_OnIdle;
             player.aimEvent.OnAim -= AimEvent_OnAim;
+
+            player.moveByVelocityEvent.OnMoveByVelocity -= MoveByVelocityEvent_OnMoveByVelocity;
         }
 
 
@@ -42,6 +46,12 @@ namespace DungeonGunner {
             DisableAllAimAnimationParameters();
 
             SetAimAnimationParameters(aimEventArgs.direction);
+        }
+
+
+
+        private void MoveByVelocityEvent_OnMoveByVelocity(MoveByVelocityEvent moveByVelocityEvent, MoveByVelocityEventArgs moveByVelocityEventArgs) {
+            SetMovingAnimationParameters();
         }
 
 
@@ -85,6 +95,13 @@ namespace DungeonGunner {
                     player.animator.SetBool(Settings.AimLeft, true);
                     break;
             }
+        }
+
+
+
+        private void SetMovingAnimationParameters() {
+            player.animator.SetBool(Settings.IsIdle, false);
+            player.animator.SetBool(Settings.IsMoving, true);
         }
     }
 }

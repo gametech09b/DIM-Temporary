@@ -1,7 +1,5 @@
-﻿namespace DungeonGunner
-{
-    public enum Orientation
-    {
+﻿namespace DungeonGunner {
+    public enum Orientation {
         NORTH,
         EAST,
         SOUTH,
@@ -11,8 +9,19 @@
 
 
 
-    public enum GameState
-    {
+    public enum Direction {
+        UP,
+        UP_RIGHT,
+        UP_LEFT,
+        RIGHT,
+        DOWN,
+        LEFT,
+        NONE
+    }
+
+
+
+    public enum GameState {
         GAME_STARTED,
         PLAYING_LEVEL,
         ENGAGING_ENEMY,

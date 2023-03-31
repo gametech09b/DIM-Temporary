@@ -6,7 +6,9 @@ using UnityEngine.Tilemaps;
 namespace DungeonGunner
 {
     [DisallowMultipleComponent]
+    #region Requirement Components
     [RequireComponent(typeof(BoxCollider2D))]
+    #endregion
     public class RoomGameObject : MonoBehaviour
     {
         [HideInInspector] public Room room;

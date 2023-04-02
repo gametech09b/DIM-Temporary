@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,6 +33,8 @@ namespace DungeonGunner {
 
         private void Start() {
             waitForFixedUpdate = new WaitForFixedUpdate();
+
+            SetPlayerAnimationSpeed();
         }
 
 
@@ -56,6 +59,12 @@ namespace DungeonGunner {
 
         private void OnCollisionStay2D(Collision2D other) {
             StopDashCoroutine();
+        }
+
+
+
+        private void SetPlayerAnimationSpeed() {
+            player.animator.speed = moveSpeed / Settings.BaseSpeedForPlayer;
         }
 
 

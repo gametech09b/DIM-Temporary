@@ -26,6 +26,8 @@ namespace DungeonGunner {
 
 
         #region Animator Parameters - Player
+        public static float BaseSpeedForPlayer = 8f;
+        
         public static int AimUp = Animator.StringToHash("aimUp");
         public static int AimUpRight = Animator.StringToHash("aimUpRight");
         public static int AimUpLeft = Animator.StringToHash("aimUpLeft");

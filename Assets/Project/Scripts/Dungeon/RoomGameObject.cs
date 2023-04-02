@@ -33,6 +33,16 @@ namespace DungeonGunner {
 
 
 
+        private void OnTriggerEnter2D(Collider2D other) {
+            if (other.CompareTag(Settings.PlayerTag) && room != GameManager.Instance.GetCurrentRoom()) {
+                room.isVisited = true;
+
+                DungeonStaticEvent.CallOnRoomChange(room);
+            }
+        }
+
+
+
         public void Init(GameObject roomGameObject) {
             PopulateTilemapVariables(roomGameObject);
 
@@ -173,7 +183,7 @@ namespace DungeonGunner {
                 if (doorway.doorPrefab == null) continue;
                 if (!doorway.isConnected) continue;
 
-                float tileDistance = Settings.tileSizePixel / Settings.pixelPerUnit;
+                float tileDistance = Settings.TileSizePixel / Settings.PixelPerUnit;
 
                 GameObject doorGameObject = null;
 
@@ -218,7 +228,7 @@ namespace DungeonGunner {
                         break;
                 }
 
-                Door door = doorGameObject.GetComponent<Door>();
+                DoorGameObject door = doorGameObject.GetComponent<DoorGameObject>();
                 if (room.roomNodeType.isBossRoom) {
                     door.isBossRoomDoor = true;
                     door.LockDoor();

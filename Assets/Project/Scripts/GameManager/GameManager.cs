@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DungeonGunner {
     [DisallowMultipleComponent]
-    public class GameManager : SingletonMonobehaviour<GameManager>
-    {
+    public class GameManager : SingletonMonobehaviour<GameManager> {
         [Space(10)]
         [Header("Dungeon Levels")]
 
@@ -25,19 +23,17 @@ namespace DungeonGunner
 
 
 
-        protected override void Awake()
-        {
+        protected override void Awake() {
             base.Awake();
 
-            currentPlayerDetail = GameResources.Instance.currentPlayer.playerDetail;
+            currentPlayerDetail = GameResources.Instance.CurrentPlayer.playerDetail;
 
             InstantiatePlayer();
         }
 
 
 
-        private void InstantiatePlayer()
-        {
+        private void InstantiatePlayer() {
             GameObject currentPlayerGameObject = Instantiate(currentPlayerDetail.characterPrefab);
 
             currentPlayer = currentPlayerGameObject.GetComponent<Player>();
@@ -46,21 +42,18 @@ namespace DungeonGunner
 
 
 
-        private void Start()
-        {
+        private void Start() {
             gameState = GameState.GAME_STARTED;
         }
 
 
 
-        private void Update()
-        {
+        private void Update() {
             HandleGameState();
 
             // FIXME: Development only
             #region DevOnly
-            if (Input.GetKeyDown(KeyCode.R))
-            {
+            if (Input.GetKeyDown(KeyCode.R)) {
                 gameState = GameState.GAME_STARTED;
             }
             #endregion
@@ -71,10 +64,8 @@ namespace DungeonGunner
         /// <summary>
         /// Handles the game state
         /// </summary>
-        private void HandleGameState()
-        {
-            switch (gameState)
-            {
+        private void HandleGameState() {
+            switch (gameState) {
                 case GameState.GAME_STARTED:
                     PlayDungeonLevel(currentDungeonLevelIndex);
                     gameState = GameState.PLAYING_LEVEL;
@@ -112,14 +103,14 @@ namespace DungeonGunner
 
 
 
-        private void PlayDungeonLevel(int dungeonLevelIndex)
-        {
+        private void PlayDungeonLevel(int dungeonLevelIndex) {
             bool dungeonBuiltSuccessfully = DungeonBuilder.Instance.GenerateDungeon(dungeonLevelList[dungeonLevelIndex]);
 
-            if (!dungeonBuiltSuccessfully)
-            {
+            if (!dungeonBuiltSuccessfully) {
                 Debug.LogError("Couldn't build dungeon from specified rooms and node graphs");
             }
+
+            DungeonStaticEvent.CallOnRoomChange(currentRoom);
 
             Vector3 currentRoomMiddlePosition = currentRoom.GetMiddlePosition();
             Vector3 nearestSpawnPoint = HelperUtilities.GetNearestSpawnPoint(currentRoomMiddlePosition);
@@ -128,23 +119,20 @@ namespace DungeonGunner
 
 
 
-        public Room GetCurrentRoom()
-        {
+        public Room GetCurrentRoom() {
             return currentRoom;
         }
 
 
 
-        public void SetCurrentRoom(Room room)
-        {
+        public void SetCurrentRoom(Room room) {
             previousRoom = currentRoom;
             currentRoom = room;
         }
 
 
 
-        public Player GetCurrentPlayer()
-        {
+        public Player GetCurrentPlayer() {
             return currentPlayer;
         }
 
@@ -152,8 +140,7 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.ValidateCheckEnumerableValues(this, nameof(dungeonLevelList), dungeonLevelList);
         }
 #endif

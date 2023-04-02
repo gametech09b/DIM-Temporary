@@ -5,21 +5,22 @@ using UnityEngine;
 namespace DungeonGunner {
     public static class Settings {
         #region Units
-        public const float pixelPerUnit = 16f;
-        public const float tileSizePixel = 16f;
+        public const float PixelPerUnit = 16f;
+        public const float TileSizePixel = 16f;
         #endregion
 
 
 
         #region Dungeon Builder Settings
-        public const int maxDungeonBuildAttempts = 10; // Max number of attempts to build the dungeon
-        public const int maxDungeonRoomRebuildAttempts = 1000; // Max number of attempts to rebuild the dungeon for room graph
+        public const int MaxDungeonBuildAttempts = 10; // max number of attempts to build the dungeon
+        public const int MaxDungeonRoomRebuildAttempts = 1000; // max number of attempts to rebuild the dungeon for room graph
         #endregion
 
 
 
         #region Room Settings
-        public const int maxChildCorridors = 3; // Max number of child corridors per room
+        public const float FadeInTime = 0.5f; // time it takes for the room to fade in
+        public const int MaxChildCorridors = 3; // max number of child corridors per room
         #endregion
 
 

@@ -22,6 +22,8 @@ namespace DungeonGunner {
     [RequireComponent(typeof(IdleEvent))]
     [RequireComponent(typeof(MoveByVelocity))]
     [RequireComponent(typeof(MoveByVelocityEvent))]
+    [RequireComponent(typeof(MoveToPosition))]
+    [RequireComponent(typeof(MoveToPositionEvent))]
     #endregion
     public class Player : MonoBehaviour {
         [HideInInspector] public Animator animator;
@@ -33,6 +35,7 @@ namespace DungeonGunner {
         [HideInInspector] public AimEvent aimEvent;
         [HideInInspector] public IdleEvent idleEvent;
         [HideInInspector] public MoveByVelocityEvent moveByVelocityEvent;
+        [HideInInspector] public MoveToPositionEvent moveToPositionEvent;
 
 
 
@@ -44,6 +47,7 @@ namespace DungeonGunner {
             aimEvent = GetComponent<AimEvent>();
             idleEvent = GetComponent<IdleEvent>();
             moveByVelocityEvent = GetComponent<MoveByVelocityEvent>();
+            moveToPositionEvent = GetComponent<MoveToPositionEvent>();
         }
 
 

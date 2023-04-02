@@ -33,7 +33,7 @@ namespace DungeonGunner {
 
 
 
-        private void IdleEvent_OnIdle(IdleEvent idleEvent) {
+        private void IdleEvent_OnIdle(IdleEvent sender) {
             ChangeToIdle();
         }
 

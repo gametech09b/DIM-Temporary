@@ -23,6 +23,7 @@ namespace DungeonGunner {
             player.aimEvent.OnAim += AimEvent_OnAim;
 
             player.moveByVelocityEvent.OnMoveByVelocity += MoveByVelocityEvent_OnMoveByVelocity;
+            player.moveToPositionEvent.OnMoveToPosition += MoveToPositionEvent_OnMoveToPosition;
         }
 
 
@@ -32,26 +33,41 @@ namespace DungeonGunner {
             player.aimEvent.OnAim -= AimEvent_OnAim;
 
             player.moveByVelocityEvent.OnMoveByVelocity -= MoveByVelocityEvent_OnMoveByVelocity;
+            player.moveToPositionEvent.OnMoveToPosition -= MoveToPositionEvent_OnMoveToPosition;
         }
 
 
 
-        private void IdleEvent_OnIdle(IdleEvent idleEvent) {
+        private void IdleEvent_OnIdle(IdleEvent sender) {
+            DisableRollAnimationParameters();
+
             SetIdleAnimationParameters();
         }
 
 
 
-        private void AimEvent_OnAim(AimEvent aimEvent, AimEventArgs aimEventArgs) {
+        private void AimEvent_OnAim(AimEvent sender, AimEventArgs args) {
             DisableAllAimAnimationParameters();
+            DisableRollAnimationParameters();
 
-            SetAimAnimationParameters(aimEventArgs.direction);
+            SetAimAnimationParameters(args.direction);
         }
 
 
 
-        private void MoveByVelocityEvent_OnMoveByVelocity(MoveByVelocityEvent moveByVelocityEvent, MoveByVelocityEventArgs moveByVelocityEventArgs) {
-            SetMovingAnimationParameters();
+        private void MoveByVelocityEvent_OnMoveByVelocity(MoveByVelocityEvent sender, MoveByVelocityEventArgs args) {
+            DisableRollAnimationParameters();
+
+            SetMoveAnimationParameters();
+        }
+
+
+
+        private void MoveToPositionEvent_OnMoveToPosition(MoveToPositionEvent sender, MoveToPositionEventArgs args) {
+            DisableAllAimAnimationParameters();
+            DisableRollAnimationParameters();
+
+            SetRollAnimationParameters(args);
         }
 
 
@@ -99,9 +115,34 @@ namespace DungeonGunner {
 
 
 
-        private void SetMovingAnimationParameters() {
+        private void SetMoveAnimationParameters() {
             player.animator.SetBool(Settings.IsIdle, false);
             player.animator.SetBool(Settings.IsMoving, true);
+        }
+
+
+
+        private void DisableRollAnimationParameters() {
+            player.animator.SetBool(Settings.RollUp, false);
+            player.animator.SetBool(Settings.RollRight, false);
+            player.animator.SetBool(Settings.RollDown, false);
+            player.animator.SetBool(Settings.RollLeft, false);
+        }
+
+
+
+        private void SetRollAnimationParameters(MoveToPositionEventArgs args) {
+            if (args.isActive) {
+                if(args.directionVector.x > 0) {
+                    player.animator.SetBool(Settings.RollRight, true);
+                } else if (args.directionVector.x < 0) {
+                    player.animator.SetBool(Settings.RollLeft, true);
+                } else if (args.directionVector.y > 0) {
+                    player.animator.SetBool(Settings.RollUp, true);
+                } else if (args.directionVector.y < 0) {
+                    player.animator.SetBool(Settings.RollDown, true);
+                }
+            }
         }
     }
 }

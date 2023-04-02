@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpeed: 10
   maxSpeed: 10
+  dashSpeed: 10
+  dashDistance: 8
+  dashCooldown: 0.2

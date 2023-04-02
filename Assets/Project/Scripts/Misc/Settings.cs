@@ -22,11 +22,16 @@ namespace DungeonGunner {
         public static int AimUpRight = Animator.StringToHash("aimUpRight");
         public static int AimUpLeft = Animator.StringToHash("aimUpLeft");
         public static int AimRight = Animator.StringToHash("aimRight");
-        public static int AimLeft = Animator.StringToHash("aimLeft");
         public static int AimDown = Animator.StringToHash("aimDown");
+        public static int AimLeft = Animator.StringToHash("aimLeft");
 
         public static int IsIdle = Animator.StringToHash("isIdle");
         public static int IsMoving = Animator.StringToHash("isMoving");
+
+        public static int RollUp = Animator.StringToHash("rollUp");
+        public static int RollRight = Animator.StringToHash("rollRight");
+        public static int RollDown = Animator.StringToHash("rollDown");
+        public static int RollLeft = Animator.StringToHash("rollLeft");
         #endregion
     }
 }

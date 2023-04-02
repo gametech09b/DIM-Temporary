@@ -33,8 +33,8 @@ namespace DungeonGunner {
 
 
 
-        private void MovementByVelocityEvent_OnMovementByVelocity(MoveByVelocityEvent movementByVelocityEvent, MoveByVelocityEventArgs movementByVelocityEventArgs) {
-            Move(movementByVelocityEventArgs.directionVector, movementByVelocityEventArgs.speed);
+        private void MovementByVelocityEvent_OnMovementByVelocity(MoveByVelocityEvent sender, MoveByVelocityEventArgs args) {
+            Move(args.directionVector, args.speed);
         }
 
 

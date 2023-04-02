@@ -10,7 +10,7 @@ namespace DungeonGunner {
 
 
 
-        public void CallOnMovementByVelocity(Vector2 directionVector, float speed) {
+        public void CallOnMoveByVelocity(Vector2 directionVector, float speed) {
             OnMoveByVelocity?.Invoke(
                 this,
                 new MoveByVelocityEventArgs() {

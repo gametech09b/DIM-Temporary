@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DoorEWClosed
+  m_Name: DoorEWClose
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -36,16 +36,14 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 6235154995679643765, guid: 94ceb7f4942570649bd0a897ef2a4ed9,
-        type: 3}
+      value: {fileID: 6235154995679643765, guid: 94ceb7f4942570649bd0a897ef2a4ed9, type: 3}
     attribute: m_Sprite
     path: DoorCollider
     classID: 212
     script: {fileID: 0}
   - curve:
     - time: 0
-      value: {fileID: 7053689574826554501, guid: 8bf4537c840876747a02facf5781dfb0,
-        type: 3}
+      value: {fileID: 7053689574826554501, guid: 8bf4537c840876747a02facf5781dfb0, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212

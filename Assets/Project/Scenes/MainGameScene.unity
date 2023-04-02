@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 180219025}
   m_Layer: 0
-  m_Name: SINGLETONS
+  m_Name: Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

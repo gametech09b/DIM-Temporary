@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace DungeonGunner
-{
+namespace DungeonGunner {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(BoxCollider2D))]
     #endregion
-    public class RoomGameObject : MonoBehaviour
-    {
+    public class RoomGameObject : MonoBehaviour {
         [HideInInspector] public Room room;
         [HideInInspector] public Grid grid;
 
@@ -28,55 +26,42 @@ namespace DungeonGunner
 
 
 
-        private void Awake()
-        {
+        private void Awake() {
             roomCollider = GetComponent<BoxCollider2D>();
             roomColliderBounds = roomCollider.bounds;
         }
 
 
 
-        public void Init(GameObject roomGameObject)
-        {
+        public void Init(GameObject roomGameObject) {
             PopulateTilemapVariables(roomGameObject);
 
             BlockOffUnconnectedDoorways();
+
+            AddDoorsToRoom();
 
             DisableCollisionTilemapRenderer();
         }
 
 
 
-        public void PopulateTilemapVariables(GameObject roomGameObject)
-        {
+        public void PopulateTilemapVariables(GameObject roomGameObject) {
             grid = roomGameObject.GetComponentInChildren<Grid>();
 
             Tilemap[] tilemapArray = grid.GetComponentsInChildren<Tilemap>();
 
-            foreach (Tilemap tilemap in tilemapArray)
-            {
-                if (tilemap.CompareTag("groundTilemap"))
-                {
+            foreach (Tilemap tilemap in tilemapArray) {
+                if (tilemap.CompareTag("groundTilemap")) {
                     groundTilemap = tilemap;
-                }
-                else if (tilemap.CompareTag("decoration1Tilemap"))
-                {
+                } else if (tilemap.CompareTag("decoration1Tilemap")) {
                     decorationTilemap1 = tilemap;
-                }
-                else if (tilemap.CompareTag("decoration2Tilemap"))
-                {
+                } else if (tilemap.CompareTag("decoration2Tilemap")) {
                     decorationTilemap2 = tilemap;
-                }
-                else if (tilemap.CompareTag("frontTilemap"))
-                {
+                } else if (tilemap.CompareTag("frontTilemap")) {
                     frontTilemap = tilemap;
-                }
-                else if (tilemap.CompareTag("collisionTilemap"))
-                {
+                } else if (tilemap.CompareTag("collisionTilemap")) {
                     collisionTilemap = tilemap;
-                }
-                else if (tilemap.CompareTag("minimapTilemap"))
-                {
+                } else if (tilemap.CompareTag("minimapTilemap")) {
                     minimapTilemap = tilemap;
                 }
             }
@@ -84,39 +69,31 @@ namespace DungeonGunner
 
 
 
-        private void BlockOffUnconnectedDoorways()
-        {
-            foreach (Doorway doorway in room.doorwayList)
-            {
+        private void BlockOffUnconnectedDoorways() {
+            foreach (Doorway doorway in room.doorwayList) {
                 if (doorway.isConnected) continue;
 
-                if (collisionTilemap != null)
-                {
+                if (collisionTilemap != null) {
                     BlockDoorwayOnTilemapLayer(doorway, collisionTilemap);
                 }
 
-                if (groundTilemap != null)
-                {
+                if (groundTilemap != null) {
                     BlockDoorwayOnTilemapLayer(doorway, groundTilemap);
                 }
 
-                if (decorationTilemap1 != null)
-                {
+                if (decorationTilemap1 != null) {
                     BlockDoorwayOnTilemapLayer(doorway, decorationTilemap1);
                 }
 
-                if (decorationTilemap2 != null)
-                {
+                if (decorationTilemap2 != null) {
                     BlockDoorwayOnTilemapLayer(doorway, decorationTilemap2);
                 }
 
-                if (frontTilemap != null)
-                {
+                if (frontTilemap != null) {
                     BlockDoorwayOnTilemapLayer(doorway, frontTilemap);
                 }
 
-                if (minimapTilemap != null)
-                {
+                if (minimapTilemap != null) {
                     BlockDoorwayOnTilemapLayer(doorway, minimapTilemap);
                 }
             }
@@ -124,10 +101,8 @@ namespace DungeonGunner
 
 
 
-        private void BlockDoorwayOnTilemapLayer(Doorway doorway, Tilemap tilemap)
-        {
-            switch (doorway.orientation)
-            {
+        private void BlockDoorwayOnTilemapLayer(Doorway doorway, Tilemap tilemap) {
+            switch (doorway.orientation) {
                 case Orientation.NORTH:
                 case Orientation.SOUTH:
                     BlockDoorwayHorizontally(doorway, tilemap);
@@ -145,14 +120,11 @@ namespace DungeonGunner
 
 
 
-        private void BlockDoorwayHorizontally(Doorway doorway, Tilemap tilemap)
-        {
+        private void BlockDoorwayHorizontally(Doorway doorway, Tilemap tilemap) {
             Vector2Int startPosition = doorway.startCopyPosition;
 
-            for (int xPosition = 0; xPosition < doorway.copyTileWidth; xPosition++)
-            {
-                for (int yPosition = 0; yPosition < doorway.copyTileHeight; yPosition++)
-                {
+            for (int xPosition = 0; xPosition < doorway.copyTileWidth; xPosition++) {
+                for (int yPosition = 0; yPosition < doorway.copyTileHeight; yPosition++) {
                     Vector3Int tileToCopyPosition = new Vector3Int(startPosition.x + xPosition, startPosition.y - yPosition, 0);
 
                     Matrix4x4 transformMatrix = tilemap.GetTransformMatrix(tileToCopyPosition);
@@ -168,14 +140,11 @@ namespace DungeonGunner
 
 
 
-        private void BlockDoorwayVertically(Doorway doorway, Tilemap tilemap)
-        {
+        private void BlockDoorwayVertically(Doorway doorway, Tilemap tilemap) {
             Vector2Int startPosition = doorway.startCopyPosition;
 
-            for (int xPosition = 0; xPosition < doorway.copyTileWidth; xPosition++)
-            {
-                for (int yPosition = 0; yPosition < doorway.copyTileHeight; yPosition++)
-                {
+            for (int xPosition = 0; xPosition < doorway.copyTileWidth; xPosition++) {
+                for (int yPosition = 0; yPosition < doorway.copyTileHeight; yPosition++) {
                     Vector3Int tileToCopyPosition = new Vector3Int(startPosition.x + xPosition, startPosition.y - yPosition, 0);
 
                     Matrix4x4 transformMatrix = tilemap.GetTransformMatrix(tileToCopyPosition);
@@ -191,9 +160,64 @@ namespace DungeonGunner
 
 
 
-        public void DisableCollisionTilemapRenderer()
-        {
+        public void DisableCollisionTilemapRenderer() {
             collisionTilemap.GetComponent<TilemapRenderer>().enabled = false;
+        }
+
+
+
+        public void AddDoorsToRoom() {
+            if (room.roomNodeType.isCorridorEW || room.roomNodeType.isCorridorNS) return;
+
+            foreach (Doorway doorway in room.doorwayList) {
+                if (doorway.doorPrefab == null) continue;
+                if (!doorway.isConnected) continue;
+
+                float tileDistance = Settings.tileSizePixel / Settings.pixelPerUnit;
+
+                GameObject doorGameObject = null;
+
+                switch (doorway.orientation) {
+                    case Orientation.NORTH:
+                        doorGameObject = Instantiate(doorway.doorPrefab, gameObject.transform);
+                        doorGameObject.transform.localPosition = new Vector3(
+                            doorway.position.x + tileDistance / 2f,
+                            doorway.position.y + tileDistance,
+                            0
+                        );
+                        break;
+
+                    case Orientation.SOUTH:
+                        doorGameObject = Instantiate(doorway.doorPrefab, gameObject.transform);
+                        doorGameObject.transform.localPosition = new Vector3(
+                            doorway.position.x + tileDistance / 2f,
+                            doorway.position.y,
+                            0
+                        );
+                        break;
+
+                    case Orientation.EAST:
+                        doorGameObject = Instantiate(doorway.doorPrefab, gameObject.transform);
+                        doorGameObject.transform.localPosition = new Vector3(
+                            doorway.position.x + tileDistance,
+                            doorway.position.y + tileDistance * 1.25f,
+                            0
+                        );
+                        break;
+
+                    case Orientation.WEST:
+                        doorGameObject = Instantiate(doorway.doorPrefab, gameObject.transform);
+                        doorGameObject.transform.localPosition = new Vector3(
+                            doorway.position.x,
+                            doorway.position.y + tileDistance * 1.25f,
+                            0
+                        );
+                        break;
+
+                    case Orientation.NONE:
+                        break;
+                }
+            }
         }
     }
 }

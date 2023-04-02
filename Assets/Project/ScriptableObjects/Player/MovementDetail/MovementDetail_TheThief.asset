@@ -16,4 +16,4 @@ MonoBehaviour:
   maxSpeed: 10
   dashSpeed: 10
   dashDistance: 8
-  dashCooldown: 0.2
+  dashCooldownTime: 0.2

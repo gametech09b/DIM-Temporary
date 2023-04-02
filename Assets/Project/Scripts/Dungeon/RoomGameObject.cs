@@ -217,6 +217,12 @@ namespace DungeonGunner {
                     case Orientation.NONE:
                         break;
                 }
+
+                Door door = doorGameObject.GetComponent<Door>();
+                if (room.roomNodeType.isBossRoom) {
+                    door.isBossRoomDoor = true;
+                    door.LockDoor();
+                }
             }
         }
     }

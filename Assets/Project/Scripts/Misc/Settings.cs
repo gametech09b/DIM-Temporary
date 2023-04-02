@@ -40,5 +40,18 @@ namespace DungeonGunner {
         public static int RollDown = Animator.StringToHash("rollDown");
         public static int RollLeft = Animator.StringToHash("rollLeft");
         #endregion
+
+
+
+        #region Animator Parameters - Door
+        public static int IsOpen = Animator.StringToHash("isOpen");
+        #endregion
+
+
+
+        #region GameObject Tags
+        public const string PlayerTag = "Player";
+        public const string PlayerWeaponTag = "playerWeapon";
+        #endregion
     }
 }

@@ -42,6 +42,18 @@ namespace DungeonGunner {
 
 
 
+        private void OnEnable() {
+            DungeonStaticEvent.OnRoomChange += DungeonStaticEvent_OnRoomChange;
+        }
+
+
+
+        private void OnDisable() {
+            DungeonStaticEvent.OnRoomChange -= DungeonStaticEvent_OnRoomChange;
+        }
+
+
+
         private void Start() {
             gameState = GameState.GAME_STARTED;
         }
@@ -57,6 +69,12 @@ namespace DungeonGunner {
                 gameState = GameState.GAME_STARTED;
             }
             #endregion
+        }
+
+
+
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs args) {
+            SetCurrentRoom(args.room);
         }
 
 

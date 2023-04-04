@@ -27,7 +27,7 @@ namespace DungeonGunner {
 
         #region Animator Parameters - Player
         public static float BaseSpeedForPlayer = 8f;
-        
+
         public static int AimUp = Animator.StringToHash("aimUp");
         public static int AimUpRight = Animator.StringToHash("aimUpRight");
         public static int AimUpLeft = Animator.StringToHash("aimUpLeft");
@@ -55,6 +55,12 @@ namespace DungeonGunner {
         #region GameObject Tags
         public const string PlayerTag = "Player";
         public const string PlayerWeaponTag = "playerWeapon";
+        #endregion
+
+
+
+        #region Combat Settings
+        public const float AimAngleDistance = 3.5f; // distance between aim angles
         #endregion
     }
 }

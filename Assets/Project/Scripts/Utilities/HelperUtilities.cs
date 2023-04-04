@@ -26,9 +26,18 @@ namespace DungeonGunner {
 
         public static float GetAngleFromVector(Vector3 vector) {
             float radian = Mathf.Atan2(vector.y, vector.x);
-            float degree = radian * Mathf.Rad2Deg;
+            float angleDegree = radian * Mathf.Rad2Deg;
 
-            return degree;
+            return angleDegree;
+        }
+
+
+
+        public static Vector3 GetDirectionVectorFromAngle(float angleDegree) {
+            float radian = angleDegree * Mathf.Deg2Rad;
+            Vector3 directionVector = new Vector3(Mathf.Cos(radian), Mathf.Sin(radian), 0);
+
+            return directionVector;
         }
 
 

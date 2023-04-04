@@ -201,7 +201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: affa1021afc206644b77aa7658a9d9ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolArray: []
+  poolArray:
+  - prefab: {fileID: 1338510408464095998, guid: 29fe0b11fbb341f4babc41f45f5e635e, type: 3}
+    size: 30
+    componentType: IFireable
 --- !u!1 &467172640
 GameObject:
   m_ObjectHideFlags: 0

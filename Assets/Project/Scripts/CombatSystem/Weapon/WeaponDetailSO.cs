@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonGunner {
-    [CreateAssetMenu(fileName = "WeaponDetail_", menuName = "Scriptable Objects/Weapon/Weapon Detail")]
+    [CreateAssetMenu(fileName = "WeaponDetail_", menuName = "Scriptable Objects/Combat/Weapon Detail")]
     public class WeaponDetailSO : ScriptableObject {
 
         [Space(10)]
@@ -25,8 +25,8 @@ namespace DungeonGunner {
         [Tooltip("Weapon shoot position - offset position from the weapon sprite pivot point")]
         public Vector3 shootPosition;
 
-        // [Tooltip("Weapon current ammo")]
-        // public AmmoDetailSO ammoDetail;
+        [Tooltip("Weapon current ammo")]
+        public AmmoDetailSO ammoDetail;
 
 
 
@@ -61,9 +61,9 @@ namespace DungeonGunner {
 #if UNITY_EDITOR
         private void OnValidate() {
             HelperUtilities.ValidateCheckEmptyString(this, nameof(weaponName), weaponName);
-            // HelperUtilities.ValidateCheckNullValue(this, nameof(ammoDetail), ammoDetail);
+            HelperUtilities.ValidateCheckNullValue(this, nameof(ammoDetail), ammoDetail);
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(fireRate), fireRate);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(prefireDelay), prefireDelay);
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(prefireDelay), prefireDelay, true);
 
             if (!isAmmoInfinite)
                 HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoCapacity), ammoCapacity);

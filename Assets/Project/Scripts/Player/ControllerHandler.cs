@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonGunner {
+    [DisallowMultipleComponent]
+    #region Requirement Components
+    [RequireComponent(typeof(Player))]
+    #endregion
     public class ControllerHandler : MonoBehaviour {
-        [Tooltip("The transform of the player's weapon shoot position")]
-        [SerializeField] private Transform weaponShootPointTransform;
 
-        [Tooltip("MovementDetailSO")]
         [SerializeField] private MovementDetailSO movementDetail;
 
         private Player player;
+        private int activeWeaponIndex = 1;
         private float moveSpeed;
 
 
@@ -34,7 +36,9 @@ namespace DungeonGunner {
         private void Start() {
             waitForFixedUpdate = new WaitForFixedUpdate();
 
-            SetPlayerAnimationSpeed();
+            SetupInitialWeapon();
+
+            SetupPlayerAnimationSpeed();
         }
 
 
@@ -63,7 +67,31 @@ namespace DungeonGunner {
 
 
 
-        private void SetPlayerAnimationSpeed() {
+        private void SetupInitialWeapon() {
+            int index = 1;
+
+            foreach (Weapon weapon in player.weaponList) {
+                if (weapon.weaponDetail == player.playerDetail.initialWeapon) {
+                    SetWeaponByIndex(index);
+                    break;
+                }
+
+                index++;
+            }
+        }
+
+
+
+        private void SetWeaponByIndex(int index) {
+            if (index - 1 < 0 || index - 1 > player.weaponList.Count) return;
+
+            activeWeaponIndex = index;
+            player.setActiveWeaponEvent.CallOnSetActiveWeapon(player.weaponList[index - 1]);
+        }
+
+
+
+        private void SetupPlayerAnimationSpeed() {
             player.animator.speed = moveSpeed / Settings.BaseSpeedForPlayer;
         }
 
@@ -102,7 +130,7 @@ namespace DungeonGunner {
             Vector3 mousePosition = HelperUtilities.GetMouseWorldPosition();
             Vector3 playerPosition = transform.position;
 
-            weaponDirectionVector = mousePosition - weaponShootPointTransform.position;
+            weaponDirectionVector = mousePosition - player.activeWeapon.GetShootPosition();
 
             Vector3 playerDirectionVector = mousePosition - playerPosition;
 

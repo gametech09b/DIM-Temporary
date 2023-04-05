@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DungeonGunner {
     [DisallowMultipleComponent]
-    public class Ammo : MonoBehaviour, IFireable {
+    public class AmmoGameObject : MonoBehaviour, IFireable {
         [SerializeField] private TrailRenderer trailRenderer;
         private float range;
         private float speed;

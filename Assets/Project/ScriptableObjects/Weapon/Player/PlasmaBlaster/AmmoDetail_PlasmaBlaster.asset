@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08f0955be34c1024f8ea16c6632b44dc, type: 3}
-  m_Name: AmmoDetail_Revolver
+  m_Name: AmmoDetail_PlasmaBlaster
   m_EditorClassIdentifier: 
-  ammoName: Revolver Ammo
+  ammoName: Plasma Blaster Ammo
   isPlayerAmmo: 1
   sprite: {fileID: 21300000, guid: 4df9cc7131cd27f4288bca5e76c82034, type: 3}
   prefabArray:
   - {fileID: 1338510408464095998, guid: 29fe0b11fbb341f4babc41f45f5e635e, type: 3}
-  material: {fileID: 2100000, guid: 5c86445c1f630c141ab88b05539eca5d, type: 2}
-  damage: 7
-  minSpeed: 13
-  maxSpeed: 13
-  range: 15
+  material: {fileID: 2100000, guid: c64696a09f1cb1a4d9766d1fe9778ca5, type: 2}
+  damage: 5
+  minSpeed: 50
+  maxSpeed: 50
+  range: 14
   rotationSpeed: 1
   chargeTime: 0
   chargeMaterial: {fileID: 0}
-  minSpread: 1
-  maxSpread: 3
+  minSpread: 0.5
+  maxSpread: 1
   minSpawnCount: 1
   maxSpawnCount: 1
   minSpawnInterval: 0
   maxSpawnInterval: 0
-  isTrailEnabled: 0
-  trailLifetime: 0
-  trailMaterial: {fileID: 0}
-  trailStartWidth: 0
-  trailEndWidth: 0
+  isTrailEnabled: 1
+  trailLifetime: 0.07
+  trailMaterial: {fileID: 2100000, guid: f40d05d451e2ae24f91e9e3314c280da, type: 2}
+  trailStartWidth: 0.079
+  trailEndWidth: 0.15

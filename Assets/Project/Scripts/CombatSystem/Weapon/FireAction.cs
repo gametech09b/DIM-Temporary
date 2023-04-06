@@ -15,6 +15,7 @@ namespace DungeonGunner {
         private ReloadEvent reloadEvent;
 
         private float fireRateTimer = 0f;
+        private float prefireTimer = 0f;
 
 
 
@@ -44,19 +45,21 @@ namespace DungeonGunner {
 
 
 
-        private void ProcessFireRateTimer() {
-            fireRateTimer -= Time.deltaTime;
-        }
-
-
-
         private void FireEvent_OnFireAction(FireEvent sender, OnFireActionArgs args) {
             Fire(args);
         }
 
 
 
+        private void ProcessFireRateTimer() {
+            fireRateTimer -= Time.deltaTime;
+        }
+
+
+
         private void Fire(OnFireActionArgs args) {
+
+            ProcessPrefireTimer(args);
 
             if (!args.isFiring) return;
 
@@ -65,6 +68,18 @@ namespace DungeonGunner {
             FireAmmo(args.angle, args.weaponAngle, args.weaponDirectionVector);
 
             ResetFireRateTimer();
+            ResetPrechargeTimer();
+        }
+
+
+
+        private void ProcessPrefireTimer(OnFireActionArgs args) {
+            if (args.isFiringPreviousFrame) {
+                prefireTimer -= Time.deltaTime;
+                return;
+            }
+
+            ResetPrechargeTimer();
         }
 
 
@@ -81,6 +96,8 @@ namespace DungeonGunner {
             }
 
             if (fireRateTimer > 0f) return false;
+
+            if (prefireTimer > 0f) return false;
 
             if (currentWeapon.isReloading) return false;
 
@@ -114,6 +131,11 @@ namespace DungeonGunner {
 
         private void ResetFireRateTimer() {
             fireRateTimer = activeWeapon.GetCurrentWeapon().weaponDetail.fireRate;
+        }
+
+
+        private void ResetPrechargeTimer() {
+            prefireTimer = activeWeapon.GetCurrentWeapon().weaponDetail.prefireDelay;
         }
     }
 }

@@ -6,11 +6,12 @@ namespace DungeonGunner {
     public class FireEvent : MonoBehaviour {
         public event Action<FireEvent, OnFireActionArgs> OnFireAction;
 
-        public void CallOnFireAction(bool isFire, Direction direction, float angle, float weaponAngle, Vector3 weaponDirectionVector) {
+        public void CallOnFireAction(bool isFire, bool isFiringPreviousFrame, Direction direction, float angle, float weaponAngle, Vector3 weaponDirectionVector) {
             OnFireAction?.Invoke(
                 this,
                 new OnFireActionArgs() {
                     isFiring = isFire,
+                    isFiringPreviousFrame = isFiringPreviousFrame,
                     direction = direction,
                     angle = angle,
                     weaponAngle = weaponAngle,
@@ -35,6 +36,7 @@ namespace DungeonGunner {
 
     public class OnFireActionArgs : EventArgs {
         public bool isFiring;
+        public bool isFiringPreviousFrame;
         public Direction direction;
         public float angle;
         public float weaponAngle;

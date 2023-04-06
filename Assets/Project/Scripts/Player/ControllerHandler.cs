@@ -15,6 +15,7 @@ namespace DungeonGunner {
         private Player player;
         private int activeWeaponIndex = 1;
         private float moveSpeed;
+        private bool isFiringPreviousFrame;
 
 
 
@@ -152,7 +153,10 @@ namespace DungeonGunner {
             bool isFiring = Input.GetMouseButton(0);
 
             if (isFiring) {
-                player.fireEvent.CallOnFireAction(isFiring, playerDirection, playerAngle, weaponAngle, weaponDirectionVector);
+                player.fireEvent.CallOnFireAction(isFiring, isFiringPreviousFrame, playerDirection, playerAngle, weaponAngle, weaponDirectionVector);
+                isFiringPreviousFrame = true;
+            } else {
+                isFiringPreviousFrame = false;
             }
         }
 

@@ -36,7 +36,7 @@ namespace DungeonGunner {
 
 
 
-        private void ActiveWeaponEvent_OnSetActiveWeapon(ActiveWeaponEvent sender, SetActiveWeaponEventArgs args) {
+        private void ActiveWeaponEvent_OnSetActiveWeapon(ActiveWeaponEvent sender, OnSetActiveWeaponArgs args) {
             SetWeapon(args.weapon);
         }
 

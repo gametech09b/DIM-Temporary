@@ -6,9 +6,9 @@ using UnityEngine;
 namespace DungeonGunner {
     [DisallowMultipleComponent]
     public class ActiveWeaponEvent : MonoBehaviour {
-        public event Action<ActiveWeaponEvent, SetActiveWeaponEventArgs> OnSetActiveWeapon;
+        public event Action<ActiveWeaponEvent, OnSetActiveWeaponArgs> OnSetActiveWeapon;
         public void CallOnSetActiveWeapon(Weapon weapon) {
-            OnSetActiveWeapon?.Invoke(this, new SetActiveWeaponEventArgs {
+            OnSetActiveWeapon?.Invoke(this, new OnSetActiveWeaponArgs {
                 weapon = weapon
             });
         }
@@ -16,7 +16,7 @@ namespace DungeonGunner {
 
 
 
-    public class SetActiveWeaponEventArgs {
+    public class OnSetActiveWeaponArgs {
         public Weapon weapon;
     }
 }

@@ -6,7 +6,7 @@ namespace DungeonGunner {
         public int indexOnList;
         public int ammoPerClipRemaining;
         public int ammoRemaining;
-        public bool isReload;
+        public bool isReloading;
         public float reloadTimer;
 
 

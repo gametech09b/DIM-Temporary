@@ -124,6 +124,8 @@ namespace DungeonGunner {
             HandleAimInput(out playerDirection, out playerAngle, out weaponAngle, out weaponDirectionVector);
 
             HandleFireInput(playerDirection, playerAngle, weaponAngle, weaponDirectionVector);
+
+            HandleReloadInput();
         }
 
 
@@ -151,6 +153,24 @@ namespace DungeonGunner {
 
             if (isFiring) {
                 player.fireEvent.CallOnFireAction(isFiring, playerDirection, playerAngle, weaponAngle, weaponDirectionVector);
+            }
+        }
+
+
+
+        private void HandleReloadInput() {
+            Weapon currentWeapon = player.activeWeapon.GetCurrentWeapon();
+
+            if (currentWeapon.isReloading) return;
+
+            if (currentWeapon.ammoPerClipRemaining == currentWeapon.weaponDetail.ammoPerClipCapacity)
+                return;
+
+            if (!currentWeapon.weaponDetail.isAmmoInfinite && currentWeapon.ammoRemaining < currentWeapon.weaponDetail.ammoPerClipCapacity)
+                return;
+
+            if (Input.GetKeyDown(KeyCode.R)) {
+                player.reloadEvent.CallOnReloadAction(currentWeapon, 0);
             }
         }
 

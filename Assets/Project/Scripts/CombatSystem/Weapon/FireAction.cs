@@ -7,10 +7,12 @@ namespace DungeonGunner {
     #region Requirement Components
     [RequireComponent(typeof(ActiveWeapon))]
     [RequireComponent(typeof(FireEvent))]
+    [RequireComponent(typeof(ReloadEvent))]
     #endregion
     public class FireAction : MonoBehaviour {
         private ActiveWeapon activeWeapon;
         private FireEvent fireEvent;
+        private ReloadEvent reloadEvent;
 
         private float fireRateTimer = 0f;
 
@@ -19,6 +21,7 @@ namespace DungeonGunner {
         private void Awake() {
             activeWeapon = GetComponent<ActiveWeapon>();
             fireEvent = GetComponent<FireEvent>();
+            reloadEvent = GetComponent<ReloadEvent>();
         }
 
 
@@ -69,14 +72,17 @@ namespace DungeonGunner {
         private bool IsReadyToFire() {
             Weapon currentWeapon = activeWeapon.GetCurrentWeapon();
 
-
             if (!currentWeapon.weaponDetail.isAmmoInfinite && currentWeapon.ammoRemaining <= 0) return false;
 
-            if (!currentWeapon.weaponDetail.isAmmoPerClipInfinite && currentWeapon.ammoPerClipRemaining <= 0) return false;
+            if (!currentWeapon.weaponDetail.isAmmoPerClipInfinite && currentWeapon.ammoPerClipRemaining <= 0) {
+                reloadEvent.CallOnReloadAction(currentWeapon, 0);
+
+                return false;
+            }
 
             if (fireRateTimer > 0f) return false;
 
-            if (currentWeapon.isReload) return false;
+            if (currentWeapon.isReloading) return false;
 
             return true;
         }

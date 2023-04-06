@@ -13,10 +13,14 @@ namespace DungeonGunner {
     [RequireComponent(typeof(SortingGroup))]
     [RequireComponent(typeof(SpriteRenderer))]
 
+    [RequireComponent(typeof(ActiveWeapon))]
+    [RequireComponent(typeof(ActiveWeaponEvent))]
     [RequireComponent(typeof(AimAction))]
     [RequireComponent(typeof(AimEvent))]
     [RequireComponent(typeof(AnimatorHandler))]
     [RequireComponent(typeof(ControllerHandler))]
+    [RequireComponent(typeof(FireAction))]
+    [RequireComponent(typeof(FireEvent))]
     [RequireComponent(typeof(Health))]
     [RequireComponent(typeof(Idle))]
     [RequireComponent(typeof(IdleEvent))]
@@ -24,9 +28,8 @@ namespace DungeonGunner {
     [RequireComponent(typeof(MoveByVelocityEvent))]
     [RequireComponent(typeof(MoveToPosition))]
     [RequireComponent(typeof(MoveToPositionEvent))]
-    [RequireComponent(typeof(ActiveWeapon))]
-    [RequireComponent(typeof(ActiveWeaponEvent))]
-    [RequireComponent(typeof(FireEvent))]
+    [RequireComponent(typeof(ReloadAction))]
+    [RequireComponent(typeof(ReloadEvent))]
     #endregion
     public class Player : MonoBehaviour {
         [HideInInspector] public Animator animator;
@@ -44,6 +47,7 @@ namespace DungeonGunner {
         [HideInInspector] public MoveToPositionEvent moveToPositionEvent;
         [HideInInspector] public ActiveWeaponEvent activeWeaponEvent;
         [HideInInspector] public FireEvent fireEvent;
+        [HideInInspector] public ReloadEvent reloadEvent;
 
 
 
@@ -55,12 +59,13 @@ namespace DungeonGunner {
 
             activeWeapon = GetComponent<ActiveWeapon>();
 
+            activeWeaponEvent = GetComponent<ActiveWeaponEvent>();
             aimEvent = GetComponent<AimEvent>();
+            fireEvent = GetComponent<FireEvent>();
             idleEvent = GetComponent<IdleEvent>();
             moveByVelocityEvent = GetComponent<MoveByVelocityEvent>();
             moveToPositionEvent = GetComponent<MoveToPositionEvent>();
-            activeWeaponEvent = GetComponent<ActiveWeaponEvent>();
-            fireEvent = GetComponent<FireEvent>();
+            reloadEvent = GetComponent<ReloadEvent>();
         }
 
 

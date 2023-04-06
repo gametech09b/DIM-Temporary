@@ -41,10 +41,10 @@ namespace DungeonGunner {
         public int ammoCapacity = 100;
 
         [Tooltip("Set if the weapon has infinite clip capacity")]
-        public bool isClipInfinite = false;
+        public bool isAmmoPerClipInfinite = false;
 
         [Tooltip("Weapon clip capacity")]
-        public int clipCapacity = 6;
+        public int ammoPerClipCapacity = 6;
 
         [Tooltip("Weapon fire rate - 0.2 means 5 shots per second")]
         public float fireRate = 0.2f;
@@ -68,8 +68,8 @@ namespace DungeonGunner {
             if (!isAmmoInfinite)
                 HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoCapacity), ammoCapacity);
 
-            if (!isClipInfinite)
-                HelperUtilities.ValidateCheckPositiveValue(this, nameof(clipCapacity), clipCapacity);
+            if (!isAmmoPerClipInfinite)
+                HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoPerClipCapacity), ammoPerClipCapacity);
         }
 #endif
         #endregion

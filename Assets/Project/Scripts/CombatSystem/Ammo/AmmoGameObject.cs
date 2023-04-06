@@ -27,7 +27,10 @@ namespace DungeonGunner {
         private void Update() {
             InitAmmoMaterial();
 
-            ProcessChargeTimer();
+            if (chargeTimer > 0) {
+                ProcessChargeTimer();
+                return;
+            }
 
             Vector3 distanceVector = directionVector * speed * Time.deltaTime;
             transform.position += distanceVector;
@@ -58,10 +61,6 @@ namespace DungeonGunner {
 
 
         private void ProcessChargeTimer() {
-            if (chargeTimer <= 0) {
-                return;
-            }
-
             chargeTimer -= Time.deltaTime;
         }
 
@@ -73,11 +72,11 @@ namespace DungeonGunner {
 
 
 
-        public void InitAmmo(AmmoDetailSO ammoDetail, float ammoSpeed, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector, bool isOverrideAmmoMovement = false) {
+        public void InitAmmo(AmmoDetailSO ammoDetail, float ammoSpeed, float angle, float weaponAngle, Vector3 weaponDirectionVector, bool isOverrideAmmoMovement = false) {
             // ammo
             this.ammoDetail = ammoDetail;
 
-            SetDirection(ammoDetail, aimAngle, weaponAimAngle, weaponAimDirectionVector);
+            SetDirection(ammoDetail, angle, weaponAngle, weaponDirectionVector);
 
             spriteRenderer.sprite = ammoDetail.sprite;
 
@@ -118,10 +117,10 @@ namespace DungeonGunner {
 
 
         private void SetDirection(AmmoDetailSO ammoDetail, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector) {
-            float randomSpreadAngle = Random.Range(ammoDetail.minSpreadAngle, ammoDetail.maxSpreadAngle);
+            float randomSpread = Random.Range(ammoDetail.minSpread, ammoDetail.maxSpread);
 
             // get a random spread toggle of 1 or -1
-            int randomSpreadToggle = Random.Range(0, 2) == 0 ? 1 : -1;
+            int randomSpreadToggle = Random.Range(0, 2) * 2 - 1;
 
             if (weaponAimDirectionVector.magnitude < Settings.AimAngleDistance) {
                 directionAngle = aimAngle;
@@ -129,7 +128,7 @@ namespace DungeonGunner {
                 directionAngle = weaponAimAngle;
             }
 
-            directionAngle += randomSpreadAngle * randomSpreadToggle;
+            directionAngle += randomSpread * randomSpreadToggle;
 
             transform.eulerAngles = new Vector3(0, 0, directionAngle);
 

@@ -48,7 +48,7 @@ namespace DungeonGunner {
 
             MovementInput();
 
-            WeaponAimInput();
+            WeaponInput();
 
             ProcessDashCooldownTimer();
         }
@@ -86,7 +86,7 @@ namespace DungeonGunner {
             if (index - 1 < 0 || index - 1 > player.weaponList.Count) return;
 
             activeWeaponIndex = index;
-            player.setActiveWeaponEvent.CallOnSetActiveWeapon(player.weaponList[index - 1]);
+            player.activeWeaponEvent.CallOnSetActiveWeapon(player.weaponList[index - 1]);
         }
 
 
@@ -116,17 +116,19 @@ namespace DungeonGunner {
 
 
 
-        private void WeaponAimInput() {
+        private void WeaponInput() {
             Vector3 weaponDirectionVector;
             float weaponAngle, playerAngle;
             Direction playerDirection;
 
-            HandleWeaponAimInput(out playerDirection, out playerAngle, out weaponAngle, out weaponDirectionVector);
+            HandleAimInput(out playerDirection, out playerAngle, out weaponAngle, out weaponDirectionVector);
+
+            HandleFireInput(playerDirection, playerAngle, weaponAngle, weaponDirectionVector);
         }
 
 
 
-        private void HandleWeaponAimInput(out Direction playerDirection, out float playerAngle, out float weaponAngle, out Vector3 weaponDirectionVector) {
+        private void HandleAimInput(out Direction playerDirection, out float playerAngle, out float weaponAngle, out Vector3 weaponDirectionVector) {
             Vector3 mousePosition = HelperUtilities.GetMouseWorldPosition();
             Vector3 playerPosition = transform.position;
 
@@ -139,7 +141,17 @@ namespace DungeonGunner {
 
             playerDirection = HelperUtilities.GetDirectionFromAngle(playerAngle);
 
-            player.aimEvent.CallOnAimEvent(playerDirection, playerAngle, weaponAngle, weaponDirectionVector);
+            player.aimEvent.CallOnAimAction(playerDirection, playerAngle, weaponAngle, weaponDirectionVector);
+        }
+
+
+
+        private void HandleFireInput(Direction playerDirection, float playerAngle, float weaponAngle, Vector3 weaponDirectionVector) {
+            bool isFiring = Input.GetMouseButton(0);
+
+            if (isFiring) {
+                player.fireEvent.CallOnFireAction(isFiring, playerDirection, playerAngle, weaponAngle, weaponDirectionVector);
+            }
         }
 
 

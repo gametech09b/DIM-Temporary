@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DungeonGunner {
     public interface IFireable {
-        void InitAmmo(AmmoDetailSO ammoDetail, float aimAngle, float weaponAimAngle, float ammoSpeed, Vector3 aimDirectionVector, bool isOverrideAmmoMovement = false);
+        void InitAmmo(AmmoDetailSO ammoDetail, float ammoSpeed, float angle, float weaponAngle, Vector3 weaponDirectionVector, bool isOverrideAmmoMovement = false);
 
         GameObject GetGameObject();
     }

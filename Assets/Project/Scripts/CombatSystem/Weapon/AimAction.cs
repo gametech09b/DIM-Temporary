@@ -7,7 +7,7 @@ namespace DungeonGunner {
     #region Requirement Components
     [RequireComponent(typeof(AimEvent))]
     #endregion
-    public class Aim : MonoBehaviour {
+    public class AimAction : MonoBehaviour {
         [Tooltip("The transform of the player's weapon")]
         [SerializeField] private Transform weaponRotationPointTransform;
 
@@ -22,13 +22,13 @@ namespace DungeonGunner {
 
 
         private void OnEnable() {
-            aimEvent.OnAim += AimEvent_OnAim;
+            aimEvent.OnAimAction += AimEvent_OnAim;
         }
 
 
 
         private void OnDisable() {
-            aimEvent.OnAim -= AimEvent_OnAim;
+            aimEvent.OnAimAction -= AimEvent_OnAim;
         }
 
 

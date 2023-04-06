@@ -4,8 +4,8 @@ namespace DungeonGunner {
     public class Weapon {
         public WeaponDetailSO weaponDetail;
         public int indexOnList;
-        public int clipRemainingAmmo;
-        public int remainingAmmo;
+        public int ammoPerClipRemaining;
+        public int ammoRemaining;
         public bool isReload;
         public float reloadTimer;
 
@@ -13,8 +13,8 @@ namespace DungeonGunner {
 
         public Weapon(WeaponDetailSO weaponDetail) {
             this.weaponDetail = weaponDetail;
-            this.clipRemainingAmmo = weaponDetail.clipCapacity;
-            this.remainingAmmo = weaponDetail.ammoCapacity;
+            this.ammoPerClipRemaining = weaponDetail.ammoPerClipCapacity;
+            this.ammoRemaining = weaponDetail.ammoCapacity;
         }
     }
 }

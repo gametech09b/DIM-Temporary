@@ -20,7 +20,7 @@ namespace DungeonGunner {
 
         public void OnEnable() {
             player.idleEvent.OnIdle += IdleEvent_OnIdle;
-            player.aimEvent.OnAim += AimEvent_OnAim;
+            player.aimEvent.OnAimAction += AimEvent_OnAim;
 
             player.moveByVelocityEvent.OnMoveByVelocity += MoveByVelocityEvent_OnMoveByVelocity;
             player.moveToPositionEvent.OnMoveToPosition += MoveToPositionEvent_OnMoveToPosition;
@@ -30,7 +30,7 @@ namespace DungeonGunner {
 
         public void OnDisable() {
             player.idleEvent.OnIdle -= IdleEvent_OnIdle;
-            player.aimEvent.OnAim -= AimEvent_OnAim;
+            player.aimEvent.OnAimAction -= AimEvent_OnAim;
 
             player.moveByVelocityEvent.OnMoveByVelocity -= MoveByVelocityEvent_OnMoveByVelocity;
             player.moveToPositionEvent.OnMoveToPosition -= MoveToPositionEvent_OnMoveToPosition;
@@ -133,7 +133,7 @@ namespace DungeonGunner {
 
         private void SetRollAnimationParameters(MoveToPositionEventArgs args) {
             if (args.isActive) {
-                if(args.directionVector.x > 0) {
+                if (args.directionVector.x > 0) {
                     player.animator.SetBool(Settings.RollRight, true);
                 } else if (args.directionVector.x < 0) {
                     player.animator.SetBool(Settings.RollLeft, true);

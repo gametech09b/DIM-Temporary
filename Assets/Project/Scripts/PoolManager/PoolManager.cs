@@ -10,12 +10,13 @@ namespace DungeonGunner {
         [SerializeField] private Pool[] poolArray = null;
 
         private Transform objectPoolTransform;
-        private Dictionary<int, Queue<Component>> poolDictionary = new Dictionary<int, Queue<Component>>();
+        private Dictionary<int, Queue<Component>> poolDictionary;
 
 
 
         private void Start() {
-            objectPoolTransform = transform;
+            objectPoolTransform = this.transform;
+            poolDictionary = new Dictionary<int, Queue<Component>>();
 
 
 
@@ -38,14 +39,13 @@ namespace DungeonGunner {
                 poolDictionary.Add(key, new Queue<Component>());
 
                 for (int i = 0; i < size; i++) {
-                    GameObject newPoolGameObject = Instantiate(prefab, parentPoolGameObject.transform);
+                    GameObject newPoolGameObject = Instantiate(prefab, parentPoolGameObject.transform) as GameObject;
+
                     newPoolGameObject.SetActive(false);
 
-                    if (componentType != "") {
-                        newPoolGameObject.AddComponent(System.Type.GetType(componentType));
-                    }
+                    Type type = Type.GetType($"{Settings.ProjectName}.{componentType}");
 
-                    poolDictionary[key].Enqueue(newPoolGameObject.GetComponent(Type.GetType(componentType)));
+                    poolDictionary[key].Enqueue(newPoolGameObject.GetComponent(type));
                 }
             }
         }

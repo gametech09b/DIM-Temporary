@@ -25,8 +25,8 @@ MonoBehaviour:
   rotationSpeed: 1
   chargeTime: 0
   chargeMaterial: {fileID: 0}
-  minSpreadAngle: 2
-  maxSpreadAngle: 4
+  minSpread: 2
+  maxSpread: 4
   minSpawnCount: 1
   maxSpawnCount: 1
   minSpawnInterval: 0

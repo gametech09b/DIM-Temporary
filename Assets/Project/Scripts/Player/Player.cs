@@ -13,7 +13,7 @@ namespace DungeonGunner {
     [RequireComponent(typeof(SortingGroup))]
     [RequireComponent(typeof(SpriteRenderer))]
 
-    [RequireComponent(typeof(Aim))]
+    [RequireComponent(typeof(AimAction))]
     [RequireComponent(typeof(AimEvent))]
     [RequireComponent(typeof(AnimatorHandler))]
     [RequireComponent(typeof(ControllerHandler))]
@@ -26,6 +26,7 @@ namespace DungeonGunner {
     [RequireComponent(typeof(MoveToPositionEvent))]
     [RequireComponent(typeof(ActiveWeapon))]
     [RequireComponent(typeof(ActiveWeaponEvent))]
+    [RequireComponent(typeof(FireEvent))]
     #endregion
     public class Player : MonoBehaviour {
         [HideInInspector] public Animator animator;
@@ -41,7 +42,8 @@ namespace DungeonGunner {
         [HideInInspector] public IdleEvent idleEvent;
         [HideInInspector] public MoveByVelocityEvent moveByVelocityEvent;
         [HideInInspector] public MoveToPositionEvent moveToPositionEvent;
-        [HideInInspector] public ActiveWeaponEvent setActiveWeaponEvent;
+        [HideInInspector] public ActiveWeaponEvent activeWeaponEvent;
+        [HideInInspector] public FireEvent fireEvent;
 
 
 
@@ -57,7 +59,8 @@ namespace DungeonGunner {
             idleEvent = GetComponent<IdleEvent>();
             moveByVelocityEvent = GetComponent<MoveByVelocityEvent>();
             moveToPositionEvent = GetComponent<MoveToPositionEvent>();
-            setActiveWeaponEvent = GetComponent<ActiveWeaponEvent>();
+            activeWeaponEvent = GetComponent<ActiveWeaponEvent>();
+            fireEvent = GetComponent<FireEvent>();
         }
 
 
@@ -92,7 +95,7 @@ namespace DungeonGunner {
             weaponList.Add(weapon);
             weapon.indexOnList = weaponList.Count;
 
-            setActiveWeaponEvent.CallOnSetActiveWeapon(weapon);
+            activeWeaponEvent.CallOnSetActiveWeapon(weapon);
             return weapon;
         }
     }

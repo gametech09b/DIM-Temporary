@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace DungeonGunner {
     public static class Settings {
+        #region Project Settings
+        public const string ProjectName = "DungeonGunner";
+        #endregion
+
+
+
         #region Units
         public const float PixelPerUnit = 16f;
         public const float TileSizePixel = 16f;

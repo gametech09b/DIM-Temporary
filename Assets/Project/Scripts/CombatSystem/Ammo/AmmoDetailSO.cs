@@ -63,10 +63,10 @@ namespace DungeonGunner {
 
 
         [Tooltip("Ammo minimum spread angle - angle in degrees to spread the ammo")]
-        public float minSpreadAngle = 0f;
+        public float minSpread = 0f;
 
         [Tooltip("Ammo maximum spread angle - angle in degrees to spread the ammo")]
-        public float maxSpreadAngle = 0f;
+        public float maxSpread = 0f;
 
 
 
@@ -125,7 +125,7 @@ namespace DungeonGunner {
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(minSpeed), minSpeed);
             HelperUtilities.ValidateCheckPositiveRange(this, nameof(minSpeed), nameof(maxSpeed), minSpeed, maxSpeed);
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(range), range);
-            HelperUtilities.ValidateCheckPositiveRange(this, nameof(minSpreadAngle), nameof(maxSpreadAngle), minSpreadAngle, maxSpreadAngle, true);
+            HelperUtilities.ValidateCheckPositiveRange(this, nameof(minSpread), nameof(maxSpread), minSpread, maxSpread, true);
             HelperUtilities.ValidateCheckPositiveRange(this, nameof(minSpawnCount), nameof(maxSpawnCount), minSpawnCount, maxSpawnCount);
             HelperUtilities.ValidateCheckPositiveRange(this, nameof(minSpawnInterval), nameof(maxSpawnInterval), minSpawnInterval, maxSpawnInterval, true);
 

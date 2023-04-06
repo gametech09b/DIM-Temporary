@@ -6,10 +6,10 @@ using UnityEngine;
 namespace DungeonGunner {
     [DisallowMultipleComponent]
     public class AimEvent : MonoBehaviour {
-        public event Action<AimEvent, AimEventArgs> OnAim;
+        public event Action<AimEvent, AimEventArgs> OnAimAction;
 
-        public void CallOnAimEvent(Direction direction, float angle, float weaponAngle, Vector3 weaponDirectionVector) {
-            OnAim?.Invoke(
+        public void CallOnAimAction(Direction direction, float angle, float weaponAngle, Vector3 weaponDirectionVector) {
+            OnAimAction?.Invoke(
                 this,
                 new AimEventArgs() {
                     direction = direction,

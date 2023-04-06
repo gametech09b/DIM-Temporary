@@ -120,7 +120,7 @@ namespace DungeonGunner {
             float randomSpread = Random.Range(ammoDetail.minSpread, ammoDetail.maxSpread);
 
             // get a random spread toggle of 1 or -1
-            int randomSpreadToggle = Random.Range(0, 2) * 2 - 1;
+            int randomSpreadToggle = Random.Range(0, 2) == 0 ? 1 : -1;
 
             if (weaponAimDirectionVector.magnitude < Settings.AimAngleDistance) {
                 directionAngle = aimAngle;

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa99c8828b39a94eaebd7459c500d8c, type: 3}
+  m_Name: WeaponDetail_Revolver
+  m_EditorClassIdentifier: 
+  weaponName: Revolver
+  sprite: {fileID: 21300000, guid: 29bc0107bc11191468ed7d175994fb5b, type: 3}
+  shootPosition: {x: 1.15, y: 0.329, z: 0}
+  ammoDetail: {fileID: 11400000, guid: 85a441ea50257a44084144afbefaac97, type: 2}
+  isAmmoInfinite: 0
+  ammoCapacity: 40
+  isAmmoPerClipInfinite: 0
+  ammoPerClipCapacity: 6
+  fireRate: 0.3
+  prefireDelay: 0
+  reloadTime: 1.8

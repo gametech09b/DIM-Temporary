@@ -21,12 +21,12 @@ namespace DungeonGunner {
 
 
 
-        public event Action<FireEvent, OnFired> OnFired;
+        public event Action<FireEvent, OnFiredArgs> OnFired;
 
         public void CallOnFired(Weapon weapon) {
             OnFired?.Invoke(
                 this,
-                new OnFired() {
+                new OnFiredArgs() {
                     weapon = weapon
                 });
         }
@@ -45,7 +45,7 @@ namespace DungeonGunner {
 
 
 
-    public class OnFired : EventArgs {
+    public class OnFiredArgs : EventArgs {
         public Weapon weapon;
     }
 }

@@ -1,6 +1,3 @@
-using System.ComponentModel;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonGunner {
@@ -23,6 +20,7 @@ namespace DungeonGunner {
         [Space(10)]
         [Header("Dungeon")]
 
+
         [Tooltip("Populate with the dungeon RoomNodeTypeListSO")]
         public RoomNodeTypeListSO RoomNodeTypeList;
 
@@ -31,6 +29,7 @@ namespace DungeonGunner {
         [Space(10)]
         [Header("Player")]
 
+
         [Tooltip("Populate with the player CurrentPlayerSO")]
         public CurrentPlayerSO CurrentPlayer;
 
@@ -38,6 +37,7 @@ namespace DungeonGunner {
 
         [Space(10)]
         [Header("Materials")]
+
 
         [Tooltip("Dimmed Material")]
         public Material DimmedMaterial;
@@ -49,6 +49,7 @@ namespace DungeonGunner {
 
         [Space(10)]
         [Header("Shaders")]
+
 
         [Tooltip("Variable-Lit Shader")]
         public Shader VariableLitShader;

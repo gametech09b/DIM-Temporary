@@ -68,5 +68,13 @@ namespace DungeonGunner {
         #region Combat Settings
         public const float AimAngleDistance = 3.5f; // distance between aim angles
         #endregion
+
+
+
+        #region UI Settings
+        public const float AmmoIconSpacing = 4f; // spacing between ammo icons
+        public static Color ReloadProgressColor = Color.red;
+        public static Color ReloadDoneColor = Color.green;
+        #endregion
     }
 }

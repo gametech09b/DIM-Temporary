@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa99c8828b39a94eaebd7459c500d8c, type: 3}
+  m_Name: WeaponDetail_GM6LynxSniper
+  m_EditorClassIdentifier: 
+  weaponName: GM6 Lynx Sniper
+  sprite: {fileID: 21300000, guid: 7e70ae1621ea16746be436ae77e38ce9, type: 3}
+  shootPosition: {x: 1.678, y: 0.234, z: 0}
+  ammoDetail: {fileID: 11400000, guid: fa7838dcdc1010b47a5c94f3aa469297, type: 2}
+  isAmmoInfinite: 0
+  ammoCapacity: 30
+  isAmmoPerClipInfinite: 0
+  ammoPerClipCapacity: 4
+  fireRate: 0.4
+  prefireDelay: 0
+  reloadTime: 2

@@ -18,7 +18,9 @@ MonoBehaviour:
   startingHealthAmount: 100
   minimapIconSprite: {fileID: 21300000, guid: 709f49100a0267f419aa33d571fb9d25, type: 3}
   handSprite: {fileID: 21300000, guid: a8c352369ed75924d84743672d1ab512, type: 3}
-  initialWeapon: {fileID: 11400000, guid: 6f0f9386eeaa3364b9ebd2a6fd53dea9, type: 2}
+  initialWeapon: {fileID: 11400000, guid: a1d31860e8f2ccc4b9636e17e3a10132, type: 2}
   initialWeaponsList:
   - {fileID: 11400000, guid: a1d31860e8f2ccc4b9636e17e3a10132, type: 2}
   - {fileID: 11400000, guid: 6f0f9386eeaa3364b9ebd2a6fd53dea9, type: 2}
+  - {fileID: 11400000, guid: 58ab990b53485d442952290c2900bce2, type: 2}
+  - {fileID: 11400000, guid: 60dd69d3fce63a046902d93e2f0b3949, type: 2}

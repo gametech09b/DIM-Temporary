@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -126,6 +125,8 @@ namespace DungeonGunner {
 
             HandleFireInput(playerDirection, playerAngle, weaponAngle, weaponDirectionVector);
 
+            HandleSwitchWeaponInput();
+
             HandleReloadInput();
         }
 
@@ -157,6 +158,45 @@ namespace DungeonGunner {
                 isFiringPreviousFrame = true;
             } else {
                 isFiringPreviousFrame = false;
+            }
+        }
+
+
+
+        private void HandleSwitchWeaponInput() {
+            if (Input.mouseScrollDelta.y < 0f) {
+                PreviousWeapon();
+            }
+            if (Input.mouseScrollDelta.y > 0f) {
+                NextWeapon();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1)) {
+                SetWeaponByIndex(1);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2)) {
+                SetWeaponByIndex(2);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3)) {
+                SetWeaponByIndex(3);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4)) {
+                SetWeaponByIndex(4);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5)) {
+                SetWeaponByIndex(5);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha6)) {
+                SetWeaponByIndex(6);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha7)) {
+                SetWeaponByIndex(7);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha8)) {
+                SetWeaponByIndex(8);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha9)) {
+                SetWeaponByIndex(9);
             }
         }
 
@@ -227,6 +267,30 @@ namespace DungeonGunner {
             if (dashCooldownTimer >= 0) {
                 dashCooldownTimer -= Time.deltaTime;
             }
+        }
+
+
+
+        private void PreviousWeapon() {
+            activeWeaponIndex--;
+
+            if (activeWeaponIndex < 1) {
+                activeWeaponIndex = player.weaponList.Count;
+            }
+
+            SetWeaponByIndex(activeWeaponIndex);
+        }
+
+
+
+        private void NextWeapon() {
+            activeWeaponIndex++;
+
+            if (activeWeaponIndex > player.weaponList.Count) {
+                activeWeaponIndex = 1;
+            }
+
+            SetWeaponByIndex(activeWeaponIndex);
         }
 
 

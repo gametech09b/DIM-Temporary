@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f0955be34c1024f8ea16c6632b44dc, type: 3}
+  m_Name: AmmoDetail_MP7
+  m_EditorClassIdentifier: 
+  ammoName: MP7 Ammo
+  isPlayerAmmo: 1
+  sprite: {fileID: 21300000, guid: e36e8bbd18074d341b170885ac002038, type: 3}
+  prefabArray:
+  - {fileID: 1338510408464095998, guid: 6f8c7003f920a9a49ac3fd5613902114, type: 3}
+  material: {fileID: 2100000, guid: 33a55999e44f4724191171c59fc64319, type: 2}
+  damage: 13
+  minSpeed: 18
+  maxSpeed: 18
+  range: 11
+  rotationSpeed: 1
+  chargeTime: 0
+  chargeMaterial: {fileID: 0}
+  minSpread: 2
+  maxSpread: 4
+  minSpawnCount: 1
+  maxSpawnCount: 1
+  minSpawnInterval: 0
+  maxSpawnInterval: 0
+  isTrailEnabled: 0
+  trailLifetime: 0
+  trailMaterial: {fileID: 0}
+  trailStartWidth: 0
+  trailEndWidth: 0

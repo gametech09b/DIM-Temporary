@@ -76,5 +76,14 @@ namespace DungeonGunner {
         public static Color ReloadProgressColor = Color.red;
         public static Color ReloadDoneColor = Color.green;
         #endregion
+
+
+
+
+
+
+
+
+        
     }
 }

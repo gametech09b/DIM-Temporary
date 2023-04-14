@@ -305,6 +305,9 @@ MonoBehaviour:
   - prefab: {fileID: 1338510408464095998, guid: 6f8c7003f920a9a49ac3fd5613902114, type: 3}
     size: 30
     componentType: IFireable
+  - prefab: {fileID: 1338510408464095998, guid: cea4b3d2d714e04439afdcbbd2c9c965, type: 3}
+    size: 10
+    componentType: IFireable
 --- !u!1 &467172640
 GameObject:
   m_ObjectHideFlags: 0

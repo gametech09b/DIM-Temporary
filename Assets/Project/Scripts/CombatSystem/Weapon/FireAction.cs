@@ -107,24 +107,40 @@ namespace DungeonGunner {
 
 
         private void FireAmmo(float angle, float weaponAngle, Vector3 weaponDirectionVector) {
-            Weapon currentWeapon = activeWeapon.GetCurrentWeapon();
             AmmoDetailSO currentAmmoDetail = activeWeapon.GetAmmoDetail();
 
             if (currentAmmoDetail != null) {
+                StartCoroutine(FireAmmoCoroutine(currentAmmoDetail, angle, weaponAngle, weaponDirectionVector));
+            }
+        }
 
-                GameObject ammoPrefab = currentAmmoDetail.prefabArray[Random.Range(0, currentAmmoDetail.prefabArray.Length)];
-                float ammoSpeed = Random.Range(currentAmmoDetail.minSpeed, currentAmmoDetail.maxSpeed);
+
+
+        private IEnumerator FireAmmoCoroutine(AmmoDetailSO ammoDetail, float angle, float weaponAngle, Vector3 weaponDirectionVector) {
+            int ammoCounter = 0;
+            int ammoPerShot = Random.Range(ammoDetail.minSpawnCount, ammoDetail.maxSpawnCount + 1);
+            float ammoSpawnInterval = ammoPerShot > 1 ? Random.Range(ammoDetail.minSpawnInterval, ammoDetail.maxSpawnInterval) : 0f;
+
+            Weapon currentWeapon = activeWeapon.GetCurrentWeapon();
+
+            while (ammoCounter < ammoPerShot) {
+                ammoCounter++;
+
+                GameObject ammoPrefab = ammoDetail.prefabArray[Random.Range(0, ammoDetail.prefabArray.Length)];
+                float ammoSpeed = Random.Range(ammoDetail.minSpeed, ammoDetail.maxSpeed);
 
                 IFireable ammo = (IFireable)PoolManager.Instance.ReuseComponent(ammoPrefab, activeWeapon.GetShootPosition(), Quaternion.identity);
-                ammo.InitAmmo(currentAmmoDetail, ammoSpeed, angle, weaponAngle, weaponDirectionVector);
+                ammo.InitAmmo(ammoDetail, ammoSpeed, angle, weaponAngle, weaponDirectionVector);
 
-                if (currentWeapon.weaponDetail.isAmmoPerClipInfinite) return;
-
-                currentWeapon.ammoPerClipRemaining--;
-                currentWeapon.ammoRemaining--;
-
-                fireEvent.CallOnFired(activeWeapon.GetCurrentWeapon());
+                yield return new WaitForSeconds(ammoSpawnInterval);
             }
+
+            if (currentWeapon.weaponDetail.isAmmoPerClipInfinite) yield break;
+
+            currentWeapon.ammoPerClipRemaining--;
+            currentWeapon.ammoRemaining--;
+
+            fireEvent.CallOnFired(activeWeapon.GetCurrentWeapon());
         }
 
 

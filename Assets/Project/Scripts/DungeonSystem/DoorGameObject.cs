@@ -58,6 +58,7 @@ namespace DungeonGunner {
             doorTrigger.enabled = false;
 
             animator.SetBool(Settings.IsOpen, true);
+            SoundEffectManager.Instance.PlaySoundEffect(SoundEffectResources.Instance.DoorOpenCloseSoundEffect);
         }
 
 

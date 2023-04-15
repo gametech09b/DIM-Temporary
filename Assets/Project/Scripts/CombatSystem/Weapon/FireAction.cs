@@ -141,6 +141,7 @@ namespace DungeonGunner {
             currentWeapon.ammoRemaining--;
 
             fireEvent.CallOnFired(activeWeapon.GetCurrentWeapon());
+            PlayFireSoundEffect();
         }
 
 
@@ -152,6 +153,16 @@ namespace DungeonGunner {
 
         private void ResetPrechargeTimer() {
             prefireTimer = activeWeapon.GetCurrentWeapon().weaponDetail.prefireDelay;
+        }
+
+
+
+        private void PlayFireSoundEffect() {
+            SoundEffectSO currentWeaponFireSoundEffect = activeWeapon.GetCurrentWeapon().weaponDetail.fireSoundEffect;
+
+            if (currentWeaponFireSoundEffect != null) {
+                SoundEffectManager.Instance.PlaySoundEffect(currentWeaponFireSoundEffect);
+            }
         }
     }
 }

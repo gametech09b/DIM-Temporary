@@ -67,6 +67,11 @@ namespace DungeonGunner {
 
 
         private IEnumerator ReloadCoroutine(Weapon weapon, int reloadAmmoPercent) {
+            SoundEffectSO currentReloadSounfEffect = weapon.weaponDetail.reloadSoundEffect;
+            if (currentReloadSounfEffect != null) {
+                SoundEffectManager.Instance.PlaySoundEffect(currentReloadSounfEffect);
+            }
+
             weapon.isReloading = true;
 
             while (weapon.reloadTimer < weapon.weaponDetail.reloadTime) {

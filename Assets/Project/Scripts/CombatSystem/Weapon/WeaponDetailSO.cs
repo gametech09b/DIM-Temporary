@@ -57,6 +57,17 @@ namespace DungeonGunner {
 
 
 
+        [Space(10)]
+        [Header("Weapon Sound Effect")]
+
+
+        [Tooltip("Weapon fire sound effect")]
+        public SoundEffectSO fireSoundEffect;
+
+        [Tooltip("Weapon reload sound effect")]
+        public SoundEffectSO reloadSoundEffect;
+
+
         #region Validation
 #if UNITY_EDITOR
         private void OnValidate() {

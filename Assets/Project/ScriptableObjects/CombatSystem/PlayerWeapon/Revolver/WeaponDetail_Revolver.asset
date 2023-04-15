@@ -23,3 +23,5 @@ MonoBehaviour:
   fireRate: 0.3
   prefireDelay: 0
   reloadTime: 1.8
+  fireSoundEffect: {fileID: 11400000, guid: a85bda73eccf0804eb09d44bd6f067e9, type: 2}
+  reloadSoundEffect: {fileID: 11400000, guid: 14805e3d5ef63b14e9275f1e47bd7619, type: 2}

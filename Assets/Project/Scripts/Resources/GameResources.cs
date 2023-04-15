@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace DungeonGunner {
     public class GameResources : MonoBehaviour {
@@ -14,6 +15,15 @@ namespace DungeonGunner {
             }
         }
         #endregion
+
+
+
+        [Space(10)]
+        [Header("Audio")]
+
+
+        [Tooltip("Populate with the audio mixer group")]
+        public AudioMixerGroup AudioMixerGroup_Master;
 
 
 

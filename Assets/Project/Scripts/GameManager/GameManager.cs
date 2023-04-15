@@ -156,6 +156,12 @@ namespace DungeonGunner {
 
 
 
+        public Sprite GetCurrentPlayerMinimapIcon() {
+            return currentPlayerDetail.minimapIconSprite;
+        }
+
+
+
         #region Validation
 #if UNITY_EDITOR
         private void OnValidate() {

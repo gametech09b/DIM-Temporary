@@ -1,8 +1,10 @@
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DungeonGunner
+{
     [DisallowMultipleComponent]
-    public class AmmoGameObject : MonoBehaviour, IFireable {
+    public class AmmoGameObject : MonoBehaviour, IFireable
+    {
         [SerializeField] private TrailRenderer trailRenderer;
         private float range;
         private float speed;
@@ -18,16 +20,19 @@ namespace DungeonGunner {
 
 
 
-        private void Awake() {
+        private void Awake()
+        {
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
 
 
-        private void Update() {
+        private void Update()
+        {
             InitAmmoMaterial();
 
-            if (chargeTimer > 0) {
+            if (chargeTimer > 0)
+            {
                 ProcessChargeTimer();
                 return;
             }
@@ -36,21 +41,25 @@ namespace DungeonGunner {
             transform.position += distanceVector;
             range -= distanceVector.magnitude;
 
-            if (range < 0) {
+            if (range < 0)
+            {
                 DisableAmmo();
             }
         }
 
 
 
-        private void OnTriggerEnter2D(Collider2D other) {
+        private void OnTriggerEnter2D(Collider2D other)
+        {
             DisableAmmo();
         }
 
 
 
-        private void InitAmmoMaterial() {
-            if (isAmmoMaterialSet) {
+        private void InitAmmoMaterial()
+        {
+            if (isAmmoMaterialSet)
+            {
                 return;
             }
 
@@ -60,19 +69,22 @@ namespace DungeonGunner {
 
 
 
-        private void ProcessChargeTimer() {
+        private void ProcessChargeTimer()
+        {
             chargeTimer -= Time.deltaTime;
         }
 
 
 
-        public GameObject GetGameObject() {
+        public GameObject GetGameObject()
+        {
             return gameObject;
         }
 
 
 
-        public void InitAmmo(AmmoDetailSO ammoDetail, float ammoSpeed, float angle, float weaponAngle, Vector3 weaponDirectionVector, bool isOverrideAmmoMovement = false) {
+        public void Init(AmmoDetailSO ammoDetail, float ammoSpeed, float angle, float weaponAngle, Vector3 weaponDirectionVector, bool isOverrideAmmoMovement = false)
+        {
             // ammo
             this.ammoDetail = ammoDetail;
 
@@ -80,11 +92,14 @@ namespace DungeonGunner {
 
             spriteRenderer.sprite = ammoDetail.sprite;
 
-            if (ammoDetail.chargeTime > 0) {
+            if (ammoDetail.chargeTime > 0)
+            {
                 chargeTimer = ammoDetail.chargeTime;
                 SetAmmoMaterial(ammoDetail.chargeMaterial);
                 isAmmoMaterialSet = false;
-            } else {
+            }
+            else
+            {
                 chargeTimer = 0;
                 SetAmmoMaterial(ammoDetail.material);
                 isAmmoMaterialSet = true;
@@ -101,14 +116,17 @@ namespace DungeonGunner {
 
 
             // trail
-            if (ammoDetail.isTrailEnabled) {
+            if (ammoDetail.isTrailEnabled)
+            {
                 trailRenderer.gameObject.SetActive(true);
                 trailRenderer.emitting = true;
                 trailRenderer.material = ammoDetail.trailMaterial;
                 trailRenderer.startWidth = ammoDetail.trailStartWidth;
                 trailRenderer.endWidth = ammoDetail.trailEndWidth;
                 trailRenderer.time = ammoDetail.trailLifetime;
-            } else {
+            }
+            else
+            {
                 trailRenderer.emitting = false;
                 trailRenderer.gameObject.SetActive(false);
             }
@@ -116,15 +134,19 @@ namespace DungeonGunner {
 
 
 
-        private void SetDirection(AmmoDetailSO ammoDetail, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector) {
+        private void SetDirection(AmmoDetailSO ammoDetail, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
+        {
             float randomSpread = Random.Range(ammoDetail.minSpread, ammoDetail.maxSpread);
 
             // get a random spread toggle of 1 or -1
             int randomSpreadToggle = Random.Range(0, 2) == 0 ? 1 : -1;
 
-            if (weaponAimDirectionVector.magnitude < Settings.AimAngleDistance) {
+            if (weaponAimDirectionVector.magnitude < Settings.AimAngleDistance)
+            {
                 directionAngle = aimAngle;
-            } else {
+            }
+            else
+            {
                 directionAngle = weaponAimAngle;
             }
 
@@ -137,13 +159,15 @@ namespace DungeonGunner {
 
 
 
-        private void DisableAmmo() {
+        private void DisableAmmo()
+        {
             gameObject.SetActive(false);
         }
 
 
 
-        private void SetAmmoMaterial(Material material) {
+        private void SetAmmoMaterial(Material material)
+        {
             spriteRenderer.material = material;
         }
 
@@ -151,7 +175,8 @@ namespace DungeonGunner {
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate() {
+        private void OnValidate()
+        {
             HelperUtilities.ValidateCheckNullValue(this, nameof(trailRenderer), trailRenderer);
         }
 #endif

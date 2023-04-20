@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DungeonGunner
+{
     [CreateAssetMenu(fileName = "WeaponDetail_", menuName = "Scriptable Objects/Combat/Weapon Detail")]
-    public class WeaponDetailSO : ScriptableObject {
+    public class WeaponDetailSO : ScriptableObject
+    {
 
         [Space(10)]
         [Header("Weapon Base Detail")]
@@ -27,6 +29,9 @@ namespace DungeonGunner {
 
         [Tooltip("Weapon current ammo")]
         public AmmoDetailSO ammoDetail;
+
+        [Tooltip("Weapon shoot effect")]
+        public ShootEffectSO shootEffect;
 
 
 
@@ -70,7 +75,8 @@ namespace DungeonGunner {
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate() {
+        private void OnValidate()
+        {
             HelperUtilities.ValidateCheckEmptyString(this, nameof(weaponName), weaponName);
             HelperUtilities.ValidateCheckNullValue(this, nameof(ammoDetail), ammoDetail);
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(fireRate), fireRate);

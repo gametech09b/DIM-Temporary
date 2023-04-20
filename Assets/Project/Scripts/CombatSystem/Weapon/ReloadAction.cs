@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DungeonGunner
+{
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(ActiveWeaponEvent))]
     [RequireComponent(typeof(ReloadEvent))]
     #endregion
-    public class ReloadAction : MonoBehaviour {
+    public class ReloadAction : MonoBehaviour
+    {
         private ActiveWeaponEvent activeWeaponEvent;
         private ReloadEvent reloadEvent;
 
@@ -17,30 +19,36 @@ namespace DungeonGunner {
 
 
 
-        private void Awake() {
+        private void Awake()
+        {
             activeWeaponEvent = GetComponent<ActiveWeaponEvent>();
             reloadEvent = GetComponent<ReloadEvent>();
         }
 
 
 
-        private void OnEnable() {
+        private void OnEnable()
+        {
             activeWeaponEvent.OnSetActiveWeapon += ActiveWeaponEvent_OnSetActiveWeapon;
             reloadEvent.OnReloadAction += ReloadEvent_OnReloadAction;
         }
 
 
 
-        private void OnDisable() {
+        private void OnDisable()
+        {
             activeWeaponEvent.OnSetActiveWeapon -= ActiveWeaponEvent_OnSetActiveWeapon;
             reloadEvent.OnReloadAction -= ReloadEvent_OnReloadAction;
         }
 
 
 
-        private void ActiveWeaponEvent_OnSetActiveWeapon(ActiveWeaponEvent sender, OnSetActiveWeaponArgs args) {
-            if (args.weapon.isReloading) {
-                if (reloadCoroutine != null) {
+        private void ActiveWeaponEvent_OnSetActiveWeapon(ActiveWeaponEvent sender, OnSetActiveWeaponArgs args)
+        {
+            if (args.weapon.isReloading)
+            {
+                if (reloadCoroutine != null)
+                {
                     StopCoroutine(reloadCoroutine);
                 }
 
@@ -50,14 +58,17 @@ namespace DungeonGunner {
 
 
 
-        private void ReloadEvent_OnReloadAction(ReloadEvent sender, OnReloadActionArgs args) {
+        private void ReloadEvent_OnReloadAction(ReloadEvent sender, OnReloadActionArgs args)
+        {
             Reload(args);
         }
 
 
 
-        private void Reload(OnReloadActionArgs args) {
-            if (reloadCoroutine != null) {
+        private void Reload(OnReloadActionArgs args)
+        {
+            if (reloadCoroutine != null)
+            {
                 StopCoroutine(reloadCoroutine);
             }
 
@@ -66,35 +77,47 @@ namespace DungeonGunner {
 
 
 
-        private IEnumerator ReloadCoroutine(Weapon weapon, int reloadAmmoPercent) {
+        private IEnumerator ReloadCoroutine(Weapon weapon, int reloadAmmoPercent)
+        {
             SoundEffectSO currentReloadSounfEffect = weapon.weaponDetail.reloadSoundEffect;
-            if (currentReloadSounfEffect != null) {
+            if (!weapon.isReloading && currentReloadSounfEffect != null)
+            {
                 SoundEffectManager.Instance.PlaySoundEffect(currentReloadSounfEffect);
             }
 
             weapon.isReloading = true;
 
-            while (weapon.reloadTimer < weapon.weaponDetail.reloadTime) {
+            while (weapon.reloadTimer < weapon.weaponDetail.reloadTime)
+            {
                 weapon.reloadTimer += Time.deltaTime;
                 yield return null;
             }
 
-            if (reloadAmmoPercent != 0) {
+            if (reloadAmmoPercent != 0)
+            {
                 int reloadAmmoCount = Mathf.RoundToInt((weapon.weaponDetail.ammoCapacity * reloadAmmoPercent) / 100);
                 int totalAmmo = weapon.ammoRemaining + reloadAmmoCount;
 
-                if (totalAmmo > weapon.weaponDetail.ammoCapacity) {
+                if (totalAmmo > weapon.weaponDetail.ammoCapacity)
+                {
                     weapon.ammoRemaining = weapon.weaponDetail.ammoCapacity;
-                } else {
+                }
+                else
+                {
                     weapon.ammoRemaining = totalAmmo;
                 }
             }
 
-            if (weapon.weaponDetail.isAmmoInfinite) {
+            if (weapon.weaponDetail.isAmmoInfinite)
+            {
                 weapon.ammoPerClipRemaining = weapon.weaponDetail.ammoPerClipCapacity;
-            } else if (weapon.ammoRemaining >= weapon.weaponDetail.ammoPerClipCapacity) {
+            }
+            else if (weapon.ammoRemaining >= weapon.weaponDetail.ammoPerClipCapacity)
+            {
                 weapon.ammoPerClipRemaining = weapon.weaponDetail.ammoPerClipCapacity;
-            } else {
+            }
+            else
+            {
                 weapon.ammoPerClipRemaining = weapon.ammoRemaining;
             }
 

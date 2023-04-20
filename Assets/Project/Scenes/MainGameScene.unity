@@ -582,6 +582,9 @@ MonoBehaviour:
   - prefab: {fileID: 6686628791664719542, guid: 4a4a3acd1a5f87d46944a3726bec32d6, type: 3}
     size: 20
     componentType: ShootEffect
+  - prefab: {fileID: 7853615770937549561, guid: 88405b8536eba52438d8de605fc0ecfb, type: 3}
+    size: 20
+    componentType: ShootEffect
 --- !u!1 &330462746
 GameObject:
   m_ObjectHideFlags: 0
@@ -2945,9 +2948,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.18906942
-    width: 0.33716473
-    height: 0.29246676
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.1
   far clip plane: 5000
   field of view: 60

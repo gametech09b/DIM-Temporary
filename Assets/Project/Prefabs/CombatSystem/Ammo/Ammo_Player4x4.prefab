@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 720403282206525285}
   - component: {fileID: 1039949783176729923}
   m_Layer: 14
-  m_Name: PlayerAmmo4x4
+  m_Name: Ammo_Player4x4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

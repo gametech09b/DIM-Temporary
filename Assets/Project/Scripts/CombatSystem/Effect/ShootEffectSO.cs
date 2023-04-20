@@ -38,7 +38,6 @@ namespace DungeonGunner
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(startParticleSpeed), startParticleSpeed);
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(startLifetime), startLifetime);
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(maxParticleNumber), maxParticleNumber);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(maxEmissionRate), maxEmissionRate);
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(burstParticleNumber), burstParticleNumber);
             HelperUtilities.ValidateCheckNullValue(this, nameof(prefab), prefab);
         }

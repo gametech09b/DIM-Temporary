@@ -16,6 +16,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: dff74299f2cf7674eb05930ed6b07f8e, type: 3}
   shootPosition: {x: 1.284, y: 0.342, z: 0}
   ammoDetail: {fileID: 11400000, guid: 4be7e19606731564abaf41578b6e76dc, type: 2}
+  shootEffect: {fileID: 11400000, guid: dfdce1793bdbe3645b53872f28bb5d66, type: 2}
   isAmmoInfinite: 0
   ammoCapacity: 120
   isAmmoPerClipInfinite: 0

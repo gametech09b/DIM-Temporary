@@ -45,11 +45,11 @@ MonoBehaviour:
   startParticleSize: 0.25
   startParticleSpeed: 3
   startLifetime: 0.5
-  maxParticleNumber: 100
-  maxEmissionRate: 100
+  maxParticleNumber: 20
+  maxEmissionRate: 0
   burstParticleNumber: 20
   effectGravity: -0.01
   sprite: {fileID: 0}
-  prefab: {fileID: 0}
+  prefab: {fileID: 7853615770937549561, guid: e74f81b6079a4d840b420fe33bacb07d, type: 3}
   minVelocityOverLifetime: {x: 0, y: 0, z: 0}
   maxVelocityOverLifetime: {x: 0, y: 0, z: 0}

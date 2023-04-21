@@ -588,6 +588,9 @@ MonoBehaviour:
   - prefab: {fileID: 4845784685338801524, guid: ed69473cf5c5b564b917292f15ed4008, type: 3}
     size: 20
     componentType: ShootEffect
+  - prefab: {fileID: 7853615770937549561, guid: e74f81b6079a4d840b420fe33bacb07d, type: 3}
+    size: 20
+    componentType: HitEffect
 --- !u!1 &330462746
 GameObject:
   m_ObjectHideFlags: 0

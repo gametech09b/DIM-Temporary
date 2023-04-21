@@ -51,6 +51,7 @@ namespace DungeonGunner
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            PlayHitEffect();
             DisableAmmo();
         }
 
@@ -169,6 +170,21 @@ namespace DungeonGunner
         private void SetAmmoMaterial(Material material)
         {
             spriteRenderer.material = material;
+        }
+
+
+
+        private void PlayHitEffect()
+        {
+            HitEffectSO hitEffect = ammoDetail.hitEffect;
+            if (hitEffect != null && hitEffect.prefab != null)
+            {
+                HitEffect hitEffectInstance = (HitEffect) PoolManager.Instance.ReuseComponent(hitEffect.prefab, transform.position, Quaternion.identity);
+
+                hitEffectInstance.Init(hitEffect);
+
+                hitEffectInstance.gameObject.SetActive(true);
+            }
         }
 
 

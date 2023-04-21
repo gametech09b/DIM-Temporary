@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DungeonGunner
+{
     [CreateAssetMenu(fileName = "AmmoDetail_", menuName = "Scriptable Objects/Combat/Ammo Detail")]
-    public class AmmoDetailSO : ScriptableObject {
+    public class AmmoDetailSO : ScriptableObject
+    {
         [Space(10)]
         [Header("Ammo Base Detail")]
 
@@ -22,6 +24,9 @@ namespace DungeonGunner {
 
         [Tooltip("The ammo material")]
         public Material material;
+
+        [Tooltip("The ammo particle system")]
+        public HitEffectSO hitEffect;
 
 
 
@@ -111,13 +116,15 @@ namespace DungeonGunner {
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate() {
+        private void OnValidate()
+        {
             HelperUtilities.ValidateCheckEmptyString(this, nameof(ammoName), ammoName);
             HelperUtilities.ValidateCheckNullValue(this, nameof(sprite), sprite);
             HelperUtilities.ValidateCheckEnumerableValues(this, nameof(prefabArray), prefabArray);
             HelperUtilities.ValidateCheckNullValue(this, nameof(material), material);
 
-            if (chargeTime > 0) {
+            if (chargeTime > 0)
+            {
                 HelperUtilities.ValidateCheckNullValue(this, nameof(chargeMaterial), chargeMaterial);
             }
 
@@ -129,7 +136,8 @@ namespace DungeonGunner {
             HelperUtilities.ValidateCheckPositiveRange(this, nameof(minSpawnCount), nameof(maxSpawnCount), minSpawnCount, maxSpawnCount);
             HelperUtilities.ValidateCheckPositiveRange(this, nameof(minSpawnInterval), nameof(maxSpawnInterval), minSpawnInterval, maxSpawnInterval, true);
 
-            if (isTrailEnabled) {
+            if (isTrailEnabled)
+            {
                 HelperUtilities.ValidateCheckPositiveValue(this, nameof(trailLifetime), trailLifetime);
                 HelperUtilities.ValidateCheckNullValue(this, nameof(trailMaterial), trailMaterial);
                 HelperUtilities.ValidateCheckPositiveValue(this, nameof(trailStartWidth), trailStartWidth);

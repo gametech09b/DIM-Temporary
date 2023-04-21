@@ -18,6 +18,7 @@ MonoBehaviour:
   prefabArray:
   - {fileID: 1338510408464095998, guid: 29fe0b11fbb341f4babc41f45f5e635e, type: 3}
   material: {fileID: 2100000, guid: 5c86445c1f630c141ab88b05539eca5d, type: 2}
+  hitEffect: {fileID: 11400000, guid: cf76c3cf0ca98ba45bf443217315e2f7, type: 2}
   damage: 6
   minSpeed: 15
   maxSpeed: 15

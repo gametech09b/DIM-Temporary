@@ -184,11 +184,11 @@ namespace DungeonGunner
 
             if (currentWeaponShootEffect != null && currentWeaponShootEffect.prefab != null)
             {
-                ShootEffect shootEffect = (ShootEffect)PoolManager.Instance.ReuseComponent(currentWeaponShootEffect.prefab, activeWeapon.GetEffectPosition(), Quaternion.identity);
+                ShootEffect shootEffectInstance = (ShootEffect)PoolManager.Instance.ReuseComponent(currentWeaponShootEffect.prefab, activeWeapon.GetEffectPosition(), Quaternion.identity);
 
-                shootEffect.Init(currentWeaponShootEffect, angle);
+                shootEffectInstance.Init(currentWeaponShootEffect, angle);
 
-                shootEffect.gameObject.SetActive(true);
+                shootEffectInstance.gameObject.SetActive(true);
             }
         }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DungeonGunner
 {
-    [CreateAssetMenu(fileName = "EnemyDetail_", menuName = "Scriptable Objects/Player/Player Detail")]
+    [CreateAssetMenu(fileName = "EnemyDetail_", menuName = "Scriptable Objects/Enemy/Enemy Detail")]
     public class EnemyDetailSO : ScriptableObject
     {
         [Space(10)]

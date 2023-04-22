@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73b1bb09b320e5b42a95c8a6687bb02f, type: 3}
-  m_Name: EnemyDetail_SlimeBlock_Blue
+  m_Name: EnemyDetail_SkullFace_White
   m_EditorClassIdentifier: 
-  enemyName: SlimeBlock Blue
-  prefab: {fileID: 1571297434377822028, guid: c4201a5fecb568b41bd5b8804a7028a8, type: 3}
+  enemyName: Skull Face White
+  prefab: {fileID: 6545133348347154035, guid: 3d5cfa9a95e8894479736a64b348dc1e, type: 3}

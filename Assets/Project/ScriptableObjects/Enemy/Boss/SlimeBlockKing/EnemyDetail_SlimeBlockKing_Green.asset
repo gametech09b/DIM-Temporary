@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73b1bb09b320e5b42a95c8a6687bb02f, type: 3}
-  m_Name: EnemyDetail_SlimeBlock_Red
+  m_Name: EnemyDetail_SlimeBlockKing_Green
   m_EditorClassIdentifier: 
-  enemyName: SlimeBlock Red
-  prefab: {fileID: 1571297434377822028, guid: fb09b623f98d2464dabe5c2b2648884d, type: 3}
+  enemyName: Slime Block King Green
+  prefab: {fileID: 4166707065465126632, guid: acd3e9e0d5c5d7242a44a78a0f7dede5, type: 3}

@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8943535712278030378, guid: cef4e046720e0c5468deb522a37d1a33, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0f372b3c644e5ce4a9d95f7f7f25d99a, type: 2}
     - target: {fileID: 742017483208621248, guid: cef4e046720e0c5468deb522a37d1a33, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -113,7 +117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5045320335855835643, guid: cef4e046720e0c5468deb522a37d1a33, type: 3}
       propertyPath: m_Name
-      value: MudRock_Brown
+      value: Mudrock_Brown
       objectReference: {fileID: 0}
     - target: {fileID: 6323716623834929745, guid: cef4e046720e0c5468deb522a37d1a33, type: 3}
       propertyPath: m_Sprite

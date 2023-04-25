@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.Audio;
 
 namespace DungeonGunner {
@@ -15,6 +16,15 @@ namespace DungeonGunner {
             }
         }
         #endregion
+
+
+
+        [Space(10)]
+        [Header("AStar Tilemap")]
+
+
+        public TileBase[] EnemyUnwalkableTileArray;
+        public TileBase EnemyPreferredPathTile;
 
 
 
@@ -69,6 +79,9 @@ namespace DungeonGunner {
         #region Validation
 #if UNITY_EDITOR
         private void OnValidate() {
+            HelperUtilities.ValidateCheckEnumerableValues(this, nameof(EnemyUnwalkableTileArray), EnemyUnwalkableTileArray);
+            HelperUtilities.ValidateCheckNullValue(this, nameof(EnemyPreferredPathTile), EnemyPreferredPathTile);
+            
             HelperUtilities.ValidateCheckNullValue(this, nameof(RoomNodeTypeList), RoomNodeTypeList);
 
             HelperUtilities.ValidateCheckNullValue(this, nameof(CurrentPlayer), CurrentPlayer);

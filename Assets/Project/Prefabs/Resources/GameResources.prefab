@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619cd12582e183c4f8d7a54405e2e3a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyUnwalkableTileArray:
+  - {fileID: 11400000, guid: 37e2c9e0227bfbc409cd632b9bd0c81f, type: 2}
+  - {fileID: 11400000, guid: 98f177f8276c38b429705e6720c48672, type: 2}
+  EnemyPreferredPathTile: {fileID: 11400000, guid: 3ce5fb260af53d24887b55c3d50041e2, type: 2}
   AudioMixerGroup_Master: {fileID: -4734643798044506327, guid: 2ac509b551addfb48950fbdc0d9cefb4, type: 2}
   RoomNodeTypeList: {fileID: 11400000, guid: 0609dfb02986c1e42b35f8c34690337e, type: 2}
   CurrentPlayer: {fileID: 11400000, guid: 95960bf1ab8f048429a2de184b63c78d, type: 2}

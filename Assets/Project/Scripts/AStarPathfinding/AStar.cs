@@ -76,9 +76,9 @@ namespace DungeonGunner.AStarPathfinding
 
                     if (neighbourNode != null)
                     {
-                        int newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbourNode);
-
                         int movementPenalty = roomGameObject.GetAStarMovementPenalty(neighbourNode.position.x, neighbourNode.position.y);
+
+                        int newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbourNode) + movementPenalty;
 
                         bool isNeighbourNodeInOpenList = openNodeList.Contains(neighbourNode);
 

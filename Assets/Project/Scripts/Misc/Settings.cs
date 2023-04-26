@@ -84,6 +84,9 @@ namespace DungeonGunner
         #region AStar Pathfinding Settings
         public const int AStarDefaultMovementPenalty = 40;
         public const int AStarPreferredPathMovementPenalty = 1;
+
+        public const float AStarPlayerDistanceToRebuildPath = 3f;
+        public const float AStarEnemyRebuildCooldown = 2f;
         #endregion
 
 

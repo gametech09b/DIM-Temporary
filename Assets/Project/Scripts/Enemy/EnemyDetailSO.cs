@@ -14,6 +14,8 @@ namespace DungeonGunner
         public string enemyName;
         public GameObject prefab;
 
+        public float chaseDistance = 50f;
+
 
 
         #region Validation
@@ -22,6 +24,7 @@ namespace DungeonGunner
         {
             HelperUtilities.ValidateCheckEmptyString(this, nameof(enemyName), enemyName);
             HelperUtilities.ValidateCheckNullValue(this, nameof(prefab), prefab);
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(chaseDistance), chaseDistance);  
         }
 #endif
         #endregion

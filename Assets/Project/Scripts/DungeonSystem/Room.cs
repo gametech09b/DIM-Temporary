@@ -41,5 +41,12 @@ namespace DungeonGunner
 
             return middlePosition;
         }
+
+
+
+        public Grid GetGrid()
+        {
+            return roomGameObject.grid;
+        }
     }
 }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace DungeonGunner {
+namespace DungeonGunner
+{
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Animator))]
@@ -31,12 +32,13 @@ namespace DungeonGunner {
     [RequireComponent(typeof(ReloadAction))]
     [RequireComponent(typeof(ReloadEvent))]
     #endregion
-    public class Player : MonoBehaviour {
+    public class Player : MonoBehaviour
+    {
         [HideInInspector] public Animator animator;
         [HideInInspector] public Health health;
         [HideInInspector] public SpriteRenderer spriteRenderer;
 
-        [HideInInspector] public PlayerDetailSO playerDetail;
+        [HideInInspector] public PlayerDetailSO detail;
 
         public List<Weapon> weaponList = new List<Weapon>();
         [HideInInspector] public ActiveWeapon activeWeapon;
@@ -52,7 +54,8 @@ namespace DungeonGunner {
 
 
 
-        private void Awake() {
+        private void Awake()
+        {
             animator = GetComponent<Animator>();
             health = GetComponent<Health>();
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -70,8 +73,9 @@ namespace DungeonGunner {
 
 
 
-        public void Init(PlayerDetailSO playerDetail) {
-            this.playerDetail = playerDetail;
+        public void Init(PlayerDetailSO playerDetail)
+        {
+            this.detail = playerDetail;
 
             SetupPlayerHealth();
             SetupPlayerInitialWeapon();
@@ -79,29 +83,40 @@ namespace DungeonGunner {
 
 
 
-        private void SetupPlayerHealth() {
-            health.SetStartingAmount(playerDetail.startingHealthAmount);
+        private void SetupPlayerHealth()
+        {
+            health.SetStartingAmount(detail.startingHealthAmount);
         }
 
 
 
-        private void SetupPlayerInitialWeapon() {
+        private void SetupPlayerInitialWeapon()
+        {
             weaponList.Clear();
 
-            foreach (WeaponDetailSO weaponDetail in playerDetail.initialWeaponsList) {
+            foreach (WeaponDetailSO weaponDetail in detail.initialWeaponsList)
+            {
                 AddWeapon(weaponDetail);
             }
         }
 
 
 
-        public Weapon AddWeapon(WeaponDetailSO weaponDetail) {
+        public Weapon AddWeapon(WeaponDetailSO weaponDetail)
+        {
             Weapon weapon = new Weapon(weaponDetail);
             weaponList.Add(weapon);
             weapon.indexOnList = weaponList.Count;
 
             activeWeaponEvent.CallOnSetActiveWeapon(weapon);
             return weapon;
+        }
+
+
+
+        public Vector3 GetPosition()
+        {
+            return transform.position;
         }
     }
 }

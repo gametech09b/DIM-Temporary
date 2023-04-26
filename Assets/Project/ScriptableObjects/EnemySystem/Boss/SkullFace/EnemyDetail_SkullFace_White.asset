@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Skull Face White
   prefab: {fileID: 6545133348347154035, guid: 3d5cfa9a95e8894479736a64b348dc1e, type: 3}
+  chaseDistance: 50

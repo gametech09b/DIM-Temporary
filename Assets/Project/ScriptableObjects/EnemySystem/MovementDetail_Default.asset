@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 873b993427bc92f41b5abe803a3c2f8b, type: 3}
   m_Name: MovementDetail_Default
   m_EditorClassIdentifier: 
-  minSpeed: 2
-  maxSpeed: 4
+  minSpeed: 1
+  maxSpeed: 1.5
   dashSpeed: 0
   dashDistance: 0
   dashCooldownTime: 0

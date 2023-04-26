@@ -83,6 +83,7 @@ namespace DungeonGunner
 
         #region AStar Pathfinding Settings
         public const int AStarDefaultMovementPenalty = 40;
+        public const int AStarPreferredPathMovementPenalty = 1;
         #endregion
 
 

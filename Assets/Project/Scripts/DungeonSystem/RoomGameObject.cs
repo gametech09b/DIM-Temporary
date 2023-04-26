@@ -57,7 +57,7 @@ namespace DungeonGunner
 
             BlockOffUnconnectedDoorways();
 
-            AddObstaclesForAStar();
+            AddObstacleAndPreferredPathForAStar();
 
             AddDoorsToRoom();
 
@@ -217,7 +217,7 @@ namespace DungeonGunner
 
 
 
-        public void AddObstaclesForAStar()
+        public void AddObstacleAndPreferredPathForAStar()
         {
             int xSize = room.templateUpperBounds.x - room.templateLowerBounds.x + 1;
             int ySize = room.templateUpperBounds.y - room.templateLowerBounds.y + 1;
@@ -239,6 +239,11 @@ namespace DungeonGunner
                             aStarMovementPenaltyArray[x, y] = 0;
                             break;
                         }
+                    }
+
+                    if (tile == GameResources.Instance.EnemyPreferredPathTile)
+                    {
+                        aStarMovementPenaltyArray[x, y] = Settings.AStarPreferredPathMovementPenalty;
                     }
                 }
             }

@@ -78,6 +78,8 @@ namespace DungeonGunner.AStarPathfinding
                     {
                         int newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbourNode);
 
+                        int movementPenalty = roomGameObject.GetAStarMovementPenalty(neighbourNode.position.x, neighbourNode.position.y);
+
                         bool isNeighbourNodeInOpenList = openNodeList.Contains(neighbourNode);
 
                         if (newCostToNeighbour < neighbourNode.gCost || !isNeighbourNodeInOpenList)
@@ -110,19 +112,19 @@ namespace DungeonGunner.AStarPathfinding
             Vector2Int templateLowerBounds = roomGameObject.room.templateLowerBounds;
             Vector2Int templateUpperBounds = roomGameObject.room.templateUpperBounds;
 
-            if (
-                x >= templateUpperBounds.x - templateLowerBounds.x
-                || x < 0
-                || y >= templateUpperBounds.y - templateLowerBounds.y
-                || y < 0
-            )
+            if (x >= templateUpperBounds.x - templateLowerBounds.x
+            || x < 0
+            || y >= templateUpperBounds.y - templateLowerBounds.y
+            || y < 0)
             {
                 return null;
             }
 
             Node neighbourNode = grid.GetNode(x, y);
 
-            if (closedNodeHashSet.Contains(neighbourNode))
+            int movementPenalty = roomGameObject.GetAStarMovementPenalty(neighbourNode.position.x, neighbourNode.position.y);
+
+            if (movementPenalty == 0 || closedNodeHashSet.Contains(neighbourNode))
             {
                 return null;
             }

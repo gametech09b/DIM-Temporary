@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
-    public static class Settings {
+namespace DungeonGunner
+{
+    public static class Settings
+    {
         #region Project Settings
         public const string ProjectName = "DungeonGunner";
         #endregion
@@ -79,11 +81,13 @@ namespace DungeonGunner {
 
 
 
+        #region AStar Pathfinding Settings
+        public const int AStarDefaultMovementPenalty = 40;
+        #endregion
 
 
 
 
 
-        
     }
 }

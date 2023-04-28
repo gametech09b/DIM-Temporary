@@ -48,6 +48,14 @@ namespace DungeonGunner
 
 
 
+        [Space(10)]
+        [Header("Enemies In Room Detail")]
+
+
+        public List<SpawnableObjectsByLevel<EnemyDetailSO>> enemiesByLevelList;
+
+
+
         #region Validation
 #if UNITY_EDITOR
         private void OnValidate()

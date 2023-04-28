@@ -348,7 +348,7 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            HelperUtilities.ValidateCheckNullValue(this, nameof(movementDetail), movementDetail);
+            HelperUtilities.CheckNullValue(this, nameof(movementDetail), movementDetail);
         }
 #endif
         #endregion

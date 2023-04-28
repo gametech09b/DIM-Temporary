@@ -46,6 +46,8 @@ namespace DungeonGunner.EnemySystem
 
         private void MoveToPositionEvent_OnMoveToPosition(MoveToPositionEvent sender, MoveToPositionEventArgs args)
         {
+            DisableAllAimAnimationParameters();
+
             // FIXME: FIX LATER
             Vector3 position = _enemy.transform.position;
             Vector3 targetPosition = GameManager.Instance.GetCurrentPlayer().transform.position;

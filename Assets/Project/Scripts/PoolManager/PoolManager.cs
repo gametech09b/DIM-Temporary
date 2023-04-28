@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DungeonGunner
+{
     [DisallowMultipleComponent]
-    public class PoolManager : SingletonMonobehaviour<PoolManager> {
+    public class PoolManager : SingletonMonobehaviour<PoolManager>
+    {
         [Tooltip("The pools to be created")]
         [SerializeField] private Pool[] poolArray = null;
 
@@ -14,20 +16,23 @@ namespace DungeonGunner {
 
 
 
-        private void Start() {
+        private void Start()
+        {
             objectPoolTransform = this.transform;
             poolDictionary = new Dictionary<int, Queue<Component>>();
 
 
 
-            foreach (Pool pool in poolArray) {
+            foreach (Pool pool in poolArray)
+            {
                 CreatePool(pool.prefab, pool.size, pool.componentType);
             }
         }
 
 
 
-        private void CreatePool(GameObject prefab, int size, string componentType) {
+        private void CreatePool(GameObject prefab, int size, string componentType)
+        {
             int key = prefab.GetInstanceID();
 
             string poolName = $"{prefab.name} Pool";
@@ -35,10 +40,12 @@ namespace DungeonGunner {
             GameObject parentPoolGameObject = new GameObject(poolName);
             parentPoolGameObject.transform.SetParent(objectPoolTransform);
 
-            if (!poolDictionary.ContainsKey(key)) {
+            if (!poolDictionary.ContainsKey(key))
+            {
                 poolDictionary.Add(key, new Queue<Component>());
 
-                for (int i = 0; i < size; i++) {
+                for (int i = 0; i < size; i++)
+                {
                     GameObject newPoolGameObject = Instantiate(prefab, parentPoolGameObject.transform) as GameObject;
 
                     newPoolGameObject.SetActive(false);
@@ -52,10 +59,12 @@ namespace DungeonGunner {
 
 
 
-        public Component ReuseComponent(GameObject prefab, Vector3 position, Quaternion rotation) {
+        public Component ReuseComponent(GameObject prefab, Vector3 position, Quaternion rotation)
+        {
             int key = prefab.GetInstanceID();
 
-            if (poolDictionary.ContainsKey(key)) {
+            if (poolDictionary.ContainsKey(key))
+            {
                 Component componentToReuse = GetComponentFromPool(key);
 
                 ResetObject(componentToReuse, prefab, position, rotation);
@@ -69,12 +78,14 @@ namespace DungeonGunner {
 
 
 
-        private Component GetComponentFromPool(int key) {
+        private Component GetComponentFromPool(int key)
+        {
             Component componentToReuse = poolDictionary[key].Dequeue();
 
             poolDictionary[key].Enqueue(componentToReuse);
 
-            if (componentToReuse.gameObject.activeSelf) {
+            if (componentToReuse.gameObject.activeSelf)
+            {
                 componentToReuse.gameObject.SetActive(false);
             }
 
@@ -83,7 +94,8 @@ namespace DungeonGunner {
 
 
 
-        private void ResetObject(Component componentToReuse, GameObject prefab, Vector3 position, Quaternion rotation) {
+        private void ResetObject(Component componentToReuse, GameObject prefab, Vector3 position, Quaternion rotation)
+        {
             componentToReuse.transform.position = position;
             componentToReuse.transform.rotation = rotation;
             componentToReuse.transform.localScale = prefab.transform.localScale;
@@ -93,8 +105,9 @@ namespace DungeonGunner {
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate() {
-            HelperUtilities.ValidateCheckEnumerableValues(this, nameof(poolArray), poolArray);
+        private void OnValidate()
+        {
+            HelperUtilities.CheckEnumerableValue(this, nameof(poolArray), poolArray);
         }
 #endif
         #endregion
@@ -103,7 +116,8 @@ namespace DungeonGunner {
 
 
     [System.Serializable]
-    public struct Pool {
+    public struct Pool
+    {
         public GameObject prefab;
         public int size;
         public string componentType;

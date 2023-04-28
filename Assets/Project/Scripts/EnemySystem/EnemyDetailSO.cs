@@ -22,9 +22,9 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            HelperUtilities.ValidateCheckEmptyString(this, nameof(enemyName), enemyName);
-            HelperUtilities.ValidateCheckNullValue(this, nameof(prefab), prefab);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(chaseDistance), chaseDistance);  
+            HelperUtilities.CheckEmptyString(this, nameof(enemyName), enemyName);
+            HelperUtilities.CheckNullValue(this, nameof(prefab), prefab);
+            HelperUtilities.CheckPositiveValue(this, nameof(chaseDistance), chaseDistance);
         }
 #endif
         #endregion

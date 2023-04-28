@@ -35,9 +35,9 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            HelperUtilities.ValidateCheckEmptyString(this, nameof(levelName), levelName);
-            if (HelperUtilities.ValidateCheckEnumerableValues(this, nameof(roomTemplateList), roomTemplateList)) return;
-            if (HelperUtilities.ValidateCheckEnumerableValues(this, nameof(roomNodeGraphList), roomNodeGraphList)) return;
+            HelperUtilities.CheckEmptyString(this, nameof(levelName), levelName);
+            if (HelperUtilities.CheckEnumerableValue(this, nameof(roomTemplateList), roomTemplateList)) return;
+            if (HelperUtilities.CheckEnumerableValue(this, nameof(roomNodeGraphList), roomNodeGraphList)) return;
 
 
 

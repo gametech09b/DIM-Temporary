@@ -31,13 +31,13 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(duration), duration);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(startParticleSize), startParticleSize);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(startParticleSpeed), startParticleSpeed);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(startLifetime), startLifetime);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(maxParticleNumber), maxParticleNumber);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(burstParticleNumber), burstParticleNumber);
-            HelperUtilities.ValidateCheckNullValue(this, nameof(prefab), prefab);
+            HelperUtilities.CheckPositiveValue(this, nameof(duration), duration);
+            HelperUtilities.CheckPositiveValue(this, nameof(startParticleSize), startParticleSize);
+            HelperUtilities.CheckPositiveValue(this, nameof(startParticleSpeed), startParticleSpeed);
+            HelperUtilities.CheckPositiveValue(this, nameof(startLifetime), startLifetime);
+            HelperUtilities.CheckPositiveValue(this, nameof(maxParticleNumber), maxParticleNumber);
+            HelperUtilities.CheckPositiveValue(this, nameof(burstParticleNumber), burstParticleNumber);
+            HelperUtilities.CheckNullValue(this, nameof(prefab), prefab);
         }
 #endif
         #endregion

@@ -77,16 +77,16 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            HelperUtilities.ValidateCheckEmptyString(this, nameof(weaponName), weaponName);
-            HelperUtilities.ValidateCheckNullValue(this, nameof(ammoDetail), ammoDetail);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(fireRate), fireRate);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(prefireDelay), prefireDelay, true);
+            HelperUtilities.CheckEmptyString(this, nameof(weaponName), weaponName);
+            HelperUtilities.CheckNullValue(this, nameof(ammoDetail), ammoDetail);
+            HelperUtilities.CheckPositiveValue(this, nameof(fireRate), fireRate);
+            HelperUtilities.CheckPositiveValue(this, nameof(prefireDelay), prefireDelay, true);
 
             if (!isAmmoInfinite)
-                HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoCapacity), ammoCapacity);
+                HelperUtilities.CheckPositiveValue(this, nameof(ammoCapacity), ammoCapacity);
 
             if (!isAmmoPerClipInfinite)
-                HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoPerClipCapacity), ammoPerClipCapacity);
+                HelperUtilities.CheckPositiveValue(this, nameof(ammoPerClipCapacity), ammoPerClipCapacity);
         }
 #endif
         #endregion

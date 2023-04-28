@@ -186,11 +186,12 @@ namespace DungeonGunner
 
 
         #region Validation
-        #if UNITY_EDITOR
-        private void OnValidate() {
-            HelperUtilities.ValidateCheckNullValue(this,nameof(_movementDetail),_movementDetail);
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            HelperUtilities.CheckNullValue(this, nameof(_movementDetail), _movementDetail);
         }
-        #endif
+#endif
         #endregion
     }
 }

@@ -179,7 +179,7 @@ namespace DungeonGunner
             HitEffectSO hitEffect = ammoDetail.hitEffect;
             if (hitEffect != null && hitEffect.prefab != null)
             {
-                HitEffect hitEffectInstance = (HitEffect) PoolManager.Instance.ReuseComponent(hitEffect.prefab, transform.position, Quaternion.identity);
+                HitEffect hitEffectInstance = (HitEffect)PoolManager.Instance.ReuseComponent(hitEffect.prefab, transform.position, Quaternion.identity);
 
                 hitEffectInstance.Init(hitEffect);
 
@@ -193,7 +193,7 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            HelperUtilities.ValidateCheckNullValue(this, nameof(trailRenderer), trailRenderer);
+            HelperUtilities.CheckNullValue(this, nameof(trailRenderer), trailRenderer);
         }
 #endif
         #endregion

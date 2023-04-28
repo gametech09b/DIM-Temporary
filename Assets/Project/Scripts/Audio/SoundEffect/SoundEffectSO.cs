@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DungeonGunner
+{
     [CreateAssetMenu(fileName = "SoundEffect_", menuName = "Scriptable Objects/Audio/Sound Effect")]
-    public class SoundEffectSO : ScriptableObject {
+    public class SoundEffectSO : ScriptableObject
+    {
 
         [Space(10)]
         [Header("Sound Effect Detail")]
@@ -22,12 +24,13 @@ namespace DungeonGunner {
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate() {
-            HelperUtilities.ValidateCheckEmptyString(this, nameof(soundEffectName), soundEffectName);
-            HelperUtilities.ValidateCheckNullValue(this, nameof(prefab), prefab);
-            HelperUtilities.ValidateCheckNullValue(this, nameof(audioClip), audioClip);
-            HelperUtilities.ValidateCheckPositiveRange(this, nameof(minPitchVariation), nameof(maxPitchVariation), minPitchVariation, maxPitchVariation);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(volume), volume);
+        private void OnValidate()
+        {
+            HelperUtilities.CheckEmptyString(this, nameof(soundEffectName), soundEffectName);
+            HelperUtilities.CheckNullValue(this, nameof(prefab), prefab);
+            HelperUtilities.CheckNullValue(this, nameof(audioClip), audioClip);
+            HelperUtilities.CheckPositiveRange(this, nameof(minPitchVariation), nameof(maxPitchVariation), minPitchVariation, maxPitchVariation);
+            HelperUtilities.CheckPositiveValue(this, nameof(volume), volume);
         }
 #endif
         #endregion

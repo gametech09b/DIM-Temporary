@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DungeonGunner
+{
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(ActiveWeaponEvent))]
     #endregion
-    public class ActiveWeapon : MonoBehaviour {
+    public class ActiveWeapon : MonoBehaviour
+    {
         [SerializeField] private SpriteRenderer weaponSpriteRenderer;
         [SerializeField] private PolygonCollider2D weaponPolygonCollider2D;
         [SerializeField] private Transform weaponShootPointTransform;
@@ -18,36 +20,42 @@ namespace DungeonGunner {
 
 
 
-        private void Awake() {
+        private void Awake()
+        {
             activeWeaponEvent = GetComponent<ActiveWeaponEvent>();
         }
 
 
 
-        private void OnEnable() {
+        private void OnEnable()
+        {
             activeWeaponEvent.OnSetActiveWeapon += ActiveWeaponEvent_OnSetActiveWeapon;
         }
 
 
 
-        private void OnDisable() {
+        private void OnDisable()
+        {
             activeWeaponEvent.OnSetActiveWeapon -= ActiveWeaponEvent_OnSetActiveWeapon;
         }
 
 
 
-        private void ActiveWeaponEvent_OnSetActiveWeapon(ActiveWeaponEvent sender, OnSetActiveWeaponArgs args) {
+        private void ActiveWeaponEvent_OnSetActiveWeapon(ActiveWeaponEvent sender, OnSetActiveWeaponArgs args)
+        {
             SetWeapon(args.weapon);
         }
 
 
 
-        private void SetWeapon(Weapon weapon) {
+        private void SetWeapon(Weapon weapon)
+        {
             currentWeapon = weapon;
 
             weaponSpriteRenderer.sprite = currentWeapon.weaponDetail.sprite;
 
-            if (weaponPolygonCollider2D != null && weaponSpriteRenderer.sprite != null) {
+            if (weaponPolygonCollider2D != null && weaponSpriteRenderer.sprite != null)
+            {
                 List<Vector2> pointList = new List<Vector2>();
                 weaponSpriteRenderer.sprite.GetPhysicsShape(0, pointList);
 
@@ -59,31 +67,36 @@ namespace DungeonGunner {
 
 
 
-        public AmmoDetailSO GetAmmoDetail() {
+        public AmmoDetailSO GetAmmoDetail()
+        {
             return currentWeapon.weaponDetail.ammoDetail;
         }
 
 
 
-        public Weapon GetCurrentWeapon() {
+        public Weapon GetCurrentWeapon()
+        {
             return currentWeapon;
         }
 
 
 
-        public Vector3 GetShootPosition() {
+        public Vector3 GetShootPosition()
+        {
             return weaponShootPointTransform.position;
         }
 
 
 
-        public Vector3 GetEffectPosition() {
+        public Vector3 GetEffectPosition()
+        {
             return weaponEffectPointTransform.position;
         }
 
 
 
-        public void RemoveCurrentWeapon() {
+        public void RemoveCurrentWeapon()
+        {
             currentWeapon = null;
         }
 
@@ -91,11 +104,12 @@ namespace DungeonGunner {
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate() {
-            HelperUtilities.ValidateCheckNullValue(this, nameof(weaponSpriteRenderer), weaponSpriteRenderer);
-            HelperUtilities.ValidateCheckNullValue(this, nameof(weaponPolygonCollider2D), weaponPolygonCollider2D);
-            HelperUtilities.ValidateCheckNullValue(this, nameof(weaponShootPointTransform), weaponShootPointTransform);
-            HelperUtilities.ValidateCheckNullValue(this, nameof(weaponEffectPointTransform), weaponEffectPointTransform);
+        private void OnValidate()
+        {
+            HelperUtilities.CheckNullValue(this, nameof(weaponSpriteRenderer), weaponSpriteRenderer);
+            HelperUtilities.CheckNullValue(this, nameof(weaponPolygonCollider2D), weaponPolygonCollider2D);
+            HelperUtilities.CheckNullValue(this, nameof(weaponShootPointTransform), weaponShootPointTransform);
+            HelperUtilities.CheckNullValue(this, nameof(weaponEffectPointTransform), weaponEffectPointTransform);
         }
 #endif
         #endregion

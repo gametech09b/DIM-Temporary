@@ -14,14 +14,26 @@ namespace DungeonGunner
         public Vector2Int templateLowerBounds;
         public Vector2Int templateUpperBounds;
         public Vector2Int[] spawnPositionArray;
-        public List<string> childRoomIDList;
+
+
         public string parentRoomID;
+        public List<string> childRoomIDList;
+
+
         public List<Doorway> doorwayList;
         public bool isPositioned;
-        public RoomGameObject roomGameObject;
+
+
         public bool isLit = false;
         public bool isCleared = false;
         public bool isVisited = false;
+
+
+        public RoomGameObject roomGameObject;
+
+
+        public List<SpawnableObjectsByLevel<EnemyDetailSO>> enemySpawnByLevelList;
+        public List<RoomEnemySpawnParameter> roomEnemySpawnParameterList;
 
 
 
@@ -47,6 +59,36 @@ namespace DungeonGunner
         public Grid GetGrid()
         {
             return roomGameObject.grid;
+        }
+
+
+
+        public int GetNumberOfEnemyToSpawn(DungeonLevelSO dungeonLevel)
+        {
+            foreach (RoomEnemySpawnParameter roomEnemySpawnParameter in roomEnemySpawnParameterList)
+            {
+                if (roomEnemySpawnParameter.dungeonLevel == dungeonLevel)
+                {
+                    return Random.Range(roomEnemySpawnParameter.minTotalEnemy, roomEnemySpawnParameter.maxTotalEnemy);
+                }
+            }
+
+            return 0;
+        }
+
+
+
+        public RoomEnemySpawnParameter GetRoomEnemySpawnParameter(DungeonLevelSO dungeonLevel)
+        {
+            foreach (RoomEnemySpawnParameter roomEnemySpawnParameter in roomEnemySpawnParameterList)
+            {
+                if (roomEnemySpawnParameter.dungeonLevel == dungeonLevel)
+                {
+                    return roomEnemySpawnParameter;
+                }
+            }
+
+            return null;
         }
     }
 }

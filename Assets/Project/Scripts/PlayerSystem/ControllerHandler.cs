@@ -78,7 +78,7 @@ namespace DungeonGunner
 
             foreach (Weapon weapon in _player.weaponList)
             {
-                if (weapon.weaponDetail == _player.detail.initialWeapon)
+                if (weapon.weaponDetail == _player.playerDetail.initialWeapon)
                 {
                     SetWeaponByIndex(index);
                     break;
@@ -102,7 +102,7 @@ namespace DungeonGunner
 
         private void SetupPlayerAnimationSpeed()
         {
-            _player.animator.speed = _moveSpeed / Settings.BaseSpeedForPlayer;
+            _player.animator.speed = _moveSpeed / Settings.BaseSpeedForPlayerAnimation;
         }
 
 

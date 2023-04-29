@@ -38,7 +38,7 @@ namespace DungeonGunner
         [HideInInspector] public Health health;
         [HideInInspector] public SpriteRenderer spriteRenderer;
 
-        [HideInInspector] public PlayerDetailSO detail;
+        [HideInInspector] public PlayerDetailSO playerDetail;
 
         public List<Weapon> weaponList = new List<Weapon>();
         [HideInInspector] public ActiveWeapon activeWeapon;
@@ -73,9 +73,9 @@ namespace DungeonGunner
 
 
 
-        public void Init(PlayerDetailSO playerDetail)
+        public void Init(PlayerDetailSO _playerDetail)
         {
-            this.detail = playerDetail;
+            this.playerDetail = _playerDetail;
 
             SetupPlayerHealth();
             SetupPlayerInitialWeapon();
@@ -85,7 +85,7 @@ namespace DungeonGunner
 
         private void SetupPlayerHealth()
         {
-            health.SetStartingAmount(detail.startingHealthAmount);
+            health.SetStartingAmount(playerDetail.startingHealthAmount);
         }
 
 
@@ -94,7 +94,7 @@ namespace DungeonGunner
         {
             weaponList.Clear();
 
-            foreach (WeaponDetailSO weaponDetail in detail.initialWeaponsList)
+            foreach (WeaponDetailSO weaponDetail in playerDetail.initialWeaponsList)
             {
                 AddWeapon(weaponDetail);
             }
@@ -102,9 +102,9 @@ namespace DungeonGunner
 
 
 
-        public Weapon AddWeapon(WeaponDetailSO weaponDetail)
+        public Weapon AddWeapon(WeaponDetailSO _weaponDetail)
         {
-            Weapon weapon = new Weapon(weaponDetail);
+            Weapon weapon = new Weapon(_weaponDetail);
             weaponList.Add(weapon);
             weapon.indexOnList = weaponList.Count;
 

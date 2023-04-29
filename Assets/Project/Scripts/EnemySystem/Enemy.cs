@@ -26,13 +26,12 @@ namespace DungeonGunner
     public class Enemy : MonoBehaviour
     {
         [HideInInspector] public Animator animator;
-        private CircleCollider2D _circleCollider2D;
-        private PolygonCollider2D _polygonCollider2D;
-        private SpriteRenderer[] _spriteRendererArray;
+        private CircleCollider2D circleCollider2D;
+        private PolygonCollider2D polygonCollider2D;
+        private SpriteRenderer[] spriteRendererArray;
 
-        /* [HideInInspector] */
-        public EnemyDetailSO detail;
-        private EnemyMovementAI _enemyMovementAI;
+        [HideInInspector] public EnemyDetailSO enemyDetail;
+        private EnemyMovementAI enemyMovementAI;
 
         [HideInInspector] public IdleEvent idleEvent;
         [HideInInspector] public MoveToPositionEvent moveToPositionEvent;
@@ -42,14 +41,30 @@ namespace DungeonGunner
         private void Awake()
         {
             animator = GetComponent<Animator>();
-            _circleCollider2D = GetComponent<CircleCollider2D>();
-            _polygonCollider2D = GetComponent<PolygonCollider2D>();
-            _spriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
+            circleCollider2D = GetComponent<CircleCollider2D>();
+            polygonCollider2D = GetComponent<PolygonCollider2D>();
+            spriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
 
-            _enemyMovementAI = GetComponent<EnemyMovementAI>();
+            enemyMovementAI = GetComponent<EnemyMovementAI>();
 
             idleEvent = GetComponent<IdleEvent>();
             moveToPositionEvent = GetComponent<MoveToPositionEvent>();
+        }
+
+
+
+        public void Init(EnemyDetailSO _enemyDetail, int _spawnedCount, DungeonLevelSO _dungeonLevel)
+        {
+            this.enemyDetail = _enemyDetail;
+
+            SetupEnemyAnimationSpeed();
+        }
+
+
+
+        private void SetupEnemyAnimationSpeed()
+        {
+            animator.speed = enemyMovementAI.moveSpeed / Settings.BaseSpeedForEnemyAnimation;
         }
     }
 }

@@ -34,7 +34,7 @@ namespace DungeonGunner
 
 
         #region Animator Parameters - Player
-        public static float BaseSpeedForPlayer = 8f;
+        public static float BaseSpeedForPlayerAnimation = 8f;
 
         public static int AimUp = Animator.StringToHash("aimUp");
         public static int AimUpRight = Animator.StringToHash("aimUpRight");
@@ -56,6 +56,12 @@ namespace DungeonGunner
 
         #region Animator Parameters - Door
         public static int IsOpen = Animator.StringToHash("isOpen");
+        #endregion
+
+
+
+        #region Animator Parameters - Enemy
+        public static float BaseSpeedForEnemyAnimation = 3f;
         #endregion
 
 

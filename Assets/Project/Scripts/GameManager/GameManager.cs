@@ -10,18 +10,24 @@ namespace DungeonGunner
         [Space(10)]
         [Header("Dungeon Levels")]
 
+
         [Tooltip("The list of dungeon levels to use for this game")]
         [SerializeField] private List<DungeonLevelSO> dungeonLevelList;
 
         [Tooltip("The current dungeon level")]
         [SerializeField] private int currentDungeonLevelIndex;
 
+
+
         private Room currentRoom;
         private Room previousRoom;
         private PlayerDetailSO currentPlayerDetail;
         private Player currentPlayer;
 
+
+
         [HideInInspector] public GameState gameState;
+        [HideInInspector] public GameState previousGameState;
 
 
 
@@ -62,6 +68,7 @@ namespace DungeonGunner
 
         private void Start()
         {
+            previousGameState = GameState.GAME_STARTED;
             gameState = GameState.GAME_STARTED;
         }
 

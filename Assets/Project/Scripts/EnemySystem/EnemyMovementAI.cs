@@ -60,7 +60,7 @@ namespace DungeonGunner
 
             float distanceToTargetPosition = Vector3.Distance(transform.position, currentTargetPosition);
 
-            if (!_isChasing && distanceToTargetPosition > _enemy.detail.chaseDistance)
+            if (!_isChasing && distanceToTargetPosition > _enemy.enemyDetail.chaseDistance)
             {
                 _isChasing = true;
             }

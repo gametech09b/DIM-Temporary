@@ -25,14 +25,14 @@ namespace DungeonGunner
         [HideInInspector] public Bounds roomColliderBounds;
 
 
-        private BoxCollider2D roomCollider;
+        private BoxCollider2D _roomCollider;
 
 
 
         private void Awake()
         {
-            roomCollider = GetComponent<BoxCollider2D>();
-            roomColliderBounds = roomCollider.bounds;
+            _roomCollider = GetComponent<BoxCollider2D>();
+            roomColliderBounds = _roomCollider.bounds;
         }
 
 
@@ -330,6 +330,27 @@ namespace DungeonGunner
         public int GetAStarMovementPenalty(int x, int y)
         {
             return aStarMovementPenaltyArray[x, y];
+        }
+
+
+
+        public void LockDoors()
+        {
+            DoorGameObject[] doorArray = GetComponentsInParent<DoorGameObject>();
+
+            foreach (DoorGameObject door in GetComponentsInChildren<DoorGameObject>())
+            {
+                door.LockDoor();
+            }
+
+            DisableRoomCollider();
+        }
+
+
+
+        public void DisableRoomCollider()
+        {
+            _roomCollider.enabled = false;
         }
     }
 }

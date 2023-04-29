@@ -5,8 +5,8 @@ namespace DungeonGunner
 {
     public class SpawnTest : MonoBehaviour
     {
-        private List<SpawnableObjectsByLevel<EnemyDetailSO>> _enemySpawnByLevelList;
-        private RandomSpawnableObject<EnemyDetailSO> _randomSpawnableObject;
+        private List<SpawnableObjectsByLevel<EnemyDetailSO>> enemySpawnByLevelList;
+        private RandomSpawnableObject<EnemyDetailSO> randomSpawnableObject;
         private List<GameObject> _spawnedEnemyList = new List<GameObject>();
 
 
@@ -30,7 +30,7 @@ namespace DungeonGunner
             if (Input.GetKeyDown(KeyCode.T))
             {
 
-                EnemyDetailSO enemyDetail = _randomSpawnableObject.GetObject();
+                EnemyDetailSO enemyDetail = randomSpawnableObject.GetObject();
 
                 if (enemyDetail != null)
                 {
@@ -66,9 +66,9 @@ namespace DungeonGunner
 
             if (roomTemplate != null)
             {
-                _enemySpawnByLevelList = roomTemplate.enemySpawnByLevelList;
+                enemySpawnByLevelList = roomTemplate.enemySpawnByLevelList;
 
-                _randomSpawnableObject = new RandomSpawnableObject<EnemyDetailSO>(_enemySpawnByLevelList);
+                randomSpawnableObject = new RandomSpawnableObject<EnemyDetailSO>(enemySpawnByLevelList);
             }
         }
     }

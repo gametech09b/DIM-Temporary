@@ -49,7 +49,7 @@ namespace DungeonGunner
 
 
 
-        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs args)
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs _args)
         {
             if (_spawnedEnemyList != null
             && _spawnedEnemyList.Count > 0)
@@ -62,7 +62,7 @@ namespace DungeonGunner
                 _spawnedEnemyList.Clear();
             }
 
-            RoomTemplateSO roomTemplate = DungeonBuilder.Instance.GetRoomTemplate(args.room.templateID);
+            RoomTemplateSO roomTemplate = DungeonBuilder.Instance.GetRoomTemplate(_args.room.templateID);
 
             if (roomTemplate != null)
             {

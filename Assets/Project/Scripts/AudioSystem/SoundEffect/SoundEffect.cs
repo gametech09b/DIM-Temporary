@@ -33,10 +33,10 @@ namespace DungeonGunner {
 
 
 
-        public void SetSoundEffect(SoundEffectSO soundEffect) {
-            audioSourceComponent.clip = soundEffect.audioClip;
-            audioSourceComponent.volume = soundEffect.volume;
-            audioSourceComponent.pitch = Random.Range(soundEffect.minPitchVariation, soundEffect.maxPitchVariation);
+        public void SetSoundEffect(SoundEffectSO _soundEffect) {
+            audioSourceComponent.clip = _soundEffect.audioClip;
+            audioSourceComponent.volume = _soundEffect.volume;
+            audioSourceComponent.pitch = Random.Range(_soundEffect.minPitchVariation, _soundEffect.maxPitchVariation);
         }
     }
 }

@@ -39,8 +39,8 @@ namespace DungeonGunner {
 
 
 
-        private void Move(Vector2 directionVector, float speed) {
-            rigidbody2DComponent.velocity = directionVector * speed;
+        private void Move(Vector2 _directionVector, float _speed) {
+            rigidbody2DComponent.velocity = _directionVector * _speed;
         }
     }
 }

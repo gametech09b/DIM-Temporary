@@ -6,7 +6,7 @@ namespace DungeonGunner
 {
     public interface IFireable
     {
-        void Init(AmmoDetailSO ammoDetail, float ammoSpeed, float angle, float weaponAngle, Vector3 weaponDirectionVector, bool isOverrideAmmoMovement = false);
+        void Init(AmmoDetailSO _ammoDetail, float _ammoSpeed, float _angle, float _weaponAngle, Vector3 _weaponDirectionVector, bool _isOverrideAmmoMovement = false);
 
         GameObject GetGameObject();
     }

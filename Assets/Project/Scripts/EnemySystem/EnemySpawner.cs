@@ -116,14 +116,14 @@ namespace DungeonGunner
 
 
 
-        private void CreateEnemy(EnemyDetailSO _enemyDetail, Vector3 position)
+        private void CreateEnemy(EnemyDetailSO _enemyDetail, Vector3 _position)
         {
             currentCount++;
             spawnedCount++;
 
             DungeonLevelSO dungeonLevel = GameManager.Instance.GetCurrentDungeonLevel();
 
-            GameObject enemyGameObject = Instantiate(_enemyDetail.prefab, position, Quaternion.identity);
+            GameObject enemyGameObject = Instantiate(_enemyDetail.prefab, _position, Quaternion.identity);
 
             Enemy enemy = enemyGameObject.GetComponent<Enemy>();
 

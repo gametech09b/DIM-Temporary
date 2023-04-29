@@ -49,7 +49,7 @@ namespace DungeonGunner
 
 
 
-        private void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D _other)
         {
             PlayHitEffect();
             DisableAmmo();
@@ -84,47 +84,47 @@ namespace DungeonGunner
 
 
 
-        public void Init(AmmoDetailSO ammoDetail, float ammoSpeed, float angle, float weaponAngle, Vector3 weaponDirectionVector, bool isOverrideAmmoMovement = false)
+        public void Init(AmmoDetailSO _ammoDetail, float _ammoSpeed, float _angle, float _weaponAngle, Vector3 _weaponDirectionVector, bool _isOverrideAmmoMovement = false)
         {
             // ammo
-            this.ammoDetail = ammoDetail;
+            this.ammoDetail = _ammoDetail;
 
-            SetDirection(ammoDetail, angle, weaponAngle, weaponDirectionVector);
+            SetDirection(_ammoDetail, _angle, _weaponAngle, _weaponDirectionVector);
 
-            spriteRenderer.sprite = ammoDetail.sprite;
+            spriteRenderer.sprite = _ammoDetail.sprite;
 
-            if (ammoDetail.chargeTime > 0)
+            if (_ammoDetail.chargeTime > 0)
             {
-                chargeTimer = ammoDetail.chargeTime;
-                SetAmmoMaterial(ammoDetail.chargeMaterial);
+                chargeTimer = _ammoDetail.chargeTime;
+                SetAmmoMaterial(_ammoDetail.chargeMaterial);
                 isAmmoMaterialSet = false;
             }
             else
             {
                 chargeTimer = 0;
-                SetAmmoMaterial(ammoDetail.material);
+                SetAmmoMaterial(_ammoDetail.material);
                 isAmmoMaterialSet = true;
             }
 
-            this.range = ammoDetail.range;
+            this.range = _ammoDetail.range;
 
-            this.speed = ammoSpeed;
+            this.speed = _ammoSpeed;
 
-            this.isOverrideAmmoMovement = isOverrideAmmoMovement;
+            this.isOverrideAmmoMovement = _isOverrideAmmoMovement;
 
             gameObject.SetActive(true);
 
 
 
             // trail
-            if (ammoDetail.isTrailEnabled)
+            if (_ammoDetail.isTrailEnabled)
             {
                 trailRenderer.gameObject.SetActive(true);
                 trailRenderer.emitting = true;
-                trailRenderer.material = ammoDetail.trailMaterial;
-                trailRenderer.startWidth = ammoDetail.trailStartWidth;
-                trailRenderer.endWidth = ammoDetail.trailEndWidth;
-                trailRenderer.time = ammoDetail.trailLifetime;
+                trailRenderer.material = _ammoDetail.trailMaterial;
+                trailRenderer.startWidth = _ammoDetail.trailStartWidth;
+                trailRenderer.endWidth = _ammoDetail.trailEndWidth;
+                trailRenderer.time = _ammoDetail.trailLifetime;
             }
             else
             {
@@ -135,20 +135,20 @@ namespace DungeonGunner
 
 
 
-        private void SetDirection(AmmoDetailSO ammoDetail, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
+        private void SetDirection(AmmoDetailSO _ammoDetail, float _aimAngle, float _weaponAimAngle, Vector3 _weaponAimDirectionVector)
         {
-            float randomSpread = Random.Range(ammoDetail.minSpread, ammoDetail.maxSpread);
+            float randomSpread = Random.Range(_ammoDetail.minSpread, _ammoDetail.maxSpread);
 
             // get a random spread toggle of 1 or -1
             int randomSpreadToggle = Random.Range(0, 2) == 0 ? 1 : -1;
 
-            if (weaponAimDirectionVector.magnitude < Settings.AimAngleDistance)
+            if (_weaponAimDirectionVector.magnitude < Settings.AimAngleDistance)
             {
-                directionAngle = aimAngle;
+                directionAngle = _aimAngle;
             }
             else
             {
-                directionAngle = weaponAimAngle;
+                directionAngle = _weaponAimAngle;
             }
 
             directionAngle += randomSpread * randomSpreadToggle;
@@ -167,9 +167,9 @@ namespace DungeonGunner
 
 
 
-        private void SetAmmoMaterial(Material material)
+        private void SetAmmoMaterial(Material _material)
         {
-            spriteRenderer.material = material;
+            spriteRenderer.material = _material;
         }
 
 

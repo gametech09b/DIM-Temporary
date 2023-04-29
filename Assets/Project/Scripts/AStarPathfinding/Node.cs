@@ -18,21 +18,21 @@ namespace DungeonGunner.AStarPathfinding
 
 
 
-        public Node(Vector2Int position)
+        public Node(Vector2Int _position)
         {
-            this.position = position;
+            this.position = _position;
             this.parentNode = null;
         }
 
 
 
-        public int CompareTo(Node node)
+        public int CompareTo(Node _node)
         {
-            int compare = FCost.CompareTo(node.FCost);
+            int compare = FCost.CompareTo(_node.FCost);
 
             if (compare == 0)
             {
-                compare = hCost.CompareTo(node.hCost);
+                compare = hCost.CompareTo(_node.hCost);
             }
 
             return compare;

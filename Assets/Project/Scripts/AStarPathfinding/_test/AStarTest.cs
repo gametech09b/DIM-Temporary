@@ -44,10 +44,10 @@ namespace DungeonGunner
 
 
 
-        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs args)
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs _args)
         {
             pathStack = null;
-            roomGameObject = args.room.roomGameObject;
+            roomGameObject = _args.room.roomGameObject;
             frontTilemap = roomGameObject.transform.Find("Grid/Tilemap4_Front").GetComponent<Tilemap>();
             grid = roomGameObject.transform.GetComponentInChildren<Grid>();
             startGridPosition = noValue;
@@ -109,15 +109,15 @@ namespace DungeonGunner
 
 
 
-        private bool IsPositionWithinBounds(Vector3Int position)
+        private bool IsPositionWithinBounds(Vector3Int _position)
         {
             Vector2Int templateLowerBounds = roomGameObject.room.templateLowerBounds;
             Vector2Int templateUpperBounds = roomGameObject.room.templateUpperBounds;
 
-            if (position.x < templateLowerBounds.x
-            || position.x > templateUpperBounds.x
-            || position.y < templateLowerBounds.y
-            || position.y > templateUpperBounds.y)
+            if (_position.x < templateLowerBounds.x
+            || _position.x > templateUpperBounds.x
+            || _position.y < templateLowerBounds.y
+            || _position.y > templateUpperBounds.y)
             {
                 return false;
             }

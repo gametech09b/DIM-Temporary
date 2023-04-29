@@ -69,71 +69,71 @@ namespace DungeonGunner
 
 
 
-        private void ActiveWeapon_OnSetActiveWeapon(ActiveWeaponEvent sender, OnSetActiveWeaponArgs args)
+        private void ActiveWeapon_OnSetActiveWeapon(ActiveWeaponEvent _sender, OnSetActiveWeaponArgs _args)
         {
-            SetActiveWeaponUI(args.weapon);
+            SetActiveWeaponUI(_args.weapon);
         }
 
 
 
-        private void FireEvent_OnFired(FireEvent sender, OnFiredArgs args)
+        private void FireEvent_OnFired(FireEvent _sender, OnFiredArgs _args)
         {
-            FiredUI(args.weapon);
+            FiredUI(_args.weapon);
         }
 
 
 
-        private void ReloadEvent_OnReloadAction(ReloadEvent sender, OnReloadActionArgs args)
+        private void ReloadEvent_OnReloadAction(ReloadEvent _sender, OnReloadActionArgs _args)
         {
-            ReloadActionUI(args.weapon);
+            ReloadActionUI(_args.weapon);
         }
 
 
 
-        private void ReloadEvent_OnReloaded(ReloadEvent sender, OnReloadedArgs args)
+        private void ReloadEvent_OnReloaded(ReloadEvent _sender, OnReloadedArgs _args)
         {
-            ReloadedUI(args.weapon);
+            ReloadedUI(_args.weapon);
         }
 
 
 
-        private void SetActiveWeaponUI(Weapon weapon)
+        private void SetActiveWeaponUI(Weapon _weapon)
         {
-            UpdateActiveWeaponImage(weapon.weaponDetail);
-            UpdateActiveWeaponName(weapon);
-            UpdateAmmoIconList(weapon);
-            UpdateAmmoText(weapon);
+            UpdateActiveWeaponImage(_weapon.weaponDetail);
+            UpdateActiveWeaponName(_weapon);
+            UpdateAmmoIconList(_weapon);
+            UpdateAmmoText(_weapon);
 
-            if (weapon.isReloading)
+            if (_weapon.isReloading)
             {
-                ReloadActionUI(weapon);
+                ReloadActionUI(_weapon);
             }
             else
             {
                 ResetStatusBar();
             }
 
-            UpdateReloadText(weapon);
+            UpdateReloadText(_weapon);
         }
 
 
 
-        private void FiredUI(Weapon weapon)
+        private void FiredUI(Weapon _weapon)
         {
-            UpdateAmmoIconList(weapon);
-            UpdateAmmoText(weapon);
-            UpdateReloadText(weapon);
+            UpdateAmmoIconList(_weapon);
+            UpdateAmmoText(_weapon);
+            UpdateReloadText(_weapon);
         }
 
 
 
-        private void ReloadedUI(Weapon weapon)
+        private void ReloadedUI(Weapon _weapon)
         {
-            if (player.activeWeapon.GetCurrentWeapon() == weapon)
+            if (player.activeWeapon.GetCurrentWeapon() == _weapon)
             {
-                UpdateAmmoIconList(weapon);
-                UpdateAmmoText(weapon);
-                UpdateReloadText(weapon);
+                UpdateAmmoIconList(_weapon);
+                UpdateAmmoText(_weapon);
+                UpdateReloadText(_weapon);
 
                 ResetStatusBar();
             }
@@ -141,25 +141,25 @@ namespace DungeonGunner
 
 
 
-        private void UpdateActiveWeaponImage(WeaponDetailSO weaponDetail)
+        private void UpdateActiveWeaponImage(WeaponDetailSO _weaponDetail)
         {
-            weaponImage.sprite = weaponDetail.sprite;
+            weaponImage.sprite = _weaponDetail.sprite;
         }
 
 
 
-        private void UpdateActiveWeaponName(Weapon weapon)
+        private void UpdateActiveWeaponName(Weapon _weapon)
         {
-            weaponNameText.text = $"({weapon.indexOnList}) {weapon.weaponDetail.weaponName.ToUpper()}";
+            weaponNameText.text = $"({_weapon.indexOnList}) {_weapon.weaponDetail.weaponName.ToUpper()}";
         }
 
 
 
-        private void UpdateAmmoIconList(Weapon weapon)
+        private void UpdateAmmoIconList(Weapon _weapon)
         {
             ClearAmmoIconList();
 
-            for (int i = 0; i < weapon.ammoPerClipRemaining; i++)
+            for (int i = 0; i < _weapon.ammoPerClipRemaining; i++)
             {
                 GameObject ammoIcon = Instantiate(UIResources.Instance.ammoIconPrefab, ammoIconListParentTransform);
                 RectTransform ammoIconRectTransform = ammoIcon.GetComponent<RectTransform>();
@@ -182,38 +182,38 @@ namespace DungeonGunner
 
 
 
-        private void UpdateAmmoText(Weapon weapon)
+        private void UpdateAmmoText(Weapon _weapon)
         {
-            if (weapon.weaponDetail.isAmmoInfinite)
+            if (_weapon.weaponDetail.isAmmoInfinite)
             {
                 ammoRemainingText.text = "INFINITE AMMO";
                 return;
             }
 
-            ammoRemainingText.text = $"{weapon.ammoRemaining}/{weapon.weaponDetail.ammoCapacity}";
+            ammoRemainingText.text = $"{_weapon.ammoRemaining}/{_weapon.weaponDetail.ammoCapacity}";
         }
 
 
 
-        private void ReloadActionUI(Weapon weapon)
+        private void ReloadActionUI(Weapon _weapon)
         {
-            if (weapon.weaponDetail.isAmmoPerClipInfinite) return;
+            if (_weapon.weaponDetail.isAmmoPerClipInfinite) return;
 
             StopReloadingCoroutine();
-            UpdateReloadText(weapon);
+            UpdateReloadText(_weapon);
 
-            reloadingCoroutine = StartCoroutine(ReloadingCoroutine(weapon));
+            reloadingCoroutine = StartCoroutine(ReloadingCoroutine(_weapon));
         }
 
 
 
-        private IEnumerator ReloadingCoroutine(Weapon weapon)
+        private IEnumerator ReloadingCoroutine(Weapon _weapon)
         {
             statusBarValueImage.color = Settings.ReloadProgressColor;
 
-            while (weapon.isReloading)
+            while (_weapon.isReloading)
             {
-                float barFill = weapon.reloadTimer / weapon.weaponDetail.reloadTime;
+                float barFill = _weapon.reloadTimer / _weapon.weaponDetail.reloadTime;
                 statusBarValueTransform.transform.localScale = new Vector3(barFill, 1, 1);
 
                 yield return null;
@@ -242,11 +242,11 @@ namespace DungeonGunner
 
 
 
-        private void UpdateReloadText(Weapon weapon)
+        private void UpdateReloadText(Weapon _weapon)
         {
             if (
-                !weapon.weaponDetail.isAmmoPerClipInfinite &&
-                (weapon.ammoPerClipRemaining <= 0 || weapon.isReloading)
+                !_weapon.weaponDetail.isAmmoPerClipInfinite &&
+                (_weapon.ammoPerClipRemaining <= 0 || _weapon.isReloading)
             )
             {
                 reloadText.color = Settings.ReloadProgressColor;

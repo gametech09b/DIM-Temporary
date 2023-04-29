@@ -11,10 +11,10 @@ namespace DungeonGunner {
 
 
 
-        public Weapon(WeaponDetailSO weaponDetail) {
-            this.weaponDetail = weaponDetail;
-            this.ammoPerClipRemaining = weaponDetail.ammoPerClipCapacity;
-            this.ammoRemaining = weaponDetail.ammoCapacity;
+        public Weapon(WeaponDetailSO _weaponDetail) {
+            this.weaponDetail = _weaponDetail;
+            this.ammoPerClipRemaining = _weaponDetail.ammoPerClipCapacity;
+            this.ammoRemaining = _weaponDetail.ammoCapacity;
         }
     }
 }

@@ -31,16 +31,16 @@ namespace DungeonGunner {
 
 
 
-        private void MoveToPositionEvent_OnMoveToPosition(MoveToPositionEvent sender, MoveToPositionEventArgs args) {
-            MoveRigidbody2D(args.currentPosition, args.targetPosition, args.speed);
+        private void MoveToPositionEvent_OnMoveToPosition(MoveToPositionEvent _sender, MoveToPositionEventArgs _args) {
+            MoveRigidbody2D(_args.currentPosition, _args.targetPosition, _args.speed);
         }
 
 
 
-        private void MoveRigidbody2D(Vector3 currentPosition, Vector3 targetPosition, float speed) {
-            Vector2 directionVector = (targetPosition - currentPosition).normalized;
+        private void MoveRigidbody2D(Vector3 _currentPosition, Vector3 _targetPosition, float _speed) {
+            Vector2 directionVector = (_targetPosition - _currentPosition).normalized;
 
-            rigidbody2DComponent.MovePosition(rigidbody2DComponent.position + (directionVector * speed * Time.fixedDeltaTime));
+            rigidbody2DComponent.MovePosition(rigidbody2DComponent.position + (directionVector * _speed * Time.fixedDeltaTime));
         }
     }
 }

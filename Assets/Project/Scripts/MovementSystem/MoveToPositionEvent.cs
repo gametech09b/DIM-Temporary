@@ -10,16 +10,16 @@ namespace DungeonGunner
     {
         public event Action<MoveToPositionEvent, MoveToPositionEventArgs> OnMoveToPosition;
 
-        public void CallOnMoveToPosition(Vector3 currentPosition, Vector3 targetPosition, Vector2 directionVector, float speed, bool isActive = false)
+        public void CallOnMoveToPosition(Vector3 _currentPosition, Vector3 _targetPosition, Vector2 _directionVector, float _speed, bool _isActive = false)
         {
             OnMoveToPosition?.Invoke(this,
                 new MoveToPositionEventArgs
                 {
-                    currentPosition = currentPosition,
-                    targetPosition = targetPosition,
-                    directionVector = directionVector,
-                    speed = speed,
-                    isActive = isActive
+                    currentPosition = _currentPosition,
+                    targetPosition = _targetPosition,
+                    directionVector = _directionVector,
+                    speed = _speed,
+                    isActive = _isActive
                 });
         }
     }

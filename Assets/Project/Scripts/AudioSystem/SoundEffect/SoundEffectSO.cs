@@ -16,6 +16,8 @@ namespace DungeonGunner
         public GameObject prefab;
         public AudioClip audioClip;
 
+
+
         [Range(0.1f, 1.5f)] public float minPitchVariation = 0.8f;
         [Range(0.1f, 1.5f)] public float maxPitchVariation = 1.2f;
         [Range(0f, 1f)] public float volume = 1f;

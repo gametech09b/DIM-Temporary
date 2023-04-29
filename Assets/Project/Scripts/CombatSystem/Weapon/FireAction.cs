@@ -51,9 +51,9 @@ namespace DungeonGunner
 
 
 
-        private void FireEvent_OnFireAction(FireEvent sender, OnFireActionArgs args)
+        private void FireEvent_OnFireAction(FireEvent _sender, OnFireActionArgs _args)
         {
-            Fire(args);
+            Fire(_args);
         }
 
 
@@ -65,16 +65,16 @@ namespace DungeonGunner
 
 
 
-        private void Fire(OnFireActionArgs args)
+        private void Fire(OnFireActionArgs _args)
         {
 
-            ProcessPrefireTimer(args);
+            ProcessPrefireTimer(_args);
 
-            if (!args.isFiring) return;
+            if (!_args.isFiring) return;
 
             if (!IsReadyToFire()) return;
 
-            FireAmmo(args.angle, args.weaponAngle, args.weaponDirectionVector);
+            FireAmmo(_args.angle, _args.weaponAngle, _args.weaponDirectionVector);
 
             ResetFireRateTimer();
             ResetPrechargeTimer();
@@ -82,9 +82,9 @@ namespace DungeonGunner
 
 
 
-        private void ProcessPrefireTimer(OnFireActionArgs args)
+        private void ProcessPrefireTimer(OnFireActionArgs _args)
         {
-            if (args.isFiringPreviousFrame)
+            if (_args.isFiringPreviousFrame)
             {
                 prefireTimer -= Time.deltaTime;
                 return;
@@ -119,23 +119,23 @@ namespace DungeonGunner
 
 
 
-        private void FireAmmo(float angle, float weaponAngle, Vector3 weaponDirectionVector)
+        private void FireAmmo(float _angle, float _weaponAngle, Vector3 _weaponDirectionVector)
         {
             AmmoDetailSO currentAmmoDetail = activeWeapon.GetAmmoDetail();
 
             if (currentAmmoDetail != null)
             {
-                StartCoroutine(FireAmmoCoroutine(currentAmmoDetail, angle, weaponAngle, weaponDirectionVector));
+                StartCoroutine(FireAmmoCoroutine(currentAmmoDetail, _angle, _weaponAngle, _weaponDirectionVector));
             }
         }
 
 
 
-        private IEnumerator FireAmmoCoroutine(AmmoDetailSO ammoDetail, float angle, float weaponAngle, Vector3 weaponDirectionVector)
+        private IEnumerator FireAmmoCoroutine(AmmoDetailSO _ammoDetail, float _angle, float _weaponAngle, Vector3 _weaponDirectionVector)
         {
             int ammoCounter = 0;
-            int ammoPerShot = Random.Range(ammoDetail.minSpawnCount, ammoDetail.maxSpawnCount + 1);
-            float ammoSpawnInterval = ammoPerShot > 1 ? Random.Range(ammoDetail.minSpawnInterval, ammoDetail.maxSpawnInterval) : 0f;
+            int ammoPerShot = Random.Range(_ammoDetail.minSpawnCount, _ammoDetail.maxSpawnCount + 1);
+            float ammoSpawnInterval = ammoPerShot > 1 ? Random.Range(_ammoDetail.minSpawnInterval, _ammoDetail.maxSpawnInterval) : 0f;
 
             Weapon currentWeapon = activeWeapon.GetCurrentWeapon();
 
@@ -143,11 +143,11 @@ namespace DungeonGunner
             {
                 ammoCounter++;
 
-                GameObject ammoPrefab = ammoDetail.prefabArray[Random.Range(0, ammoDetail.prefabArray.Length)];
-                float ammoSpeed = Random.Range(ammoDetail.minSpeed, ammoDetail.maxSpeed);
+                GameObject ammoPrefab = _ammoDetail.prefabArray[Random.Range(0, _ammoDetail.prefabArray.Length)];
+                float ammoSpeed = Random.Range(_ammoDetail.minSpeed, _ammoDetail.maxSpeed);
 
                 IFireable ammo = (IFireable)PoolManager.Instance.ReuseComponent(ammoPrefab, activeWeapon.GetShootPosition(), Quaternion.identity);
-                ammo.Init(ammoDetail, ammoSpeed, angle, weaponAngle, weaponDirectionVector);
+                ammo.Init(_ammoDetail, ammoSpeed, _angle, _weaponAngle, _weaponDirectionVector);
 
                 yield return new WaitForSeconds(ammoSpawnInterval);
             }
@@ -158,7 +158,7 @@ namespace DungeonGunner
             currentWeapon.ammoRemaining--;
 
             fireEvent.CallOnFired(activeWeapon.GetCurrentWeapon());
-            PlayFireShootEffect(angle);
+            PlayFireShootEffect(_angle);
             PlayFireSoundEffect();
         }
 
@@ -178,7 +178,7 @@ namespace DungeonGunner
 
 
 
-        private void PlayFireShootEffect(float angle)
+        private void PlayFireShootEffect(float _angle)
         {
             ShootEffectSO currentWeaponShootEffect = activeWeapon.GetCurrentWeapon().weaponDetail.shootEffect;
 
@@ -186,7 +186,7 @@ namespace DungeonGunner
             {
                 ShootEffect shootEffectInstance = (ShootEffect)PoolManager.Instance.ReuseComponent(currentWeaponShootEffect.prefab, activeWeapon.GetEffectPosition(), Quaternion.identity);
 
-                shootEffectInstance.Init(currentWeaponShootEffect, angle);
+                shootEffectInstance.Init(currentWeaponShootEffect, _angle);
 
                 shootEffectInstance.gameObject.SetActive(true);
             }

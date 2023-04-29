@@ -25,21 +25,21 @@ namespace DungeonGunner
         [HideInInspector] public Bounds roomColliderBounds;
 
 
-        private BoxCollider2D _roomCollider;
+        private BoxCollider2D roomCollider;
 
 
 
         private void Awake()
         {
-            _roomCollider = GetComponent<BoxCollider2D>();
-            roomColliderBounds = _roomCollider.bounds;
+            roomCollider = GetComponent<BoxCollider2D>();
+            roomColliderBounds = roomCollider.bounds;
         }
 
 
 
-        private void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D _other)
         {
-            if (other.CompareTag(Settings.PlayerTag) && room != GameManager.Instance.GetCurrentRoom())
+            if (_other.CompareTag(Settings.PlayerTag) && room != GameManager.Instance.GetCurrentRoom())
             {
                 room.isVisited = true;
 
@@ -49,9 +49,9 @@ namespace DungeonGunner
 
 
 
-        public void Init(GameObject roomGameObject)
+        public void Init(GameObject _roomGameObject)
         {
-            PopulateTilemapVariables(roomGameObject);
+            PopulateTilemapVariables(_roomGameObject);
 
             BlockOffUnconnectedDoorways();
 
@@ -64,9 +64,9 @@ namespace DungeonGunner
 
 
 
-        public void PopulateTilemapVariables(GameObject roomGameObject)
+        public void PopulateTilemapVariables(GameObject _roomGameObject)
         {
-            grid = roomGameObject.GetComponentInChildren<Grid>();
+            grid = _roomGameObject.GetComponentInChildren<Grid>();
 
             Tilemap[] tilemapArray = grid.GetComponentsInChildren<Tilemap>();
 
@@ -141,18 +141,18 @@ namespace DungeonGunner
 
 
 
-        private void BlockDoorwayOnTilemapLayer(Doorway doorway, Tilemap tilemap)
+        private void BlockDoorwayOnTilemapLayer(Doorway _doorway, Tilemap _tilemap)
         {
-            switch (doorway.orientation)
+            switch (_doorway.orientation)
             {
                 case Orientation.NORTH:
                 case Orientation.SOUTH:
-                    BlockDoorwayHorizontally(doorway, tilemap);
+                    BlockDoorwayHorizontally(_doorway, _tilemap);
                     break;
 
                 case Orientation.EAST:
                 case Orientation.WEST:
-                    BlockDoorwayVertically(doorway, tilemap);
+                    BlockDoorwayVertically(_doorway, _tilemap);
                     break;
 
                 case Orientation.NONE:
@@ -162,46 +162,46 @@ namespace DungeonGunner
 
 
 
-        private void BlockDoorwayHorizontally(Doorway doorway, Tilemap tilemap)
+        private void BlockDoorwayHorizontally(Doorway _doorway, Tilemap _tilemap)
         {
-            Vector2Int startPosition = doorway.startCopyPosition;
+            Vector2Int startPosition = _doorway.startCopyPosition;
 
-            for (int xPosition = 0; xPosition < doorway.copyTileWidth; xPosition++)
+            for (int xPosition = 0; xPosition < _doorway.copyTileWidth; xPosition++)
             {
-                for (int yPosition = 0; yPosition < doorway.copyTileHeight; yPosition++)
+                for (int yPosition = 0; yPosition < _doorway.copyTileHeight; yPosition++)
                 {
                     Vector3Int tileToCopyPosition = new Vector3Int(startPosition.x + xPosition, startPosition.y - yPosition, 0);
 
-                    Matrix4x4 transformMatrix = tilemap.GetTransformMatrix(tileToCopyPosition);
+                    Matrix4x4 transformMatrix = _tilemap.GetTransformMatrix(tileToCopyPosition);
 
-                    TileBase tileToCopy = tilemap.GetTile(tileToCopyPosition);
+                    TileBase tileToCopy = _tilemap.GetTile(tileToCopyPosition);
 
                     Vector3Int tileToPastePosition = new Vector3Int(startPosition.x + 1 + xPosition, startPosition.y - yPosition, 0);
-                    tilemap.SetTile(tileToPastePosition, tileToCopy);
-                    tilemap.SetTransformMatrix(tileToPastePosition, transformMatrix);
+                    _tilemap.SetTile(tileToPastePosition, tileToCopy);
+                    _tilemap.SetTransformMatrix(tileToPastePosition, transformMatrix);
                 }
             }
         }
 
 
 
-        private void BlockDoorwayVertically(Doorway doorway, Tilemap tilemap)
+        private void BlockDoorwayVertically(Doorway _doorway, Tilemap _tilemap)
         {
-            Vector2Int startPosition = doorway.startCopyPosition;
+            Vector2Int startPosition = _doorway.startCopyPosition;
 
-            for (int xPosition = 0; xPosition < doorway.copyTileWidth; xPosition++)
+            for (int xPosition = 0; xPosition < _doorway.copyTileWidth; xPosition++)
             {
-                for (int yPosition = 0; yPosition < doorway.copyTileHeight; yPosition++)
+                for (int yPosition = 0; yPosition < _doorway.copyTileHeight; yPosition++)
                 {
                     Vector3Int tileToCopyPosition = new Vector3Int(startPosition.x + xPosition, startPosition.y - yPosition, 0);
 
-                    Matrix4x4 transformMatrix = tilemap.GetTransformMatrix(tileToCopyPosition);
+                    Matrix4x4 transformMatrix = _tilemap.GetTransformMatrix(tileToCopyPosition);
 
-                    TileBase tileToCopy = tilemap.GetTile(tileToCopyPosition);
+                    TileBase tileToCopy = _tilemap.GetTile(tileToCopyPosition);
 
                     Vector3Int tileToPastePosition = new Vector3Int(startPosition.x + xPosition, startPosition.y - 1 - yPosition, 0);
-                    tilemap.SetTile(tileToPastePosition, tileToCopy);
-                    tilemap.SetTransformMatrix(tileToPastePosition, transformMatrix);
+                    _tilemap.SetTile(tileToPastePosition, tileToCopy);
+                    _tilemap.SetTransformMatrix(tileToPastePosition, transformMatrix);
                 }
             }
         }
@@ -315,9 +315,9 @@ namespace DungeonGunner
 
 
 
-        public int GetAStarMovementPenalty(Vector3 worldPosition)
+        public int GetAStarMovementPenalty(Vector3 _worldPosition)
         {
-            Vector3Int tilePosition = collisionTilemap.WorldToCell(worldPosition);
+            Vector3Int tilePosition = collisionTilemap.WorldToCell(_worldPosition);
 
             int x = tilePosition.x - room.templateLowerBounds.x;
             int y = tilePosition.y - room.templateLowerBounds.y;
@@ -327,9 +327,9 @@ namespace DungeonGunner
 
 
 
-        public int GetAStarMovementPenalty(int x, int y)
+        public int GetAStarMovementPenalty(int _x, int _y)
         {
-            return aStarMovementPenaltyArray[x, y];
+            return aStarMovementPenaltyArray[_x, _y];
         }
 
 
@@ -350,7 +350,7 @@ namespace DungeonGunner
 
         public void DisableRoomCollider()
         {
-            _roomCollider.enabled = false;
+            roomCollider.enabled = false;
         }
     }
 }

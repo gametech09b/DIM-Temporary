@@ -13,30 +13,30 @@ namespace DungeonGunner
 
         [SerializeField] private MovementDetailSO movementDetail;
 
-        private Player _player;
-        private int _activeWeaponIndex = 1;
-        private float _moveSpeed;
-        private bool _isFiringPreviousFrame;
+        private Player player;
+        private int activeWeaponIndex = 1;
+        private float moveSpeed;
+        private bool isFiringPreviousFrame;
 
-        private Coroutine _dashCoroutine;
-        private WaitForFixedUpdate _waitForFixedUpdate;
-        private bool _isDashing;
-        private float _dashCooldownTimer;
+        private Coroutine dashCoroutine;
+        private WaitForFixedUpdate waitForFixedUpdate;
+        private bool isDashing;
+        private float dashCooldownTimer;
 
 
 
         private void Awake()
         {
-            _player = GetComponent<Player>();
+            player = GetComponent<Player>();
 
-            _moveSpeed = movementDetail.GetMoveSpeed();
+            moveSpeed = movementDetail.GetMoveSpeed();
         }
 
 
 
         private void Start()
         {
-            _waitForFixedUpdate = new WaitForFixedUpdate();
+            waitForFixedUpdate = new WaitForFixedUpdate();
 
             SetupInitialWeapon();
 
@@ -47,7 +47,7 @@ namespace DungeonGunner
 
         private void Update()
         {
-            if (_isDashing) return;
+            if (isDashing) return;
 
             MovementInput();
 
@@ -58,14 +58,14 @@ namespace DungeonGunner
 
 
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnCollisionEnter2D(Collision2D _other)
         {
             StopDashCoroutine();
         }
 
 
 
-        private void OnCollisionStay2D(Collision2D other)
+        private void OnCollisionStay2D(Collision2D _other)
         {
             StopDashCoroutine();
         }
@@ -76,9 +76,9 @@ namespace DungeonGunner
         {
             int index = 1;
 
-            foreach (Weapon weapon in _player.weaponList)
+            foreach (Weapon weapon in player.weaponList)
             {
-                if (weapon.weaponDetail == _player.playerDetail.initialWeapon)
+                if (weapon.weaponDetail == player.playerDetail.initialWeapon)
                 {
                     SetWeaponByIndex(index);
                     break;
@@ -90,19 +90,19 @@ namespace DungeonGunner
 
 
 
-        private void SetWeaponByIndex(int index)
+        private void SetWeaponByIndex(int _index)
         {
-            if (index - 1 < 0 || index - 1 > _player.weaponList.Count) return;
+            if (_index - 1 < 0 || _index - 1 > player.weaponList.Count) return;
 
-            _activeWeaponIndex = index;
-            _player.activeWeaponEvent.CallOnSetActiveWeapon(_player.weaponList[index - 1]);
+            activeWeaponIndex = _index;
+            player.activeWeaponEvent.CallOnSetActiveWeapon(player.weaponList[_index - 1]);
         }
 
 
 
         private void SetupPlayerAnimationSpeed()
         {
-            _player.animator.speed = _moveSpeed / Settings.BaseSpeedForPlayerAnimation;
+            player.animator.speed = moveSpeed / Settings.BaseSpeedForPlayerAnimation;
         }
 
 
@@ -116,18 +116,18 @@ namespace DungeonGunner
 
             if (directionVector != Vector2.zero)
             {
-                if (Input.GetMouseButtonDown(1) && _dashCooldownTimer <= 0)
+                if (Input.GetMouseButtonDown(1) && dashCooldownTimer <= 0)
                 {
                     Roll((Vector3)directionVector);
                 }
                 else
                 {
-                    _player.moveByVelocityEvent.CallOnMoveByVelocity(directionVector, _moveSpeed);
+                    player.moveByVelocityEvent.CallOnMoveByVelocity(directionVector, moveSpeed);
                 }
             }
             else
             {
-                _player.idleEvent.CallOnIdleEvent();
+                player.idleEvent.CallOnIdleEvent();
             }
         }
 
@@ -150,37 +150,37 @@ namespace DungeonGunner
 
 
 
-        private void HandleAimInput(out Direction playerDirection, out float playerAngle, out float weaponAngle, out Vector3 weaponDirectionVector)
+        private void HandleAimInput(out Direction _playerDirection, out float _playerAngle, out float _weaponAngle, out Vector3 _weaponDirectionVector)
         {
             Vector3 mousePosition = HelperUtilities.GetMouseWorldPosition();
             Vector3 playerPosition = transform.position;
 
-            weaponDirectionVector = mousePosition - _player.activeWeapon.GetShootPosition();
+            _weaponDirectionVector = mousePosition - player.activeWeapon.GetShootPosition();
 
             Vector3 playerDirectionVector = mousePosition - playerPosition;
 
-            weaponAngle = HelperUtilities.GetAngleFromVector(weaponDirectionVector);
-            playerAngle = HelperUtilities.GetAngleFromVector(playerDirectionVector);
+            _weaponAngle = HelperUtilities.GetAngleFromVector(_weaponDirectionVector);
+            _playerAngle = HelperUtilities.GetAngleFromVector(playerDirectionVector);
 
-            playerDirection = HelperUtilities.GetDirectionFromAngle(playerAngle);
+            _playerDirection = HelperUtilities.GetDirectionFromAngle(_playerAngle);
 
-            _player.aimEvent.CallOnAimAction(playerDirection, playerAngle, weaponAngle, weaponDirectionVector);
+            player.aimEvent.CallOnAimAction(_playerDirection, _playerAngle, _weaponAngle, _weaponDirectionVector);
         }
 
 
 
-        private void HandleFireInput(Direction playerDirection, float playerAngle, float weaponAngle, Vector3 weaponDirectionVector)
+        private void HandleFireInput(Direction _playerDirection, float _playerAngle, float _weaponAngle, Vector3 _weaponDirectionVector)
         {
             bool isFiring = Input.GetMouseButton(0);
 
             if (isFiring)
             {
-                _player.fireEvent.CallOnFireAction(isFiring, _isFiringPreviousFrame, playerDirection, playerAngle, weaponAngle, weaponDirectionVector);
-                _isFiringPreviousFrame = true;
+                player.fireEvent.CallOnFireAction(isFiring, isFiringPreviousFrame, _playerDirection, _playerAngle, _weaponAngle, _weaponDirectionVector);
+                isFiringPreviousFrame = true;
             }
             else
             {
-                _isFiringPreviousFrame = false;
+                isFiringPreviousFrame = false;
             }
         }
 
@@ -239,7 +239,7 @@ namespace DungeonGunner
 
         private void HandleReloadInput()
         {
-            Weapon currentWeapon = _player.activeWeapon.GetCurrentWeapon();
+            Weapon currentWeapon = player.activeWeapon.GetCurrentWeapon();
 
             if (currentWeapon.isReloading) return;
 
@@ -251,66 +251,66 @@ namespace DungeonGunner
 
             if (Input.GetKeyDown(KeyCode.R))
             {
-                _player.reloadEvent.CallOnReloadAction(currentWeapon, 0);
+                player.reloadEvent.CallOnReloadAction(currentWeapon, 0);
             }
         }
 
 
 
-        private void Roll(Vector3 directionVector)
+        private void Roll(Vector3 _directionVector)
         {
-            if (_dashCoroutine != null)
+            if (dashCoroutine != null)
             {
-                StopCoroutine(_dashCoroutine);
+                StopCoroutine(dashCoroutine);
             }
 
-            _dashCoroutine = StartCoroutine(DashCoroutine(directionVector));
+            dashCoroutine = StartCoroutine(DashCoroutine(_directionVector));
         }
 
 
 
-        private IEnumerator DashCoroutine(Vector3 directionVector)
+        private IEnumerator DashCoroutine(Vector3 _directionVector)
         {
-            _isDashing = true;
+            isDashing = true;
 
             float minimumDistance = 0.2f;
 
-            Vector3 currentPosition = _player.transform.position;
-            Vector3 targetPosition = currentPosition + directionVector * movementDetail.dashDistance;
+            Vector3 currentPosition = player.transform.position;
+            Vector3 targetPosition = currentPosition + _directionVector * movementDetail.dashDistance;
 
-            while (Vector3.Distance(_player.transform.position, targetPosition) > minimumDistance)
+            while (Vector3.Distance(player.transform.position, targetPosition) > minimumDistance)
             {
-                _player.moveToPositionEvent.CallOnMoveToPosition(currentPosition, targetPosition, directionVector, movementDetail.dashSpeed, _isDashing);
+                player.moveToPositionEvent.CallOnMoveToPosition(currentPosition, targetPosition, _directionVector, movementDetail.dashSpeed, isDashing);
 
-                yield return _waitForFixedUpdate;
+                yield return waitForFixedUpdate;
             }
 
-            _isDashing = false;
+            isDashing = false;
 
-            _dashCooldownTimer = movementDetail.dashCooldownTime;
+            dashCooldownTimer = movementDetail.dashCooldownTime;
 
-            _player.transform.position = targetPosition;
+            player.transform.position = targetPosition;
         }
 
 
 
         private void StopDashCoroutine()
         {
-            if (_dashCoroutine != null)
+            if (dashCoroutine != null)
             {
-                StopCoroutine(_dashCoroutine);
+                StopCoroutine(dashCoroutine);
             }
 
-            _isDashing = false;
+            isDashing = false;
         }
 
 
 
         private void ProcessDashCooldownTimer()
         {
-            if (_dashCooldownTimer >= 0)
+            if (dashCooldownTimer >= 0)
             {
-                _dashCooldownTimer -= Time.deltaTime;
+                dashCooldownTimer -= Time.deltaTime;
             }
         }
 
@@ -318,28 +318,28 @@ namespace DungeonGunner
 
         private void PreviousWeapon()
         {
-            _activeWeaponIndex--;
+            activeWeaponIndex--;
 
-            if (_activeWeaponIndex < 1)
+            if (activeWeaponIndex < 1)
             {
-                _activeWeaponIndex = _player.weaponList.Count;
+                activeWeaponIndex = player.weaponList.Count;
             }
 
-            SetWeaponByIndex(_activeWeaponIndex);
+            SetWeaponByIndex(activeWeaponIndex);
         }
 
 
 
         private void NextWeapon()
         {
-            _activeWeaponIndex++;
+            activeWeaponIndex++;
 
-            if (_activeWeaponIndex > _player.weaponList.Count)
+            if (activeWeaponIndex > player.weaponList.Count)
             {
-                _activeWeaponIndex = 1;
+                activeWeaponIndex = 1;
             }
 
-            SetWeaponByIndex(_activeWeaponIndex);
+            SetWeaponByIndex(activeWeaponIndex);
         }
 
 

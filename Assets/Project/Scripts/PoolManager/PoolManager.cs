@@ -31,11 +31,11 @@ namespace DungeonGunner
 
 
 
-        private void CreatePool(GameObject prefab, int size, string componentType)
+        private void CreatePool(GameObject _prefab, int _size, string _componentType)
         {
-            int key = prefab.GetInstanceID();
+            int key = _prefab.GetInstanceID();
 
-            string poolName = $"{prefab.name} Pool";
+            string poolName = $"{_prefab.name} Pool";
 
             GameObject parentPoolGameObject = new GameObject(poolName);
             parentPoolGameObject.transform.SetParent(objectPoolTransform);
@@ -44,13 +44,13 @@ namespace DungeonGunner
             {
                 poolDictionary.Add(key, new Queue<Component>());
 
-                for (int i = 0; i < size; i++)
+                for (int i = 0; i < _size; i++)
                 {
-                    GameObject newPoolGameObject = Instantiate(prefab, parentPoolGameObject.transform) as GameObject;
+                    GameObject newPoolGameObject = Instantiate(_prefab, parentPoolGameObject.transform) as GameObject;
 
                     newPoolGameObject.SetActive(false);
 
-                    Type type = Type.GetType($"{Settings.ProjectName}.{componentType}");
+                    Type type = Type.GetType($"{Settings.ProjectName}.{_componentType}");
 
                     poolDictionary[key].Enqueue(newPoolGameObject.GetComponent(type));
                 }
@@ -59,15 +59,15 @@ namespace DungeonGunner
 
 
 
-        public Component ReuseComponent(GameObject prefab, Vector3 position, Quaternion rotation)
+        public Component ReuseComponent(GameObject _prefab, Vector3 _position, Quaternion _rotation)
         {
-            int key = prefab.GetInstanceID();
+            int key = _prefab.GetInstanceID();
 
             if (poolDictionary.ContainsKey(key))
             {
                 Component componentToReuse = GetComponentFromPool(key);
 
-                ResetObject(componentToReuse, prefab, position, rotation);
+                ResetObject(componentToReuse, _prefab, _position, _rotation);
 
                 return componentToReuse;
             }
@@ -78,11 +78,11 @@ namespace DungeonGunner
 
 
 
-        private Component GetComponentFromPool(int key)
+        private Component GetComponentFromPool(int _key)
         {
-            Component componentToReuse = poolDictionary[key].Dequeue();
+            Component componentToReuse = poolDictionary[_key].Dequeue();
 
-            poolDictionary[key].Enqueue(componentToReuse);
+            poolDictionary[_key].Enqueue(componentToReuse);
 
             if (componentToReuse.gameObject.activeSelf)
             {
@@ -94,11 +94,11 @@ namespace DungeonGunner
 
 
 
-        private void ResetObject(Component componentToReuse, GameObject prefab, Vector3 position, Quaternion rotation)
+        private void ResetObject(Component _componentToReuse, GameObject _prefab, Vector3 _position, Quaternion _rotation)
         {
-            componentToReuse.transform.position = position;
-            componentToReuse.transform.rotation = rotation;
-            componentToReuse.transform.localScale = prefab.transform.localScale;
+            _componentToReuse.transform.position = _position;
+            _componentToReuse.transform.rotation = _rotation;
+            _componentToReuse.transform.localScale = _prefab.transform.localScale;
         }
 
 

@@ -41,16 +41,16 @@ namespace DungeonGunner
 
 
 
-        private void ActiveWeaponEvent_OnSetActiveWeapon(ActiveWeaponEvent sender, OnSetActiveWeaponArgs args)
+        private void ActiveWeaponEvent_OnSetActiveWeapon(ActiveWeaponEvent _sender, OnSetActiveWeaponArgs _args)
         {
-            SetWeapon(args.weapon);
+            SetWeapon(_args.weapon);
         }
 
 
 
-        private void SetWeapon(Weapon weapon)
+        private void SetWeapon(Weapon _weapon)
         {
-            currentWeapon = weapon;
+            currentWeapon = _weapon;
 
             weaponSpriteRenderer.sprite = currentWeapon.weaponDetail.sprite;
 

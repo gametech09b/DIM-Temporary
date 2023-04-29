@@ -30,8 +30,8 @@ namespace DungeonGunner {
 
 
 
-        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs args) {
-            if (args.room == roomGameObject.room && !roomGameObject.room.isLit) {
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs _args) {
+            if (_args.room == roomGameObject.room && !roomGameObject.room.isLit) {
                 FadeInRoom();
 
                 FadeInAllDoorsOnRoom();
@@ -48,33 +48,33 @@ namespace DungeonGunner {
 
 
 
-        private IEnumerator FadeInRoomCoroutine(RoomGameObject roomGameObject) {
+        private IEnumerator FadeInRoomCoroutine(RoomGameObject _roomGameObject) {
             Material material = new Material(GameResources.Instance.VariableLitShader);
 
-            ChangeRoomTilemapMaterials(roomGameObject, material);
+            ChangeRoomTilemapMaterials(_roomGameObject, material);
 
             for (float i = 0.05f; i <= 1f; i += Time.deltaTime / Settings.FadeInTime) {
                 material.SetFloat("Alpha_Slider", i);
                 yield return null;
             }
 
-            ChangeRoomTilemapMaterials(roomGameObject, GameResources.Instance.LitMaterial);
+            ChangeRoomTilemapMaterials(_roomGameObject, GameResources.Instance.LitMaterial);
         }
 
 
 
-        private void ChangeTilemapMaterial(Tilemap tilemap, Material material) {
-            tilemap.GetComponent<TilemapRenderer>().material = material;
+        private void ChangeTilemapMaterial(Tilemap _tilemap, Material _material) {
+            _tilemap.GetComponent<TilemapRenderer>().material = _material;
         }
 
 
 
-        private void ChangeRoomTilemapMaterials(RoomGameObject roomGameObject, Material material) {
-            ChangeTilemapMaterial(roomGameObject.groundTilemap, material);
-            ChangeTilemapMaterial(roomGameObject.decorationTilemap1, material);
-            ChangeTilemapMaterial(roomGameObject.decorationTilemap2, material);
-            ChangeTilemapMaterial(roomGameObject.frontTilemap, material);
-            ChangeTilemapMaterial(roomGameObject.minimapTilemap, material);
+        private void ChangeRoomTilemapMaterials(RoomGameObject _roomGameObject, Material _material) {
+            ChangeTilemapMaterial(_roomGameObject.groundTilemap, _material);
+            ChangeTilemapMaterial(_roomGameObject.decorationTilemap1, _material);
+            ChangeTilemapMaterial(_roomGameObject.decorationTilemap2, _material);
+            ChangeTilemapMaterial(_roomGameObject.frontTilemap, _material);
+            ChangeTilemapMaterial(_roomGameObject.minimapTilemap, _material);
         }
 
 

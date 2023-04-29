@@ -63,11 +63,11 @@ namespace DungeonGunner
 
 
 
-        public int GetNumberOfEnemyToSpawn(DungeonLevelSO dungeonLevel)
+        public int GetNumberOfEnemyToSpawn(DungeonLevelSO _dungeonLevel)
         {
             foreach (RoomEnemySpawnParameter roomEnemySpawnParameter in roomEnemySpawnParameterList)
             {
-                if (roomEnemySpawnParameter.dungeonLevel == dungeonLevel)
+                if (roomEnemySpawnParameter.dungeonLevel == _dungeonLevel)
                 {
                     return Random.Range(roomEnemySpawnParameter.minTotalEnemy, roomEnemySpawnParameter.maxTotalEnemy);
                 }
@@ -78,11 +78,11 @@ namespace DungeonGunner
 
 
 
-        public RoomEnemySpawnParameter GetRoomEnemySpawnParameter(DungeonLevelSO dungeonLevel)
+        public RoomEnemySpawnParameter GetRoomEnemySpawnParameter(DungeonLevelSO _dungeonLevel)
         {
             foreach (RoomEnemySpawnParameter roomEnemySpawnParameter in roomEnemySpawnParameterList)
             {
-                if (roomEnemySpawnParameter.dungeonLevel == dungeonLevel)
+                if (roomEnemySpawnParameter.dungeonLevel == _dungeonLevel)
                 {
                     return roomEnemySpawnParameter;
                 }

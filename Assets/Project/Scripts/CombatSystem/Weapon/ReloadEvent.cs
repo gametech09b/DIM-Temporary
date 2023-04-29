@@ -6,10 +6,10 @@ namespace DungeonGunner {
     public class ReloadEvent : MonoBehaviour {
         public event Action<ReloadEvent, OnReloadActionArgs> OnReloadAction;
 
-        public void CallOnReloadAction(Weapon weapon, int reloadAmmoPercent) {
+        public void CallOnReloadAction(Weapon _weapon, int _reloadAmmoPercent) {
             OnReloadAction?.Invoke(this, new OnReloadActionArgs {
-                weapon = weapon,
-                reloadAmmoPercent = reloadAmmoPercent
+                weapon = _weapon,
+                reloadAmmoPercent = _reloadAmmoPercent
             });
         }
 
@@ -17,9 +17,9 @@ namespace DungeonGunner {
 
         public event Action<ReloadEvent, OnReloadedArgs> OnReloaded;
 
-        public void CallOnReloaded(Weapon weapon) {
+        public void CallOnReloaded(Weapon _weapon) {
             OnReloaded?.Invoke(this, new OnReloadedArgs {
-                weapon = weapon
+                weapon = _weapon
             });
         }
     }

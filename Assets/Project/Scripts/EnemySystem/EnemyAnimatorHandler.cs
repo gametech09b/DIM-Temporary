@@ -10,46 +10,46 @@ namespace DungeonGunner.EnemySystem
     #endregion
     public class EnemyAnimatorHandler : MonoBehaviour
     {
-        private Enemy _enemy;
+        private Enemy enemy;
 
 
 
         private void Awake()
         {
-            _enemy = GetComponent<Enemy>();
+            enemy = GetComponent<Enemy>();
         }
 
 
 
         private void OnEnable()
         {
-            _enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
-            _enemy.moveToPositionEvent.OnMoveToPosition += MoveToPositionEvent_OnMoveToPosition;
+            enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
+            enemy.moveToPositionEvent.OnMoveToPosition += MoveToPositionEvent_OnMoveToPosition;
         }
 
 
 
         private void OnDisable()
         {
-            _enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
-            _enemy.moveToPositionEvent.OnMoveToPosition -= MoveToPositionEvent_OnMoveToPosition;
+            enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
+            enemy.moveToPositionEvent.OnMoveToPosition -= MoveToPositionEvent_OnMoveToPosition;
         }
 
 
 
-        private void IdleEvent_OnIdle(IdleEvent sender)
+        private void IdleEvent_OnIdle(IdleEvent _sender)
         {
             SetIdleAnimationParameters();
         }
 
 
 
-        private void MoveToPositionEvent_OnMoveToPosition(MoveToPositionEvent sender, MoveToPositionEventArgs args)
+        private void MoveToPositionEvent_OnMoveToPosition(MoveToPositionEvent _sender, MoveToPositionEventArgs _args)
         {
             DisableAllAimAnimationParameters();
 
             // FIXME: FIX LATER
-            Vector3 position = _enemy.transform.position;
+            Vector3 position = enemy.transform.position;
             Vector3 targetPosition = GameManager.Instance.GetCurrentPlayer().transform.position;
             if (position.x < targetPosition.x)
             {
@@ -67,45 +67,45 @@ namespace DungeonGunner.EnemySystem
 
         private void SetIdleAnimationParameters()
         {
-            _enemy.animator.SetBool(Settings.IsIdle, true);
-            _enemy.animator.SetBool(Settings.IsMoving, false);
+            enemy.animator.SetBool(Settings.IsIdle, true);
+            enemy.animator.SetBool(Settings.IsMoving, false);
         }
 
 
 
         private void DisableAllAimAnimationParameters()
         {
-            _enemy.animator.SetBool(Settings.AimUp, false);
-            _enemy.animator.SetBool(Settings.AimUpRight, false);
-            _enemy.animator.SetBool(Settings.AimUpLeft, false);
-            _enemy.animator.SetBool(Settings.AimRight, false);
-            _enemy.animator.SetBool(Settings.AimDown, false);
-            _enemy.animator.SetBool(Settings.AimLeft, false);
+            enemy.animator.SetBool(Settings.AimUp, false);
+            enemy.animator.SetBool(Settings.AimUpRight, false);
+            enemy.animator.SetBool(Settings.AimUpLeft, false);
+            enemy.animator.SetBool(Settings.AimRight, false);
+            enemy.animator.SetBool(Settings.AimDown, false);
+            enemy.animator.SetBool(Settings.AimLeft, false);
         }
 
 
 
-        private void SetAimAnimationParameters(Direction direction)
+        private void SetAimAnimationParameters(Direction _direction)
         {
-            switch (direction)
+            switch (_direction)
             {
                 case Direction.UP:
-                    _enemy.animator.SetBool(Settings.AimUp, true);
+                    enemy.animator.SetBool(Settings.AimUp, true);
                     break;
                 case Direction.UP_RIGHT:
-                    _enemy.animator.SetBool(Settings.AimUpRight, true);
+                    enemy.animator.SetBool(Settings.AimUpRight, true);
                     break;
                 case Direction.UP_LEFT:
-                    _enemy.animator.SetBool(Settings.AimUpLeft, true);
+                    enemy.animator.SetBool(Settings.AimUpLeft, true);
                     break;
                 case Direction.RIGHT:
-                    _enemy.animator.SetBool(Settings.AimRight, true);
+                    enemy.animator.SetBool(Settings.AimRight, true);
                     break;
                 case Direction.DOWN:
-                    _enemy.animator.SetBool(Settings.AimDown, true);
+                    enemy.animator.SetBool(Settings.AimDown, true);
                     break;
                 case Direction.LEFT:
-                    _enemy.animator.SetBool(Settings.AimLeft, true);
+                    enemy.animator.SetBool(Settings.AimLeft, true);
                     break;
             }
         }
@@ -114,8 +114,8 @@ namespace DungeonGunner.EnemySystem
 
         private void SetMoveAnimationParameters()
         {
-            _enemy.animator.SetBool(Settings.IsIdle, false);
-            _enemy.animator.SetBool(Settings.IsMoving, true);
+            enemy.animator.SetBool(Settings.IsIdle, false);
+            enemy.animator.SetBool(Settings.IsMoving, true);
         }
     }
 }

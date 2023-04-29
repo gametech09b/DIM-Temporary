@@ -12,17 +12,17 @@ namespace DungeonGunner
 
 
 
-        public void SetStartingAmount(int amount)
+        public void SetStartingAmount(int _amount)
         {
-            startingAmount = amount;
-            currentAmount = amount;
+            startingAmount = _amount;
+            currentAmount = _amount;
         }
 
 
 
-        public void SetCurrentAmount(int amount)
+        public void SetCurrentAmount(int _amount)
         {
-            currentAmount = amount;
+            currentAmount = _amount;
         }
 
 

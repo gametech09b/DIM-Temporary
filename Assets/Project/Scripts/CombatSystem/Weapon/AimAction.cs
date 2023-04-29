@@ -38,18 +38,18 @@ namespace DungeonGunner
 
 
 
-        private void AimEvent_OnAim(AimEvent aimEvent, AimEventArgs aimEventArgs)
+        private void AimEvent_OnAim(AimEvent _aimEvent, AimEventArgs _aimEventArgs)
         {
-            AimToMousePosition(aimEventArgs.direction, aimEventArgs.angle);
+            AimToMousePosition(_aimEventArgs.direction, _aimEventArgs.angle);
         }
 
 
 
-        private void AimToMousePosition(Direction direction, float angle)
+        private void AimToMousePosition(Direction _direction, float _angle)
         {
-            weaponRotationPointTransform.eulerAngles = new Vector3(0f, 0f, angle);
+            weaponRotationPointTransform.eulerAngles = new Vector3(0f, 0f, _angle);
 
-            switch (direction)
+            switch (_direction)
             {
                 case Direction.UP_LEFT:
                 case Direction.LEFT:

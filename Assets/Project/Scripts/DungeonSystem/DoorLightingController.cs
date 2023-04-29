@@ -16,13 +16,13 @@ namespace DungeonGunner {
 
 
 
-        private void OnTriggerEnter2D(Collider2D other) {
+        private void OnTriggerEnter2D(Collider2D _other) {
             FadeInDoor(doorGameObject);
         }
 
 
 
-        public void FadeInDoor(DoorGameObject doorGameObject) {
+        public void FadeInDoor(DoorGameObject _doorGameObject) {
             Material material = new Material(GameResources.Instance.VariableLitShader);
 
             if (!isLit) {
@@ -38,15 +38,15 @@ namespace DungeonGunner {
 
 
 
-        private IEnumerator FadeInDoorCoroutine(SpriteRenderer spriteRenderer, Material material) {
-            spriteRenderer.material = material;
+        private IEnumerator FadeInDoorCoroutine(SpriteRenderer _spriteRenderer, Material _material) {
+            _spriteRenderer.material = _material;
 
             for (float i = 0.05f; i <= 1f; i += Time.deltaTime / Settings.FadeInTime) {
-                material.SetFloat("Alpha_Slider", i);
+                _material.SetFloat("Alpha_Slider", i);
                 yield return null;
             }
 
-            spriteRenderer.material = GameResources.Instance.LitMaterial;
+            _spriteRenderer.material = GameResources.Instance.LitMaterial;
         }
     }
 }

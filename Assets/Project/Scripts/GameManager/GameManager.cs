@@ -89,9 +89,9 @@ namespace DungeonGunner
 
 
 
-        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs args)
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs _args)
         {
-            SetCurrentRoom(args.room);
+            SetCurrentRoom(_args.room);
         }
 
 
@@ -140,9 +140,9 @@ namespace DungeonGunner
 
 
 
-        private void PlayDungeonLevel(int dungeonLevelIndex)
+        private void PlayDungeonLevel(int _dungeonLevelIndex)
         {
-            bool dungeonBuiltSuccessfully = DungeonBuilder.Instance.GenerateDungeon(dungeonLevelList[dungeonLevelIndex]);
+            bool dungeonBuiltSuccessfully = DungeonBuilder.Instance.GenerateDungeon(dungeonLevelList[_dungeonLevelIndex]);
 
             if (!dungeonBuiltSuccessfully)
             {
@@ -165,10 +165,10 @@ namespace DungeonGunner
 
 
 
-        public void SetCurrentRoom(Room room)
+        public void SetCurrentRoom(Room _room)
         {
             previousRoom = currentRoom;
-            currentRoom = room;
+            currentRoom = _room;
         }
 
 

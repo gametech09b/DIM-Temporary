@@ -94,10 +94,5 @@ namespace DungeonGunner
         public const float AStarPlayerDistanceToRebuildPath = 3f;
         public const float AStarEnemyRebuildCooldown = 2f;
         #endregion
-
-
-
-
-
     }
 }

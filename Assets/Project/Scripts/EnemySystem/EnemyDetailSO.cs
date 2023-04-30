@@ -33,6 +33,20 @@ namespace DungeonGunner
         [ColorUsage(true, true)] public Color materializeColor;
 
 
+
+        [Space(10)]
+        [Header("Enemy Weapon Setting")]
+
+
+        public WeaponDetailSO weaponDetail;
+        public float minFireInterval = 0.1f;
+        public float maxFireInterval = 1f;
+        public float minFireDuration = 1f;
+        public float maxFireDuration = 2f;
+        public bool isRequireTargetOnSight = true;
+
+
+
         #region Validation
 #if UNITY_EDITOR
         private void OnValidate()
@@ -45,6 +59,9 @@ namespace DungeonGunner
 
             HelperUtilities.CheckPositiveValue(this, nameof(materializeDuration), materializeDuration);
             HelperUtilities.CheckNullValue(this, nameof(materializeShader), materializeShader);
+
+            HelperUtilities.CheckPositiveValue(this, nameof(minFireInterval), minFireInterval);
+            HelperUtilities.CheckPositiveValue(this, nameof(maxFireInterval), maxFireInterval);
         }
 #endif
         #endregion

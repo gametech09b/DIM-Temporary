@@ -34,6 +34,8 @@ namespace DungeonGunner
         [HideInInspector] public EnemyDetailSO enemyDetail;
         private EnemyMovementAI enemyMovementAI;
 
+        [HideInInspector] public AimEvent aimEvent;
+        [HideInInspector] public FireEvent fireEvent;
         [HideInInspector] public IdleEvent idleEvent;
         [HideInInspector] public MoveToPositionEvent moveToPositionEvent;
 

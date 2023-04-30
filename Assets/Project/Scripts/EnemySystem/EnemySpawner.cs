@@ -42,7 +42,8 @@ namespace DungeonGunner
             || currentRoom.roomNodeType.isEntrance)
                 return;
 
-            if (currentRoom.isCleared) return;
+            if (currentRoom.isCleared)
+                return;
 
             enemyToSpawn = currentRoom.GetNumberOfEnemyToSpawn(GameManager.Instance.GetCurrentDungeonLevel());
 

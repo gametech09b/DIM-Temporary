@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
-    public class UIResources : MonoBehaviour {
+namespace DungeonGunner
+{
+    public class UIResources : MonoBehaviour
+    {
         #region Singleton UIResources
         private static UIResources instance;
-        public static UIResources Instance {
+        public static UIResources Instance
+        {
             get
             {
-                if (instance == null) {
+                if (instance == null)
                     instance = Resources.Load<UIResources>("UIResources");
-                }
+
                 return instance;
             }
         }
@@ -23,15 +26,5 @@ namespace DungeonGunner {
         [Header("Weapon HUD")]
 
         public GameObject ammoIconPrefab;
-
-
-
-        #region Validation
-#if UNITY_EDITOR
-        private void OnValidate() {
-
-        }
-#endif
-        #endregion
     }
 }

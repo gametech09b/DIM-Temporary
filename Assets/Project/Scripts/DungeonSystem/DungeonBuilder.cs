@@ -83,9 +83,7 @@ namespace DungeonGunner
 
 
                 if (dungeonBuildSuccessful)
-                {
                     InstantiateRoomGameObjects();
-                }
             }
 
             return dungeonBuildSuccessful;
@@ -103,13 +101,9 @@ namespace DungeonGunner
             foreach (RoomTemplateSO roomTemplate in roomTemplateList)
             {
                 if (!roomTemplateDictionary.ContainsKey(roomTemplate.id))
-                {
                     roomTemplateDictionary.Add(roomTemplate.id, roomTemplate);
-                }
                 else
-                {
                     Debug.Log($"Duplicate Room Template Key In {roomTemplateList}");
-                }
             }
         }
 
@@ -146,9 +140,7 @@ namespace DungeonGunner
 
             // If all the room nodes have been processed and there hasn't been a room overlap then return true
             if (roomNodeBuildQueue.Count == 0 && !isRoomOverlaps)
-            {
                 return true;
-            }
 
             return false;
         }
@@ -221,11 +213,9 @@ namespace DungeonGunner
                 // Select random unconnected available doorway for Parent
                 List<Doorway> unconnectedAvailableParentDoorwayList = GetUnconnectedAvailableDoorways(_parentRoom.doorwayList).ToList();
 
+                // If no more doorways to try then overlap failure.
                 if (unconnectedAvailableParentDoorwayList.Count == 0)
-                {
-                    // If no more doorways to try then overlap failure.
                     return true; // room overlaps
-                }
 
                 Doorway currentDoorway = unconnectedAvailableParentDoorwayList[UnityEngine.Random.Range(0, unconnectedAvailableParentDoorwayList.Count)];
 
@@ -393,22 +383,21 @@ namespace DungeonGunner
         {
             foreach (Doorway comparedDoorway in _doorwayList)
             {
-                if (_currentDoorway.orientation == Orientation.EAST && comparedDoorway.orientation == Orientation.WEST)
-                {
+                if (_currentDoorway.orientation == Orientation.EAST
+                && comparedDoorway.orientation == Orientation.WEST)
                     return comparedDoorway;
-                }
-                else if (_currentDoorway.orientation == Orientation.WEST && comparedDoorway.orientation == Orientation.EAST)
-                {
+
+                else if (_currentDoorway.orientation == Orientation.WEST
+                     && comparedDoorway.orientation == Orientation.EAST)
                     return comparedDoorway;
-                }
-                else if (_currentDoorway.orientation == Orientation.NORTH && comparedDoorway.orientation == Orientation.SOUTH)
-                {
+
+                else if (_currentDoorway.orientation == Orientation.NORTH
+                     && comparedDoorway.orientation == Orientation.SOUTH)
                     return comparedDoorway;
-                }
-                else if (_currentDoorway.orientation == Orientation.SOUTH && comparedDoorway.orientation == Orientation.NORTH)
-                {
+
+                else if (_currentDoorway.orientation == Orientation.SOUTH
+                     && comparedDoorway.orientation == Orientation.NORTH)
                     return comparedDoorway;
-                }
             }
 
             return null;
@@ -434,9 +423,7 @@ namespace DungeonGunner
 
                 // If room overlaps
                 if (IsRoomOverlapping(_roomToCheck, room))
-                {
                     return room;
-                }
             }
 
             return null;
@@ -456,9 +443,7 @@ namespace DungeonGunner
             bool isOverlappingY = IsIntervalOverlapping(_roomA.lowerBounds.y, _roomA.upperBounds.y, _roomB.lowerBounds.y, _roomB.upperBounds.y);
 
             if (isOverlappingX && isOverlappingY)
-            {
                 return true;
-            }
 
             return false;
         }
@@ -476,9 +461,7 @@ namespace DungeonGunner
         private bool IsIntervalOverlapping(int _imin1, int _imax1, int _imin2, int _imax2)
         {
             if (Mathf.Max(_imin1, _imin2) <= Mathf.Min(_imax1, _imax2))
-            {
                 return true;
-            }
 
             return false;
         }
@@ -497,12 +480,11 @@ namespace DungeonGunner
             foreach (RoomTemplateSO roomTemplate in roomTemplateList)
             {
                 if (roomTemplate.roomNodeType == _roomNodeType)
-                {
                     matchTypeRoomTemplateList.Add(roomTemplate);
-                }
             }
 
-            if (matchTypeRoomTemplateList.Count == 0) return null;
+            if (matchTypeRoomTemplateList.Count == 0)
+                return null;
 
             return matchTypeRoomTemplateList[UnityEngine.Random.Range(0, matchTypeRoomTemplateList.Count)];
         }
@@ -563,9 +545,7 @@ namespace DungeonGunner
             }
 
             if (room.GetNumberOfEnemyToSpawn(GameManager.Instance.GetCurrentDungeonLevel()) == 0)
-            {
                 room.isCleared = true;
-            }
 
             return room;
         }
@@ -580,9 +560,7 @@ namespace DungeonGunner
         private RoomNodeGraphSO SelectRandomRoomNodeGraph(List<RoomNodeGraphSO> _roomNodeGraphList)
         {
             if (_roomNodeGraphList.Count > 0)
-            {
                 return _roomNodeGraphList[UnityEngine.Random.Range(0, _roomNodeGraphList.Count)];
-            }
 
             Debug.Log("No room node graphs in list");
             return null;
@@ -630,9 +608,7 @@ namespace DungeonGunner
             List<string> newStringList = new List<string>();
 
             foreach (string stringValue in _oldStringList)
-            {
                 newStringList.Add(stringValue);
-            }
 
             return newStringList;
         }
@@ -673,9 +649,7 @@ namespace DungeonGunner
         public RoomTemplateSO GetRoomTemplate(string _roomTemplateID)
         {
             if (roomTemplateDictionary.TryGetValue(_roomTemplateID, out RoomTemplateSO roomTemplate))
-            {
                 return roomTemplate;
-            }
 
             return null;
         }
@@ -690,9 +664,7 @@ namespace DungeonGunner
         public Room GetRoom(string _roomID)
         {
             if (roomDictionary.TryGetValue(_roomID, out Room room))
-            {
                 return room;
-            }
 
             return null;
         }
@@ -712,9 +684,7 @@ namespace DungeonGunner
                     Room room = roomDictionaryKVP.Value;
 
                     if (room.roomGameObject != null)
-                    {
                         Destroy(room.roomGameObject.gameObject);
-                    }
                 }
 
                 roomDictionary.Clear();

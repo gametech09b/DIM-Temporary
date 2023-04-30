@@ -48,9 +48,7 @@ namespace DungeonGunner
             if (_args.weapon.isReloading)
             {
                 if (reloadCoroutine != null)
-                {
                     StopCoroutine(reloadCoroutine);
-                }
 
                 reloadCoroutine = StartCoroutine(ReloadCoroutine(_args.weapon, 0));
             }
@@ -68,9 +66,7 @@ namespace DungeonGunner
         private void Reload(OnReloadActionArgs _args)
         {
             if (reloadCoroutine != null)
-            {
                 StopCoroutine(reloadCoroutine);
-            }
 
             reloadCoroutine = StartCoroutine(ReloadCoroutine(_args.weapon, _args.reloadAmmoPercent));
         }
@@ -81,9 +77,7 @@ namespace DungeonGunner
         {
             SoundEffectSO currentReloadSounfEffect = _weapon.weaponDetail.reloadSoundEffect;
             if (!_weapon.isReloading && currentReloadSounfEffect != null)
-            {
                 SoundEffectManager.Instance.PlaySoundEffect(currentReloadSounfEffect);
-            }
 
             _weapon.isReloading = true;
 
@@ -99,27 +93,17 @@ namespace DungeonGunner
                 int totalAmmo = _weapon.ammoRemaining + reloadAmmoCount;
 
                 if (totalAmmo > _weapon.weaponDetail.ammoCapacity)
-                {
                     _weapon.ammoRemaining = _weapon.weaponDetail.ammoCapacity;
-                }
                 else
-                {
                     _weapon.ammoRemaining = totalAmmo;
-                }
             }
 
             if (_weapon.weaponDetail.isAmmoInfinite)
-            {
                 _weapon.ammoPerClipRemaining = _weapon.weaponDetail.ammoPerClipCapacity;
-            }
             else if (_weapon.ammoRemaining >= _weapon.weaponDetail.ammoPerClipCapacity)
-            {
                 _weapon.ammoPerClipRemaining = _weapon.weaponDetail.ammoPerClipCapacity;
-            }
             else
-            {
                 _weapon.ammoPerClipRemaining = _weapon.ammoRemaining;
-            }
 
             _weapon.reloadTimer = 0;
             _weapon.isReloading = false;

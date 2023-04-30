@@ -192,7 +192,9 @@ namespace DungeonGunner
 
         private void DisplayPath()
         {
-            if (startGridPosition == noValue || endGridPosition == noValue) return;
+            if (startGridPosition == noValue
+            || endGridPosition == noValue)
+                return;
 
             pathStack = AStarPathfinding.AStar.BuildPath(roomGameObject.room, startGridPosition, endGridPosition);
 

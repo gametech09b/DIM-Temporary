@@ -21,9 +21,7 @@ namespace DungeonGunner.AStarPathfinding
             Node endPathNode = FindShortestPath(startNode, targetNode, grid, openNodeList, closeNodeHashSet, _room.roomGameObject);
 
             if (endPathNode != null)
-            {
                 return CreatePathStack(endPathNode, _room);
-            }
 
             return null;
         }
@@ -42,9 +40,7 @@ namespace DungeonGunner.AStarPathfinding
                 _openNodeList.RemoveAt(0);
 
                 if (currentNode == _targetNode)
-                {
                     return currentNode;
-                }
 
                 _closedNodeHashSet.Add(currentNode);
 
@@ -67,9 +63,7 @@ namespace DungeonGunner.AStarPathfinding
                 for (int j = -1; j <= 1; j++)
                 {
                     if (i == 0 && j == 0)
-                    {
                         continue;
-                    }
 
                     neighbourNode = GetValidNeighbourNode(currentNodePosition.x + i, currentNodePosition.y + j, _grid, _closedNodeHashSet, _roomGameObject);
 
@@ -82,7 +76,8 @@ namespace DungeonGunner.AStarPathfinding
 
                         bool isNeighbourNodeInOpenList = _openNodeList.Contains(neighbourNode);
 
-                        if (newCostToNeighbour < neighbourNode.gCost || !isNeighbourNodeInOpenList)
+                        if (newCostToNeighbour < neighbourNode.gCost
+                        || !isNeighbourNodeInOpenList)
                         {
                             neighbourNode.gCost = newCostToNeighbour;
                             neighbourNode.hCost = GetDistance(neighbourNode, _targetNode);
@@ -95,9 +90,7 @@ namespace DungeonGunner.AStarPathfinding
                                 neighbourNode.parentNode = _currentNode;
 
                                 if (!isNeighbourNodeInOpenList)
-                                {
                                     _openNodeList.Add(neighbourNode);
-                                }
                             }
                         }
                     }
@@ -116,22 +109,17 @@ namespace DungeonGunner.AStarPathfinding
             || _x < 0
             || _y >= templateUpperBounds.y - templateLowerBounds.y
             || _y < 0)
-            {
                 return null;
-            }
 
             Node neighbourNode = _grid.GetNode(_x, _y);
 
             int movementPenalty = _roomGameObject.GetAStarMovementPenalty(neighbourNode.position.x, neighbourNode.position.y);
 
-            if (movementPenalty == 0 || _closedNodeHashSet.Contains(neighbourNode))
-            {
+            if (movementPenalty == 0
+            || _closedNodeHashSet.Contains(neighbourNode))
                 return null;
-            }
             else
-            {
                 return neighbourNode;
-            }
         }
 
 
@@ -142,9 +130,7 @@ namespace DungeonGunner.AStarPathfinding
             int distanceY = Mathf.Abs(_nodeA.position.y - _nodeB.position.y);
 
             if (distanceX > distanceY)
-            {
                 return 14 * distanceY + 10 * (distanceX - distanceY);
-            }
 
             return 14 * distanceX + 10 * (distanceY - distanceX);
         }

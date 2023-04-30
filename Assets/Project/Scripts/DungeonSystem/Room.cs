@@ -68,9 +68,7 @@ namespace DungeonGunner
             foreach (RoomEnemySpawnParameter roomEnemySpawnParameter in roomEnemySpawnParameterList)
             {
                 if (roomEnemySpawnParameter.dungeonLevel == _dungeonLevel)
-                {
                     return Random.Range(roomEnemySpawnParameter.minTotalEnemy, roomEnemySpawnParameter.maxTotalEnemy);
-                }
             }
 
             return 0;
@@ -83,9 +81,7 @@ namespace DungeonGunner
             foreach (RoomEnemySpawnParameter roomEnemySpawnParameter in roomEnemySpawnParameterList)
             {
                 if (roomEnemySpawnParameter.dungeonLevel == _dungeonLevel)
-                {
                     return roomEnemySpawnParameter;
-                }
             }
 
             return null;

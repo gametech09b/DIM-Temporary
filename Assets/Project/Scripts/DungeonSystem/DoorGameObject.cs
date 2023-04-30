@@ -48,16 +48,15 @@ namespace DungeonGunner
         private void OnTriggerEnter2D(Collider2D _other)
         {
             if (_other.CompareTag(Settings.PlayerTag) || _other.CompareTag(Settings.PlayerWeaponTag))
-            {
                 OpenDoor();
-            }
         }
 
 
 
         private void OpenDoor()
         {
-            if (isOpen) return;
+            if (isOpen)
+                return;
 
             isOpen = true;
             isOpened = true;

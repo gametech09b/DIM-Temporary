@@ -73,29 +73,22 @@ namespace DungeonGunner
             foreach (Tilemap tilemap in tilemapArray)
             {
                 if (tilemap.CompareTag("groundTilemap"))
-                {
                     groundTilemap = tilemap;
-                }
+
                 else if (tilemap.CompareTag("decoration1Tilemap"))
-                {
                     decorationTilemap1 = tilemap;
-                }
+
                 else if (tilemap.CompareTag("decoration2Tilemap"))
-                {
                     decorationTilemap2 = tilemap;
-                }
+
                 else if (tilemap.CompareTag("frontTilemap"))
-                {
                     frontTilemap = tilemap;
-                }
+
                 else if (tilemap.CompareTag("collisionTilemap"))
-                {
                     collisionTilemap = tilemap;
-                }
+
                 else if (tilemap.CompareTag("minimapTilemap"))
-                {
                     minimapTilemap = tilemap;
-                }
             }
         }
 
@@ -108,34 +101,22 @@ namespace DungeonGunner
                 if (doorway.isConnected) continue;
 
                 if (collisionTilemap != null)
-                {
                     BlockDoorwayOnTilemapLayer(doorway, collisionTilemap);
-                }
 
                 if (groundTilemap != null)
-                {
                     BlockDoorwayOnTilemapLayer(doorway, groundTilemap);
-                }
 
                 if (decorationTilemap1 != null)
-                {
                     BlockDoorwayOnTilemapLayer(doorway, decorationTilemap1);
-                }
 
                 if (decorationTilemap2 != null)
-                {
                     BlockDoorwayOnTilemapLayer(doorway, decorationTilemap2);
-                }
 
                 if (frontTilemap != null)
-                {
                     BlockDoorwayOnTilemapLayer(doorway, frontTilemap);
-                }
 
                 if (minimapTilemap != null)
-                {
                     BlockDoorwayOnTilemapLayer(doorway, minimapTilemap);
-                }
             }
         }
 
@@ -240,9 +221,7 @@ namespace DungeonGunner
                     }
 
                     if (tile == GameResources.Instance.EnemyPreferredPathTile)
-                    {
                         aStarMovementPenaltyArray[x, y] = Settings.AStarPreferredPathMovementPenalty;
-                    }
                 }
             }
         }

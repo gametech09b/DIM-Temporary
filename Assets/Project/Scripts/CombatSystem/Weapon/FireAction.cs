@@ -70,9 +70,11 @@ namespace DungeonGunner
 
             ProcessPrefireTimer(_args);
 
-            if (!_args.isFiring) return;
+            if (!_args.isFiring)
+                return;
 
-            if (!IsReadyToFire()) return;
+            if (!IsReadyToFire())
+                return;
 
             FireAmmo(_args.angle, _args.weaponAngle, _args.weaponDirectionVector);
 
@@ -104,7 +106,6 @@ namespace DungeonGunner
             if (!currentWeapon.weaponDetail.isAmmoPerClipInfinite && currentWeapon.ammoPerClipRemaining <= 0)
             {
                 reloadEvent.CallOnReloadAction(currentWeapon, 0);
-
                 return false;
             }
 
@@ -124,9 +125,7 @@ namespace DungeonGunner
             AmmoDetailSO currentAmmoDetail = activeWeapon.GetAmmoDetail();
 
             if (currentAmmoDetail != null)
-            {
                 StartCoroutine(FireAmmoCoroutine(currentAmmoDetail, _angle, _weaponAngle, _weaponDirectionVector));
-            }
         }
 
 
@@ -199,9 +198,7 @@ namespace DungeonGunner
             SoundEffectSO currentWeaponFireSoundEffect = activeWeapon.GetCurrentWeapon().weaponDetail.fireSoundEffect;
 
             if (currentWeaponFireSoundEffect != null)
-            {
                 SoundEffectManager.Instance.PlaySoundEffect(currentWeaponFireSoundEffect);
-            }
         }
     }
 }

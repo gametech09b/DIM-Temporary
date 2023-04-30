@@ -66,7 +66,6 @@ namespace DungeonGunner
             && distanceToTargetPosition > enemy.enemyDetail.chaseDistance)
                 isChasing = true;
 
-
             if (isChasing)
                 return;
 
@@ -107,13 +106,9 @@ namespace DungeonGunner
             pathStack = AStar.BuildPath(currentRoom, gridPosition, targetGridPosition);
 
             if (pathStack != null)
-            {
                 pathStack.Pop();
-            }
             else
-            {
                 enemy.idleEvent.CallOnIdleEvent();
-            }
         }
 
 
@@ -136,9 +131,7 @@ namespace DungeonGunner
             int penalty = _currentRoom.roomGameObject.GetAStarMovementPenalty(adjustedTargetCellPosition.x, adjustedTargetCellPosition.y);
 
             if (penalty != 0)
-            {
                 return targetCellPosition;
-            }
 
             return FindNonObstacleTargetPosition(_currentRoom, targetCellPosition, adjustedTargetCellPosition);
         }
@@ -158,9 +151,7 @@ namespace DungeonGunner
                         int penalty = _currentRoom.roomGameObject.GetAStarMovementPenalty(_adjustedTargetCellPosition.x + i, _adjustedTargetCellPosition.y + j);
 
                         if (penalty != 0)
-                        {
                             return new Vector3Int(_targetCellPosition.x + i, _targetCellPosition.y + j, 0);
-                        }
                     }
                     catch (System.Exception)
                     {

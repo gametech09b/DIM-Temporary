@@ -244,10 +244,8 @@ namespace DungeonGunner
 
         private void UpdateReloadText(Weapon _weapon)
         {
-            if (
-                !_weapon.weaponDetail.isAmmoPerClipInfinite &&
-                (_weapon.ammoPerClipRemaining <= 0 || _weapon.isReloading)
-            )
+            if (!_weapon.weaponDetail.isAmmoPerClipInfinite
+            && (_weapon.ammoPerClipRemaining <= 0 || _weapon.isReloading))
             {
                 reloadText.color = Settings.ReloadProgressColor;
 

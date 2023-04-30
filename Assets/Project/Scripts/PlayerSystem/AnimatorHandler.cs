@@ -2,23 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DungeonGunner
+{
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Player))]
     #endregion
-    public class AnimatorHandler : MonoBehaviour {
+    public class AnimatorHandler : MonoBehaviour
+    {
         private Player player;
 
 
 
-        private void Awake() {
+        private void Awake()
+        {
             player = GetComponent<Player>();
         }
 
 
 
-        public void OnEnable() {
+        public void OnEnable()
+        {
             player.idleEvent.OnIdle += IdleEvent_OnIdle;
             player.aimEvent.OnAimAction += AimEvent_OnAim;
 
@@ -28,7 +32,8 @@ namespace DungeonGunner {
 
 
 
-        public void OnDisable() {
+        public void OnDisable()
+        {
             player.idleEvent.OnIdle -= IdleEvent_OnIdle;
             player.aimEvent.OnAimAction -= AimEvent_OnAim;
 
@@ -38,7 +43,8 @@ namespace DungeonGunner {
 
 
 
-        private void IdleEvent_OnIdle(IdleEvent _sender) {
+        private void IdleEvent_OnIdle(IdleEvent _sender)
+        {
             DisableRollAnimationParameters();
 
             SetIdleAnimationParameters();
@@ -46,7 +52,8 @@ namespace DungeonGunner {
 
 
 
-        private void AimEvent_OnAim(AimEvent _sender, AimEventArgs _args) {
+        private void AimEvent_OnAim(AimEvent _sender, AimEventArgs _args)
+        {
             DisableAllAimAnimationParameters();
             DisableRollAnimationParameters();
 
@@ -55,7 +62,8 @@ namespace DungeonGunner {
 
 
 
-        private void MoveByVelocityEvent_OnMoveByVelocity(MoveByVelocityEvent _sender, MoveByVelocityEventArgs _args) {
+        private void MoveByVelocityEvent_OnMoveByVelocity(MoveByVelocityEvent _sender, MoveByVelocityEventArgs _args)
+        {
             DisableRollAnimationParameters();
 
             SetMoveAnimationParameters();
@@ -63,7 +71,8 @@ namespace DungeonGunner {
 
 
 
-        private void MoveToPositionEvent_OnMoveToPosition(MoveToPositionEvent _sender, MoveToPositionEventArgs _args) {
+        private void MoveToPositionEvent_OnMoveToPosition(MoveToPositionEvent _sender, MoveToPositionEventArgs _args)
+        {
             DisableAllAimAnimationParameters();
             DisableRollAnimationParameters();
 
@@ -72,14 +81,16 @@ namespace DungeonGunner {
 
 
 
-        private void SetIdleAnimationParameters() {
+        private void SetIdleAnimationParameters()
+        {
             player.animator.SetBool(Settings.IsIdle, true);
             player.animator.SetBool(Settings.IsMoving, false);
         }
 
 
 
-        private void DisableAllAimAnimationParameters() {
+        private void DisableAllAimAnimationParameters()
+        {
             player.animator.SetBool(Settings.AimUp, false);
             player.animator.SetBool(Settings.AimUpRight, false);
             player.animator.SetBool(Settings.AimUpLeft, false);
@@ -90,8 +101,10 @@ namespace DungeonGunner {
 
 
 
-        private void SetAimAnimationParameters(Direction _direction) {
-            switch (_direction) {
+        private void SetAimAnimationParameters(Direction _direction)
+        {
+            switch (_direction)
+            {
                 case Direction.UP:
                     player.animator.SetBool(Settings.AimUp, true);
                     break;
@@ -115,14 +128,16 @@ namespace DungeonGunner {
 
 
 
-        private void SetMoveAnimationParameters() {
+        private void SetMoveAnimationParameters()
+        {
             player.animator.SetBool(Settings.IsIdle, false);
             player.animator.SetBool(Settings.IsMoving, true);
         }
 
 
 
-        private void DisableRollAnimationParameters() {
+        private void DisableRollAnimationParameters()
+        {
             player.animator.SetBool(Settings.RollUp, false);
             player.animator.SetBool(Settings.RollRight, false);
             player.animator.SetBool(Settings.RollDown, false);
@@ -131,17 +146,22 @@ namespace DungeonGunner {
 
 
 
-        private void SetRollAnimationParameters(MoveToPositionEventArgs _args) {
-            if (_args.isActive) {
-                if (_args.directionVector.x > 0) {
+        private void SetRollAnimationParameters(MoveToPositionEventArgs _args)
+        {
+            if (_args.isActive)
+            {
+                if (_args.directionVector.x > 0)
                     player.animator.SetBool(Settings.RollRight, true);
-                } else if (_args.directionVector.x < 0) {
+
+                else if (_args.directionVector.x < 0)
                     player.animator.SetBool(Settings.RollLeft, true);
-                } else if (_args.directionVector.y > 0) {
+
+                else if (_args.directionVector.y > 0)
                     player.animator.SetBool(Settings.RollUp, true);
-                } else if (_args.directionVector.y < 0) {
+
+                else if (_args.directionVector.y < 0)
                     player.animator.SetBool(Settings.RollDown, true);
-                }
+
             }
         }
     }

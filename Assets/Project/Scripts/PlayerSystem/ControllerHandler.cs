@@ -47,7 +47,8 @@ namespace DungeonGunner
 
         private void Update()
         {
-            if (isDashing) return;
+            if (isDashing)
+                return;
 
             MovementInput();
 
@@ -92,7 +93,8 @@ namespace DungeonGunner
 
         private void SetWeaponByIndex(int _index)
         {
-            if (_index - 1 < 0 || _index - 1 > player.weaponList.Count) return;
+            if (_index - 1 < 0 || _index - 1 > player.weaponList.Count)
+                return;
 
             activeWeaponIndex = _index;
             player.activeWeaponEvent.CallOnSetActiveWeapon(player.weaponList[_index - 1]);
@@ -117,13 +119,9 @@ namespace DungeonGunner
             if (directionVector != Vector2.zero)
             {
                 if (Input.GetMouseButtonDown(1) && dashCooldownTimer <= 0)
-                {
                     Roll((Vector3)directionVector);
-                }
                 else
-                {
                     player.moveByVelocityEvent.CallOnMoveByVelocity(directionVector, moveSpeed);
-                }
             }
             else
             {
@@ -189,50 +187,28 @@ namespace DungeonGunner
         private void HandleSwitchWeaponInput()
         {
             if (Input.mouseScrollDelta.y < 0f)
-            {
                 PreviousWeapon();
-            }
             if (Input.mouseScrollDelta.y > 0f)
-            {
                 NextWeapon();
-            }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
                 SetWeaponByIndex(1);
-            }
             if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
                 SetWeaponByIndex(2);
-            }
             if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
                 SetWeaponByIndex(3);
-            }
             if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
                 SetWeaponByIndex(4);
-            }
             if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
                 SetWeaponByIndex(5);
-            }
             if (Input.GetKeyDown(KeyCode.Alpha6))
-            {
                 SetWeaponByIndex(6);
-            }
             if (Input.GetKeyDown(KeyCode.Alpha7))
-            {
                 SetWeaponByIndex(7);
-            }
             if (Input.GetKeyDown(KeyCode.Alpha8))
-            {
                 SetWeaponByIndex(8);
-            }
             if (Input.GetKeyDown(KeyCode.Alpha9))
-            {
                 SetWeaponByIndex(9);
-            }
         }
 
 
@@ -241,18 +217,18 @@ namespace DungeonGunner
         {
             Weapon currentWeapon = player.activeWeapon.GetCurrentWeapon();
 
-            if (currentWeapon.isReloading) return;
+            if (currentWeapon.isReloading)
+                return;
 
             if (currentWeapon.ammoPerClipRemaining == currentWeapon.weaponDetail.ammoPerClipCapacity)
                 return;
 
-            if (!currentWeapon.weaponDetail.isAmmoInfinite && currentWeapon.ammoRemaining < currentWeapon.weaponDetail.ammoPerClipCapacity)
+            if (!currentWeapon.weaponDetail.isAmmoInfinite
+            && currentWeapon.ammoRemaining < currentWeapon.weaponDetail.ammoPerClipCapacity)
                 return;
 
             if (Input.GetKeyDown(KeyCode.R))
-            {
                 player.reloadEvent.CallOnReloadAction(currentWeapon, 0);
-            }
         }
 
 
@@ -260,9 +236,7 @@ namespace DungeonGunner
         private void Roll(Vector3 _directionVector)
         {
             if (dashCoroutine != null)
-            {
                 StopCoroutine(dashCoroutine);
-            }
 
             dashCoroutine = StartCoroutine(DashCoroutine(_directionVector));
         }
@@ -297,9 +271,7 @@ namespace DungeonGunner
         private void StopDashCoroutine()
         {
             if (dashCoroutine != null)
-            {
                 StopCoroutine(dashCoroutine);
-            }
 
             isDashing = false;
         }
@@ -309,9 +281,7 @@ namespace DungeonGunner
         private void ProcessDashCooldownTimer()
         {
             if (dashCooldownTimer >= 0)
-            {
                 dashCooldownTimer -= Time.deltaTime;
-            }
         }
 
 
@@ -321,9 +291,7 @@ namespace DungeonGunner
             activeWeaponIndex--;
 
             if (activeWeaponIndex < 1)
-            {
                 activeWeaponIndex = player.weaponList.Count;
-            }
 
             SetWeaponByIndex(activeWeaponIndex);
         }
@@ -335,9 +303,7 @@ namespace DungeonGunner
             activeWeaponIndex++;
 
             if (activeWeaponIndex > player.weaponList.Count)
-            {
                 activeWeaponIndex = 1;
-            }
 
             SetWeaponByIndex(activeWeaponIndex);
         }

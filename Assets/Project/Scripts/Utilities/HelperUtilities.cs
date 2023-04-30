@@ -52,34 +52,32 @@ namespace DungeonGunner
         {
             Direction direction;
 
-            if (_angleDegree >= 22f && _angleDegree <= 67f)
-            {
+            if (_angleDegree >= 22f
+            && _angleDegree <= 67f)
                 direction = Direction.UP_RIGHT;
-            }
-            else if (_angleDegree > 67f && _angleDegree <= 112f)
-            {
+
+            else if (_angleDegree > 67f
+                 && _angleDegree <= 112f)
                 direction = Direction.UP;
-            }
-            else if (_angleDegree > 112f && _angleDegree <= 158f)
-            {
+
+            else if (_angleDegree > 112f
+                 && _angleDegree <= 158f)
                 direction = Direction.UP_LEFT;
-            }
-            else if ((_angleDegree <= 180f && _angleDegree > 158f) || (_angleDegree > -180f && _angleDegree <= -135f))
-            {
+
+            else if ((_angleDegree <= 180f && _angleDegree > 158f)
+                 || (_angleDegree > -180f && _angleDegree <= -135f))
                 direction = Direction.LEFT;
-            }
-            else if (_angleDegree > -135f && _angleDegree <= -45f)
-            {
+
+            else if (_angleDegree > -135f
+                 && _angleDegree <= -45f)
                 direction = Direction.DOWN;
-            }
-            else if ((_angleDegree > -45f && _angleDegree <= 0f) || (_angleDegree > 0 && _angleDegree < 22f))
-            {
+
+            else if ((_angleDegree > -45f && _angleDegree <= 0f)
+                 || (_angleDegree > 0 && _angleDegree < 22f))
                 direction = Direction.RIGHT;
-            }
+
             else
-            {
                 direction = Direction.NONE;
-            }
 
             return direction;
         }

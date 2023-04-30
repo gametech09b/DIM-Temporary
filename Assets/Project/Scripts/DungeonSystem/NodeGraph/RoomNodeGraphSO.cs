@@ -41,9 +41,8 @@ namespace DungeonGunner
         public RoomNodeSO GetRoomNode(string _roomNodeID)
         {
             if (roomNodeDictionary.TryGetValue(_roomNodeID, out RoomNodeSO roomNode))
-            {
                 return roomNode;
-            }
+                
             return null;
         }
 
@@ -59,9 +58,7 @@ namespace DungeonGunner
             foreach (RoomNodeSO roomNode in roomNodeList)
             {
                 if (roomNode.roomNodeType == _roomNodeType)
-                {
                     return roomNode;
-                }
             }
             return null;
         }

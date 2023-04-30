@@ -85,9 +85,7 @@ namespace DungeonGunner
             poolDictionary[_key].Enqueue(componentToReuse);
 
             if (componentToReuse.gameObject.activeSelf)
-            {
                 componentToReuse.gameObject.SetActive(false);
-            }
 
             return componentToReuse;
         }

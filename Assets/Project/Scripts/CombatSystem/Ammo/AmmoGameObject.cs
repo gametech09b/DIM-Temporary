@@ -42,9 +42,7 @@ namespace DungeonGunner
             range -= distanceVector.magnitude;
 
             if (range < 0)
-            {
                 DisableAmmo();
-            }
         }
 
 
@@ -60,9 +58,7 @@ namespace DungeonGunner
         private void InitAmmoMaterial()
         {
             if (isAmmoMaterialSet)
-            {
                 return;
-            }
 
             SetAmmoMaterial(ammoDetail.material);
             isAmmoMaterialSet = true;

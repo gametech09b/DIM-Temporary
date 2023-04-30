@@ -31,9 +31,7 @@ namespace DungeonGunner.AStarPathfinding
             int compare = FCost.CompareTo(_node.FCost);
 
             if (compare == 0)
-            {
                 compare = hCost.CompareTo(_node.hCost);
-            }
 
             return compare;
         }

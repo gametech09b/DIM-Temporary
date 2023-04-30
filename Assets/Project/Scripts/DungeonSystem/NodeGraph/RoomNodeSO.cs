@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace DungeonGunner {
-    public class RoomNodeSO : ScriptableObject {
+namespace DungeonGunner
+{
+    public class RoomNodeSO : ScriptableObject
+    {
         [HideInInspector] public string id;
         [HideInInspector] public List<string> parentRoomNodeIDList = new List<string>();
         [HideInInspector] public List<string> childRoomNodeIDList = new List<string>();
@@ -28,7 +30,8 @@ namespace DungeonGunner {
         /// <param name="_rect"></param>
         /// <param name="_roomNodeGraph"></param>
         /// <param name="_roomNodeType"></param>
-        public void Initialize(Rect _rect, RoomNodeGraphSO _roomNodeGraph, RoomNodeTypeSO _roomNodeType) {
+        public void Initialize(Rect _rect, RoomNodeGraphSO _roomNodeGraph, RoomNodeTypeSO _roomNodeType)
+        {
             this.rect = _rect;
             this.id = Guid.NewGuid().ToString();
             this.name = "RoomNode";
@@ -44,13 +47,17 @@ namespace DungeonGunner {
         /// Draw the room node
         /// </summary>
         /// <param name="_nodeStyle"></param>
-        public void Draw(GUIStyle _nodeStyle) {
+        public void Draw(GUIStyle _nodeStyle)
+        {
             GUILayout.BeginArea(rect, _nodeStyle);
             EditorGUI.BeginChangeCheck();
 
-            if (parentRoomNodeIDList.Count > 0 || roomNodeType.isEntrance) {
+            if (parentRoomNodeIDList.Count > 0 || roomNodeType.isEntrance)
+            {
                 EditorGUILayout.LabelField(roomNodeType.roomNodeTypeName);
-            } else {
+            }
+            else
+            {
 
                 int currentSelectedTypeIndex = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
                 int newSelectedTypeIndex = EditorGUILayout.Popup("", currentSelectedTypeIndex, GetRoomNodeTypesToDisplay());
@@ -63,14 +70,18 @@ namespace DungeonGunner {
                 // check invalid
                 if (currentSelectedType.isCorridor && !newSelectedType.isCorridor
                 || !currentSelectedType.isCorridor && newSelectedType.isCorridor
-                || !currentSelectedType.isBossRoom && newSelectedType.isBossRoom) {
-                    if (childRoomNodeIDList.Count <= 0) return;
+                || !currentSelectedType.isBossRoom && newSelectedType.isBossRoom)
+                {
+                    if (childRoomNodeIDList.Count <= 0)
+                        return;
 
-                    for (int i = childRoomNodeIDList.Count - 1; i >= 0; i--) {
+                    for (int i = childRoomNodeIDList.Count - 1; i >= 0; i--)
+                    {
                         string childRoomNodeID = childRoomNodeIDList[i];
                         RoomNodeSO childRoomNode = roomNodeGraph.GetRoomNode(childRoomNodeID);
 
-                        if (childRoomNode == null) continue;
+                        if (childRoomNode == null)
+                            continue;
 
                         RemoveChildRoomNodeIDFromRoomNode(childRoomNodeID);
                         childRoomNode.RemoveParentRoomNodeIDToRoomNode(id);
@@ -78,9 +89,8 @@ namespace DungeonGunner {
                 }
             }
 
-            if (EditorGUI.EndChangeCheck()) {
+            if (EditorGUI.EndChangeCheck())
                 EditorUtility.SetDirty(this);
-            }
 
             GUILayout.EndArea();
         }
@@ -91,13 +101,14 @@ namespace DungeonGunner {
         /// Get the room node types to display in the popup
         /// </summary>
         /// <returns></returns>
-        public string[] GetRoomNodeTypesToDisplay() {
+        public string[] GetRoomNodeTypesToDisplay()
+        {
             string[] roomNodeTypesArray = new string[roomNodeTypeList.list.Count];
 
-            for (int i = 0; i < roomNodeTypeList.list.Count; i++) {
-                if (roomNodeTypeList.list[i].displayInNodeGraphEditor) {
+            for (int i = 0; i < roomNodeTypeList.list.Count; i++)
+            {
+                if (roomNodeTypeList.list[i].displayInNodeGraphEditor)
                     roomNodeTypesArray[i] = roomNodeTypeList.list[i].roomNodeTypeName;
-                }
             }
 
             return roomNodeTypesArray;
@@ -109,8 +120,10 @@ namespace DungeonGunner {
         /// Process RoomNode events
         /// </summary>
         /// <param name="_currentEvent"></param>
-        public void ProcessEvents(Event _currentEvent) {
-            switch (_currentEvent.type) {
+        public void ProcessEvents(Event _currentEvent)
+        {
+            switch (_currentEvent.type)
+            {
                 case EventType.MouseDown:
                     ProcessMouseDownEvent(_currentEvent);
                     break;
@@ -133,21 +146,21 @@ namespace DungeonGunner {
         /// Process mouse down event
         /// </summary>
         /// <param name="_currentEvent"></param>
-        public void ProcessMouseDownEvent(Event _currentEvent) {
-            if (_currentEvent.button == 0) {
+        public void ProcessMouseDownEvent(Event _currentEvent)
+        {
+            if (_currentEvent.button == 0)
                 ProcessMouseDownLeft();
-            }
 
-            if (_currentEvent.button == 1) {
+            if (_currentEvent.button == 1)
                 ProcessMouseDownRight(_currentEvent);
-            }
         }
 
 
         /// <summary>
         /// Process left click down event
         /// </summary>
-        public void ProcessMouseDownLeft() {
+        public void ProcessMouseDownLeft()
+        {
             Selection.activeObject = this;
 
             isSelected = !isSelected;
@@ -159,7 +172,8 @@ namespace DungeonGunner {
         /// Process right click down event
         /// </summary>
         /// <param name="_currentEvent"></param>
-        public void ProcessMouseDownRight(Event _currentEvent) {
+        public void ProcessMouseDownRight(Event _currentEvent)
+        {
             roomNodeGraph.SetNodeToDrawConnectionLineFrom(this, _currentEvent.mousePosition);
         }
 
@@ -169,10 +183,10 @@ namespace DungeonGunner {
         /// Process mouse drag event
         /// </summary>
         /// <param name="_currentEvent"></param>
-        public void ProcessMouseDragEvent(Event _currentEvent) {
-            if (_currentEvent.button == 0) {
+        public void ProcessMouseDragEvent(Event _currentEvent)
+        {
+            if (_currentEvent.button == 0)
                 ProcessMouseDragLeft(_currentEvent);
-            }
         }
 
 
@@ -180,10 +194,10 @@ namespace DungeonGunner {
         /// Process left click drag event
         /// </summary>
         /// <param name="_currentEvent"></param>
-        public void ProcessMouseDragLeft(Event _currentEvent) {
-            if (!isSelected) {
+        public void ProcessMouseDragLeft(Event _currentEvent)
+        {
+            if (!isSelected)
                 return;
-            }
 
             isLeftClickDragging = true;
             DragNode(_currentEvent.delta);
@@ -195,7 +209,8 @@ namespace DungeonGunner {
         /// Handle dragging the node
         /// </summary>
         /// <param name="_delta"></param>
-        public void DragNode(Vector2 _delta) {
+        public void DragNode(Vector2 _delta)
+        {
             rect.position += _delta;
             EditorUtility.SetDirty(this);
             GUI.changed = true;
@@ -207,10 +222,10 @@ namespace DungeonGunner {
         /// Process mouse up event
         /// </summary>
         /// <param name="_currentEvent"></param>
-        public void ProcessMouseUpEvent(Event _currentEvent) {
-            if (_currentEvent.button == 0) {
+        public void ProcessMouseUpEvent(Event _currentEvent)
+        {
+            if (_currentEvent.button == 0)
                 ProcessMouseUpLeft();
-            }
         }
 
 
@@ -218,10 +233,10 @@ namespace DungeonGunner {
         /// <summary>
         /// Process left click up event
         /// </summary>
-        public void ProcessMouseUpLeft() {
-            if (isLeftClickDragging) {
+        public void ProcessMouseUpLeft()
+        {
+            if (isLeftClickDragging)
                 isLeftClickDragging = false;
-            }
         }
 
 
@@ -231,35 +246,55 @@ namespace DungeonGunner {
         /// </summary>
         /// <param name="_childNodeRoomID"></param>
         /// <returns></returns>
-        public bool IsChildRoomValid(string _childNodeRoomID) {
+        public bool IsChildRoomValid(string _childNodeRoomID)
+        {
             // barrier 1
-            if (id == _childNodeRoomID) return false;
-            if (childRoomNodeIDList.Contains(_childNodeRoomID)) return false;
-            if (parentRoomNodeIDList.Contains(_childNodeRoomID)) return false;
+            if (id == _childNodeRoomID)
+                return false;
+            if (childRoomNodeIDList.Contains(_childNodeRoomID))
+                return false;
+            if (parentRoomNodeIDList.Contains(_childNodeRoomID))
+                return false;
 
 
             // barrier 2
             RoomNodeSO currentRoomNode = roomNodeGraph.GetRoomNode(_childNodeRoomID);
             RoomNodeTypeSO currentRoomNodeType = currentRoomNode.roomNodeType;
 
-            if (currentRoomNode.parentRoomNodeIDList.Count > 0) return false;
+            if (currentRoomNode.parentRoomNodeIDList.Count > 0)
+                return false;
 
 
             // barrier 3
-            if (currentRoomNodeType.isNone) return false;
-            if (currentRoomNodeType.isCorridor && roomNodeType.isCorridor) return false;
-            if (!currentRoomNodeType.isCorridor && !roomNodeType.isCorridor) return false;
-            if (currentRoomNodeType.isCorridor && childRoomNodeIDList.Count >= Settings.MaxChildCorridors) return false;
-            if (currentRoomNodeType.isEntrance) return false;
-            if (!currentRoomNodeType.isCorridor && childRoomNodeIDList.Count > 0) return false;
+            if (currentRoomNodeType.isNone)
+                return false;
+
+            if (currentRoomNodeType.isCorridor
+            && roomNodeType.isCorridor)
+                return false;
+
+            if (!currentRoomNodeType.isCorridor
+            && !roomNodeType.isCorridor)
+                return false;
+
+            if (currentRoomNodeType.isCorridor
+            && childRoomNodeIDList.Count >= Settings.MaxChildCorridors)
+                return false;
+
+            if (currentRoomNodeType.isEntrance)
+                return false;
+
+            if (!currentRoomNodeType.isCorridor
+            && childRoomNodeIDList.Count > 0)
+                return false;
 
 
             //  barrier 4
             bool isBossRoomNodeAlreadyConnected = false;
-            foreach (RoomNodeSO roomNode in roomNodeGraph.roomNodeList) {
-                if (roomNode.roomNodeType.isBossRoom && roomNode.parentRoomNodeIDList.Count > 0) {
+            foreach (RoomNodeSO roomNode in roomNodeGraph.roomNodeList)
+            {
+                if (roomNode.roomNodeType.isBossRoom && roomNode.parentRoomNodeIDList.Count > 0)
                     isBossRoomNodeAlreadyConnected = true;
-                }
             }
 
             if (currentRoomNodeType.isBossRoom && isBossRoomNodeAlreadyConnected) return false;
@@ -275,10 +310,10 @@ namespace DungeonGunner {
         /// </summary>
         /// <param name="_childRoomNodeID"></param>
         /// <returns></returns>
-        public bool AddChildRoomNodeIDToRoomNode(string _childRoomNodeID) {
-            if (!IsChildRoomValid(_childRoomNodeID)) {
+        public bool AddChildRoomNodeIDToRoomNode(string _childRoomNodeID)
+        {
+            if (!IsChildRoomValid(_childRoomNodeID))
                 return false;
-            }
 
             childRoomNodeIDList.Add(_childRoomNodeID);
             return true;
@@ -291,8 +326,10 @@ namespace DungeonGunner {
         /// </summary>
         /// <param name="_childRoomNodeID"></param>
         /// <returns></returns>
-        public bool RemoveChildRoomNodeIDFromRoomNode(string _childRoomNodeID) {
-            if (childRoomNodeIDList.Contains(_childRoomNodeID)) {
+        public bool RemoveChildRoomNodeIDFromRoomNode(string _childRoomNodeID)
+        {
+            if (childRoomNodeIDList.Contains(_childRoomNodeID))
+            {
                 childRoomNodeIDList.Remove(_childRoomNodeID);
                 return true;
             }
@@ -307,8 +344,10 @@ namespace DungeonGunner {
         /// </summary>
         /// <param name="_parentRoomNodeID"></param>
         /// <returns></returns>
-        public bool AddParentRoomNodeIDToRoomNode(string _parentRoomNodeID) {
-            if (!parentRoomNodeIDList.Contains(_parentRoomNodeID)) {
+        public bool AddParentRoomNodeIDToRoomNode(string _parentRoomNodeID)
+        {
+            if (!parentRoomNodeIDList.Contains(_parentRoomNodeID))
+            {
                 parentRoomNodeIDList.Add(_parentRoomNodeID);
                 return true;
             }
@@ -323,8 +362,10 @@ namespace DungeonGunner {
         /// </summary>
         /// <param name="_parentRoomNodeID"></param>
         /// <returns></returns>
-        public bool RemoveParentRoomNodeIDToRoomNode(string _parentRoomNodeID) {
-            if (parentRoomNodeIDList.Contains(_parentRoomNodeID)) {
+        public bool RemoveParentRoomNodeIDToRoomNode(string _parentRoomNodeID)
+        {
+            if (parentRoomNodeIDList.Contains(_parentRoomNodeID))
+            {
                 parentRoomNodeIDList.Remove(_parentRoomNodeID);
                 return true;
             }

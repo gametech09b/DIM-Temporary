@@ -52,13 +52,9 @@ namespace DungeonGunner.EnemySystem
             Vector3 position = enemy.transform.position;
             Vector3 targetPosition = GameManager.Instance.GetCurrentPlayer().transform.position;
             if (position.x < targetPosition.x)
-            {
                 SetAimAnimationParameters(Direction.RIGHT);
-            }
             else
-            {
                 SetAimAnimationParameters(Direction.LEFT);
-            }
 
             SetMoveAnimationParameters();
         }

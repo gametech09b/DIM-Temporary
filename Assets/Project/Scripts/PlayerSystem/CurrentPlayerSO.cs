@@ -9,7 +9,5 @@ namespace DungeonGunner
     {
         public PlayerDetailSO playerDetail;
         public string playerName;
-
-
     }
 }

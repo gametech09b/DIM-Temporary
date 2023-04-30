@@ -88,6 +88,7 @@ namespace DungeonGunner
 
 
         #region AStar Pathfinding Settings
+        public const int AStarTargetFrameRate = 60;
         public const int AStarDefaultMovementPenalty = 40;
         public const int AStarPreferredPathMovementPenalty = 1;
 

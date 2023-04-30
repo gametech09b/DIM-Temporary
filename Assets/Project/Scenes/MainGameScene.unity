@@ -2853,7 +2853,6 @@ GameObject:
   - component: {fileID: 1990003488}
   - component: {fileID: 1990003489}
   - component: {fileID: 1990003490}
-  - component: {fileID: 1990003491}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2895,7 +2894,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd72760585491f64b879d9eff76a03a7, type: 2}
   - {fileID: 11400000, guid: 3cc665a5674e03041aa51bf9857b5ee9, type: 2}
   - {fileID: 11400000, guid: 871557923b0bdb4438b6524dade0b8f9, type: 2}
-  currentDungeonLevelIndex: 0
+  currentDungeonLevelIndex: 5
   gameState: 0
   previousGameState: 0
 --- !u!81 &1990003490
@@ -2906,18 +2905,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990003487}
   m_Enabled: 1
---- !u!114 &1990003491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1990003487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f8827fe62113bf4ea1d93bf343307d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1990951072
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,6 +25,8 @@ namespace DungeonGunner
         [HideInInspector] public float moveSpeed;
         private bool isChasing;
 
+        [HideInInspector] public int updateAtFrame = 1;
+
 
 
         private void Awake()
@@ -60,13 +62,16 @@ namespace DungeonGunner
 
             float distanceToTargetPosition = Vector3.Distance(transform.position, currentTargetPosition);
 
-            if (!isChasing && distanceToTargetPosition > enemy.enemyDetail.chaseDistance)
-            {
+            if (!isChasing
+            && distanceToTargetPosition > enemy.enemyDetail.chaseDistance)
                 isChasing = true;
-            }
 
-            if (isChasing) return;
 
+            if (isChasing)
+                return;
+
+            if (Time.frameCount % Settings.AStarTargetFrameRate != updateAtFrame)
+                return;
 
             if (rebuildPathCooldownTimer <= 0f || Vector3.Distance(referenceTargetPosition, currentTargetPosition) > Settings.AStarPlayerDistanceToRebuildPath)
             {
@@ -109,6 +114,13 @@ namespace DungeonGunner
             {
                 enemy.idleEvent.CallOnIdleEvent();
             }
+        }
+
+
+
+        public void SetUpdateAtFrame(int _updateAtFrame)
+        {
+            this.updateAtFrame = _updateAtFrame;
         }
 
 

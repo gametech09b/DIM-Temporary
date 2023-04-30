@@ -58,6 +58,8 @@ namespace DungeonGunner
             this.enemyDetail = _enemyDetail;
 
             SetupEnemyAnimationSpeed();
+
+            SetEnemyMoveUpdateFrame(_spawnedCount);
         }
 
 
@@ -65,6 +67,13 @@ namespace DungeonGunner
         private void SetupEnemyAnimationSpeed()
         {
             animator.speed = enemyMovementAI.moveSpeed / Settings.BaseSpeedForEnemyAnimation;
+        }
+
+
+
+        private void SetEnemyMoveUpdateFrame(int _spawnedCount)
+        {
+            enemyMovementAI.SetUpdateAtFrame(_spawnedCount % Settings.AStarTargetFrameRate);
         }
     }
 }

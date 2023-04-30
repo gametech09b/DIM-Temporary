@@ -18,6 +18,21 @@ namespace DungeonGunner
 
 
 
+        [Space(10)]
+        [Header("Enemy Material")]
+
+        public Material standardMaterial;
+
+
+
+        [Space(10)]
+        [Header("Enemy Materialize Setting")]
+
+        public float materializeDuration;
+        public Shader materializeShader;
+        [ColorUsage(true, true)] public Color materializeColor;
+
+
         #region Validation
 #if UNITY_EDITOR
         private void OnValidate()
@@ -25,6 +40,11 @@ namespace DungeonGunner
             HelperUtilities.CheckEmptyString(this, nameof(enemyName), enemyName);
             HelperUtilities.CheckNullValue(this, nameof(prefab), prefab);
             HelperUtilities.CheckPositiveValue(this, nameof(chaseDistance), chaseDistance);
+
+            HelperUtilities.CheckNullValue(this, nameof(standardMaterial), standardMaterial);
+
+            HelperUtilities.CheckPositiveValue(this, nameof(materializeDuration), materializeDuration);
+            HelperUtilities.CheckNullValue(this, nameof(materializeShader), materializeShader);
         }
 #endif
         #endregion

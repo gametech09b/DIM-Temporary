@@ -20,6 +20,7 @@ namespace DungeonGunner
     [RequireComponent(typeof(EnemyMovementAI))]
     [RequireComponent(typeof(Idle))]
     [RequireComponent(typeof(IdleEvent))]
+    [RequireComponent(typeof(MaterializeEffect))]
     [RequireComponent(typeof(MoveToPosition))]
     [RequireComponent(typeof(MoveToPositionEvent))]
     #endregion
@@ -36,6 +37,8 @@ namespace DungeonGunner
         [HideInInspector] public IdleEvent idleEvent;
         [HideInInspector] public MoveToPositionEvent moveToPositionEvent;
 
+        private MaterializeEffect materializeEffect;
+
 
 
         private void Awake()
@@ -49,6 +52,8 @@ namespace DungeonGunner
 
             idleEvent = GetComponent<IdleEvent>();
             moveToPositionEvent = GetComponent<MoveToPositionEvent>();
+
+            materializeEffect = GetComponent<MaterializeEffect>();
         }
 
 
@@ -60,6 +65,8 @@ namespace DungeonGunner
             SetupEnemyAnimationSpeed();
 
             SetEnemyMoveUpdateFrame(_spawnedCount);
+
+            StartCoroutine(MaterializeEnemyCoroutine());
         }
 
 
@@ -74,6 +81,27 @@ namespace DungeonGunner
         private void SetEnemyMoveUpdateFrame(int _spawnedCount)
         {
             enemyMovementAI.SetUpdateAtFrame(_spawnedCount % Settings.AStarTargetFrameRate);
+        }
+
+
+
+        private IEnumerator MaterializeEnemyCoroutine()
+        {
+            SetEnable(false);
+
+            yield return StartCoroutine(materializeEffect.MaterializeCoroutine(enemyDetail.materializeShader, enemyDetail.materializeColor, enemyDetail.materializeDuration, spriteRendererArray, enemyDetail.standardMaterial));
+
+            SetEnable(true);
+        }
+
+
+
+        private void SetEnable(bool _isEnable)
+        {
+            circleCollider2D.enabled = _isEnable;
+            polygonCollider2D.enabled = _isEnable;
+
+            enemyMovementAI.enabled = _isEnable;
         }
     }
 }

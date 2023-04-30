@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Slizzard
   prefab: {fileID: 7118660946420956969, guid: 776b44f11c8187b4590aec20d5fa9976, type: 3}
+  chaseDistance: 50
+  standardMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  materializeDuration: 2
+  materializeShader: {fileID: -6465566751694194690, guid: 5fec8f8e6ea244648a3c6ede24a56288, type: 3}
+  materializeColor: {r: 8.47419, g: 0, b: 6.122713, a: 1}

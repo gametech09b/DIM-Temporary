@@ -6,7 +6,7 @@ namespace DungeonGunner
     [DisallowMultipleComponent]
     public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     {
-        private int enemyToSpawn;
+        private int totalToSpawn;
         private int currentCount;
         private int spawnedCount;
         private int maxConcurrentSpawnCount;
@@ -45,11 +45,11 @@ namespace DungeonGunner
             if (currentRoom.isCleared)
                 return;
 
-            enemyToSpawn = currentRoom.GetNumberOfEnemyToSpawn(GameManager.Instance.GetCurrentDungeonLevel());
+            totalToSpawn = currentRoom.GetNumberOfEnemyToSpawn(GameManager.Instance.GetCurrentDungeonLevel());
 
             currentRoomEnemySpawnParameter = currentRoom.GetRoomEnemySpawnParameter(GameManager.Instance.GetCurrentDungeonLevel());
 
-            if (enemyToSpawn == 0)
+            if (totalToSpawn == 0)
             {
                 currentRoom.isCleared = true;
                 return;
@@ -85,7 +85,7 @@ namespace DungeonGunner
 
             if (currentRoom.spawnPositionArray.Length > 0)
             {
-                for (int i = 0; i < enemyToSpawn; i++)
+                for (int i = 0; i < totalToSpawn; i++)
                 {
                     while (currentCount >= maxConcurrentSpawnCount)
                     {
@@ -129,6 +129,43 @@ namespace DungeonGunner
             Enemy enemy = enemyGameObject.GetComponent<Enemy>();
 
             enemy.Init(_enemyDetail, spawnedCount, dungeonLevel);
+
+            enemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_DestroyedEvent_OnDestroyed;
+        }
+
+
+
+        private void Enemy_DestroyedEvent_OnDestroyed(DestroyedEvent _sender)
+        {
+            _sender.OnDestroyed -= Enemy_DestroyedEvent_OnDestroyed;
+
+            currentCount--;
+
+            Debug.Log($"Enemy destroyed. spawnedCount count: {spawnedCount}");
+
+            if (currentCount <= 0
+            && spawnedCount == totalToSpawn)
+            {
+                currentRoom.isCleared = true;
+
+                if (GameManager.Instance.gameState == GameState.ENGAGING_ENEMY)
+                {
+                    GameManager.Instance.gameState = GameState.PLAYING_LEVEL;
+                    GameManager.Instance.previousGameState = GameState.ENGAGING_ENEMY;
+                }
+
+                else if (GameManager.Instance.gameState == GameState.ENGAGING_BOSS)
+                {
+                    GameManager.Instance.gameState = GameState.BOSS_STAGE;
+                    GameManager.Instance.previousGameState = GameState.ENGAGING_BOSS;
+                }
+
+                Debug.Log($"Game State: {GameManager.Instance.gameState}");
+
+                currentRoom.roomGameObject.UnlockDoors(Settings.RoomUnlockDoorsDelay);
+
+                DungeonStaticEvent.CallOnRoomEnemiesDefeated(currentRoom);
+            }
         }
     }
 }

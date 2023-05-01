@@ -49,7 +49,7 @@ namespace DungeonGunner
         {
             _spriteRenderer.material = _material;
 
-            for (float i = 0.05f; i <= 1f; i += Time.deltaTime / Settings.FadeInTime)
+            for (float i = 0.05f; i <= 1f; i += Time.deltaTime / Settings.RoomFadeInTime)
             {
                 _material.SetFloat("Alpha_Slider", i);
                 yield return null;

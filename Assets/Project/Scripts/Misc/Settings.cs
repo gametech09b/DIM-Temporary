@@ -20,15 +20,16 @@ namespace DungeonGunner
 
 
         #region Dungeon Builder Settings
-        public const int MaxDungeonBuildAttempts = 10; // max number of attempts to build the dungeon
-        public const int MaxDungeonRoomRebuildAttempts = 1000; // max number of attempts to rebuild the dungeon for room graph
+        public const int DungeonMaxBuildAttempts = 10; // max number of attempts to build the dungeon
+        public const int DungeonMaxRoomRebuildAttempts = 1000; // max number of attempts to rebuild the dungeon for room graph
         #endregion
 
 
 
         #region Room Settings
-        public const float FadeInTime = 0.5f; // time it takes for the room to fade in
-        public const int MaxChildCorridors = 3; // max number of child corridors per room
+        public const float RoomFadeInTime = 0.5f; // time it takes for the room to fade in
+        public const int RoomMaxChildCorridors = 3; // max number of child corridors per room
+        public const float RoomUnlockDoorsDelay = 1f; // delay before unlocking doors
         #endregion
 
 
@@ -94,6 +95,12 @@ namespace DungeonGunner
 
         public const float AStarPlayerDistanceToRebuildPath = 3f;
         public const float AStarEnemyRebuildCooldown = 2f;
+        #endregion
+
+
+
+        #region Enemy Settings
+        public const int EnemyDefaultHealth = 20;
         #endregion
     }
 }

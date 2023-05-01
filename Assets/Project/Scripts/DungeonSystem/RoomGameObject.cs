@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -315,8 +316,6 @@ namespace DungeonGunner
 
         public void LockDoors()
         {
-            DoorGameObject[] doorArray = GetComponentsInParent<DoorGameObject>();
-
             foreach (DoorGameObject door in GetComponentsInChildren<DoorGameObject>())
             {
                 door.LockDoor();
@@ -327,9 +326,37 @@ namespace DungeonGunner
 
 
 
+        public void UnlockDoors(float _delay)
+        {
+            StartCoroutine(UnlockDoorsCoroutine(_delay));
+        }
+
+
+
+        private IEnumerator UnlockDoorsCoroutine(float _delay)
+        {
+            yield return new WaitForSeconds(_delay);
+
+            foreach (DoorGameObject door in GetComponentsInChildren<DoorGameObject>())
+            {
+                door.UnlockDoor();
+            }
+
+            EnableRoomCollider();
+        }
+
+
+
         public void DisableRoomCollider()
         {
             roomCollider.enabled = false;
+        }
+
+
+
+        public void EnableRoomCollider()
+        {
+            roomCollider.enabled = true;
         }
     }
 }

@@ -60,7 +60,7 @@ namespace DungeonGunner
 
             dungeonBuildSuccessful = false;
             int dungeonBuildAttempts = 0;
-            while (!dungeonBuildSuccessful && dungeonBuildAttempts < Settings.MaxDungeonBuildAttempts)
+            while (!dungeonBuildSuccessful && dungeonBuildAttempts < Settings.DungeonMaxBuildAttempts)
             {
                 dungeonBuildAttempts++;
 
@@ -71,7 +71,7 @@ namespace DungeonGunner
                 dungeonBuildSuccessful = false;
 
                 // Loop until dungeon successfully built or more than max attempts for node graph
-                while (!dungeonBuildSuccessful && roomBuildAttempts <= Settings.MaxDungeonRoomRebuildAttempts)
+                while (!dungeonBuildSuccessful && roomBuildAttempts <= Settings.DungeonMaxRoomRebuildAttempts)
                 {
                     ClearDungeon();
 

@@ -2,36 +2,43 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace DungeonGunner {
+namespace DungeonGunner
+{
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(RoomGameObject))]
     #endregion
-    public class RoomLightingController : MonoBehaviour {
+    public class RoomLightingController : MonoBehaviour
+    {
         private RoomGameObject roomGameObject;
 
 
 
-        private void Awake() {
+        private void Awake()
+        {
             roomGameObject = GetComponent<RoomGameObject>();
         }
 
 
 
-        private void OnEnable() {
+        private void OnEnable()
+        {
             DungeonStaticEvent.OnRoomChange += DungeonStaticEvent_OnRoomChange;
         }
 
 
 
-        private void OnDisable() {
+        private void OnDisable()
+        {
             DungeonStaticEvent.OnRoomChange -= DungeonStaticEvent_OnRoomChange;
         }
 
 
 
-        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs _args) {
-            if (_args.room == roomGameObject.room && !roomGameObject.room.isLit) {
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs _args)
+        {
+            if (_args.room == roomGameObject.room && !roomGameObject.room.isLit)
+            {
                 FadeInRoom();
 
                 FadeInAllDoorsOnRoom();
@@ -42,18 +49,21 @@ namespace DungeonGunner {
 
 
 
-        private void FadeInRoom() {
+        private void FadeInRoom()
+        {
             StartCoroutine(FadeInRoomCoroutine(roomGameObject));
         }
 
 
 
-        private IEnumerator FadeInRoomCoroutine(RoomGameObject _roomGameObject) {
+        private IEnumerator FadeInRoomCoroutine(RoomGameObject _roomGameObject)
+        {
             Material material = new Material(GameResources.Instance.VariableLitShader);
 
             ChangeRoomTilemapMaterials(_roomGameObject, material);
 
-            for (float i = 0.05f; i <= 1f; i += Time.deltaTime / Settings.FadeInTime) {
+            for (float i = 0.05f; i <= 1f; i += Time.deltaTime / Settings.RoomFadeInTime)
+            {
                 material.SetFloat("Alpha_Slider", i);
                 yield return null;
             }
@@ -63,13 +73,15 @@ namespace DungeonGunner {
 
 
 
-        private void ChangeTilemapMaterial(Tilemap _tilemap, Material _material) {
+        private void ChangeTilemapMaterial(Tilemap _tilemap, Material _material)
+        {
             _tilemap.GetComponent<TilemapRenderer>().material = _material;
         }
 
 
 
-        private void ChangeRoomTilemapMaterials(RoomGameObject _roomGameObject, Material _material) {
+        private void ChangeRoomTilemapMaterials(RoomGameObject _roomGameObject, Material _material)
+        {
             ChangeTilemapMaterial(_roomGameObject.groundTilemap, _material);
             ChangeTilemapMaterial(_roomGameObject.decorationTilemap1, _material);
             ChangeTilemapMaterial(_roomGameObject.decorationTilemap2, _material);
@@ -79,10 +91,12 @@ namespace DungeonGunner {
 
 
 
-        private void FadeInAllDoorsOnRoom() {
+        private void FadeInAllDoorsOnRoom()
+        {
             DoorGameObject[] doorGameObjectArray = GetComponentsInChildren<DoorGameObject>();
 
-            foreach (DoorGameObject doorGameObject in doorGameObjectArray) {
+            foreach (DoorGameObject doorGameObject in doorGameObjectArray)
+            {
                 DoorLightingController doorLightingController = doorGameObject.GetComponentInChildren<DoorLightingController>();
 
                 doorLightingController.FadeInDoor(doorGameObject);

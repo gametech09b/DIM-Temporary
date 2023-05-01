@@ -49,8 +49,20 @@ namespace DungeonGunner
 
         private void OnTriggerEnter2D(Collider2D _other)
         {
+            DealDamage(_other);
             PlayHitEffect();
             DisableAmmo();
+        }
+
+
+
+        private void DealDamage(Collider2D _other)
+        {
+            Health health = _other.GetComponent<Health>();
+            if (health != null)
+            {
+                health.TakeDamage(ammoDetail.damage);
+            }
         }
 
 

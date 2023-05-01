@@ -47,6 +47,16 @@ namespace DungeonGunner
 
 
 
+        [Space(10)]
+        [Header("Enemy Health")]
+
+
+        public EnemyHealthDetail[] enemyHealthDetailArray;
+        public bool isImmuneAfterHit = false;
+        public float immuneDuration = 1f;
+
+
+
         #region Validation
 #if UNITY_EDITOR
         private void OnValidate()
@@ -62,6 +72,10 @@ namespace DungeonGunner
 
             HelperUtilities.CheckPositiveValue(this, nameof(minFireInterval), minFireInterval);
             HelperUtilities.CheckPositiveValue(this, nameof(maxFireInterval), maxFireInterval);
+
+            HelperUtilities.CheckEnumerableValue(this, nameof(enemyHealthDetailArray), enemyHealthDetailArray);
+            if (isImmuneAfterHit)
+                HelperUtilities.CheckPositiveValue(this, nameof(immuneDuration), immuneDuration);
         }
 #endif
         #endregion

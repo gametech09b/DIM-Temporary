@@ -20,11 +20,15 @@ namespace DungeonGunner
     [RequireComponent(typeof(ActiveWeaponEvent))]
     [RequireComponent(typeof(AimAction))]
     [RequireComponent(typeof(AimEvent))]
+    [RequireComponent(typeof(Destroyed))]
+    [RequireComponent(typeof(DestroyedEvent))]
     [RequireComponent(typeof(EnemyAnimatorHandler))]
     [RequireComponent(typeof(EnemyMovementAI))]
     [RequireComponent(typeof(EnemyWeaponAI))]
     [RequireComponent(typeof(FireAction))]
     [RequireComponent(typeof(FireEvent))]
+    [RequireComponent(typeof(Health))]
+    [RequireComponent(typeof(HealthEvent))]
     [RequireComponent(typeof(Idle))]
     [RequireComponent(typeof(IdleEvent))]
     [RequireComponent(typeof(MaterializeEffect))]
@@ -50,6 +54,8 @@ namespace DungeonGunner
         [HideInInspector] public IdleEvent idleEvent;
         [HideInInspector] public MoveToPositionEvent moveToPositionEvent;
 
+        private Health health;
+        private HealthEvent healthEvent;
 
         private MaterializeEffect materializeEffect;
 
@@ -71,7 +77,34 @@ namespace DungeonGunner
             idleEvent = GetComponent<IdleEvent>();
             moveToPositionEvent = GetComponent<MoveToPositionEvent>();
 
+            health = GetComponent<Health>();
+            healthEvent = GetComponent<HealthEvent>();
+
             materializeEffect = GetComponent<MaterializeEffect>();
+        }
+
+
+
+        private void OnEnable()
+        {
+            healthEvent.OnHealthChange += HealthEvent_OnHealthChange;
+        }
+
+
+
+        private void OnDisable()
+        {
+            healthEvent.OnHealthChange -= HealthEvent_OnHealthChange;
+        }
+
+
+
+        private void HealthEvent_OnHealthChange(HealthEvent _sender, OnHealthChangeEventArgs _args)
+        {
+            if (_args.healthAmount <= 0)
+            {
+                DestroyGameObject();
+            }
         }
 
 
@@ -83,6 +116,8 @@ namespace DungeonGunner
             SetupAnimationSpeed();
 
             SetMovePathfindingUpdateFrame(_spawnedCount);
+
+            SetStartingHealth(_dungeonLevel);
 
             SetStartingWeapon();
 
@@ -101,6 +136,22 @@ namespace DungeonGunner
         private void SetMovePathfindingUpdateFrame(int _spawnedCount)
         {
             enemyMovementAI.SetUpdateAtFrame(_spawnedCount % Settings.AStarTargetFrameRate);
+        }
+
+
+
+        private void SetStartingHealth(DungeonLevelSO _dungeonLevel)
+        {
+            foreach (EnemyHealthDetail enemyHealthDetail in enemyDetail.enemyHealthDetailArray)
+            {
+                if (enemyHealthDetail.dungeonLevel == _dungeonLevel)
+                {
+                    health.SetStartingAmount(enemyHealthDetail.healthAmount);
+                    break;
+                }
+            }
+
+            health.SetStartingAmount(Settings.EnemyDefaultHealth);
         }
 
 
@@ -135,6 +186,14 @@ namespace DungeonGunner
 
             enemyMovementAI.enabled = _isEnable;
             fireAction.enabled = _isEnable;
+        }
+
+
+
+        private void DestroyGameObject()
+        {
+            DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
+            destroyedEvent.CallOnDestroyed();
         }
     }
 }

@@ -278,7 +278,7 @@ namespace DungeonGunner
                 return false;
 
             if (currentRoomNodeType.isCorridor
-            && childRoomNodeIDList.Count >= Settings.MaxChildCorridors)
+            && childRoomNodeIDList.Count >= Settings.RoomMaxChildCorridors)
                 return false;
 
             if (currentRoomNodeType.isEntrance)

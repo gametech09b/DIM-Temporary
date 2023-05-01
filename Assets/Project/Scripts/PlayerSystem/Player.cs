@@ -23,6 +23,7 @@ namespace DungeonGunner
     [RequireComponent(typeof(FireAction))]
     [RequireComponent(typeof(FireEvent))]
     [RequireComponent(typeof(Health))]
+    [RequireComponent(typeof(HealthEvent))]
     [RequireComponent(typeof(Idle))]
     [RequireComponent(typeof(IdleEvent))]
     [RequireComponent(typeof(MoveByVelocity))]

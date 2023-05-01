@@ -12,11 +12,29 @@ namespace DungeonGunner
                 room = _room
             });
         }
+
+
+
+        public static event Action<OnRoomEnemiesDefeatedEventArgs> OnRoomEnemiesDefeated;
+        public static void CallOnRoomEnemiesDefeated(Room _room)
+        {
+            OnRoomEnemiesDefeated?.Invoke(new OnRoomEnemiesDefeatedEventArgs()
+            {
+                room = _room
+            });
+        }
     }
 
 
 
     public class OnRoomChangeEventArgs : EventArgs
+    {
+        public Room room;
+    }
+
+
+
+    public class OnRoomEnemiesDefeatedEventArgs : EventArgs
     {
         public Room room;
     }

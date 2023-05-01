@@ -108,10 +108,8 @@ namespace DungeonGunner
             {
                 ReloadActionUI(_weapon);
             }
-            else
-            {
-                ResetStatusBar();
-            }
+
+            ResetStatusBar();
 
             UpdateReloadText(_weapon);
         }
@@ -218,6 +216,8 @@ namespace DungeonGunner
 
                 yield return null;
             }
+
+            ResetStatusBar();
         }
 
 

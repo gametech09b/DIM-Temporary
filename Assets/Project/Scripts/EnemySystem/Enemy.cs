@@ -20,6 +20,7 @@ namespace DungeonGunner
     [RequireComponent(typeof(ActiveWeaponEvent))]
     [RequireComponent(typeof(AimAction))]
     [RequireComponent(typeof(AimEvent))]
+    [RequireComponent(typeof(DealContactDamage))]
     [RequireComponent(typeof(Destroyed))]
     [RequireComponent(typeof(DestroyedEvent))]
     [RequireComponent(typeof(EnemyAnimatorHandler))]

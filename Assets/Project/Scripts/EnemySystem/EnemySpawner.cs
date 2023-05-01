@@ -141,8 +141,6 @@ namespace DungeonGunner
 
             currentCount--;
 
-            Debug.Log($"Enemy destroyed. spawnedCount count: {spawnedCount}");
-
             if (currentCount <= 0
             && spawnedCount == totalToSpawn)
             {

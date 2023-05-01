@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 378947183875633789}
   - component: {fileID: 7956154202785743945}
   - component: {fileID: 8717754872499881984}
+  - component: {fileID: -1266303902435481009}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -188,9 +189,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  health: {fileID: 0}
   spriteRenderer: {fileID: 0}
   playerDetail: {fileID: 0}
+  controllerHandler: {fileID: 0}
   activeWeapon: {fileID: 0}
   aimEvent: {fileID: 0}
   idleEvent: {fileID: 0}
@@ -199,6 +200,9 @@ MonoBehaviour:
   activeWeaponEvent: {fileID: 0}
   fireEvent: {fileID: 0}
   reloadEvent: {fileID: 0}
+  health: {fileID: 0}
+  healthEvent: {fileID: 0}
+  destroyedEvent: {fileID: 0}
 --- !u!95 &4886237443457582244
 Animator:
   serializedVersion: 5
@@ -417,6 +421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementDetail: {fileID: 11400000, guid: 910685f49d2328e4f99e59627fc235fe, type: 2}
+  isDashing: 0
 --- !u!114 &4886237443457582243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8da36598976789488bad5747a119296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
   isDamageable: 1
 --- !u!114 &7644752685778861728
 MonoBehaviour:
@@ -614,6 +620,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb1147b5ecdbc84e8580ffe8786d16c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1266303902435481009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886237443457582251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ba87b8d3a81ec64195480227bd18f8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 131072
 --- !u!1 &4886237443564654884
 GameObject:
   m_ObjectHideFlags: 0

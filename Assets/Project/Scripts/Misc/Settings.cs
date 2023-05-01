@@ -102,5 +102,11 @@ namespace DungeonGunner
         #region Enemy Settings
         public const int EnemyDefaultHealth = 20;
         #endregion
+
+
+
+        #region Contact Damage Settings
+        public const float ContactDamageCooldown = 0.5f;
+        #endregion
     }
 }

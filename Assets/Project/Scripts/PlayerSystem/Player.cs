@@ -20,6 +20,7 @@ namespace DungeonGunner
     [RequireComponent(typeof(AimEvent))]
     [RequireComponent(typeof(AnimatorHandler))]
     [RequireComponent(typeof(ControllerHandler))]
+    [RequireComponent(typeof(DealContactDamage))]
     [RequireComponent(typeof(Destroyed))]
     [RequireComponent(typeof(DestroyedEvent))]
     [RequireComponent(typeof(FireAction))]
@@ -34,6 +35,7 @@ namespace DungeonGunner
     [RequireComponent(typeof(MoveToPositionEvent))]
     [RequireComponent(typeof(ReloadAction))]
     [RequireComponent(typeof(ReloadEvent))]
+    [RequireComponent(typeof(TakeContactDamage))]
     #endregion
     public class Player : MonoBehaviour
     {

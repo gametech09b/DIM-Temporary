@@ -44,7 +44,7 @@ namespace DungeonGunner
             {
                 room.isVisited = true;
 
-                DungeonStaticEvent.CallOnRoomChange(room);
+                DungeonStaticEvent.CallOnRoomChanged(room);
             }
         }
 

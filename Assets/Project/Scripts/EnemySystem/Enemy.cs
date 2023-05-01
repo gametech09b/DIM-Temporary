@@ -195,7 +195,7 @@ namespace DungeonGunner
         private void DestroyGameObject()
         {
             DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
-            destroyedEvent.CallOnDestroyed(false);
+            destroyedEvent.CallOnDestroyed(false, health.GetStartingAmount());
         }
     }
 }

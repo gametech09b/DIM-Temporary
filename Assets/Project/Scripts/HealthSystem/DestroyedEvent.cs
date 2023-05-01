@@ -8,13 +8,14 @@ namespace DungeonGunner
     {
         public event Action<DestroyedEvent, OnDestroyedEventArgs> OnDestroyed;
 
-        public void CallOnDestroyed(bool isPlayer)
+        public void CallOnDestroyed(bool _isPlayer, int _point)
         {
             OnDestroyed?.Invoke(
                 this,
                 new OnDestroyedEventArgs()
                 {
-                    isPlayer = isPlayer
+                    isPlayer = _isPlayer,
+                    point = _point
                 });
         }
     }
@@ -24,5 +25,6 @@ namespace DungeonGunner
     public class OnDestroyedEventArgs : EventArgs
     {
         public bool isPlayer;
+        public int point;
     }
 }

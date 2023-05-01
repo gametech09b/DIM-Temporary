@@ -13,14 +13,14 @@ namespace DungeonGunner
 
         private void OnEnable()
         {
-            DungeonStaticEvent.OnRoomChange += DungeonStaticEvent_OnRoomChange;
+            DungeonStaticEvent.OnRoomChanged += DungeonStaticEvent_OnRoomChange;
         }
 
 
 
         private void OnDisable()
         {
-            DungeonStaticEvent.OnRoomChange -= DungeonStaticEvent_OnRoomChange;
+            DungeonStaticEvent.OnRoomChanged -= DungeonStaticEvent_OnRoomChange;
         }
 
 
@@ -49,7 +49,7 @@ namespace DungeonGunner
 
 
 
-        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs _args)
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangedEventArgs _args)
         {
             if (_spawnedEnemyList != null
             && _spawnedEnemyList.Count > 0)

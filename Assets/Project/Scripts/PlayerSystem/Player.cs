@@ -105,7 +105,7 @@ namespace DungeonGunner
         {
             if (_args.healthAmount <= 0f)
             {
-                destroyedEvent.CallOnDestroyed(true);
+                destroyedEvent.CallOnDestroyed(true, 0);
             }
         }
 

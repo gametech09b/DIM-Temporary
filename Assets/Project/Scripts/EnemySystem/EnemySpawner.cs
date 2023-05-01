@@ -18,19 +18,19 @@ namespace DungeonGunner
 
         private void OnEnable()
         {
-            DungeonStaticEvent.OnRoomChange += DungeonStaticEvent_OnRoomChange;
+            DungeonStaticEvent.OnRoomChanged += DungeonStaticEvent_OnRoomChange;
         }
 
 
 
         private void OnDisable()
         {
-            DungeonStaticEvent.OnRoomChange -= DungeonStaticEvent_OnRoomChange;
+            DungeonStaticEvent.OnRoomChanged -= DungeonStaticEvent_OnRoomChange;
         }
 
 
 
-        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs _args)
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangedEventArgs _args)
         {
             currentCount = 0;
             spawnedCount = 0;
@@ -141,6 +141,8 @@ namespace DungeonGunner
 
             currentCount--;
 
+            DungeonStaticEvent.CallOnPointScored(_args.point);
+
             if (currentCount <= 0
             && spawnedCount == totalToSpawn)
             {
@@ -157,8 +159,6 @@ namespace DungeonGunner
                     GameManager.Instance.gameState = GameState.BOSS_STAGE;
                     GameManager.Instance.previousGameState = GameState.ENGAGING_BOSS;
                 }
-
-                Debug.Log($"Game State: {GameManager.Instance.gameState}");
 
                 currentRoom.roomGameObject.UnlockDoors(Settings.RoomUnlockDoorsDelay);
 

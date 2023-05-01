@@ -28,6 +28,7 @@ namespace DungeonGunner
 
         [HideInInspector] public GameState gameState;
         [HideInInspector] public GameState previousGameState;
+        private long gameScore;
 
 
 
@@ -54,14 +55,16 @@ namespace DungeonGunner
 
         private void OnEnable()
         {
-            DungeonStaticEvent.OnRoomChange += DungeonStaticEvent_OnRoomChange;
+            DungeonStaticEvent.OnRoomChanged += DungeonStaticEvent_OnRoomChange;
+            DungeonStaticEvent.OnPointScored += DungeonStaticEvent_OnPointScored;
         }
 
 
 
         private void OnDisable()
         {
-            DungeonStaticEvent.OnRoomChange -= DungeonStaticEvent_OnRoomChange;
+            DungeonStaticEvent.OnRoomChanged -= DungeonStaticEvent_OnRoomChange;
+            DungeonStaticEvent.OnPointScored -= DungeonStaticEvent_OnPointScored;
         }
 
 
@@ -70,6 +73,8 @@ namespace DungeonGunner
         {
             previousGameState = GameState.GAME_STARTED;
             gameState = GameState.GAME_STARTED;
+
+            gameScore = 0;
         }
 
 
@@ -87,9 +92,18 @@ namespace DungeonGunner
 
 
 
-        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs _args)
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangedEventArgs _args)
         {
             SetCurrentRoom(_args.room);
+        }
+
+
+
+        private void DungeonStaticEvent_OnPointScored(OnPointScoredEventArgs _args)
+        {
+            gameScore += _args.point;
+
+            DungeonStaticEvent.CallOnScoreChanged(gameScore);
         }
 
 
@@ -147,7 +161,7 @@ namespace DungeonGunner
                 Debug.LogError("Couldn't build dungeon from specified rooms and node graphs");
             }
 
-            DungeonStaticEvent.CallOnRoomChange(currentRoom);
+            DungeonStaticEvent.CallOnRoomChanged(currentRoom);
 
             Vector3 currentRoomMiddlePosition = currentRoom.GetMiddlePosition();
             Vector3 nearestSpawnPoint = HelperUtilities.GetNearestSpawnPoint(currentRoomMiddlePosition);

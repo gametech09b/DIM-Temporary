@@ -23,19 +23,19 @@ namespace DungeonGunner
 
         private void OnEnable()
         {
-            DungeonStaticEvent.OnRoomChange += DungeonStaticEvent_OnRoomChange;
+            DungeonStaticEvent.OnRoomChanged += DungeonStaticEvent_OnRoomChange;
         }
 
 
 
         private void OnDisable()
         {
-            DungeonStaticEvent.OnRoomChange -= DungeonStaticEvent_OnRoomChange;
+            DungeonStaticEvent.OnRoomChanged -= DungeonStaticEvent_OnRoomChange;
         }
 
 
 
-        private void DungeonStaticEvent_OnRoomChange(OnRoomChangeEventArgs _args)
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangedEventArgs _args)
         {
             if (_args.room == roomGameObject.room && !roomGameObject.room.isLit)
             {

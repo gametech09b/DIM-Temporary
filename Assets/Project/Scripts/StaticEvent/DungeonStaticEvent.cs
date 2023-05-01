@@ -4,10 +4,10 @@ namespace DungeonGunner
 {
     public static class DungeonStaticEvent
     {
-        public static event Action<OnRoomChangeEventArgs> OnRoomChange;
-        public static void CallOnRoomChange(Room _room)
+        public static event Action<OnRoomChangedEventArgs> OnRoomChanged;
+        public static void CallOnRoomChanged(Room _room)
         {
-            OnRoomChange?.Invoke(new OnRoomChangeEventArgs()
+            OnRoomChanged?.Invoke(new OnRoomChangedEventArgs()
             {
                 room = _room
             });
@@ -23,11 +23,33 @@ namespace DungeonGunner
                 room = _room
             });
         }
+
+
+
+        public static event Action<OnPointScoredEventArgs> OnPointScored;
+        public static void CallOnPointScored(int _point)
+        {
+            OnPointScored?.Invoke(new OnPointScoredEventArgs()
+            {
+                point = _point
+            });
+        }
+
+
+
+        public static event Action<OnScoreChangedEventArgs> OnScoreChanged;
+        public static void CallOnScoreChanged(long _score)
+        {
+            OnScoreChanged?.Invoke(new OnScoreChangedEventArgs()
+            {
+                score = _score
+            });
+        }
     }
 
 
 
-    public class OnRoomChangeEventArgs : EventArgs
+    public class OnRoomChangedEventArgs : EventArgs
     {
         public Room room;
     }
@@ -37,5 +59,19 @@ namespace DungeonGunner
     public class OnRoomEnemiesDefeatedEventArgs : EventArgs
     {
         public Room room;
+    }
+
+
+
+    public class OnPointScoredEventArgs : EventArgs
+    {
+        public int point;
+    }
+
+
+
+    public class OnScoreChangedEventArgs : EventArgs
+    {
+        public long score;
     }
 }

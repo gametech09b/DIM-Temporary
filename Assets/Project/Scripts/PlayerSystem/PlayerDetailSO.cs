@@ -26,6 +26,8 @@ namespace DungeonGunner
 
         [Tooltip("Player starting health amount")]
         public int startingHealthAmount;
+        public bool isImmuneAfterHit = false;
+        public float immuneDuration;
 
 
 
@@ -59,7 +61,11 @@ namespace DungeonGunner
             HelperUtilities.CheckEmptyString(this, nameof(characterName), characterName);
             HelperUtilities.CheckNullValue(this, nameof(characterPrefab), characterPrefab);
             HelperUtilities.CheckNullValue(this, nameof(runtimeAnimatorController), runtimeAnimatorController);
+
             HelperUtilities.CheckPositiveValue(this, nameof(startingHealthAmount), startingHealthAmount);
+            if (isImmuneAfterHit)
+                HelperUtilities.CheckPositiveValue(this, nameof(immuneDuration), immuneDuration);
+
             HelperUtilities.CheckNullValue(this, nameof(minimapIconSprite), minimapIconSprite);
             HelperUtilities.CheckNullValue(this, nameof(handSprite), handSprite);
 

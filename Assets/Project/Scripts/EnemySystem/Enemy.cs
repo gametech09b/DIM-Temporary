@@ -42,7 +42,8 @@ namespace DungeonGunner
         [HideInInspector] public Animator animator;
         private CircleCollider2D circleCollider2D;
         private PolygonCollider2D polygonCollider2D;
-        private SpriteRenderer[] spriteRendererArray;
+
+        [HideInInspector] public SpriteRenderer[] spriteRendererArray;
 
         [HideInInspector] public EnemyDetailSO enemyDetail;
         private EnemyMovementAI enemyMovementAI;

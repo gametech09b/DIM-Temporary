@@ -35,9 +35,13 @@ namespace DungeonGunner
 
 
 
-        private void DestroyedEvent_OnDestroyed(DestroyedEvent _destroyedEvent)
+        private void DestroyedEvent_OnDestroyed(DestroyedEvent _sender, OnDestroyedEventArgs _args)
+
         {
-            Destroy(gameObject);
+            if (_args.isPlayer)
+                gameObject.SetActive(false);
+            else
+                Destroy(gameObject);
         }
     }
 }

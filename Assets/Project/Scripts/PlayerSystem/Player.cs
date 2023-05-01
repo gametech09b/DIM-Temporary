@@ -20,6 +20,8 @@ namespace DungeonGunner
     [RequireComponent(typeof(AimEvent))]
     [RequireComponent(typeof(AnimatorHandler))]
     [RequireComponent(typeof(ControllerHandler))]
+    [RequireComponent(typeof(Destroyed))]
+    [RequireComponent(typeof(DestroyedEvent))]
     [RequireComponent(typeof(FireAction))]
     [RequireComponent(typeof(FireEvent))]
     [RequireComponent(typeof(Health))]
@@ -36,7 +38,6 @@ namespace DungeonGunner
     public class Player : MonoBehaviour
     {
         [HideInInspector] public Animator animator;
-        [HideInInspector] public Health health;
         [HideInInspector] public SpriteRenderer spriteRenderer;
 
         [HideInInspector] public PlayerDetailSO playerDetail;
@@ -52,13 +53,16 @@ namespace DungeonGunner
         [HideInInspector] public FireEvent fireEvent;
         [HideInInspector] public ReloadEvent reloadEvent;
 
+        [HideInInspector] public Health health;
+        [HideInInspector] public HealthEvent healthEvent;
+        [HideInInspector] public DestroyedEvent destroyedEvent;
+
 
 
 
         private void Awake()
         {
             animator = GetComponent<Animator>();
-            health = GetComponent<Health>();
             spriteRenderer = GetComponent<SpriteRenderer>();
 
             activeWeapon = GetComponent<ActiveWeapon>();
@@ -70,6 +74,34 @@ namespace DungeonGunner
             moveByVelocityEvent = GetComponent<MoveByVelocityEvent>();
             moveToPositionEvent = GetComponent<MoveToPositionEvent>();
             reloadEvent = GetComponent<ReloadEvent>();
+
+            health = GetComponent<Health>();
+            healthEvent = GetComponent<HealthEvent>();
+            destroyedEvent = GetComponent<DestroyedEvent>();
+        }
+
+
+
+        private void OnEnable()
+        {
+            healthEvent.OnHealthChange += HealthEvent_OnHealthChange;
+        }
+
+
+
+        private void OnDisable()
+        {
+            healthEvent.OnHealthChange -= HealthEvent_OnHealthChange;
+        }
+
+
+
+        private void HealthEvent_OnHealthChange(HealthEvent _sender, OnHealthChangeEventArgs _args)
+        {
+            if (_args.healthAmount <= 0f)
+            {
+                destroyedEvent.CallOnDestroyed(true);
+            }
         }
 
 

@@ -135,7 +135,7 @@ namespace DungeonGunner
 
 
 
-        private void Enemy_DestroyedEvent_OnDestroyed(DestroyedEvent _sender)
+        private void Enemy_DestroyedEvent_OnDestroyed(DestroyedEvent _sender, OnDestroyedEventArgs _args)
         {
             _sender.OnDestroyed -= Enemy_DestroyedEvent_OnDestroyed;
 

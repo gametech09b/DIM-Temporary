@@ -81,9 +81,9 @@ namespace DungeonGunner
 
 
         #region UI Settings
-        public const float AmmoIconSpacing = 4f; // spacing between ammo icons
-        public static Color ReloadProgressColor = Color.red;
-        public static Color ReloadDoneColor = Color.green;
+        public const float UIAmmoIconSpacing = 4f; // spacing between ammo icons
+
+        public const float UIHeartIconSpacing = 16f;
         #endregion
 
 

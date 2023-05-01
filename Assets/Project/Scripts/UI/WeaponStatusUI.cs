@@ -101,15 +101,15 @@ namespace DungeonGunner
         {
             UpdateActiveWeaponImage(_weapon.weaponDetail);
             UpdateActiveWeaponName(_weapon);
-            UpdateAmmoIconList(_weapon);
             UpdateAmmoText(_weapon);
+            UpdateAmmoIconList(_weapon);
+
+            Debug.Log($"Set Active Weapon UI: {_weapon.isReloading}");
 
             if (_weapon.isReloading)
-            {
                 ReloadActionUI(_weapon);
-            }
-
-            ResetStatusBar();
+            else
+                ResetStatusBar();
 
             UpdateReloadText(_weapon);
         }
@@ -161,7 +161,7 @@ namespace DungeonGunner
             {
                 GameObject ammoIcon = Instantiate(UIResources.Instance.ammoIconPrefab, ammoIconListParentTransform);
                 RectTransform ammoIconRectTransform = ammoIcon.GetComponent<RectTransform>();
-                ammoIconRectTransform.anchoredPosition = new Vector2(0, Settings.AmmoIconSpacing * i);
+                ammoIconRectTransform.anchoredPosition = new Vector2(0, Settings.UIAmmoIconSpacing * i);
 
                 ammoIconList.Add(ammoIcon);
             }
@@ -195,7 +195,8 @@ namespace DungeonGunner
 
         private void ReloadActionUI(Weapon _weapon)
         {
-            if (_weapon.weaponDetail.isAmmoPerClipInfinite) return;
+            if (_weapon.weaponDetail.isAmmoPerClipInfinite)
+                return;
 
             StopReloadingCoroutine();
             UpdateReloadText(_weapon);
@@ -207,7 +208,7 @@ namespace DungeonGunner
 
         private IEnumerator ReloadingCoroutine(Weapon _weapon)
         {
-            statusBarValueImage.color = Settings.ReloadProgressColor;
+            statusBarValueImage.color = Color.red;
 
             while (_weapon.isReloading)
             {
@@ -216,8 +217,6 @@ namespace DungeonGunner
 
                 yield return null;
             }
-
-            ResetStatusBar();
         }
 
 
@@ -226,8 +225,8 @@ namespace DungeonGunner
         {
             StopReloadingCoroutine();
 
-            statusBarValueImage.color = Settings.ReloadDoneColor;
-            statusBarValueImage.transform.localScale = new Vector3(1, 1, 1);
+            statusBarValueImage.color = Color.green;
+            statusBarValueTransform.transform.localScale = new Vector3(1f, 1f, 1f);
         }
 
 
@@ -247,7 +246,7 @@ namespace DungeonGunner
             if (!_weapon.weaponDetail.isAmmoPerClipInfinite
             && (_weapon.ammoPerClipRemaining <= 0 || _weapon.isReloading))
             {
-                reloadText.color = Settings.ReloadProgressColor;
+                statusBarValueImage.color = Color.red;
 
                 StopBlinkingReloadingTextCoroutine();
 

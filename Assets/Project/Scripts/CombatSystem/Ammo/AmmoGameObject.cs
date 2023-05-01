@@ -17,6 +17,7 @@ namespace DungeonGunner
         private float chargeTimer;
         private bool isAmmoMaterialSet;
         private bool isOverrideAmmoMovement;
+        private bool isCollided;
 
 
 
@@ -49,6 +50,9 @@ namespace DungeonGunner
 
         private void OnTriggerEnter2D(Collider2D _other)
         {
+            if (isCollided)
+                return;
+
             DealDamage(_other);
             PlayHitEffect();
             DisableAmmo();
@@ -58,10 +62,11 @@ namespace DungeonGunner
 
         private void DealDamage(Collider2D _other)
         {
-            Health health = _other.GetComponent<Health>();
-            if (health != null)
+            Health collidedHealth = _other.GetComponent<Health>();
+            if (collidedHealth != null)
             {
-                health.TakeDamage(ammoDetail.damage);
+                isCollided = true;
+                collidedHealth.TakeDamage(ammoDetail.damage);
             }
         }
 
@@ -94,8 +99,10 @@ namespace DungeonGunner
 
         public void Init(AmmoDetailSO _ammoDetail, float _ammoSpeed, float _angle, float _weaponAngle, Vector3 _weaponDirectionVector, bool _isOverrideAmmoMovement = false)
         {
-            // ammo
+            #region ammo
             this.ammoDetail = _ammoDetail;
+
+            isCollided = false;
 
             SetDirection(_ammoDetail, _angle, _weaponAngle, _weaponDirectionVector);
 
@@ -121,10 +128,10 @@ namespace DungeonGunner
             this.isOverrideAmmoMovement = _isOverrideAmmoMovement;
 
             gameObject.SetActive(true);
+            #endregion
 
 
-
-            // trail
+            #region trail
             if (_ammoDetail.isTrailEnabled)
             {
                 trailRenderer.gameObject.SetActive(true);
@@ -139,6 +146,7 @@ namespace DungeonGunner
                 trailRenderer.emitting = false;
                 trailRenderer.gameObject.SetActive(false);
             }
+            #endregion
         }
 
 

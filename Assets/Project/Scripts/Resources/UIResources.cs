@@ -26,5 +26,13 @@ namespace DungeonGunner
         [Header("Weapon HUD")]
 
         public GameObject ammoIconPrefab;
+
+
+
+        [Space(10)]
+        [Header("Health HUD")]
+
+
+        public GameObject healthIconPrefab;
     }
 }

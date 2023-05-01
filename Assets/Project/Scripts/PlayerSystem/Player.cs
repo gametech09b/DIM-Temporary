@@ -41,6 +41,7 @@ namespace DungeonGunner
         [HideInInspector] public SpriteRenderer spriteRenderer;
 
         [HideInInspector] public PlayerDetailSO playerDetail;
+        [HideInInspector] public ControllerHandler controllerHandler;
 
         public List<Weapon> weaponList = new List<Weapon>();
         [HideInInspector] public ActiveWeapon activeWeapon;
@@ -64,6 +65,8 @@ namespace DungeonGunner
         {
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+
+            controllerHandler = GetComponent<ControllerHandler>();
 
             activeWeapon = GetComponent<ActiveWeapon>();
 

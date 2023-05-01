@@ -104,8 +104,6 @@ namespace DungeonGunner
             UpdateAmmoText(_weapon);
             UpdateAmmoIconList(_weapon);
 
-            Debug.Log($"Set Active Weapon UI: {_weapon.isReloading}");
-
             if (_weapon.isReloading)
                 ReloadActionUI(_weapon);
             else

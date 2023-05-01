@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonGunner
@@ -13,6 +11,9 @@ namespace DungeonGunner
         private int startingAmount;
         private int currentAmount;
         private HealthEvent healthEvent;
+
+        private Player player;
+        [HideInInspector] public Enemy enemy;
 
         [HideInInspector] public bool isDamageable = true;
 
@@ -28,6 +29,9 @@ namespace DungeonGunner
         private void Start()
         {
             CallOnHealthChange(0);
+
+            player = GetComponent<Player>();
+            enemy = GetComponent<Enemy>();
         }
 
 
@@ -41,7 +45,12 @@ namespace DungeonGunner
 
         public void TakeDamage(int _damageAmount)
         {
-            if (isDamageable)
+            bool isDashing = false;
+            if (player != null)
+                isDashing = player.controllerHandler.isDashing;
+
+            if (isDamageable
+            && !isDashing)
             {
                 currentAmount -= _damageAmount;
                 CallOnHealthChange(_damageAmount);

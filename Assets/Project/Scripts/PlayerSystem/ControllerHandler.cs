@@ -18,9 +18,9 @@ namespace DungeonGunner
         private float moveSpeed;
         private bool isFiringPreviousFrame;
 
+        [HideInInspector] public bool isDashing;
         private Coroutine dashCoroutine;
         private WaitForFixedUpdate waitForFixedUpdate;
-        private bool isDashing;
         private float dashCooldownTimer;
 
 

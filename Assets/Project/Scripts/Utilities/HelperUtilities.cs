@@ -231,5 +231,16 @@ namespace DungeonGunner
 
             return nearestSpawnPosition;
         }
+
+
+
+        public static void CameraWorldPositionBounds(Camera _camera, out Vector2Int _lowerBounds, out Vector2Int _upperBounds)
+        {
+            Vector3 viewportBottomLeft = _camera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
+            Vector3 viewportTopRight = _camera.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
+
+            _lowerBounds = new Vector2Int((int)viewportBottomLeft.x, (int)viewportBottomLeft.y);
+            _upperBounds = new Vector2Int((int)viewportTopRight.x, (int)viewportTopRight.y);
+        }
     }
 }

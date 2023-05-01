@@ -2908,6 +2908,7 @@ GameObject:
   - component: {fileID: 1990003488}
   - component: {fileID: 1990003489}
   - component: {fileID: 1990003490}
+  - component: {fileID: 1990003491}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2960,6 +2961,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990003487}
   m_Enabled: 1
+--- !u!114 &1990003491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990003487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9656a3fc7f01d6940a1730f1f050851c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapCamera: {fileID: 177452887}
 --- !u!1 &1990951072
 GameObject:
   m_ObjectHideFlags: 0
@@ -3392,7 +3406,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 16, y: -32}
+  m_AnchoredPosition: {x: 20, y: -32}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2071941744

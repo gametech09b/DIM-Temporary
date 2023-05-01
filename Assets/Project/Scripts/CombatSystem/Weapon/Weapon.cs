@@ -6,8 +6,8 @@ namespace DungeonGunner
     {
         public WeaponDetailSO weaponDetail;
         public int indexOnList;
-        public int ammoPerClipRemaining;
         public int ammoRemaining;
+        public int ammoPerClipRemaining;
         public bool isReloading;
         public float reloadTimer;
 
@@ -16,8 +16,8 @@ namespace DungeonGunner
         public Weapon(WeaponDetailSO _weaponDetail)
         {
             this.weaponDetail = _weaponDetail;
-            this.ammoPerClipRemaining = _weaponDetail.ammoPerClipCapacity;
             this.ammoRemaining = _weaponDetail.ammoCapacity;
+            this.ammoPerClipRemaining = _weaponDetail.ammoPerClipCapacity;
         }
     }
 }

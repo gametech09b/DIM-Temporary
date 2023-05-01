@@ -25,6 +25,7 @@ namespace DungeonGunner.EnemySystem
         {
             enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
             enemy.moveToPositionEvent.OnMoveToPosition += MoveToPositionEvent_OnMoveToPosition;
+            enemy.aimEvent.OnAimAction += AimEvent_OnAimAction;
         }
 
 
@@ -33,6 +34,7 @@ namespace DungeonGunner.EnemySystem
         {
             enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
             enemy.moveToPositionEvent.OnMoveToPosition -= MoveToPositionEvent_OnMoveToPosition;
+            enemy.aimEvent.OnAimAction -= AimEvent_OnAimAction;
         }
 
 
@@ -46,17 +48,16 @@ namespace DungeonGunner.EnemySystem
 
         private void MoveToPositionEvent_OnMoveToPosition(MoveToPositionEvent _sender, MoveToPositionEventArgs _args)
         {
+            SetMoveAnimationParameters();
+        }
+
+
+
+        private void AimEvent_OnAimAction(AimEvent _sender, AimEventArgs _args)
+        {
             DisableAllAimAnimationParameters();
 
-            // FIXME: FIX LATER
-            Vector3 position = enemy.transform.position;
-            Vector3 targetPosition = GameManager.Instance.GetCurrentPlayer().transform.position;
-            if (position.x < targetPosition.x)
-                SetAimAnimationParameters(Direction.RIGHT);
-            else
-                SetAimAnimationParameters(Direction.LEFT);
-
-            SetMoveAnimationParameters();
+            SetAimAnimationParameters(_args.direction);
         }
 
 

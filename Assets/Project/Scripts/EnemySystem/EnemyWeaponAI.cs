@@ -11,7 +11,7 @@ namespace DungeonGunner
     public class EnemyWeaponAI : MonoBehaviour
     {
         [SerializeField] private LayerMask layerMask;
-        [SerializeField] private Transform shootPosition;
+        [SerializeField] private Transform weaponShootPointTransform;
 
         private Enemy enemy;
         private EnemyDetailSO enemyDetail;
@@ -76,7 +76,7 @@ namespace DungeonGunner
         private void Fire()
         {
             Vector3 playerDirectionVector = GameManager.Instance.GetCurrentPlayer().GetPosition() - transform.position;
-            Vector3 weaponDirectionVector = GameManager.Instance.GetCurrentPlayer().GetPosition() - shootPosition.position;
+            Vector3 weaponDirectionVector = GameManager.Instance.GetCurrentPlayer().GetPosition() - weaponShootPointTransform.position;
 
             float angle = HelperUtilities.GetAngleFromVector(playerDirectionVector);
             float weaponAngle = HelperUtilities.GetAngleFromVector(weaponDirectionVector);
@@ -104,7 +104,7 @@ namespace DungeonGunner
 
         private bool IsTargetOnSight(Vector3 _weaponDirectionVector, float _ammoRange)
         {
-            RaycastHit2D raycastHit2D = Physics2D.Raycast(shootPosition.position, (Vector2)_weaponDirectionVector, _ammoRange, layerMask);
+            RaycastHit2D raycastHit2D = Physics2D.Raycast(weaponShootPointTransform.position, (Vector2)_weaponDirectionVector, _ammoRange, layerMask);
 
             if (raycastHit2D
             && raycastHit2D.transform.CompareTag(Settings.PlayerTag))
@@ -119,7 +119,7 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            HelperUtilities.CheckNullValue(this, nameof(shootPosition), shootPosition);
+            HelperUtilities.CheckNullValue(this, nameof(weaponShootPointTransform), weaponShootPointTransform);
         }
 #endif
         #endregion

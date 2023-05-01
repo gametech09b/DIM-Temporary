@@ -77,20 +77,20 @@ namespace DungeonGunner
         {
             this.playerDetail = _playerDetail;
 
-            SetupPlayerHealth();
-            SetupPlayerInitialWeapon();
+            SetupHealth();
+            SetupInitialWeapon();
         }
 
 
 
-        private void SetupPlayerHealth()
+        private void SetupHealth()
         {
             health.SetStartingAmount(playerDetail.startingHealthAmount);
         }
 
 
 
-        private void SetupPlayerInitialWeapon()
+        private void SetupInitialWeapon()
         {
             weaponList.Clear();
 

@@ -16,13 +16,22 @@ namespace DungeonGunner
     [RequireComponent(typeof(SortingGroup))]
     [RequireComponent(typeof(SpriteRenderer))]
 
+    [RequireComponent(typeof(ActiveWeapon))]
+    [RequireComponent(typeof(ActiveWeaponEvent))]
+    [RequireComponent(typeof(AimAction))]
+    [RequireComponent(typeof(AimEvent))]
     [RequireComponent(typeof(EnemyAnimatorHandler))]
     [RequireComponent(typeof(EnemyMovementAI))]
+    [RequireComponent(typeof(EnemyWeaponAI))]
+    [RequireComponent(typeof(FireAction))]
+    [RequireComponent(typeof(FireEvent))]
     [RequireComponent(typeof(Idle))]
     [RequireComponent(typeof(IdleEvent))]
     [RequireComponent(typeof(MaterializeEffect))]
     [RequireComponent(typeof(MoveToPosition))]
     [RequireComponent(typeof(MoveToPositionEvent))]
+    [RequireComponent(typeof(ReloadAction))]
+    [RequireComponent(typeof(ReloadEvent))]
     #endregion
     public class Enemy : MonoBehaviour
     {
@@ -33,11 +42,14 @@ namespace DungeonGunner
 
         [HideInInspector] public EnemyDetailSO enemyDetail;
         private EnemyMovementAI enemyMovementAI;
+        private FireAction fireAction;
 
+        [HideInInspector] public ActiveWeaponEvent activeWeaponEvent;
         [HideInInspector] public AimEvent aimEvent;
         [HideInInspector] public FireEvent fireEvent;
         [HideInInspector] public IdleEvent idleEvent;
         [HideInInspector] public MoveToPositionEvent moveToPositionEvent;
+
 
         private MaterializeEffect materializeEffect;
 
@@ -51,7 +63,11 @@ namespace DungeonGunner
             spriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
 
             enemyMovementAI = GetComponent<EnemyMovementAI>();
+            fireAction = GetComponent<FireAction>();
 
+            activeWeaponEvent = GetComponent<ActiveWeaponEvent>();
+            aimEvent = GetComponent<AimEvent>();
+            fireEvent = GetComponent<FireEvent>();
             idleEvent = GetComponent<IdleEvent>();
             moveToPositionEvent = GetComponent<MoveToPositionEvent>();
 
@@ -64,30 +80,44 @@ namespace DungeonGunner
         {
             this.enemyDetail = _enemyDetail;
 
-            SetupEnemyAnimationSpeed();
+            SetupAnimationSpeed();
 
-            SetEnemyMoveUpdateFrame(_spawnedCount);
+            SetMovePathfindingUpdateFrame(_spawnedCount);
 
-            StartCoroutine(MaterializeEnemyCoroutine());
+            SetStartingWeapon();
+
+            StartCoroutine(MaterializeCoroutine());
         }
 
 
 
-        private void SetupEnemyAnimationSpeed()
+        private void SetupAnimationSpeed()
         {
             animator.speed = enemyMovementAI.moveSpeed / Settings.BaseSpeedForEnemyAnimation;
         }
 
 
 
-        private void SetEnemyMoveUpdateFrame(int _spawnedCount)
+        private void SetMovePathfindingUpdateFrame(int _spawnedCount)
         {
             enemyMovementAI.SetUpdateAtFrame(_spawnedCount % Settings.AStarTargetFrameRate);
         }
 
 
 
-        private IEnumerator MaterializeEnemyCoroutine()
+        private void SetStartingWeapon()
+        {
+            if (enemyDetail.weaponDetail != null)
+            {
+                Weapon weapon = new Weapon(enemyDetail.weaponDetail);
+
+                activeWeaponEvent.CallOnSetActiveWeapon(weapon);
+            }
+        }
+
+
+
+        private IEnumerator MaterializeCoroutine()
         {
             SetEnable(false);
 
@@ -104,6 +134,7 @@ namespace DungeonGunner
             polygonCollider2D.enabled = _isEnable;
 
             enemyMovementAI.enabled = _isEnable;
+            fireAction.enabled = _isEnable;
         }
     }
 }

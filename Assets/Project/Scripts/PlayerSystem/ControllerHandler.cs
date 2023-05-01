@@ -93,7 +93,7 @@ namespace DungeonGunner
 
         private void SetWeaponByIndex(int _index)
         {
-            if (_index - 1 < 0 || _index - 1 > player.weaponList.Count)
+            if (_index - 1 < 0 || _index - 1 >= player.weaponList.Count)
                 return;
 
             activeWeaponIndex = _index;

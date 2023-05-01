@@ -591,6 +591,9 @@ MonoBehaviour:
   - prefab: {fileID: 7853615770937549561, guid: e74f81b6079a4d840b420fe33bacb07d, type: 3}
     size: 20
     componentType: HitEffect
+  - prefab: {fileID: 1338510408464095998, guid: a191acab0d741b34f92d35b0c000ed2f, type: 3}
+    size: 200
+    componentType: IFireable
 --- !u!1 &330462746
 GameObject:
   m_ObjectHideFlags: 0

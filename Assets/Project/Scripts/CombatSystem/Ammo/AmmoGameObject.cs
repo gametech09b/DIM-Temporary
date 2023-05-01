@@ -43,7 +43,12 @@ namespace DungeonGunner
             range -= distanceVector.magnitude;
 
             if (range < 0)
+            {
+                if (ammoDetail.isPlayerAmmo)
+                    DungeonStaticEvent.CallOnMultiplierChanged(false);
+
                 DisableAmmo();
+            }
         }
 
 
@@ -63,11 +68,22 @@ namespace DungeonGunner
         private void DealDamage(Collider2D _other)
         {
             Health collidedHealth = _other.GetComponent<Health>();
+
+            bool isHitEnemy = false;
+
             if (collidedHealth != null)
             {
                 isCollided = true;
                 collidedHealth.TakeDamage(ammoDetail.damage);
+
+                if (collidedHealth.enemy != null)
+                {
+                    isHitEnemy = true;
+                }
             }
+
+            if (ammoDetail.isPlayerAmmo)
+                DungeonStaticEvent.CallOnMultiplierChanged(isHitEnemy);
         }
 
 

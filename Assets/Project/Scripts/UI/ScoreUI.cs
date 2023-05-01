@@ -34,7 +34,7 @@ namespace DungeonGunner
 
         private void DungeonStaticEvent_OnScoreChanged(OnScoreChangedEventArgs _args)
         {
-            scoreTextMP.text = $"SCORE: {_args.score.ToString("###,###0")}";
+            scoreTextMP.text = $"SCORE: {_args.score.ToString("###,###0")}\nMULTIPLIER: x{_args.multiplier}";
         }
     }
 }

@@ -28,7 +28,8 @@ namespace DungeonGunner
 
         [HideInInspector] public GameState gameState;
         [HideInInspector] public GameState previousGameState;
-        private long gameScore;
+        private long score;
+        private int scoreMultiplier;
 
 
 
@@ -57,6 +58,7 @@ namespace DungeonGunner
         {
             DungeonStaticEvent.OnRoomChanged += DungeonStaticEvent_OnRoomChange;
             DungeonStaticEvent.OnPointScored += DungeonStaticEvent_OnPointScored;
+            DungeonStaticEvent.OnMultiplierChanged += DungeonStaticEvent_OnMultiplierChanged;
         }
 
 
@@ -65,6 +67,7 @@ namespace DungeonGunner
         {
             DungeonStaticEvent.OnRoomChanged -= DungeonStaticEvent_OnRoomChange;
             DungeonStaticEvent.OnPointScored -= DungeonStaticEvent_OnPointScored;
+            DungeonStaticEvent.OnMultiplierChanged -= DungeonStaticEvent_OnMultiplierChanged;
         }
 
 
@@ -74,7 +77,8 @@ namespace DungeonGunner
             previousGameState = GameState.GAME_STARTED;
             gameState = GameState.GAME_STARTED;
 
-            gameScore = 0;
+            score = 0;
+            scoreMultiplier = 1;
         }
 
 
@@ -84,7 +88,7 @@ namespace DungeonGunner
             HandleGameState();
 
             // FIXME: Development only
-            #region DevOnly
+            #region Development Only
             if (Input.GetKeyDown(KeyCode.P))
                 gameState = GameState.GAME_STARTED;
             #endregion
@@ -101,9 +105,22 @@ namespace DungeonGunner
 
         private void DungeonStaticEvent_OnPointScored(OnPointScoredEventArgs _args)
         {
-            gameScore += _args.point;
+            score += _args.point * scoreMultiplier;
 
-            DungeonStaticEvent.CallOnScoreChanged(gameScore);
+            DungeonStaticEvent.CallOnScoreChanged(score, scoreMultiplier);
+        }
+
+
+
+        private void DungeonStaticEvent_OnMultiplierChanged(OnMultiplierChangedEventArgs _args)
+        {
+            if (_args.isMultiplier)
+                scoreMultiplier++;
+            else
+                scoreMultiplier--;
+
+            scoreMultiplier = Mathf.Clamp(scoreMultiplier, 1, 30);
+            DungeonStaticEvent.CallOnScoreChanged(score, scoreMultiplier);
         }
 
 

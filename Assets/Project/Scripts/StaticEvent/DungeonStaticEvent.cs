@@ -38,11 +38,23 @@ namespace DungeonGunner
 
 
         public static event Action<OnScoreChangedEventArgs> OnScoreChanged;
-        public static void CallOnScoreChanged(long _score)
+        public static void CallOnScoreChanged(long _score, int _multiplier)
         {
             OnScoreChanged?.Invoke(new OnScoreChangedEventArgs()
             {
-                score = _score
+                score = _score,
+                multiplier = _multiplier
+            });
+        }
+
+
+
+        public static event Action<OnMultiplierChangedEventArgs> OnMultiplierChanged;
+        public static void CallOnMultiplierChanged(bool _isMultiplierActive)
+        {
+            OnMultiplierChanged?.Invoke(new OnMultiplierChangedEventArgs()
+            {
+                isMultiplier = _isMultiplierActive
             });
         }
     }
@@ -73,5 +85,13 @@ namespace DungeonGunner
     public class OnScoreChangedEventArgs : EventArgs
     {
         public long score;
+        public int multiplier;
+    }
+
+
+
+    public class OnMultiplierChangedEventArgs : EventArgs
+    {
+        public bool isMultiplier;
     }
 }

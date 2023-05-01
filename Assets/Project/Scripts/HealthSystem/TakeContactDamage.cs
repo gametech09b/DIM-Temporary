@@ -37,7 +37,7 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            HelperUtilities.CheckPositiveValue(this, nameof(damageAmount), damageAmount);
+            HelperUtilities.CheckPositiveValue(this, nameof(damageAmount), damageAmount, true);
         }
 #endif
         #endregion

@@ -30,6 +30,10 @@ namespace DungeonGunner
 
 
 
+        [SerializeField] private GameObject environmentParentGameObject;
+
+
+
         private void Awake()
         {
             roomCollider = GetComponent<BoxCollider2D>();
@@ -358,5 +362,33 @@ namespace DungeonGunner
         {
             roomCollider.enabled = true;
         }
+
+
+
+        public void ActivateEnvironment()
+        {
+            if (environmentParentGameObject != null)
+                environmentParentGameObject.SetActive(true);
+        }
+
+
+
+        public void DeactivateEnvironment()
+        {
+            if (environmentParentGameObject != null)
+                environmentParentGameObject.SetActive(false);
+        }
+
+
+
+        #region Validation
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            // environmentParentGameObject = transform.Find("Environment").gameObject;
+            HelperUtilities.CheckNullValue(this, nameof(environmentParentGameObject), environmentParentGameObject);
+        }
+#endif
+        #endregion
     }
 }

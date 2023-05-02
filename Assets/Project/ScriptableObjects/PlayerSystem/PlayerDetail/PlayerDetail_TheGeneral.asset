@@ -15,18 +15,11 @@ MonoBehaviour:
   characterName: The General
   characterPrefab: {fileID: 981645755342799537, guid: 0ef85f541b7ede647975dafaad5667ff, type: 3}
   runtimeAnimatorController: {fileID: 9100000, guid: e87ce176a15556c459b355908992b930, type: 2}
-  startingHealthAmount: 100
+  startingHealthAmount: 10000
   isImmuneAfterHit: 1
   immuneDuration: 3
   minimapIconSprite: {fileID: 21300000, guid: 709f49100a0267f419aa33d571fb9d25, type: 3}
   handSprite: {fileID: 21300000, guid: a8c352369ed75924d84743672d1ab512, type: 3}
-  initialWeapon: {fileID: 11400000, guid: c8d9f0c686a941840a8fb326dd827519, type: 2}
+  initialWeapon: {fileID: 11400000, guid: 4d7d5a6a0d6dd3e4eabc5dc39b8722b6, type: 2}
   initialWeaponsList:
-  - {fileID: 11400000, guid: a1d31860e8f2ccc4b9636e17e3a10132, type: 2}
-  - {fileID: 11400000, guid: 6f0f9386eeaa3364b9ebd2a6fd53dea9, type: 2}
-  - {fileID: 11400000, guid: 58ab990b53485d442952290c2900bce2, type: 2}
-  - {fileID: 11400000, guid: 60dd69d3fce63a046902d93e2f0b3949, type: 2}
-  - {fileID: 11400000, guid: fce937c2d3175db48bffa0dd741d0dab, type: 2}
-  - {fileID: 11400000, guid: 0c90574df9cc3e1489a57bec0627e76c, type: 2}
-  - {fileID: 11400000, guid: 8e1a9060863c7ee46836f0170cf9c0bd, type: 2}
-  - {fileID: 11400000, guid: c8d9f0c686a941840a8fb326dd827519, type: 2}
+  - {fileID: 11400000, guid: 4d7d5a6a0d6dd3e4eabc5dc39b8722b6, type: 2}

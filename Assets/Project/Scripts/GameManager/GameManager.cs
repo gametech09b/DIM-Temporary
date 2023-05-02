@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DungeonGunner
 {
@@ -24,7 +25,7 @@ namespace DungeonGunner
         private PlayerDetailSO currentPlayerDetail;
         private Player currentPlayer;
 
-
+        private RoomGameObject currentBossRoom;
 
         [HideInInspector] public GameState gameState;
         [HideInInspector] public GameState previousGameState;
@@ -57,8 +58,11 @@ namespace DungeonGunner
         private void OnEnable()
         {
             DungeonStaticEvent.OnRoomChanged += DungeonStaticEvent_OnRoomChange;
+            DungeonStaticEvent.OnRoomEnemiesDefeated += DungeonStaticEvent_OnRoomEnemiesDefeated;
             DungeonStaticEvent.OnPointScored += DungeonStaticEvent_OnPointScored;
             DungeonStaticEvent.OnMultiplierChanged += DungeonStaticEvent_OnMultiplierChanged;
+
+            currentPlayer.destroyedEvent.OnDestroyed += CurrentPlayer_DestroyedEvent_OnDestroyed;
         }
 
 
@@ -66,8 +70,11 @@ namespace DungeonGunner
         private void OnDisable()
         {
             DungeonStaticEvent.OnRoomChanged -= DungeonStaticEvent_OnRoomChange;
+            DungeonStaticEvent.OnRoomEnemiesDefeated -= DungeonStaticEvent_OnRoomEnemiesDefeated;
             DungeonStaticEvent.OnPointScored -= DungeonStaticEvent_OnPointScored;
             DungeonStaticEvent.OnMultiplierChanged -= DungeonStaticEvent_OnMultiplierChanged;
+
+            currentPlayer.destroyedEvent.OnDestroyed -= CurrentPlayer_DestroyedEvent_OnDestroyed;
         }
 
 
@@ -103,6 +110,13 @@ namespace DungeonGunner
 
 
 
+        private void DungeonStaticEvent_OnRoomEnemiesDefeated(OnRoomEnemiesDefeatedEventArgs _args)
+        {
+            RoomEnemiesDefeated();
+        }
+
+
+
         private void DungeonStaticEvent_OnPointScored(OnPointScoredEventArgs _args)
         {
             score += _args.point * scoreMultiplier;
@@ -125,6 +139,14 @@ namespace DungeonGunner
 
 
 
+        private void CurrentPlayer_DestroyedEvent_OnDestroyed(DestroyedEvent _sender, OnDestroyedEventArgs _args)
+        {
+            previousGameState = gameState;
+            gameState = GameState.GAME_LOST;
+        }
+
+
+
         /// <summary>
         /// Handles the game state
         /// </summary>
@@ -136,6 +158,7 @@ namespace DungeonGunner
                     PlayDungeonLevel(currentDungeonLevelIndex);
                     gameState = GameState.PLAYING_LEVEL;
 
+                    RoomEnemiesDefeated();
                     break;
 
                 case GameState.PLAYING_LEVEL:
@@ -145,12 +168,20 @@ namespace DungeonGunner
                     break;
 
                 case GameState.LEVEL_COMPLETED:
+                    StartCoroutine(LevelCompletedCoroutine());
                     break;
 
                 case GameState.GAME_WON:
+                    if (previousGameState != GameState.GAME_WON)
+                        StartCoroutine(GameWonCoroutine());
                     break;
 
                 case GameState.GAME_LOST:
+                    if (previousGameState != GameState.GAME_LOST)
+                    {
+                        StopAllCoroutines();
+                        StartCoroutine(GameLostCoroutine());
+                    }
                     break;
 
                 case GameState.GAME_PAUSED:
@@ -160,6 +191,7 @@ namespace DungeonGunner
                     break;
 
                 case GameState.RESTART_GAME:
+                    RestartGame();
                     break;
 
                 default:
@@ -187,6 +219,72 @@ namespace DungeonGunner
 
 
 
+        private IEnumerator BeginBossStageCoroutine()
+        {
+            currentBossRoom.gameObject.SetActive(true);
+
+            currentBossRoom.UnlockDoors(0f);
+
+            yield return new WaitForSeconds(2f);
+
+            Debug.Log("Boss stage started");
+        }
+
+
+
+        private IEnumerator LevelCompletedCoroutine()
+        {
+            gameState = GameState.PLAYING_LEVEL;
+
+            yield return new WaitForSeconds(2f);
+
+            Debug.Log("Level completed");
+
+            while (!Input.GetKeyDown(KeyCode.Return))
+            {
+                yield return null;
+            }
+
+            yield return null;
+
+            currentDungeonLevelIndex++;
+
+            PlayDungeonLevel(currentDungeonLevelIndex);
+        }
+
+
+
+        private IEnumerator GameWonCoroutine()
+        {
+            previousGameState = GameState.GAME_WON;
+
+            Debug.Log("Game won");
+            yield return new WaitForSeconds(10f);
+
+            gameState = GameState.RESTART_GAME;
+        }
+
+
+
+        private IEnumerator GameLostCoroutine()
+        {
+            previousGameState = GameState.GAME_LOST;
+
+            Debug.Log("Game lost");
+            yield return new WaitForSeconds(10f);
+
+            gameState = GameState.RESTART_GAME;
+        }
+
+
+
+        private void RestartGame()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+
+
         public Room GetCurrentRoom()
         {
             return currentRoom;
@@ -198,6 +296,45 @@ namespace DungeonGunner
         {
             previousRoom = currentRoom;
             currentRoom = _room;
+        }
+
+
+
+        private void RoomEnemiesDefeated()
+        {
+            // TODO: Handle this for Nuradiance later
+            bool isDungeonClearFromCommonEnemies = true;
+            currentBossRoom = null;
+
+            foreach (KeyValuePair<string, Room> roomDictionaryKVP in DungeonBuilder.Instance.roomDictionary)
+            {
+                if (roomDictionaryKVP.Value.roomNodeType.isBossRoom)
+                {
+                    currentBossRoom = roomDictionaryKVP.Value.roomGameObject;
+                    continue;
+                }
+
+                if (!roomDictionaryKVP.Value.isCleared)
+                {
+                    isDungeonClearFromCommonEnemies = false;
+                    break;
+                }
+            }
+
+            if ((isDungeonClearFromCommonEnemies && currentBossRoom == null)
+            || (isDungeonClearFromCommonEnemies && currentBossRoom.room.isCleared))
+            {
+                if (currentDungeonLevelIndex < dungeonLevelList.Count - 1)
+                    gameState = GameState.LEVEL_COMPLETED;
+                else
+                    gameState = GameState.GAME_WON;
+            }
+            else if (isDungeonClearFromCommonEnemies)
+            {
+                gameState = GameState.BOSS_STAGE;
+
+                StartCoroutine(BeginBossStageCoroutine());
+            }
         }
 
 

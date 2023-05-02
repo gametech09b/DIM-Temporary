@@ -66,7 +66,13 @@ namespace DungeonGunner
 
         private void SpawnEnemy()
         {
-            if (GameManager.Instance.gameState == GameState.PLAYING_LEVEL)
+            if (GameManager.Instance.gameState == GameState.BOSS_STAGE)
+            {
+                GameManager.Instance.previousGameState = GameState.BOSS_STAGE;
+                GameManager.Instance.gameState = GameState.ENGAGING_BOSS;
+            }
+
+            else if (GameManager.Instance.gameState == GameState.PLAYING_LEVEL)
             {
                 GameManager.Instance.previousGameState = GameState.PLAYING_LEVEL;
                 GameManager.Instance.gameState = GameState.ENGAGING_ENEMY;
@@ -150,14 +156,14 @@ namespace DungeonGunner
 
                 if (GameManager.Instance.gameState == GameState.ENGAGING_ENEMY)
                 {
-                    GameManager.Instance.gameState = GameState.PLAYING_LEVEL;
                     GameManager.Instance.previousGameState = GameState.ENGAGING_ENEMY;
+                    GameManager.Instance.gameState = GameState.PLAYING_LEVEL;
                 }
 
                 else if (GameManager.Instance.gameState == GameState.ENGAGING_BOSS)
                 {
-                    GameManager.Instance.gameState = GameState.BOSS_STAGE;
                     GameManager.Instance.previousGameState = GameState.ENGAGING_BOSS;
+                    GameManager.Instance.gameState = GameState.BOSS_STAGE;
                 }
 
                 currentRoom.roomGameObject.UnlockDoors(Settings.RoomUnlockDoorsDelay);

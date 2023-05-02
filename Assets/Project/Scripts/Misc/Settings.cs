@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,6 +64,13 @@ namespace DungeonGunner
 
         #region Animator Parameters - Enemy
         public static float BaseSpeedForEnemyAnimation = 3f;
+        #endregion
+
+
+
+        #region Animator Parameters - DestroyableItem
+        public static int Destroy = Animator.StringToHash("destroy");
+        public static String DestroyedState = "Destroyed";
         #endregion
 
 

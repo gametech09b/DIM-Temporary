@@ -25,6 +25,7 @@ MonoBehaviour:
   minFireDuration: 1
   maxFireDuration: 2
   isRequireTargetOnSight: 1
+  isHealthBarEnabled: 0
   enemyHealthDetailArray:
   - dungeonLevel: {fileID: 11400000, guid: 7821a4d8b37051c4eb4565cbaf52e3dd, type: 2}
     healthAmount: 20

@@ -89,19 +89,19 @@ namespace DungeonGunner
 
         private void OnEnable()
         {
-            healthEvent.OnHealthChange += HealthEvent_OnHealthChange;
+            healthEvent.OnHealthChanged += HealthEvent_OnHealthChange;
         }
 
 
 
         private void OnDisable()
         {
-            healthEvent.OnHealthChange -= HealthEvent_OnHealthChange;
+            healthEvent.OnHealthChanged -= HealthEvent_OnHealthChange;
         }
 
 
 
-        private void HealthEvent_OnHealthChange(HealthEvent _sender, OnHealthChangeEventArgs _args)
+        private void HealthEvent_OnHealthChange(HealthEvent _sender, OnHealthChangedEventArgs _args)
         {
             if (_args.healthAmount <= 0f)
             {

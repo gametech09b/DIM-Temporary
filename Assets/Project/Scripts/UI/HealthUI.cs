@@ -12,26 +12,26 @@ namespace DungeonGunner
 
         private void OnEnable()
         {
-            GameManager.Instance.GetCurrentPlayer().healthEvent.OnHealthChange += HealthEvent_OnHealthChange;
+            GameManager.Instance.GetCurrentPlayer().healthEvent.OnHealthChanged += HealthEvent_OnHealthChange;
         }
 
 
 
         private void OnDisable()
         {
-            GameManager.Instance.GetCurrentPlayer().healthEvent.OnHealthChange -= HealthEvent_OnHealthChange;
+            GameManager.Instance.GetCurrentPlayer().healthEvent.OnHealthChanged -= HealthEvent_OnHealthChange;
         }
 
 
 
-        private void HealthEvent_OnHealthChange(HealthEvent _sender, OnHealthChangeEventArgs _args)
+        private void HealthEvent_OnHealthChange(HealthEvent _sender, OnHealthChangedEventArgs _args)
         {
             SetHealthUI(_args);
         }
 
 
 
-        private void SetHealthUI(OnHealthChangeEventArgs _args)
+        private void SetHealthUI(OnHealthChangedEventArgs _args)
         {
             ClearHearthIconList();
 

@@ -6,13 +6,13 @@ namespace DungeonGunner
     [DisallowMultipleComponent]
     public class HealthEvent : MonoBehaviour
     {
-        public event Action<HealthEvent, OnHealthChangeEventArgs> OnHealthChange;
+        public event Action<HealthEvent, OnHealthChangedEventArgs> OnHealthChanged;
 
-        public void CallOnHealthChange(float _healthPercent, int _healthAmount, int _damageAmount)
+        public void CallOnHealthChanged(float _healthPercent, int _healthAmount, int _damageAmount)
         {
-            OnHealthChange?.Invoke(
+            OnHealthChanged?.Invoke(
                 this,
-                new OnHealthChangeEventArgs
+                new OnHealthChangedEventArgs
                 {
                     healthPercent = _healthPercent,
                     healthAmount = _healthAmount,
@@ -23,7 +23,7 @@ namespace DungeonGunner
 
 
 
-    public class OnHealthChangeEventArgs : EventArgs
+    public class OnHealthChangedEventArgs : EventArgs
     {
         public float healthPercent;
         public int healthAmount;

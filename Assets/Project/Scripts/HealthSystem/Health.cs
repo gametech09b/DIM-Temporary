@@ -81,7 +81,7 @@ namespace DungeonGunner
 
         private void CallOnHealthChange(int _damageAmount)
         {
-            healthEvent.CallOnHealthChange(GetPercent(), currentAmount, _damageAmount);
+            healthEvent.CallOnHealthChanged(GetPercent(), currentAmount, _damageAmount);
         }
 
 

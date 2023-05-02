@@ -151,10 +151,11 @@ namespace DungeonGunner
                 yield return new WaitForSeconds(ammoSpawnInterval);
             }
 
-            if (currentWeapon.weaponDetail.isAmmoPerClipInfinite) yield break;
-
-            currentWeapon.ammoPerClipRemaining--;
-            currentWeapon.ammoRemaining--;
+            if (!currentWeapon.weaponDetail.isAmmoPerClipInfinite)
+            {
+                currentWeapon.ammoPerClipRemaining--;
+                currentWeapon.ammoRemaining--;
+            }
 
             fireEvent.CallOnFired(activeWeapon.GetCurrentWeapon());
             PlayFireShootEffect(_angle);

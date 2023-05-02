@@ -23,6 +23,8 @@ namespace DungeonGunner
         private WaitForFixedUpdate waitForFixedUpdate;
         private float dashCooldownTimer;
 
+        private bool isDisabled = false;
+
 
 
         private void Awake()
@@ -47,6 +49,9 @@ namespace DungeonGunner
 
         private void Update()
         {
+            if (isDisabled)
+                return;
+
             if (isDashing)
                 return;
 
@@ -306,6 +311,21 @@ namespace DungeonGunner
                 activeWeaponIndex = 1;
 
             SetWeaponByIndex(activeWeaponIndex);
+        }
+
+
+
+        public void EnableController()
+        {
+            isDisabled = false;
+        }
+
+
+
+        public void DisableController()
+        {
+            isDisabled = true;
+            player.idleEvent.CallOnIdleEvent();
         }
 
 

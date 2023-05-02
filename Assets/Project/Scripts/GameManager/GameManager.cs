@@ -1,13 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace DungeonGunner
 {
     [DisallowMultipleComponent]
     public class GameManager : SingletonMonobehaviour<GameManager>
     {
+        [Space(10)]
+        [Header("Message UI")]
+
+
+        [SerializeField] private TextMeshProUGUI messageTextMP;
+        [SerializeField] private CanvasGroup fadeScreenCanvasGroup;
+        private bool isFading = false;
+
+
+
         [Space(10)]
         [Header("Dungeon Levels")]
 
@@ -86,6 +98,8 @@ namespace DungeonGunner
 
             score = 0;
             scoreMultiplier = 1;
+
+            StartCoroutine(FadeCoroutine(0f, 1f, 0f, Color.black));
         }
 
 
@@ -215,6 +229,76 @@ namespace DungeonGunner
             Vector3 currentRoomMiddlePosition = currentRoom.GetMiddlePosition();
             Vector3 nearestSpawnPoint = HelperUtilities.GetNearestSpawnPoint(currentRoomMiddlePosition);
             currentPlayer.transform.position = nearestSpawnPoint;
+
+            StartCoroutine(DisplayDungeonLevelTextCoroutine());
+        }
+
+
+
+        private IEnumerator FadeCoroutine(float _startAlpha, float _targetAlpha, float _fadeDuration, Color _backgroundColor)
+        {
+            isFading = true;
+
+            Image image = fadeScreenCanvasGroup.GetComponent<Image>();
+            image.color = _backgroundColor;
+
+            float elapsedTime = 0f;
+
+            while (elapsedTime <= _fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+
+                fadeScreenCanvasGroup.alpha = Mathf.Lerp(_startAlpha, _targetAlpha, (elapsedTime / _fadeDuration));
+
+                yield return null;
+            }
+
+            isFading = false;
+        }
+
+
+
+        private IEnumerator DisplayDungeonLevelTextCoroutine()
+        {
+            StartCoroutine(FadeCoroutine(0f, 1f, 0f, Color.black));
+
+            GetCurrentPlayer().controllerHandler.DisableController();
+
+            string message = $"Dungeon Level {currentDungeonLevelIndex + 1}\n\n{dungeonLevelList[currentDungeonLevelIndex].levelName.ToUpper()}";
+
+            yield return StartCoroutine(DisplayMessageCoroutine(message, Color.white, 2f));
+
+            GetCurrentPlayer().controllerHandler.EnableController();
+
+            yield return StartCoroutine(FadeCoroutine(1f, 0f, 2f, Color.black));
+        }
+
+
+
+        private IEnumerator DisplayMessageCoroutine(string _message, Color _textColor, float _displayDuration)
+        {
+            messageTextMP.SetText(_message);
+            messageTextMP.color = _textColor;
+
+            if (_displayDuration > 0)
+            {
+                float timer = _displayDuration;
+
+                while (timer > 0 && !Input.GetKeyDown(KeyCode.Return))
+                {
+                    timer -= Time.deltaTime;
+                    yield return null;
+                }
+            }
+            else
+            {
+                while (!Input.GetKeyDown(KeyCode.Return))
+                {
+                    yield return null;
+                }
+            }
+
+            messageTextMP.SetText("");
         }
 
 
@@ -227,7 +311,11 @@ namespace DungeonGunner
 
             yield return new WaitForSeconds(2f);
 
-            Debug.Log("Boss stage started");
+            yield return StartCoroutine(FadeCoroutine(0f, 1f, 2f, new Color(0f, 0f, 0f, 0.4f)));
+
+            yield return StartCoroutine(DisplayMessageCoroutine($"WELL DONE {GameResources.Instance.CurrentPlayer.playerName}! YOU'VE SURVIVED.... SO FAR\n\nNOW FIND AND DEFEAT THE BOSS.... GOOD LUCK!", Color.white, 5f));
+
+            yield return StartCoroutine(FadeCoroutine(1f, 0f, 2f, new Color(0f, 0f, 0f, 0.4f)));
         }
 
 
@@ -238,7 +326,10 @@ namespace DungeonGunner
 
             yield return new WaitForSeconds(2f);
 
-            Debug.Log("Level completed");
+            yield return StartCoroutine(FadeCoroutine(0f, 1f, 2f, new Color(0f, 0f, 0f, 0.4f)));
+
+            yield return StartCoroutine(DisplayMessageCoroutine($"WELL DONE {GameResources.Instance.CurrentPlayer.playerName}! YOU'VE SURVIVED THIS DUNGEON LEVEL!", Color.white, 5f));
+            yield return StartCoroutine(DisplayMessageCoroutine($"COLLECT ANY LOOT.... THEN PRESS RETURN\n\nTO DESCEND FURTHER INTO THE DUNGEON", Color.white, 5f));
 
             while (!Input.GetKeyDown(KeyCode.Return))
             {
@@ -258,8 +349,13 @@ namespace DungeonGunner
         {
             previousGameState = GameState.GAME_WON;
 
-            Debug.Log("Game won");
-            yield return new WaitForSeconds(10f);
+            GetCurrentPlayer().controllerHandler.DisableController();
+
+            yield return StartCoroutine(FadeCoroutine(0f, 1f, 2f, Color.black));
+
+            yield return StartCoroutine(DisplayMessageCoroutine($"WELL DONE {GameResources.Instance.CurrentPlayer.playerName}! YOU'VE DEFEATED ALL DUNGEONS!", Color.white, 3f));
+            yield return StartCoroutine(DisplayMessageCoroutine($"YOU SCORED {score.ToString("###,###0")} POINTS", Color.white, 4f));
+            yield return StartCoroutine(DisplayMessageCoroutine($"PRESS RETURN TO RESTART THE GAME", Color.white, 0f));
 
             gameState = GameState.RESTART_GAME;
         }
@@ -270,8 +366,22 @@ namespace DungeonGunner
         {
             previousGameState = GameState.GAME_LOST;
 
-            Debug.Log("Game lost");
-            yield return new WaitForSeconds(10f);
+            GetCurrentPlayer().controllerHandler.DisableController();
+
+            yield return new WaitForSeconds(1f);
+
+            yield return StartCoroutine(FadeCoroutine(0f, 1f, 2f, Color.black));
+
+            Enemy[] enemyArray = GameObject.FindObjectsOfType<Enemy>();
+
+            foreach (Enemy enemy in enemyArray)
+            {
+                enemy.gameObject.SetActive(false);
+            }
+
+            yield return StartCoroutine(DisplayMessageCoroutine($"BAD LUCK {GameResources.Instance.CurrentPlayer.playerName}! YOU'VE BEEN DEFEATED!", Color.white, 3f));
+            yield return StartCoroutine(DisplayMessageCoroutine($"YOU SCORED {score.ToString("###,###0")} POINTS", Color.white, 4f));
+            yield return StartCoroutine(DisplayMessageCoroutine($"PRESS RETURN TO RESTART THE GAME", Color.white, 0f));
 
             gameState = GameState.RESTART_GAME;
         }
@@ -364,6 +474,9 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
+            HelperUtilities.CheckNullValue(this, nameof(messageTextMP), messageTextMP);
+            HelperUtilities.CheckNullValue(this, nameof(fadeScreenCanvasGroup), fadeScreenCanvasGroup);
+
             HelperUtilities.CheckEnumerableValue(this, nameof(dungeonLevelList), dungeonLevelList);
         }
 #endif

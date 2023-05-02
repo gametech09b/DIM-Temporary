@@ -26,6 +26,8 @@ namespace DungeonGunner
 
         [HideInInspector] public bool isDamageable = true;
 
+        private HealthBar healthBar;
+
 
 
         private void Awake()
@@ -59,6 +61,19 @@ namespace DungeonGunner
                     immuneDuration = enemy.enemyDetail.immuneDuration;
                     spriteRenderer = enemy.spriteRendererArray[0];
                 }
+
+                healthBar = GetComponentInChildren<HealthBar>();
+            }
+
+            if (enemy != null
+            && enemy.enemyDetail.isHealthBarEnabled
+            && healthBar != null)
+            {
+                healthBar.EnableHealthBar();
+            }
+            else if (healthBar != null)
+            {
+                healthBar.DisableHealthBar();
             }
         }
 
@@ -84,6 +99,9 @@ namespace DungeonGunner
                 CallOnHealthChange(_damageAmount);
 
                 PostHitImmune();
+
+                if (healthBar != null)
+                    healthBar.SetHealthBarValue(GetPercent());
             }
         }
 

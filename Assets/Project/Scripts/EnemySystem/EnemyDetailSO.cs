@@ -51,6 +51,7 @@ namespace DungeonGunner
         [Header("Enemy Health")]
 
 
+        public bool isHealthBarEnabled = false;
         public EnemyHealthDetail[] enemyHealthDetailArray;
         public bool isImmuneAfterHit = false;
         public float immuneDuration = 1f;

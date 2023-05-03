@@ -9,13 +9,13 @@ namespace DungeonGunner {
     [RequireComponent(typeof(MoveByVelocityEvent))]
     #endregion
     public class MoveByVelocity : MonoBehaviour {
-        private Rigidbody2D rigidbody2DComponent;
+        private Rigidbody2D rb2D;
         private MoveByVelocityEvent movementByVelocityEvent;
 
 
 
         private void Awake() {
-            rigidbody2DComponent = GetComponent<Rigidbody2D>();
+            rb2D = GetComponent<Rigidbody2D>();
             movementByVelocityEvent = GetComponent<MoveByVelocityEvent>();
         }
 
@@ -40,7 +40,7 @@ namespace DungeonGunner {
 
 
         private void Move(Vector2 _directionVector, float _speed) {
-            rigidbody2DComponent.velocity = _directionVector * _speed;
+            rb2D.velocity = _directionVector * _speed;
         }
     }
 }

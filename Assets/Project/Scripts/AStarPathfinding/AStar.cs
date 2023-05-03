@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner.AStarPathfinding
-{
-    public static class AStar
-    {
-        public static Stack<Vector3> BuildPath(Room _room, Vector3Int _startGridPosition, Vector3Int _endGridPosition)
-        {
+namespace DungeonGunner.AStarPathfinding {
+    public static class AStar {
+        public static Stack<Vector3> BuildPath(Room _room, Vector3Int _startGridPosition, Vector3Int _endGridPosition) {
             _startGridPosition -= (Vector3Int)_room.templateLowerBounds;
             _endGridPosition -= (Vector3Int)_room.templateLowerBounds;
 
@@ -28,12 +25,10 @@ namespace DungeonGunner.AStarPathfinding
 
 
 
-        private static Node FindShortestPath(Node _startNode, Node _targetNode, AStarGrid _grid, List<Node> _openNodeList, HashSet<Node> _closedNodeHashSet, RoomGameObject _roomGameObject)
-        {
+        private static Node FindShortestPath(Node _startNode, Node _targetNode, AStarGrid _grid, List<Node> _openNodeList, HashSet<Node> _closedNodeHashSet, RoomGameObject _roomGameObject) {
             _openNodeList.Add(_startNode);
 
-            while (_openNodeList.Count > 0)
-            {
+            while (_openNodeList.Count > 0) {
                 _openNodeList.Sort();
 
                 Node currentNode = _openNodeList[0];
@@ -52,24 +47,20 @@ namespace DungeonGunner.AStarPathfinding
 
 
 
-        public static void EvaluateCurrentNodeNeighbours(Node _currentNode, Node _targetNode, AStarGrid _grid, List<Node> _openNodeList, HashSet<Node> _closedNodeHashSet, RoomGameObject _roomGameObject)
-        {
+        public static void EvaluateCurrentNodeNeighbours(Node _currentNode, Node _targetNode, AStarGrid _grid, List<Node> _openNodeList, HashSet<Node> _closedNodeHashSet, RoomGameObject _roomGameObject) {
             Vector2Int currentNodePosition = _currentNode.position;
 
             Node neighbourNode;
 
-            for (int i = -1; i <= 1; i++)
-            {
-                for (int j = -1; j <= 1; j++)
-                {
+            for (int i = -1; i <= 1; i++) {
+                for (int j = -1; j <= 1; j++) {
                     if (i == 0 && j == 0)
                         continue;
 
                     neighbourNode = GetValidNeighbourNode(currentNodePosition.x + i, currentNodePosition.y + j, _grid, _closedNodeHashSet, _roomGameObject);
 
 
-                    if (neighbourNode != null)
-                    {
+                    if (neighbourNode != null) {
                         int movementPenalty = _roomGameObject.GetAStarMovementPenalty(neighbourNode.position.x, neighbourNode.position.y);
 
                         int newCostToNeighbour = _currentNode.gCost + GetDistance(_currentNode, neighbourNode) + movementPenalty;
@@ -77,14 +68,12 @@ namespace DungeonGunner.AStarPathfinding
                         bool isNeighbourNodeInOpenList = _openNodeList.Contains(neighbourNode);
 
                         if (newCostToNeighbour < neighbourNode.gCost
-                        || !isNeighbourNodeInOpenList)
-                        {
+                        || !isNeighbourNodeInOpenList) {
                             neighbourNode.gCost = newCostToNeighbour;
                             neighbourNode.hCost = GetDistance(neighbourNode, _targetNode);
                             neighbourNode.parentNode = _currentNode;
 
-                            if (!isNeighbourNodeInOpenList)
-                            {
+                            if (!isNeighbourNodeInOpenList) {
                                 neighbourNode.gCost = newCostToNeighbour;
                                 neighbourNode.hCost = GetDistance(neighbourNode, _targetNode);
                                 neighbourNode.parentNode = _currentNode;
@@ -100,8 +89,7 @@ namespace DungeonGunner.AStarPathfinding
 
 
 
-        public static Node GetValidNeighbourNode(int _x, int _y, AStarGrid _grid, HashSet<Node> _closedNodeHashSet, RoomGameObject _roomGameObject)
-        {
+        public static Node GetValidNeighbourNode(int _x, int _y, AStarGrid _grid, HashSet<Node> _closedNodeHashSet, RoomGameObject _roomGameObject) {
             Vector2Int templateLowerBounds = _roomGameObject.room.templateLowerBounds;
             Vector2Int templateUpperBounds = _roomGameObject.room.templateUpperBounds;
 
@@ -114,8 +102,10 @@ namespace DungeonGunner.AStarPathfinding
             Node neighbourNode = _grid.GetNode(_x, _y);
 
             int movementPenalty = _roomGameObject.GetAStarMovementPenalty(neighbourNode.position.x, neighbourNode.position.y);
+            int itemObstaclePenalty = _roomGameObject.GetAStarItemObstaclePenalty(neighbourNode.position.x, neighbourNode.position.y);
 
             if (movementPenalty == 0
+            || itemObstaclePenalty == 0
             || _closedNodeHashSet.Contains(neighbourNode))
                 return null;
             else
@@ -124,8 +114,7 @@ namespace DungeonGunner.AStarPathfinding
 
 
 
-        public static int GetDistance(Node _nodeA, Node _nodeB)
-        {
+        public static int GetDistance(Node _nodeA, Node _nodeB) {
             int distanceX = Mathf.Abs(_nodeA.position.x - _nodeB.position.x);
             int distanceY = Mathf.Abs(_nodeA.position.y - _nodeB.position.y);
 
@@ -137,8 +126,7 @@ namespace DungeonGunner.AStarPathfinding
 
 
 
-        public static Stack<Vector3> CreatePathStack(Node _targetNode, Room _room)
-        {
+        public static Stack<Vector3> CreatePathStack(Node _targetNode, Room _room) {
             Stack<Vector3> pathStack = new Stack<Vector3>();
 
             Node nextNode = _targetNode;
@@ -146,8 +134,7 @@ namespace DungeonGunner.AStarPathfinding
             Vector3 cellMiddle = _room.roomGameObject.grid.cellSize * 0.5f;
             cellMiddle.z = 0;
 
-            while (nextNode != null)
-            {
+            while (nextNode != null) {
                 Vector3Int cellPosition = new Vector3Int(nextNode.position.x + _room.templateLowerBounds.x, nextNode.position.y + _room.templateLowerBounds.y, 0);
 
                 Vector3 cellWorldPosition = _room.roomGameObject.grid.CellToWorld(cellPosition);

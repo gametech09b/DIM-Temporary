@@ -7,13 +7,13 @@ namespace DungeonGunner {
     [RequireComponent(typeof(MoveToPositionEvent))]
     #endregion
     public class MoveToPosition : MonoBehaviour {
-        private Rigidbody2D rigidbody2DComponent;
+        private Rigidbody2D rb2D;
         private MoveToPositionEvent moveToPositionEvent;
 
 
 
         private void Awake() {
-            rigidbody2DComponent = GetComponent<Rigidbody2D>();
+            rb2D = GetComponent<Rigidbody2D>();
             moveToPositionEvent = GetComponent<MoveToPositionEvent>();
         }
 
@@ -40,7 +40,7 @@ namespace DungeonGunner {
         private void MoveRigidbody2D(Vector3 _currentPosition, Vector3 _targetPosition, float _speed) {
             Vector2 directionVector = (_targetPosition - _currentPosition).normalized;
 
-            rigidbody2DComponent.MovePosition(rigidbody2DComponent.position + (directionVector * _speed * Time.fixedDeltaTime));
+            rb2D.MovePosition(rb2D.position + (directionVector * _speed * Time.fixedDeltaTime));
         }
     }
 }

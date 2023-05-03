@@ -1,21 +1,19 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace DungeonGunner
-{
+namespace DungeonGunner {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(BoxCollider2D))]
     #endregion
-    public class RoomGameObject : MonoBehaviour
-    {
+    public class RoomGameObject : MonoBehaviour {
         [HideInInspector] public Room room;
         [HideInInspector] public Grid grid;
 
-
         [HideInInspector] public int[,] aStarMovementPenaltyArray;
-
+        [HideInInspector] public int[,] aStarItemObstaclePenaltyArray;
 
         [HideInInspector] public Tilemap groundTilemap;
         [HideInInspector] public Tilemap decorationTilemap1;
@@ -23,29 +21,31 @@ namespace DungeonGunner
         [HideInInspector] public Tilemap frontTilemap;
         [HideInInspector] public Tilemap collisionTilemap;
         [HideInInspector] public Tilemap minimapTilemap;
-        [HideInInspector] public Bounds roomColliderBounds;
 
+        [HideInInspector] public Bounds roomColliderBounds;
+        [HideInInspector] public List<MoveableItem> moveableItemList = new List<MoveableItem>();
 
         private BoxCollider2D roomCollider;
-
-
 
         [SerializeField] private GameObject environmentParentGameObject;
 
 
 
-        private void Awake()
-        {
+        private void Awake() {
             roomCollider = GetComponent<BoxCollider2D>();
             roomColliderBounds = roomCollider.bounds;
         }
 
 
 
-        private void OnTriggerEnter2D(Collider2D _other)
-        {
-            if (_other.CompareTag(Settings.PlayerTag) && room != GameManager.Instance.GetCurrentRoom())
-            {
+        private void Start() {
+            UpdateMoveableObstacle();
+        }
+
+
+
+        private void OnTriggerEnter2D(Collider2D _other) {
+            if (_other.CompareTag(Settings.PlayerTag) && room != GameManager.Instance.GetCurrentRoom()) {
                 room.isVisited = true;
 
                 DungeonStaticEvent.CallOnRoomChanged(room);
@@ -54,13 +54,14 @@ namespace DungeonGunner
 
 
 
-        public void Init(GameObject _roomGameObject)
-        {
+        public void Init(GameObject _roomGameObject) {
             PopulateTilemapVariables(_roomGameObject);
 
             BlockOffUnconnectedDoorways();
 
             AddObstacleAndPreferredPathForAStar();
+
+            CreateItemObstacleArray();
 
             AddDoorsToRoom();
 
@@ -69,14 +70,12 @@ namespace DungeonGunner
 
 
 
-        public void PopulateTilemapVariables(GameObject _roomGameObject)
-        {
+        public void PopulateTilemapVariables(GameObject _roomGameObject) {
             grid = _roomGameObject.GetComponentInChildren<Grid>();
 
             Tilemap[] tilemapArray = grid.GetComponentsInChildren<Tilemap>();
 
-            foreach (Tilemap tilemap in tilemapArray)
-            {
+            foreach (Tilemap tilemap in tilemapArray) {
                 if (tilemap.CompareTag("groundTilemap"))
                     groundTilemap = tilemap;
 
@@ -99,10 +98,8 @@ namespace DungeonGunner
 
 
 
-        private void BlockOffUnconnectedDoorways()
-        {
-            foreach (Doorway doorway in room.doorwayList)
-            {
+        private void BlockOffUnconnectedDoorways() {
+            foreach (Doorway doorway in room.doorwayList) {
                 if (doorway.isConnected) continue;
 
                 if (collisionTilemap != null)
@@ -127,10 +124,8 @@ namespace DungeonGunner
 
 
 
-        private void BlockDoorwayOnTilemapLayer(Doorway _doorway, Tilemap _tilemap)
-        {
-            switch (_doorway.orientation)
-            {
+        private void BlockDoorwayOnTilemapLayer(Doorway _doorway, Tilemap _tilemap) {
+            switch (_doorway.orientation) {
                 case Orientation.NORTH:
                 case Orientation.SOUTH:
                     BlockDoorwayHorizontally(_doorway, _tilemap);
@@ -148,14 +143,11 @@ namespace DungeonGunner
 
 
 
-        private void BlockDoorwayHorizontally(Doorway _doorway, Tilemap _tilemap)
-        {
+        private void BlockDoorwayHorizontally(Doorway _doorway, Tilemap _tilemap) {
             Vector2Int startPosition = _doorway.startCopyPosition;
 
-            for (int xPosition = 0; xPosition < _doorway.copyTileWidth; xPosition++)
-            {
-                for (int yPosition = 0; yPosition < _doorway.copyTileHeight; yPosition++)
-                {
+            for (int xPosition = 0; xPosition < _doorway.copyTileWidth; xPosition++) {
+                for (int yPosition = 0; yPosition < _doorway.copyTileHeight; yPosition++) {
                     Vector3Int tileToCopyPosition = new Vector3Int(startPosition.x + xPosition, startPosition.y - yPosition, 0);
 
                     Matrix4x4 transformMatrix = _tilemap.GetTransformMatrix(tileToCopyPosition);
@@ -171,14 +163,11 @@ namespace DungeonGunner
 
 
 
-        private void BlockDoorwayVertically(Doorway _doorway, Tilemap _tilemap)
-        {
+        private void BlockDoorwayVertically(Doorway _doorway, Tilemap _tilemap) {
             Vector2Int startPosition = _doorway.startCopyPosition;
 
-            for (int xPosition = 0; xPosition < _doorway.copyTileWidth; xPosition++)
-            {
-                for (int yPosition = 0; yPosition < _doorway.copyTileHeight; yPosition++)
-                {
+            for (int xPosition = 0; xPosition < _doorway.copyTileWidth; xPosition++) {
+                for (int yPosition = 0; yPosition < _doorway.copyTileHeight; yPosition++) {
                     Vector3Int tileToCopyPosition = new Vector3Int(startPosition.x + xPosition, startPosition.y - yPosition, 0);
 
                     Matrix4x4 transformMatrix = _tilemap.GetTransformMatrix(tileToCopyPosition);
@@ -194,32 +183,26 @@ namespace DungeonGunner
 
 
 
-        public void DisableCollisionTilemapRenderer()
-        {
+        public void DisableCollisionTilemapRenderer() {
             collisionTilemap.GetComponent<TilemapRenderer>().enabled = false;
         }
 
 
 
-        public void AddObstacleAndPreferredPathForAStar()
-        {
+        public void AddObstacleAndPreferredPathForAStar() {
             int xSize = room.templateUpperBounds.x - room.templateLowerBounds.x + 1;
             int ySize = room.templateUpperBounds.y - room.templateLowerBounds.y + 1;
 
             aStarMovementPenaltyArray = new int[xSize, ySize];
 
-            for (int x = 0; x < xSize; x++)
-            {
-                for (int y = 0; y < ySize; y++)
-                {
+            for (int x = 0; x < xSize; x++) {
+                for (int y = 0; y < ySize; y++) {
                     aStarMovementPenaltyArray[x, y] = Settings.AStarDefaultMovementPenalty;
 
                     TileBase tile = collisionTilemap.GetTile(new Vector3Int(x + room.templateLowerBounds.x, y + room.templateLowerBounds.y, 0));
 
-                    foreach (TileBase collisionTile in GameResources.Instance.EnemyUnwalkableTileArray)
-                    {
-                        if (tile == collisionTile)
-                        {
+                    foreach (TileBase collisionTile in GameResources.Instance.EnemyUnwalkableTileArray) {
+                        if (tile == collisionTile) {
                             aStarMovementPenaltyArray[x, y] = 0;
                             break;
                         }
@@ -233,12 +216,10 @@ namespace DungeonGunner
 
 
 
-        public void AddDoorsToRoom()
-        {
+        public void AddDoorsToRoom() {
             if (room.roomNodeType.isCorridorEW || room.roomNodeType.isCorridorNS) return;
 
-            foreach (Doorway doorway in room.doorwayList)
-            {
+            foreach (Doorway doorway in room.doorwayList) {
                 if (doorway.doorPrefab == null) continue;
                 if (!doorway.isConnected) continue;
 
@@ -246,8 +227,7 @@ namespace DungeonGunner
 
                 GameObject doorGameObject = null;
 
-                switch (doorway.orientation)
-                {
+                switch (doorway.orientation) {
                     case Orientation.NORTH:
                         doorGameObject = Instantiate(doorway.doorPrefab, gameObject.transform);
                         doorGameObject.transform.localPosition = new Vector3(
@@ -289,8 +269,7 @@ namespace DungeonGunner
                 }
 
                 DoorGameObject door = doorGameObject.GetComponent<DoorGameObject>();
-                if (room.roomNodeType.isBossRoom)
-                {
+                if (room.roomNodeType.isBossRoom) {
                     door.isBossRoomDoor = true;
                     door.LockDoor();
                 }
@@ -299,8 +278,7 @@ namespace DungeonGunner
 
 
 
-        public int GetAStarMovementPenalty(Vector3 _worldPosition)
-        {
+        public int GetAStarMovementPenalty(Vector3 _worldPosition) {
             Vector3Int tilePosition = collisionTilemap.WorldToCell(_worldPosition);
 
             int x = tilePosition.x - room.templateLowerBounds.x;
@@ -311,17 +289,30 @@ namespace DungeonGunner
 
 
 
-        public int GetAStarMovementPenalty(int _x, int _y)
-        {
+        public int GetAStarMovementPenalty(int _x, int _y) {
             return aStarMovementPenaltyArray[_x, _y];
         }
 
 
+        public int GetAStarItemObstaclePenalty(Vector3 _worldPosition) {
+            Vector3Int tilePosition = collisionTilemap.WorldToCell(_worldPosition);
 
-        public void LockDoors()
-        {
-            foreach (DoorGameObject door in GetComponentsInChildren<DoorGameObject>())
-            {
+            int x = tilePosition.x - room.templateLowerBounds.x;
+            int y = tilePosition.y - room.templateLowerBounds.y;
+
+            return aStarItemObstaclePenaltyArray[x, y];
+        }
+
+
+
+        public int GetAStarItemObstaclePenalty(int _x, int _y) {
+            return aStarItemObstaclePenaltyArray[_x, _y];
+        }
+
+
+
+        public void LockDoors() {
+            foreach (DoorGameObject door in GetComponentsInChildren<DoorGameObject>()) {
                 door.LockDoor();
             }
 
@@ -330,19 +321,16 @@ namespace DungeonGunner
 
 
 
-        public void UnlockDoors(float _delay)
-        {
+        public void UnlockDoors(float _delay) {
             StartCoroutine(UnlockDoorsCoroutine(_delay));
         }
 
 
 
-        private IEnumerator UnlockDoorsCoroutine(float _delay)
-        {
+        private IEnumerator UnlockDoorsCoroutine(float _delay) {
             yield return new WaitForSeconds(_delay);
 
-            foreach (DoorGameObject door in GetComponentsInChildren<DoorGameObject>())
-            {
+            foreach (DoorGameObject door in GetComponentsInChildren<DoorGameObject>()) {
                 door.UnlockDoor();
             }
 
@@ -351,41 +339,90 @@ namespace DungeonGunner
 
 
 
-        public void DisableRoomCollider()
-        {
+        public void DisableRoomCollider() {
             roomCollider.enabled = false;
         }
 
 
 
-        public void EnableRoomCollider()
-        {
+        public void EnableRoomCollider() {
             roomCollider.enabled = true;
         }
 
 
 
-        public void ActivateEnvironment()
-        {
+        public void ActivateEnvironment() {
             if (environmentParentGameObject != null)
                 environmentParentGameObject.SetActive(true);
         }
 
 
 
-        public void DeactivateEnvironment()
-        {
+        public void DeactivateEnvironment() {
             if (environmentParentGameObject != null)
                 environmentParentGameObject.SetActive(false);
         }
 
 
 
+        private void CreateItemObstacleArray() {
+            aStarItemObstaclePenaltyArray = new int[room.templateUpperBounds.x - room.templateLowerBounds.x + 1, room.templateUpperBounds.y - room.templateLowerBounds.y + 1];
+        }
+
+
+
+        private void InitItemObstacleArray() {
+            int xSize = room.templateUpperBounds.x - room.templateLowerBounds.x + 1;
+            int ySize = room.templateUpperBounds.y - room.templateLowerBounds.y + 1;
+
+            for (int x = 0; x < xSize; x++) {
+                for (int y = 0; y < ySize; y++) {
+                    aStarItemObstaclePenaltyArray[x, y] = Settings.AStarDefaultMovementPenalty;
+                }
+            }
+        }
+
+
+
+        public void UpdateMoveableObstacle() {
+            InitItemObstacleArray();
+
+            foreach (MoveableItem moveableItem in moveableItemList) {
+                Vector3Int minColliderBounds = grid.WorldToCell(moveableItem.boxCollider2D.bounds.min);
+                Vector3Int maxColliderBounds = grid.WorldToCell(moveableItem.boxCollider2D.bounds.max);
+
+                for (int x = minColliderBounds.x; x <= maxColliderBounds.x; x++) {
+                    for (int y = minColliderBounds.y; y <= maxColliderBounds.y; y++) {
+                        aStarItemObstaclePenaltyArray[x - room.templateLowerBounds.x, y - room.templateLowerBounds.y] = 0;
+                    }
+                }
+            }
+        }
+
+
+
+        // FIXME: comment if not needed
+        // private void OnDrawGizmos() {
+        //     int xSize = room.templateUpperBounds.x - room.templateLowerBounds.x + 1;
+        //     int ySize = room.templateUpperBounds.y - room.templateLowerBounds.y + 1;
+
+        //     for (int x = 0; x < xSize; x++) {
+        //         for (int y = 0; y < ySize; y++) {
+        //             if (aStarItemObstaclePenaltyArray[x, y] == 0) {
+        //                 Vector3 worldCellPosition = grid.CellToWorld(new Vector3Int(x + room.templateLowerBounds.x, y + room.templateLowerBounds.y, 0));
+
+        //                 Gizmos.DrawWireCube(new Vector3(worldCellPosition.x + 0.5f, worldCellPosition.y + 0.5f, 0), Vector3.one);
+        //             }
+        //         }
+        //     }
+        // }
+
+
+
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
-            // environmentParentGameObject = transform.Find("Environment").gameObject;
+        private void OnValidate() {
+            environmentParentGameObject = transform.Find("Environment").gameObject;
             HelperUtilities.CheckNullValue(this, nameof(environmentParentGameObject), environmentParentGameObject);
         }
 #endif

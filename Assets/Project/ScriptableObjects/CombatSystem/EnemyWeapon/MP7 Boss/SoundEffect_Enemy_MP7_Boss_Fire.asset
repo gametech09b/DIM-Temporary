@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 223aaa81165e4ec4483e30f308cce39f, type: 3}
-  m_Name: SoundEffect_MP7_Boss_Reload
+  m_Name: SoundEffect_Enemy_MP7_Boss_Fire
   m_EditorClassIdentifier: 
-  soundEffectName: MP7 Boss Reload
+  soundEffectName: MP7 Boss Fire
   prefab: {fileID: 6192850743870799467, guid: baf8604b058f691429c375471bb5f3d0, type: 3}
-  audioClip: {fileID: 8300000, guid: 68017df84c8afc04390c474cf1ffbaca, type: 3}
+  audioClip: {fileID: 8300000, guid: 28378ef3028432d42a65a0281de86c3c, type: 3}
   minPitchVariation: 0.7
   maxPitchVariation: 1
   volume: 1

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 223aaa81165e4ec4483e30f308cce39f, type: 3}
-  m_Name: SoundEffect_Pistol_Boss_Reload
+  m_Name: SoundEffect_Enemy_Pistol_Boss_Fire
   m_EditorClassIdentifier: 
-  soundEffectName: Pistol Boss Reload
+  soundEffectName: Pistol Boss Fire
   prefab: {fileID: 6192850743870799467, guid: baf8604b058f691429c375471bb5f3d0, type: 3}
-  audioClip: {fileID: 8300000, guid: 28a2b6d663b81204a8dfb1dd072eefe1, type: 3}
-  minPitchVariation: 0.73
+  audioClip: {fileID: 8300000, guid: 71d623ca1199efc429d66921b7070dda, type: 3}
+  minPitchVariation: 0.675
   maxPitchVariation: 1
-  volume: 1
+  volume: 0.5

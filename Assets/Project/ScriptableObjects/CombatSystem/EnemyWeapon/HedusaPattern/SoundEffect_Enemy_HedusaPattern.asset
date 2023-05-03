@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 223aaa81165e4ec4483e30f308cce39f, type: 3}
-  m_Name: SoundEffect_Pistol_Boss_Fire
+  m_Name: SoundEffect_Enemy_HedusaPattern
   m_EditorClassIdentifier: 
-  soundEffectName: Pistol Boss Fire
+  soundEffectName: Hedusa Pattern Fire
   prefab: {fileID: 6192850743870799467, guid: baf8604b058f691429c375471bb5f3d0, type: 3}
-  audioClip: {fileID: 8300000, guid: 71d623ca1199efc429d66921b7070dda, type: 3}
-  minPitchVariation: 0.675
-  maxPitchVariation: 1
-  volume: 0.5
+  audioClip: {fileID: 8300000, guid: 7b82801ffd69b1e459dd4cf17aacda5d, type: 3}
+  minPitchVariation: 0.8
+  maxPitchVariation: 1.2
+  volume: 0.2

@@ -9,29 +9,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e183ad1657bd1034c85004cf4825deb7, type: 3}
-  m_Name: ShootEffect_MP7_Boss
+  m_Script: {fileID: 11500000, guid: 33aedf7c61d904347a9d8daa9397db52, type: 3}
+  m_Name: HitEffect_Enemy_Pistol_Boss
   m_EditorClassIdentifier: 
   colorGradient:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 0.92013735, b: 0, a: 1}
-    key2: {r: 1, g: 0.13899982, b: 0, a: 0.53333336}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
+    key1: {r: 0.6132076, g: 0.130162, b: 0.130162, a: 1}
+    key2: {r: 0.6431373, g: 0.6431373, b: 0.6431373, a: 0}
+    key3: {r: 1, g: 1, b: 1, a: 0}
+    key4: {r: 1, g: 1, b: 1, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 8096
-    ctime2: 21395
-    ctime3: 46838
+    ctime1: 12143
+    ctime2: 26985
+    ctime3: 45296
     ctime4: 65535
     ctime5: 0
     ctime6: 0
     ctime7: 0
     atime0: 0
-    atime1: 43754
+    atime1: 45104
     atime2: 65535
     atime3: 0
     atime4: 0
@@ -41,15 +41,15 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 5
     m_NumAlphaKeys: 3
-  duration: 0.1
-  startParticleSize: 0.25
-  startParticleSpeed: 3
+  duration: 0.5
+  startParticleSize: 0.35
+  startParticleSpeed: 3.5
   startLifetime: 0.5
-  maxParticleNumber: 20
+  maxParticleNumber: 25
   maxEmissionRate: 0
-  burstParticleNumber: 20
+  burstParticleNumber: 25
   effectGravity: -0.01
-  sprite: {fileID: 21300000, guid: bb7ccf2391a6a544ab96e81e36b6a0ed, type: 3}
-  prefab: {fileID: 7853615770937549561, guid: 88405b8536eba52438d8de605fc0ecfb, type: 3}
+  sprite: {fileID: 0}
+  prefab: {fileID: 7853615770937549561, guid: e74f81b6079a4d840b420fe33bacb07d, type: 3}
   minVelocityOverLifetime: {x: 0, y: 0, z: 0}
   maxVelocityOverLifetime: {x: 0, y: 0, z: 0}

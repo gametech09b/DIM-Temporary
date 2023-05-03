@@ -19,12 +19,12 @@ MonoBehaviour:
   materializeDuration: 3
   materializeShader: {fileID: -6465566751694194690, guid: 5fec8f8e6ea244648a3c6ede24a56288, type: 3}
   materializeColor: {r: 0.84298223, g: 8.47419, b: 0, a: 1}
-  weaponDetail: {fileID: 0}
-  minFireInterval: 0.1
-  maxFireInterval: 1
-  minFireDuration: 1
-  maxFireDuration: 2
-  isRequireTargetOnSight: 1
+  weaponDetail: {fileID: 11400000, guid: 417c15d0ac9caff4abb62716356770ab, type: 2}
+  minFireInterval: 1
+  maxFireInterval: 3
+  minFireDuration: 7
+  maxFireDuration: 10
+  isRequireTargetOnSight: 0
   isHealthBarEnabled: 0
   enemyHealthDetailArray:
   - dungeonLevel: {fileID: 11400000, guid: 7821a4d8b37051c4eb4565cbaf52e3dd, type: 2}

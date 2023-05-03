@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
-    public static class Settings
-    {
+namespace DungeonGunner {
+    public static class Settings {
         #region Project Settings
         public const string ProjectName = "DungeonGunner";
         #endregion
@@ -71,6 +69,15 @@ namespace DungeonGunner
         #region Animator Parameters - DestroyableItem
         public static int Destroy = Animator.StringToHash("destroy");
         public static String DestroyedState = "Destroyed";
+        #endregion
+
+
+
+        #region Animator Parameters - MoveableItem
+        public static int FlipUp = Animator.StringToHash("flipUp");
+        public static int FlipRight = Animator.StringToHash("flipRight");
+        public static int FlipDown = Animator.StringToHash("flipDown");
+        public static int FlipLeft = Animator.StringToHash("flipLeft");
         #endregion
 
 

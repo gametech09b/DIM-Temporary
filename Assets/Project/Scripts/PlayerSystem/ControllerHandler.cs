@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DungeonGunner {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Player))]
     #endregion
-    public class ControllerHandler : MonoBehaviour
-    {
+    public class ControllerHandler : MonoBehaviour {
 
         [SerializeField] private MovementDetailSO movementDetail;
 
@@ -27,8 +25,7 @@ namespace DungeonGunner
 
 
 
-        private void Awake()
-        {
+        private void Awake() {
             player = GetComponent<Player>();
 
             moveSpeed = movementDetail.GetMoveSpeed();
@@ -36,8 +33,7 @@ namespace DungeonGunner
 
 
 
-        private void Start()
-        {
+        private void Start() {
             waitForFixedUpdate = new WaitForFixedUpdate();
 
             SetupInitialWeapon();
@@ -47,8 +43,7 @@ namespace DungeonGunner
 
 
 
-        private void Update()
-        {
+        private void Update() {
             if (isDisabled)
                 return;
 
@@ -59,33 +54,30 @@ namespace DungeonGunner
 
             WeaponInput();
 
+            UseInput();
+
             ProcessDashCooldownTimer();
         }
 
 
 
-        private void OnCollisionEnter2D(Collision2D _other)
-        {
+        private void OnCollisionEnter2D(Collision2D _other) {
             StopDashCoroutine();
         }
 
 
 
-        private void OnCollisionStay2D(Collision2D _other)
-        {
+        private void OnCollisionStay2D(Collision2D _other) {
             StopDashCoroutine();
         }
 
 
 
-        private void SetupInitialWeapon()
-        {
+        private void SetupInitialWeapon() {
             int index = 1;
 
-            foreach (Weapon weapon in player.weaponList)
-            {
-                if (weapon.weaponDetail == player.playerDetail.initialWeapon)
-                {
+            foreach (Weapon weapon in player.weaponList) {
+                if (weapon.weaponDetail == player.playerDetail.initialWeapon) {
                     SetWeaponByIndex(index);
                     break;
                 }
@@ -96,8 +88,7 @@ namespace DungeonGunner
 
 
 
-        private void SetWeaponByIndex(int _index)
-        {
+        private void SetWeaponByIndex(int _index) {
             if (_index - 1 < 0 || _index - 1 >= player.weaponList.Count)
                 return;
 
@@ -107,37 +98,31 @@ namespace DungeonGunner
 
 
 
-        private void SetupPlayerAnimationSpeed()
-        {
+        private void SetupPlayerAnimationSpeed() {
             player.animator.speed = moveSpeed / Settings.BaseSpeedForPlayerAnimation;
         }
 
 
 
-        private void MovementInput()
-        {
+        private void MovementInput() {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
 
             Vector2 directionVector = new Vector2(horizontalInput, verticalInput).normalized;
 
-            if (directionVector != Vector2.zero)
-            {
+            if (directionVector != Vector2.zero) {
                 if (Input.GetMouseButtonDown(1) && dashCooldownTimer <= 0)
                     Roll((Vector3)directionVector);
                 else
                     player.moveByVelocityEvent.CallOnMoveByVelocity(directionVector, moveSpeed);
-            }
-            else
-            {
+            } else {
                 player.idleEvent.CallOnIdleEvent();
             }
         }
 
 
 
-        private void WeaponInput()
-        {
+        private void WeaponInput() {
             Vector3 weaponDirectionVector;
             float weaponAngle, playerAngle;
             Direction playerDirection;
@@ -153,8 +138,26 @@ namespace DungeonGunner
 
 
 
-        private void HandleAimInput(out Direction _playerDirection, out float _playerAngle, out float _weaponAngle, out Vector3 _weaponDirectionVector)
-        {
+        private void UseInput() {
+            if (Input.GetKeyDown(KeyCode.E)) {
+                float useRadius = 2f;
+
+                Collider2D[] collider2DArray = Physics2D.OverlapCircleAll(player.GetPosition(), useRadius);
+
+                foreach (Collider2D collider2D in collider2DArray) {
+                    IUseable usable = collider2D.GetComponent<IUseable>();
+
+                    if (usable != null) {
+                        usable.Use();
+                        break;
+                    }
+                }
+            }
+        }
+
+
+
+        private void HandleAimInput(out Direction _playerDirection, out float _playerAngle, out float _weaponAngle, out Vector3 _weaponDirectionVector) {
             Vector3 mousePosition = HelperUtilities.GetMouseWorldPosition();
             Vector3 playerPosition = transform.position;
 
@@ -172,25 +175,20 @@ namespace DungeonGunner
 
 
 
-        private void HandleFireInput(Direction _playerDirection, float _playerAngle, float _weaponAngle, Vector3 _weaponDirectionVector)
-        {
+        private void HandleFireInput(Direction _playerDirection, float _playerAngle, float _weaponAngle, Vector3 _weaponDirectionVector) {
             bool isFiring = Input.GetMouseButton(0);
 
-            if (isFiring)
-            {
+            if (isFiring) {
                 player.fireEvent.CallOnFireAction(isFiring, isFiringPreviousFrame, _playerDirection, _playerAngle, _weaponAngle, _weaponDirectionVector);
                 isFiringPreviousFrame = true;
-            }
-            else
-            {
+            } else {
                 isFiringPreviousFrame = false;
             }
         }
 
 
 
-        private void HandleSwitchWeaponInput()
-        {
+        private void HandleSwitchWeaponInput() {
             if (Input.mouseScrollDelta.y < 0f)
                 PreviousWeapon();
             if (Input.mouseScrollDelta.y > 0f)
@@ -218,8 +216,7 @@ namespace DungeonGunner
 
 
 
-        private void HandleReloadInput()
-        {
+        private void HandleReloadInput() {
             Weapon currentWeapon = player.activeWeapon.GetCurrentWeapon();
 
             if (currentWeapon.isReloading)
@@ -238,8 +235,7 @@ namespace DungeonGunner
 
 
 
-        private void Roll(Vector3 _directionVector)
-        {
+        private void Roll(Vector3 _directionVector) {
             if (dashCoroutine != null)
                 StopCoroutine(dashCoroutine);
 
@@ -248,8 +244,7 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator DashCoroutine(Vector3 _directionVector)
-        {
+        private IEnumerator DashCoroutine(Vector3 _directionVector) {
             isDashing = true;
 
             float minimumDistance = 0.2f;
@@ -257,8 +252,7 @@ namespace DungeonGunner
             Vector3 currentPosition = player.transform.position;
             Vector3 targetPosition = currentPosition + _directionVector * movementDetail.dashDistance;
 
-            while (Vector3.Distance(player.transform.position, targetPosition) > minimumDistance)
-            {
+            while (Vector3.Distance(player.transform.position, targetPosition) > minimumDistance) {
                 player.moveToPositionEvent.CallOnMoveToPosition(currentPosition, targetPosition, _directionVector, movementDetail.dashSpeed, isDashing);
 
                 yield return waitForFixedUpdate;
@@ -273,8 +267,7 @@ namespace DungeonGunner
 
 
 
-        private void StopDashCoroutine()
-        {
+        private void StopDashCoroutine() {
             if (dashCoroutine != null)
                 StopCoroutine(dashCoroutine);
 
@@ -283,16 +276,14 @@ namespace DungeonGunner
 
 
 
-        private void ProcessDashCooldownTimer()
-        {
+        private void ProcessDashCooldownTimer() {
             if (dashCooldownTimer >= 0)
                 dashCooldownTimer -= Time.deltaTime;
         }
 
 
 
-        private void PreviousWeapon()
-        {
+        private void PreviousWeapon() {
             activeWeaponIndex--;
 
             if (activeWeaponIndex < 1)
@@ -303,8 +294,7 @@ namespace DungeonGunner
 
 
 
-        private void NextWeapon()
-        {
+        private void NextWeapon() {
             activeWeaponIndex++;
 
             if (activeWeaponIndex > player.weaponList.Count)
@@ -315,15 +305,13 @@ namespace DungeonGunner
 
 
 
-        public void EnableController()
-        {
+        public void EnableController() {
             isDisabled = false;
         }
 
 
 
-        public void DisableController()
-        {
+        public void DisableController() {
             isDisabled = true;
             player.idleEvent.CallOnIdleEvent();
         }
@@ -332,8 +320,7 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckNullValue(this, nameof(movementDetail), movementDetail);
         }
 #endif

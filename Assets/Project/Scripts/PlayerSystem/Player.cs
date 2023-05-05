@@ -20,9 +20,13 @@ namespace DungeonGunner
     [RequireComponent(typeof(AimEvent))]
     [RequireComponent(typeof(AnimatorHandler))]
     [RequireComponent(typeof(ControllerHandler))]
+    [RequireComponent(typeof(DealContactDamage))]
+    [RequireComponent(typeof(Destroyed))]
+    [RequireComponent(typeof(DestroyedEvent))]
     [RequireComponent(typeof(FireAction))]
     [RequireComponent(typeof(FireEvent))]
     [RequireComponent(typeof(Health))]
+    [RequireComponent(typeof(HealthEvent))]
     [RequireComponent(typeof(Idle))]
     [RequireComponent(typeof(IdleEvent))]
     [RequireComponent(typeof(MoveByVelocity))]
@@ -31,14 +35,15 @@ namespace DungeonGunner
     [RequireComponent(typeof(MoveToPositionEvent))]
     [RequireComponent(typeof(ReloadAction))]
     [RequireComponent(typeof(ReloadEvent))]
+    [RequireComponent(typeof(TakeContactDamage))]
     #endregion
     public class Player : MonoBehaviour
     {
         [HideInInspector] public Animator animator;
-        [HideInInspector] public Health health;
         [HideInInspector] public SpriteRenderer spriteRenderer;
 
-        [HideInInspector] public PlayerDetailSO detail;
+        [HideInInspector] public PlayerDetailSO playerDetail;
+        [HideInInspector] public ControllerHandler controllerHandler;
 
         public List<Weapon> weaponList = new List<Weapon>();
         [HideInInspector] public ActiveWeapon activeWeapon;
@@ -51,14 +56,19 @@ namespace DungeonGunner
         [HideInInspector] public FireEvent fireEvent;
         [HideInInspector] public ReloadEvent reloadEvent;
 
+        [HideInInspector] public Health health;
+        [HideInInspector] public HealthEvent healthEvent;
+        [HideInInspector] public DestroyedEvent destroyedEvent;
+
 
 
 
         private void Awake()
         {
             animator = GetComponent<Animator>();
-            health = GetComponent<Health>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+
+            controllerHandler = GetComponent<ControllerHandler>();
 
             activeWeapon = GetComponent<ActiveWeapon>();
 
@@ -69,32 +79,60 @@ namespace DungeonGunner
             moveByVelocityEvent = GetComponent<MoveByVelocityEvent>();
             moveToPositionEvent = GetComponent<MoveToPositionEvent>();
             reloadEvent = GetComponent<ReloadEvent>();
+
+            health = GetComponent<Health>();
+            healthEvent = GetComponent<HealthEvent>();
+            destroyedEvent = GetComponent<DestroyedEvent>();
         }
 
 
 
-        public void Init(PlayerDetailSO playerDetail)
+        private void OnEnable()
         {
-            this.detail = playerDetail;
-
-            SetupPlayerHealth();
-            SetupPlayerInitialWeapon();
+            healthEvent.OnHealthChanged += HealthEvent_OnHealthChange;
         }
 
 
 
-        private void SetupPlayerHealth()
+        private void OnDisable()
         {
-            health.SetStartingAmount(detail.startingHealthAmount);
+            healthEvent.OnHealthChanged -= HealthEvent_OnHealthChange;
         }
 
 
 
-        private void SetupPlayerInitialWeapon()
+        private void HealthEvent_OnHealthChange(HealthEvent _sender, OnHealthChangedEventArgs _args)
+        {
+            if (_args.healthAmount <= 0f)
+            {
+                destroyedEvent.CallOnDestroyed(true, 0);
+            }
+        }
+
+
+
+        public void Init(PlayerDetailSO _playerDetail)
+        {
+            this.playerDetail = _playerDetail;
+
+            SetupHealth();
+            SetupInitialWeapon();
+        }
+
+
+
+        private void SetupHealth()
+        {
+            health.SetStartingAmount(playerDetail.startingHealthAmount);
+        }
+
+
+
+        private void SetupInitialWeapon()
         {
             weaponList.Clear();
 
-            foreach (WeaponDetailSO weaponDetail in detail.initialWeaponsList)
+            foreach (WeaponDetailSO weaponDetail in playerDetail.initialWeaponsList)
             {
                 AddWeapon(weaponDetail);
             }
@@ -102,9 +140,9 @@ namespace DungeonGunner
 
 
 
-        public Weapon AddWeapon(WeaponDetailSO weaponDetail)
+        public Weapon AddWeapon(WeaponDetailSO _weaponDetail)
         {
-            Weapon weapon = new Weapon(weaponDetail);
+            Weapon weapon = new Weapon(_weaponDetail);
             weaponList.Add(weapon);
             weapon.indexOnList = weaponList.Count;
 

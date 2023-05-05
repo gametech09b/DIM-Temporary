@@ -9,9 +9,9 @@ namespace DungeonGunner {
         public static SoundEffectResources Instance {
             get
             {
-                if (instance == null) {
+                if (instance == null)
                     instance = Resources.Load<SoundEffectResources>("SoundEffectResources");
-                }
+
                 return instance;
             }
         }
@@ -24,5 +24,24 @@ namespace DungeonGunner {
 
 
         public SoundEffectSO DoorOpenCloseSoundEffect;
+
+
+
+        [Space(10)]
+        [Header("Table SFX")]
+
+
+        public SoundEffectSO TableFlipSoundEffect;
+
+
+
+        #region Validation
+#if UNITY_EDITOR
+        private void OnValidate() {
+            HelperUtilities.CheckNullValue(this, nameof(DoorOpenCloseSoundEffect), DoorOpenCloseSoundEffect);
+            HelperUtilities.CheckNullValue(this, nameof(TableFlipSoundEffect), TableFlipSoundEffect);
+        }
+#endif
+        #endregion
     }
 }

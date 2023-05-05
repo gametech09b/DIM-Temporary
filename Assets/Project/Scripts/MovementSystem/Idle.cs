@@ -9,13 +9,13 @@ namespace DungeonGunner {
     [RequireComponent(typeof(Rigidbody2D))]
     #endregion
     public class Idle : MonoBehaviour {
-        private Rigidbody2D rigidbody2DComponent;
+        private Rigidbody2D rb2D;
         private IdleEvent idleEvent;
 
 
 
         private void Awake() {
-            rigidbody2DComponent = GetComponent<Rigidbody2D>();
+            rb2D = GetComponent<Rigidbody2D>();
             idleEvent = GetComponent<IdleEvent>();
         }
 
@@ -40,7 +40,7 @@ namespace DungeonGunner {
 
 
         private void ChangeToIdle() {
-            rigidbody2DComponent.velocity = Vector2.zero;
+            rb2D.velocity = Vector2.zero;
         }
     }
 }

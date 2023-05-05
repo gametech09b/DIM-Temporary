@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DoorOpenCloseSoundEffect: {fileID: 11400000, guid: 2dbac10963207d5419220cbd67430e6b, type: 2}
+  TableFlipSoundEffect: {fileID: 11400000, guid: 8f2aa5d9a30540d4aaf9b4f2712f6876, type: 2}

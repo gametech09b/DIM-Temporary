@@ -60,7 +60,8 @@ namespace DungeonGunner
                 }
             }
 
-            if (_chanceRatioList.Count == 0) return default(T);
+            if (_chanceRatioList.Count == 0)
+                return default(T);
 
             int lookUpChance = Random.Range(0, _ratioTotal);
 

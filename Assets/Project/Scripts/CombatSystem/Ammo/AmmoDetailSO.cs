@@ -118,30 +118,30 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            HelperUtilities.ValidateCheckEmptyString(this, nameof(ammoName), ammoName);
-            HelperUtilities.ValidateCheckNullValue(this, nameof(sprite), sprite);
-            HelperUtilities.ValidateCheckEnumerableValues(this, nameof(prefabArray), prefabArray);
-            HelperUtilities.ValidateCheckNullValue(this, nameof(material), material);
+            HelperUtilities.CheckEmptyString(this, nameof(ammoName), ammoName);
+            HelperUtilities.CheckNullValue(this, nameof(sprite), sprite);
+            HelperUtilities.CheckEnumerableValue(this, nameof(prefabArray), prefabArray);
+            HelperUtilities.CheckNullValue(this, nameof(material), material);
 
             if (chargeTime > 0)
             {
-                HelperUtilities.ValidateCheckNullValue(this, nameof(chargeMaterial), chargeMaterial);
+                HelperUtilities.CheckNullValue(this, nameof(chargeMaterial), chargeMaterial);
             }
 
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(damage), damage);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(minSpeed), minSpeed);
-            HelperUtilities.ValidateCheckPositiveRange(this, nameof(minSpeed), nameof(maxSpeed), minSpeed, maxSpeed);
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(range), range);
-            HelperUtilities.ValidateCheckPositiveRange(this, nameof(minSpread), nameof(maxSpread), minSpread, maxSpread, true);
-            HelperUtilities.ValidateCheckPositiveRange(this, nameof(minSpawnCount), nameof(maxSpawnCount), minSpawnCount, maxSpawnCount);
-            HelperUtilities.ValidateCheckPositiveRange(this, nameof(minSpawnInterval), nameof(maxSpawnInterval), minSpawnInterval, maxSpawnInterval, true);
+            HelperUtilities.CheckPositiveValue(this, nameof(damage), damage);
+            HelperUtilities.CheckPositiveValue(this, nameof(minSpeed), minSpeed);
+            HelperUtilities.CheckPositiveRange(this, nameof(minSpeed), nameof(maxSpeed), minSpeed, maxSpeed);
+            HelperUtilities.CheckPositiveValue(this, nameof(range), range);
+            HelperUtilities.CheckPositiveRange(this, nameof(minSpread), nameof(maxSpread), minSpread, maxSpread, true);
+            HelperUtilities.CheckPositiveRange(this, nameof(minSpawnCount), nameof(maxSpawnCount), minSpawnCount, maxSpawnCount);
+            HelperUtilities.CheckPositiveRange(this, nameof(minSpawnInterval), nameof(maxSpawnInterval), minSpawnInterval, maxSpawnInterval, true);
 
             if (isTrailEnabled)
             {
-                HelperUtilities.ValidateCheckPositiveValue(this, nameof(trailLifetime), trailLifetime);
-                HelperUtilities.ValidateCheckNullValue(this, nameof(trailMaterial), trailMaterial);
-                HelperUtilities.ValidateCheckPositiveValue(this, nameof(trailStartWidth), trailStartWidth);
-                HelperUtilities.ValidateCheckPositiveValue(this, nameof(trailEndWidth), trailEndWidth);
+                HelperUtilities.CheckPositiveValue(this, nameof(trailLifetime), trailLifetime);
+                HelperUtilities.CheckNullValue(this, nameof(trailMaterial), trailMaterial);
+                HelperUtilities.CheckPositiveValue(this, nameof(trailStartWidth), trailStartWidth);
+                HelperUtilities.CheckPositiveValue(this, nameof(trailEndWidth), trailEndWidth);
             }
 
         }

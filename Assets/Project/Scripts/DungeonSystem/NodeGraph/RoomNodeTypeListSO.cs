@@ -21,7 +21,7 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            HelperUtilities.ValidateCheckEnumerableValues(this, nameof(list), list);
+            HelperUtilities.CheckEnumerableValue(this, nameof(list), list);
         }
 #endif
         #endregion

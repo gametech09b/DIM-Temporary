@@ -16,13 +16,9 @@ namespace DungeonGunner
         protected virtual void Awake()
         {
             if (instance == null)
-            {
                 instance = this as T;
-            }
             else
-            {
                 Destroy(gameObject);
-            }
         }
     }
 }

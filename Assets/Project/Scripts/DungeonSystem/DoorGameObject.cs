@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DungeonGunner
+{
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Animator))]
     #endregion
-    public class DoorGameObject : MonoBehaviour {
+    public class DoorGameObject : MonoBehaviour
+    {
         [Space(10)]
         [Header("Object References")]
 
@@ -26,7 +28,8 @@ namespace DungeonGunner {
 
 
 
-        private void Awake() {
+        private void Awake()
+        {
             animator = GetComponent<Animator>();
             doorTrigger = GetComponent<BoxCollider2D>();
 
@@ -35,22 +38,25 @@ namespace DungeonGunner {
 
 
 
-        private void OnEnable() {
+        private void OnEnable()
+        {
             animator.SetBool(Settings.IsOpen, isOpen);
         }
 
 
 
-        private void OnTriggerEnter2D(Collider2D other) {
-            if (other.CompareTag(Settings.PlayerTag) || other.CompareTag(Settings.PlayerWeaponTag)) {
+        private void OnTriggerEnter2D(Collider2D _other)
+        {
+            if (_other.CompareTag(Settings.PlayerTag) || _other.CompareTag(Settings.PlayerWeaponTag))
                 OpenDoor();
-            }
         }
 
 
 
-        private void OpenDoor() {
-            if (isOpen) return;
+        private void OpenDoor()
+        {
+            if (isOpen)
+                return;
 
             isOpen = true;
             isOpened = true;
@@ -63,7 +69,8 @@ namespace DungeonGunner {
 
 
 
-        public void LockDoor() {
+        public void LockDoor()
+        {
             isOpen = false;
             doorCollider.enabled = true;
             doorTrigger.enabled = false;
@@ -73,11 +80,13 @@ namespace DungeonGunner {
 
 
 
-        public void UnlockDoor() {
+        public void UnlockDoor()
+        {
             doorCollider.enabled = false;
             doorTrigger.enabled = true;
 
-            if (isOpened) {
+            if (isOpened)
+            {
                 isOpen = false;
                 OpenDoor();
             }
@@ -86,8 +95,9 @@ namespace DungeonGunner {
 
 
         #region Validation
-        private void OnValidate() {
-            HelperUtilities.ValidateCheckNullValue(this, nameof(doorCollider), doorCollider);
+        private void OnValidate()
+        {
+            HelperUtilities.CheckNullValue(this, nameof(doorCollider), doorCollider);
         }
         #endregion
     }

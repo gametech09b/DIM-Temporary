@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
-    public class UIResources : MonoBehaviour {
+namespace DungeonGunner
+{
+    public class UIResources : MonoBehaviour
+    {
         #region Singleton UIResources
         private static UIResources instance;
-        public static UIResources Instance {
+        public static UIResources Instance
+        {
             get
             {
-                if (instance == null) {
+                if (instance == null)
                     instance = Resources.Load<UIResources>("UIResources");
-                }
+
                 return instance;
             }
         }
@@ -26,12 +29,10 @@ namespace DungeonGunner {
 
 
 
-        #region Validation
-#if UNITY_EDITOR
-        private void OnValidate() {
+        [Space(10)]
+        [Header("Health HUD")]
 
-        }
-#endif
-        #endregion
+
+        public GameObject healthIconPrefab;
     }
 }

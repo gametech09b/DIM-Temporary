@@ -8,88 +8,88 @@ namespace DungeonGunner
     #endregion
     public class HitEffect : MonoBehaviour
     {
-        private ParticleSystem _particleSystem;
+        private ParticleSystem particleSystemComponent;
 
 
 
         private void Awake()
         {
-            _particleSystem = GetComponent<ParticleSystem>();
+            particleSystemComponent = GetComponent<ParticleSystem>();
         }
 
 
 
-        public void Init(HitEffectSO hitEffect)
+        public void Init(HitEffectSO _hitEffect)
         {
-            SetColorGradient(hitEffect.colorGradient);
+            SetColorGradient(_hitEffect.colorGradient);
 
-            SetParticleStartingValues(hitEffect.duration, hitEffect.startParticleSize, hitEffect.startParticleSpeed, hitEffect.startLifetime, hitEffect.effectGravity, hitEffect.maxParticleNumber);
+            SetParticleStartingValues(_hitEffect.duration, _hitEffect.startParticleSize, _hitEffect.startParticleSpeed, _hitEffect.startLifetime, _hitEffect.effectGravity, _hitEffect.maxParticleNumber);
 
-            SetEmissionRate(hitEffect.maxEmissionRate, hitEffect.burstParticleNumber);
+            SetEmissionRate(_hitEffect.maxEmissionRate, _hitEffect.burstParticleNumber);
 
-            SetParticleSprite(hitEffect.sprite);
+            SetParticleSprite(_hitEffect.sprite);
 
-            SetVelocityOverLifetime(hitEffect.minVelocityOverLifetime, hitEffect.maxVelocityOverLifetime);
+            SetVelocityOverLifetime(_hitEffect.minVelocityOverLifetime, _hitEffect.maxVelocityOverLifetime);
         }
 
 
 
-        private void SetColorGradient(Gradient colorGradient)
+        private void SetColorGradient(Gradient _colorGradient)
         {
-            ParticleSystem.ColorOverLifetimeModule colorOverLifetime = _particleSystem.colorOverLifetime;
-            colorOverLifetime.color = colorGradient;
+            ParticleSystem.ColorOverLifetimeModule colorOverLifetime = particleSystemComponent.colorOverLifetime;
+            colorOverLifetime.color = _colorGradient;
         }
 
 
 
-        private void SetParticleStartingValues(float duration, float startParticleSize, float startParticleSpeed, float startLifetime, float effectGravity, int maxParticles)
+        private void SetParticleStartingValues(float _duration, float _startParticleSize, float _startParticleSpeed, float _startLifetime, float _effectGravity, int _maxParticles)
         {
-            ParticleSystem.MainModule mainModule = _particleSystem.main;
+            ParticleSystem.MainModule mainModule = particleSystemComponent.main;
 
-            mainModule.duration = duration;
-            mainModule.startSize = startParticleSize;
-            mainModule.startSpeed = startParticleSpeed;
-            mainModule.startLifetime = startLifetime;
-            mainModule.maxParticles = maxParticles;
+            mainModule.duration = _duration;
+            mainModule.startSize = _startParticleSize;
+            mainModule.startSpeed = _startParticleSpeed;
+            mainModule.startLifetime = _startLifetime;
+            mainModule.maxParticles = _maxParticles;
         }
 
 
 
-        private void SetEmissionRate(int maxEmissionRate, int burstParticleNumber)
+        private void SetEmissionRate(int _maxEmissionRate, int _burstParticleNumber)
         {
-            ParticleSystem.EmissionModule emissionModule = _particleSystem.emission;
+            ParticleSystem.EmissionModule emissionModule = particleSystemComponent.emission;
 
-            emissionModule.rateOverTime = maxEmissionRate;
+            emissionModule.rateOverTime = _maxEmissionRate;
 
-            ParticleSystem.Burst burst = new ParticleSystem.Burst(0, burstParticleNumber);
+            ParticleSystem.Burst burst = new ParticleSystem.Burst(0, _burstParticleNumber);
             emissionModule.SetBurst(0, burst);
         }
 
 
 
-        private void SetParticleSprite(Sprite sprite)
+        private void SetParticleSprite(Sprite _sprite)
         {
-            ParticleSystem.TextureSheetAnimationModule textureSheetAnimationModule = _particleSystem.textureSheetAnimation;
+            ParticleSystem.TextureSheetAnimationModule textureSheetAnimationModule = particleSystemComponent.textureSheetAnimation;
 
-            textureSheetAnimationModule.SetSprite(0, sprite);
+            textureSheetAnimationModule.SetSprite(0, _sprite);
         }
 
 
 
-        private void SetVelocityOverLifetime(Vector3 minVelocityOverLifetime, Vector3 maxVelocityOverLifetime)
+        private void SetVelocityOverLifetime(Vector3 _minVelocityOverLifetime, Vector3 _maxVelocityOverLifetime)
         {
-            ParticleSystem.VelocityOverLifetimeModule velocityOverLifetimeModule = _particleSystem.velocityOverLifetime;
+            ParticleSystem.VelocityOverLifetimeModule velocityOverLifetimeModule = particleSystemComponent.velocityOverLifetime;
 
             ParticleSystem.MinMaxCurve x = new ParticleSystem.MinMaxCurve();
             x.mode = ParticleSystemCurveMode.TwoConstants;
-            x.constantMin = minVelocityOverLifetime.x;
-            x.constantMax = maxVelocityOverLifetime.x;
+            x.constantMin = _minVelocityOverLifetime.x;
+            x.constantMax = _maxVelocityOverLifetime.x;
             velocityOverLifetimeModule.x = x;
 
             ParticleSystem.MinMaxCurve y = new ParticleSystem.MinMaxCurve();
             y.mode = ParticleSystemCurveMode.TwoConstants;
-            y.constantMin = minVelocityOverLifetime.y;
-            y.constantMax = maxVelocityOverLifetime.y;
+            y.constantMin = _minVelocityOverLifetime.y;
+            y.constantMax = _maxVelocityOverLifetime.y;
             velocityOverLifetimeModule.y = y;
 
         }

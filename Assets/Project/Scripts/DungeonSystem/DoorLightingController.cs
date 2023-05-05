@@ -2,33 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DungeonGunner
+{
     [DisallowMultipleComponent]
-    public class DoorLightingController : MonoBehaviour {
+    public class DoorLightingController : MonoBehaviour
+    {
         private bool isLit = false;
         private DoorGameObject doorGameObject;
 
 
 
-        private void Awake() {
+        private void Awake()
+        {
             doorGameObject = GetComponentInParent<DoorGameObject>();
         }
 
 
 
-        private void OnTriggerEnter2D(Collider2D other) {
+        private void OnTriggerEnter2D(Collider2D _other)
+        {
             FadeInDoor(doorGameObject);
         }
 
 
 
-        public void FadeInDoor(DoorGameObject doorGameObject) {
+        public void FadeInDoor(DoorGameObject _doorGameObject)
+        {
             Material material = new Material(GameResources.Instance.VariableLitShader);
 
-            if (!isLit) {
+            if (!isLit)
+            {
                 SpriteRenderer[] spriteRendererArray = GetComponentsInParent<SpriteRenderer>();
 
-                foreach (SpriteRenderer spriteRenderer in spriteRendererArray) {
+                foreach (SpriteRenderer spriteRenderer in spriteRendererArray)
+                {
                     StartCoroutine(FadeInDoorCoroutine(spriteRenderer, material));
                 }
 
@@ -38,15 +45,17 @@ namespace DungeonGunner {
 
 
 
-        private IEnumerator FadeInDoorCoroutine(SpriteRenderer spriteRenderer, Material material) {
-            spriteRenderer.material = material;
+        private IEnumerator FadeInDoorCoroutine(SpriteRenderer _spriteRenderer, Material _material)
+        {
+            _spriteRenderer.material = _material;
 
-            for (float i = 0.05f; i <= 1f; i += Time.deltaTime / Settings.FadeInTime) {
-                material.SetFloat("Alpha_Slider", i);
+            for (float i = 0.05f; i <= 1f; i += Time.deltaTime / Settings.RoomFadeInTime)
+            {
+                _material.SetFloat("Alpha_Slider", i);
                 yield return null;
             }
 
-            spriteRenderer.material = GameResources.Instance.LitMaterial;
+            _spriteRenderer.material = GameResources.Instance.LitMaterial;
         }
     }
 }

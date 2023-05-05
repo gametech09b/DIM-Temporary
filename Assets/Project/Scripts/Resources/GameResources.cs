@@ -2,16 +2,19 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Audio;
 
-namespace DungeonGunner {
-    public class GameResources : MonoBehaviour {
+namespace DungeonGunner
+{
+    public class GameResources : MonoBehaviour
+    {
         #region Singleton GameResources
         private static GameResources instance;
-        public static GameResources Instance {
+        public static GameResources Instance
+        {
             get
             {
-                if (instance == null) {
+                if (instance == null)
                     instance = Resources.Load<GameResources>("GameResources");
-                }
+
                 return instance;
             }
         }
@@ -78,18 +81,19 @@ namespace DungeonGunner {
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate() {
-            HelperUtilities.ValidateCheckEnumerableValues(this, nameof(EnemyUnwalkableTileArray), EnemyUnwalkableTileArray);
-            HelperUtilities.ValidateCheckNullValue(this, nameof(EnemyPreferredPathTile), EnemyPreferredPathTile);
-            
-            HelperUtilities.ValidateCheckNullValue(this, nameof(RoomNodeTypeList), RoomNodeTypeList);
+        private void OnValidate()
+        {
+            HelperUtilities.CheckEnumerableValue(this, nameof(EnemyUnwalkableTileArray), EnemyUnwalkableTileArray);
+            HelperUtilities.CheckNullValue(this, nameof(EnemyPreferredPathTile), EnemyPreferredPathTile);
 
-            HelperUtilities.ValidateCheckNullValue(this, nameof(CurrentPlayer), CurrentPlayer);
+            HelperUtilities.CheckNullValue(this, nameof(RoomNodeTypeList), RoomNodeTypeList);
 
-            HelperUtilities.ValidateCheckNullValue(this, nameof(DimmedMaterial), DimmedMaterial);
-            HelperUtilities.ValidateCheckNullValue(this, nameof(LitMaterial), LitMaterial);
+            HelperUtilities.CheckNullValue(this, nameof(CurrentPlayer), CurrentPlayer);
 
-            HelperUtilities.ValidateCheckNullValue(this, nameof(VariableLitShader), VariableLitShader);
+            HelperUtilities.CheckNullValue(this, nameof(DimmedMaterial), DimmedMaterial);
+            HelperUtilities.CheckNullValue(this, nameof(LitMaterial), LitMaterial);
+
+            HelperUtilities.CheckNullValue(this, nameof(VariableLitShader), VariableLitShader);
         }
 #endif
         #endregion

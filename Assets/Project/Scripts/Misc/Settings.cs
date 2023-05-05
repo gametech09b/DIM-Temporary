@@ -1,11 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
-    public static class Settings
-    {
+namespace DungeonGunner {
+    public static class Settings {
         #region Project Settings
         public const string ProjectName = "DungeonGunner";
         #endregion
@@ -20,21 +19,22 @@ namespace DungeonGunner
 
 
         #region Dungeon Builder Settings
-        public const int MaxDungeonBuildAttempts = 10; // max number of attempts to build the dungeon
-        public const int MaxDungeonRoomRebuildAttempts = 1000; // max number of attempts to rebuild the dungeon for room graph
+        public const int DungeonMaxBuildAttempts = 10; // max number of attempts to build the dungeon
+        public const int DungeonMaxRoomRebuildAttempts = 1000; // max number of attempts to rebuild the dungeon for room graph
         #endregion
 
 
 
         #region Room Settings
-        public const float FadeInTime = 0.5f; // time it takes for the room to fade in
-        public const int MaxChildCorridors = 3; // max number of child corridors per room
+        public const float RoomFadeInTime = 0.5f; // time it takes for the room to fade in
+        public const int RoomMaxChildCorridors = 3; // max number of child corridors per room
+        public const float RoomUnlockDoorsDelay = 1f; // delay before unlocking doors
         #endregion
 
 
 
         #region Animator Parameters - Player
-        public static float BaseSpeedForPlayer = 8f;
+        public static float BaseSpeedForPlayerAnimation = 8f;
 
         public static int AimUp = Animator.StringToHash("aimUp");
         public static int AimUpRight = Animator.StringToHash("aimUpRight");
@@ -60,6 +60,28 @@ namespace DungeonGunner
 
 
 
+        #region Animator Parameters - Enemy
+        public static float BaseSpeedForEnemyAnimation = 3f;
+        #endregion
+
+
+
+        #region Animator Parameters - DestroyableItem
+        public static int Destroy = Animator.StringToHash("destroy");
+        public static String DestroyedState = "Destroyed";
+        #endregion
+
+
+
+        #region Animator Parameters - MoveableItem
+        public static int FlipUp = Animator.StringToHash("flipUp");
+        public static int FlipRight = Animator.StringToHash("flipRight");
+        public static int FlipDown = Animator.StringToHash("flipDown");
+        public static int FlipLeft = Animator.StringToHash("flipLeft");
+        #endregion
+
+
+
         #region GameObject Tags
         public const string PlayerTag = "Player";
         public const string PlayerWeaponTag = "playerWeapon";
@@ -74,14 +96,15 @@ namespace DungeonGunner
 
 
         #region UI Settings
-        public const float AmmoIconSpacing = 4f; // spacing between ammo icons
-        public static Color ReloadProgressColor = Color.red;
-        public static Color ReloadDoneColor = Color.green;
+        public const float UIAmmoIconSpacing = 4f; // spacing between ammo icons
+
+        public const float UIHeartIconSpacing = 16f;
         #endregion
 
 
 
         #region AStar Pathfinding Settings
+        public const int AStarTargetFrameRate = 60;
         public const int AStarDefaultMovementPenalty = 40;
         public const int AStarPreferredPathMovementPenalty = 1;
 
@@ -91,7 +114,14 @@ namespace DungeonGunner
 
 
 
+        #region Enemy Settings
+        public const int EnemyDefaultHealth = 20;
+        #endregion
 
 
+
+        #region Contact Damage Settings
+        public const float ContactDamageCooldown = 0.5f;
+        #endregion
     }
 }

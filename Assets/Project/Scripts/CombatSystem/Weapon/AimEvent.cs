@@ -8,14 +8,14 @@ namespace DungeonGunner {
     public class AimEvent : MonoBehaviour {
         public event Action<AimEvent, AimEventArgs> OnAimAction;
 
-        public void CallOnAimAction(Direction direction, float angle, float weaponAngle, Vector3 weaponDirectionVector) {
+        public void CallOnAimAction(Direction _direction, float _angle, float _weaponAngle, Vector3 _weaponDirectionVector) {
             OnAimAction?.Invoke(
                 this,
                 new AimEventArgs() {
-                    direction = direction,
-                    angle = angle,
-                    weaponAngle = weaponAngle,
-                    weaponDirectionVector = weaponDirectionVector
+                    direction = _direction,
+                    angle = _angle,
+                    weaponAngle = _weaponAngle,
+                    weaponDirectionVector = _weaponDirectionVector
                 });
         }
     }

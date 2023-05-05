@@ -1,54 +1,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner.AStarPathfinding
-{
-    public static class AStar
-    {
-        public static Stack<Vector3> BuildPath(Room room, Vector3Int startGridPosition, Vector3Int endGridPosition)
-        {
-            startGridPosition -= (Vector3Int)room.templateLowerBounds;
-            endGridPosition -= (Vector3Int)room.templateLowerBounds;
+namespace DungeonGunner.AStarPathfinding {
+    public static class AStar {
+        public static Stack<Vector3> BuildPath(Room _room, Vector3Int _startGridPosition, Vector3Int _endGridPosition) {
+            _startGridPosition -= (Vector3Int)_room.templateLowerBounds;
+            _endGridPosition -= (Vector3Int)_room.templateLowerBounds;
 
             List<Node> openNodeList = new List<Node>();
             HashSet<Node> closeNodeHashSet = new HashSet<Node>();
 
-            Grid grid = new Grid(room.templateUpperBounds.x - room.templateLowerBounds.x + 1, room.templateUpperBounds.y - room.templateLowerBounds.y + 1);
+            AStarGrid grid = new AStarGrid(_room.templateUpperBounds.x - _room.templateLowerBounds.x + 1, _room.templateUpperBounds.y - _room.templateLowerBounds.y + 1);
 
-            Node startNode = grid.GetNode(startGridPosition.x, startGridPosition.y);
-            Node targetNode = grid.GetNode(endGridPosition.x, endGridPosition.y);
+            Node startNode = grid.GetNode(_startGridPosition.x, _startGridPosition.y);
+            Node targetNode = grid.GetNode(_endGridPosition.x, _endGridPosition.y);
 
-            Node endPathNode = FindShortestPath(startNode, targetNode, grid, openNodeList, closeNodeHashSet, room.roomGameObject);
+            Node endPathNode = FindShortestPath(startNode, targetNode, grid, openNodeList, closeNodeHashSet, _room.roomGameObject);
 
             if (endPathNode != null)
-            {
-                return CreatePathStack(endPathNode, room);
-            }
+                return CreatePathStack(endPathNode, _room);
 
             return null;
         }
 
 
 
-        private static Node FindShortestPath(Node startNode, Node targetNode, Grid grid, List<Node> openNodeList, HashSet<Node> closedNodeHashSet, RoomGameObject roomGameObject)
-        {
-            openNodeList.Add(startNode);
+        private static Node FindShortestPath(Node _startNode, Node _targetNode, AStarGrid _grid, List<Node> _openNodeList, HashSet<Node> _closedNodeHashSet, RoomGameObject _roomGameObject) {
+            _openNodeList.Add(_startNode);
 
-            while (openNodeList.Count > 0)
-            {
-                openNodeList.Sort();
+            while (_openNodeList.Count > 0) {
+                _openNodeList.Sort();
 
-                Node currentNode = openNodeList[0];
-                openNodeList.RemoveAt(0);
+                Node currentNode = _openNodeList[0];
+                _openNodeList.RemoveAt(0);
 
-                if (currentNode == targetNode)
-                {
+                if (currentNode == _targetNode)
                     return currentNode;
-                }
 
-                closedNodeHashSet.Add(currentNode);
+                _closedNodeHashSet.Add(currentNode);
 
-                EvaluateCurrentNodeNeighbours(currentNode, targetNode, grid, openNodeList, closedNodeHashSet, roomGameObject);
+                EvaluateCurrentNodeNeighbours(currentNode, _targetNode, _grid, _openNodeList, _closedNodeHashSet, _roomGameObject);
             }
 
             return null;
@@ -56,48 +47,39 @@ namespace DungeonGunner.AStarPathfinding
 
 
 
-        public static void EvaluateCurrentNodeNeighbours(Node currentNode, Node targetNode, Grid grid, List<Node> openNodeList, HashSet<Node> closedNodeHashSet, RoomGameObject roomGameObject)
-        {
-            Vector2Int currentNodePosition = currentNode.position;
+        public static void EvaluateCurrentNodeNeighbours(Node _currentNode, Node _targetNode, AStarGrid _grid, List<Node> _openNodeList, HashSet<Node> _closedNodeHashSet, RoomGameObject _roomGameObject) {
+            Vector2Int currentNodePosition = _currentNode.position;
 
             Node neighbourNode;
 
-            for (int i = -1; i <= 1; i++)
-            {
-                for (int j = -1; j <= 1; j++)
-                {
+            for (int i = -1; i <= 1; i++) {
+                for (int j = -1; j <= 1; j++) {
                     if (i == 0 && j == 0)
-                    {
                         continue;
-                    }
 
-                    neighbourNode = GetValidNeighbourNode(currentNodePosition.x + i, currentNodePosition.y + j, grid, closedNodeHashSet, roomGameObject);
+                    neighbourNode = GetValidNeighbourNode(currentNodePosition.x + i, currentNodePosition.y + j, _grid, _closedNodeHashSet, _roomGameObject);
 
 
-                    if (neighbourNode != null)
-                    {
-                        int movementPenalty = roomGameObject.GetAStarMovementPenalty(neighbourNode.position.x, neighbourNode.position.y);
+                    if (neighbourNode != null) {
+                        int movementPenalty = _roomGameObject.GetAStarMovementPenalty(neighbourNode.position.x, neighbourNode.position.y);
 
-                        int newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbourNode) + movementPenalty;
+                        int newCostToNeighbour = _currentNode.gCost + GetDistance(_currentNode, neighbourNode) + movementPenalty;
 
-                        bool isNeighbourNodeInOpenList = openNodeList.Contains(neighbourNode);
+                        bool isNeighbourNodeInOpenList = _openNodeList.Contains(neighbourNode);
 
-                        if (newCostToNeighbour < neighbourNode.gCost || !isNeighbourNodeInOpenList)
-                        {
+                        if (newCostToNeighbour < neighbourNode.gCost
+                        || !isNeighbourNodeInOpenList) {
                             neighbourNode.gCost = newCostToNeighbour;
-                            neighbourNode.hCost = GetDistance(neighbourNode, targetNode);
-                            neighbourNode.parentNode = currentNode;
+                            neighbourNode.hCost = GetDistance(neighbourNode, _targetNode);
+                            neighbourNode.parentNode = _currentNode;
 
-                            if (!isNeighbourNodeInOpenList)
-                            {
+                            if (!isNeighbourNodeInOpenList) {
                                 neighbourNode.gCost = newCostToNeighbour;
-                                neighbourNode.hCost = GetDistance(neighbourNode, targetNode);
-                                neighbourNode.parentNode = currentNode;
+                                neighbourNode.hCost = GetDistance(neighbourNode, _targetNode);
+                                neighbourNode.parentNode = _currentNode;
 
                                 if (!isNeighbourNodeInOpenList)
-                                {
-                                    openNodeList.Add(neighbourNode);
-                                }
+                                    _openNodeList.Add(neighbourNode);
                             }
                         }
                     }
@@ -107,64 +89,55 @@ namespace DungeonGunner.AStarPathfinding
 
 
 
-        public static Node GetValidNeighbourNode(int x, int y, Grid grid, HashSet<Node> closedNodeHashSet, RoomGameObject roomGameObject)
-        {
-            Vector2Int templateLowerBounds = roomGameObject.room.templateLowerBounds;
-            Vector2Int templateUpperBounds = roomGameObject.room.templateUpperBounds;
+        public static Node GetValidNeighbourNode(int _x, int _y, AStarGrid _grid, HashSet<Node> _closedNodeHashSet, RoomGameObject _roomGameObject) {
+            Vector2Int templateLowerBounds = _roomGameObject.room.templateLowerBounds;
+            Vector2Int templateUpperBounds = _roomGameObject.room.templateUpperBounds;
 
-            if (x >= templateUpperBounds.x - templateLowerBounds.x
-            || x < 0
-            || y >= templateUpperBounds.y - templateLowerBounds.y
-            || y < 0)
-            {
+            if (_x >= templateUpperBounds.x - templateLowerBounds.x
+            || _x < 0
+            || _y >= templateUpperBounds.y - templateLowerBounds.y
+            || _y < 0)
                 return null;
-            }
 
-            Node neighbourNode = grid.GetNode(x, y);
+            Node neighbourNode = _grid.GetNode(_x, _y);
 
-            int movementPenalty = roomGameObject.GetAStarMovementPenalty(neighbourNode.position.x, neighbourNode.position.y);
+            int movementPenalty = _roomGameObject.GetAStarMovementPenalty(neighbourNode.position.x, neighbourNode.position.y);
+            int itemObstaclePenalty = _roomGameObject.GetAStarItemObstaclePenalty(neighbourNode.position.x, neighbourNode.position.y);
 
-            if (movementPenalty == 0 || closedNodeHashSet.Contains(neighbourNode))
-            {
+            if (movementPenalty == 0
+            || itemObstaclePenalty == 0
+            || _closedNodeHashSet.Contains(neighbourNode))
                 return null;
-            }
             else
-            {
                 return neighbourNode;
-            }
         }
 
 
 
-        public static int GetDistance(Node nodeA, Node nodeB)
-        {
-            int distanceX = Mathf.Abs(nodeA.position.x - nodeB.position.x);
-            int distanceY = Mathf.Abs(nodeA.position.y - nodeB.position.y);
+        public static int GetDistance(Node _nodeA, Node _nodeB) {
+            int distanceX = Mathf.Abs(_nodeA.position.x - _nodeB.position.x);
+            int distanceY = Mathf.Abs(_nodeA.position.y - _nodeB.position.y);
 
             if (distanceX > distanceY)
-            {
                 return 14 * distanceY + 10 * (distanceX - distanceY);
-            }
 
             return 14 * distanceX + 10 * (distanceY - distanceX);
         }
 
 
 
-        public static Stack<Vector3> CreatePathStack(Node targetNode, Room room)
-        {
+        public static Stack<Vector3> CreatePathStack(Node _targetNode, Room _room) {
             Stack<Vector3> pathStack = new Stack<Vector3>();
 
-            Node nextNode = targetNode;
+            Node nextNode = _targetNode;
 
-            Vector3 cellMiddle = room.roomGameObject.grid.cellSize * 0.5f;
+            Vector3 cellMiddle = _room.roomGameObject.grid.cellSize * 0.5f;
             cellMiddle.z = 0;
 
-            while (nextNode != null)
-            {
-                Vector3Int cellPosition = new Vector3Int(nextNode.position.x + room.templateLowerBounds.x, nextNode.position.y + room.templateLowerBounds.y, 0);
+            while (nextNode != null) {
+                Vector3Int cellPosition = new Vector3Int(nextNode.position.x + _room.templateLowerBounds.x, nextNode.position.y + _room.templateLowerBounds.y, 0);
 
-                Vector3 cellWorldPosition = room.roomGameObject.grid.CellToWorld(cellPosition);
+                Vector3 cellWorldPosition = _room.roomGameObject.grid.CellToWorld(cellPosition);
 
                 cellWorldPosition += cellMiddle;
 

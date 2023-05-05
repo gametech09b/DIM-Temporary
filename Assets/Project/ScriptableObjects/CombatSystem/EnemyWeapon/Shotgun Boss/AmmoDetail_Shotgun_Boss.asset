@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f0955be34c1024f8ea16c6632b44dc, type: 3}
+  m_Name: AmmoDetail_Shotgun_Boss
+  m_EditorClassIdentifier: 
+  ammoName: Shotgun Boss Ammo
+  isPlayerAmmo: 0
+  sprite: {fileID: 21300000, guid: c3be09077243891458bdbf46a57d2e8a, type: 3}
+  prefabArray:
+  - {fileID: 1338510408464095998, guid: a191acab0d741b34f92d35b0c000ed2f, type: 3}
+  material: {fileID: 2100000, guid: a8f373dc317a30d40a68b73a78ce1d09, type: 2}
+  hitEffect: {fileID: 11400000, guid: 5b6cabfad75ae7e4985da99e26d91dc6, type: 2}
+  damage: 8
+  minSpeed: 13
+  maxSpeed: 20
+  range: 25
+  rotationSpeed: 1
+  chargeTime: 0
+  chargeMaterial: {fileID: 0}
+  minSpread: 1
+  maxSpread: 20
+  minSpawnCount: 6
+  maxSpawnCount: 8
+  minSpawnInterval: 0
+  maxSpawnInterval: 0.01
+  isTrailEnabled: 0
+  trailLifetime: 0
+  trailMaterial: {fileID: 0}
+  trailStartWidth: 0
+  trailEndWidth: 0

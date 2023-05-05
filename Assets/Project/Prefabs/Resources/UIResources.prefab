@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoIconPrefab: {fileID: 4812111403095352579, guid: a7f89ec82d2ddc84cbb5ac42eae38e69, type: 3}
+  healthIconPrefab: {fileID: 9200455489865040774, guid: e53e14265a055994891c56fda2ea9f88, type: 3}

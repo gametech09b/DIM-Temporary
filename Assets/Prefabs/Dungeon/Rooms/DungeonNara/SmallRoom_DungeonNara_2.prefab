@@ -727,7 +727,7 @@ GameObject:
   - component: {fileID: -7930397084649357942}
   - component: {fileID: -7769281260521683227}
   m_Layer: 0
-  m_Name: Entrance_DungeonNara_2
+  m_Name: SmallRoom_DungeonNara_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

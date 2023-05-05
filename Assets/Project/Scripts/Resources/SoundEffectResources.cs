@@ -35,6 +35,17 @@ namespace DungeonGunner {
 
 
 
+        [Space(10)]
+        [Header("Chest SFX")]
+
+
+        public SoundEffectSO ChestOpenSoundEffect;
+        public SoundEffectSO ChestAmmoPickupSoundEffect;
+        public SoundEffectSO ChestHealthPickupSoundEffect;
+        public SoundEffectSO ChestWeaponPickupSoundEffect;
+
+
+
         #region Validation
 #if UNITY_EDITOR
         private void OnValidate() {

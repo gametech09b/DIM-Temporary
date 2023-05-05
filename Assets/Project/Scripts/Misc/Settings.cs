@@ -82,6 +82,12 @@ namespace DungeonGunner {
 
 
 
+        #region Animator Parameters - Chest
+        public static int Use = Animator.StringToHash("use");
+        #endregion
+
+
+
         #region GameObject Tags
         public const string PlayerTag = "Player";
         public const string PlayerWeaponTag = "playerWeapon";

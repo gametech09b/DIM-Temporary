@@ -46,3 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DoorOpenCloseSoundEffect: {fileID: 11400000, guid: 2dbac10963207d5419220cbd67430e6b, type: 2}
   TableFlipSoundEffect: {fileID: 11400000, guid: 8f2aa5d9a30540d4aaf9b4f2712f6876, type: 2}
+  ChestOpenSoundEffect: {fileID: 11400000, guid: b959568a445d0224980f4c13abceaa18, type: 2}
+  ChestAmmoPickupSoundEffect: {fileID: 11400000, guid: f61d5dd6dc2bed340be88b54f00a241c, type: 2}
+  ChestHealthPickupSoundEffect: {fileID: 11400000, guid: 7f2781cd2131fc84fa27d1aa316d424f, type: 2}
+  ChestWeaponPickupSoundEffect: {fileID: 11400000, guid: 54b6e700c0678dd4aa64c1e48b34af28, type: 2}

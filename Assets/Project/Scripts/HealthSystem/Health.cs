@@ -1,14 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DungeonGunner {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(HealthEvent))]
     #endregion
-    public class Health : MonoBehaviour
-    {
+    public class Health : MonoBehaviour {
         private int startingAmount;
         private int currentAmount;
         private HealthEvent healthEvent;
@@ -30,33 +28,26 @@ namespace DungeonGunner
 
 
 
-        private void Awake()
-        {
+        private void Awake() {
             healthEvent = GetComponent<HealthEvent>();
         }
 
 
 
-        private void Start()
-        {
+        private void Start() {
             CallOnHealthChange(0);
 
             player = GetComponent<Player>();
             enemy = GetComponent<Enemy>();
 
-            if (player != null)
-            {
-                if (player.playerDetail.isImmuneAfterHit)
-                {
+            if (player != null) {
+                if (player.playerDetail.isImmuneAfterHit) {
                     isImmuneAfterHit = true;
                     immuneDuration = player.playerDetail.immuneDuration;
                     spriteRenderer = player.spriteRenderer;
                 }
-            }
-            else if (enemy != null)
-            {
-                if (enemy.enemyDetail.isImmuneAfterHit)
-                {
+            } else if (enemy != null) {
+                if (enemy.enemyDetail.isImmuneAfterHit) {
                     isImmuneAfterHit = true;
                     immuneDuration = enemy.enemyDetail.immuneDuration;
                     spriteRenderer = enemy.spriteRendererArray[0];
@@ -67,34 +58,28 @@ namespace DungeonGunner
 
             if (enemy != null
             && enemy.enemyDetail.isHealthBarEnabled
-            && healthBar != null)
-            {
+            && healthBar != null) {
                 healthBar.EnableHealthBar();
-            }
-            else if (healthBar != null)
-            {
+            } else if (healthBar != null) {
                 healthBar.DisableHealthBar();
             }
         }
 
 
 
-        private void CallOnHealthChange(int _damageAmount)
-        {
+        private void CallOnHealthChange(int _damageAmount) {
             healthEvent.CallOnHealthChanged(GetPercent(), currentAmount, _damageAmount);
         }
 
 
 
-        public void TakeDamage(int _damageAmount)
-        {
+        public void TakeDamage(int _damageAmount) {
             bool isDashing = false;
             if (player != null)
                 isDashing = player.controllerHandler.isDashing;
 
             if (isDamageable
-            && !isDashing)
-            {
+            && !isDashing) {
                 currentAmount -= _damageAmount;
                 CallOnHealthChange(_damageAmount);
 
@@ -107,13 +92,11 @@ namespace DungeonGunner
 
 
 
-        private void PostHitImmune()
-        {
+        private void PostHitImmune() {
             if (!gameObject.activeSelf)
                 return;
 
-            if (isImmuneAfterHit)
-            {
+            if (isImmuneAfterHit) {
                 if (immuneCoroutine != null)
                     StopCoroutine(immuneCoroutine);
 
@@ -123,14 +106,12 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator PostHitImmuneCoroutine(float _immuneDuration, SpriteRenderer _spriteRenderer)
-        {
+        private IEnumerator PostHitImmuneCoroutine(float _immuneDuration, SpriteRenderer _spriteRenderer) {
             int iterationAmount = Mathf.RoundToInt((_immuneDuration / spriteFlashInterval) * 0.5f);
 
             isDamageable = false;
 
-            while (iterationAmount > 0)
-            {
+            while (iterationAmount > 0) {
                 _spriteRenderer.color = Color.red;
                 yield return spriteFlashIntervalWaitForSeconds;
                 _spriteRenderer.color = Color.white;
@@ -146,38 +127,45 @@ namespace DungeonGunner
 
 
 
-        public void SetStartingAmount(int _amount)
-        {
+        public void SetStartingAmount(int _amount) {
             startingAmount = _amount;
             currentAmount = _amount;
         }
 
 
 
-        public void SetCurrentAmount(int _amount)
-        {
+        public void SetCurrentAmount(int _amount) {
             currentAmount = _amount;
         }
 
 
 
-        public int GetStartingAmount()
-        {
+        public int GetStartingAmount() {
             return startingAmount;
         }
 
 
 
-        public int GetCurrentAmount()
-        {
+        public int GetCurrentAmount() {
             return currentAmount;
         }
 
 
 
-        private float GetPercent()
-        {
+        private float GetPercent() {
             return (float)currentAmount / (float)startingAmount;
+        }
+
+
+
+        public void AddHealth(int _percent) {
+            int amountToAdd = Mathf.RoundToInt((startingAmount * _percent) / 100f);
+            currentAmount += amountToAdd;
+
+            if (currentAmount > startingAmount)
+                currentAmount = startingAmount;
+
+            CallOnHealthChange(0);
         }
     }
 }

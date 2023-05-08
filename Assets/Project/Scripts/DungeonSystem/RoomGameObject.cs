@@ -272,6 +272,9 @@ namespace DungeonGunner {
                 if (room.roomNodeType.isBossRoom) {
                     door.isBossRoomDoor = true;
                     door.LockDoor();
+
+                    GameObject skullIconMinimap = Instantiate(GameResources.Instance.MinimapSkullPrefab, gameObject.transform);
+                    skullIconMinimap.transform.localPosition = door.transform.localPosition;
                 }
             }
         }

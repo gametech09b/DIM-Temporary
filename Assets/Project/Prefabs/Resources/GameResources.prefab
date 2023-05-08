@@ -55,3 +55,4 @@ MonoBehaviour:
   LitMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   VariableLitShader: {fileID: -6465566751694194690, guid: c3cbbd8ea69f0654e909045c7ccca513, type: 3}
   MaterializeShader: {fileID: -6465566751694194690, guid: 5fec8f8e6ea244648a3c6ede24a56288, type: 3}
+  MinimapSkullPrefab: {fileID: 10579931087513602, guid: 9a39b678e700b4a46a8a0e6dc7edfaf0, type: 3}

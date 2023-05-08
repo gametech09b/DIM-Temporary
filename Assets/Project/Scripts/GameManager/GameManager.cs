@@ -5,11 +5,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace DungeonGunner
-{
+namespace DungeonGunner {
     [DisallowMultipleComponent]
-    public class GameManager : SingletonMonobehaviour<GameManager>
-    {
+    public class GameManager : SingletonMonobehaviour<GameManager> {
         [Space(10)]
         [Header("Message UI")]
 
@@ -46,8 +44,7 @@ namespace DungeonGunner
 
 
 
-        protected override void Awake()
-        {
+        protected override void Awake() {
             base.Awake();
 
             currentPlayerDetail = GameResources.Instance.CurrentPlayer.playerDetail;
@@ -57,8 +54,7 @@ namespace DungeonGunner
 
 
 
-        private void InstantiatePlayer()
-        {
+        private void InstantiatePlayer() {
             GameObject currentPlayerGameObject = Instantiate(currentPlayerDetail.characterPrefab);
 
             currentPlayer = currentPlayerGameObject.GetComponent<Player>();
@@ -67,8 +63,7 @@ namespace DungeonGunner
 
 
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             DungeonStaticEvent.OnRoomChanged += DungeonStaticEvent_OnRoomChange;
             DungeonStaticEvent.OnRoomEnemiesDefeated += DungeonStaticEvent_OnRoomEnemiesDefeated;
             DungeonStaticEvent.OnPointScored += DungeonStaticEvent_OnPointScored;
@@ -79,8 +74,7 @@ namespace DungeonGunner
 
 
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
             DungeonStaticEvent.OnRoomChanged -= DungeonStaticEvent_OnRoomChange;
             DungeonStaticEvent.OnRoomEnemiesDefeated -= DungeonStaticEvent_OnRoomEnemiesDefeated;
             DungeonStaticEvent.OnPointScored -= DungeonStaticEvent_OnPointScored;
@@ -91,8 +85,7 @@ namespace DungeonGunner
 
 
 
-        private void Start()
-        {
+        private void Start() {
             previousGameState = GameState.GAME_STARTED;
             gameState = GameState.GAME_STARTED;
 
@@ -104,8 +97,7 @@ namespace DungeonGunner
 
 
 
-        private void Update()
-        {
+        private void Update() {
             HandleGameState();
 
             // FIXME: Development only
@@ -117,22 +109,19 @@ namespace DungeonGunner
 
 
 
-        private void DungeonStaticEvent_OnRoomChange(OnRoomChangedEventArgs _args)
-        {
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangedEventArgs _args) {
             SetCurrentRoom(_args.room);
         }
 
 
 
-        private void DungeonStaticEvent_OnRoomEnemiesDefeated(OnRoomEnemiesDefeatedEventArgs _args)
-        {
+        private void DungeonStaticEvent_OnRoomEnemiesDefeated(OnRoomEnemiesDefeatedEventArgs _args) {
             RoomEnemiesDefeated();
         }
 
 
 
-        private void DungeonStaticEvent_OnPointScored(OnPointScoredEventArgs _args)
-        {
+        private void DungeonStaticEvent_OnPointScored(OnPointScoredEventArgs _args) {
             score += _args.point * scoreMultiplier;
 
             DungeonStaticEvent.CallOnScoreChanged(score, scoreMultiplier);
@@ -140,8 +129,7 @@ namespace DungeonGunner
 
 
 
-        private void DungeonStaticEvent_OnMultiplierChanged(OnMultiplierChangedEventArgs _args)
-        {
+        private void DungeonStaticEvent_OnMultiplierChanged(OnMultiplierChangedEventArgs _args) {
             if (_args.isMultiplier)
                 scoreMultiplier++;
             else
@@ -153,8 +141,7 @@ namespace DungeonGunner
 
 
 
-        private void CurrentPlayer_DestroyedEvent_OnDestroyed(DestroyedEvent _sender, OnDestroyedEventArgs _args)
-        {
+        private void CurrentPlayer_DestroyedEvent_OnDestroyed(DestroyedEvent _sender, OnDestroyedEventArgs _args) {
             previousGameState = gameState;
             gameState = GameState.GAME_LOST;
         }
@@ -164,10 +151,8 @@ namespace DungeonGunner
         /// <summary>
         /// Handles the game state
         /// </summary>
-        private void HandleGameState()
-        {
-            switch (gameState)
-            {
+        private void HandleGameState() {
+            switch (gameState) {
                 case GameState.GAME_STARTED:
                     PlayDungeonLevel(currentDungeonLevelIndex);
                     gameState = GameState.PLAYING_LEVEL;
@@ -176,9 +161,15 @@ namespace DungeonGunner
                     break;
 
                 case GameState.PLAYING_LEVEL:
+                    if (Input.GetKeyDown(KeyCode.Tab)) {
+                        DisplayMap();
+                    }
                     break;
 
-                case GameState.ENGAGING_ENEMY:
+                case GameState.BOSS_STAGE:
+                    if (Input.GetKeyDown(KeyCode.Tab)) {
+                        DisplayMap();
+                    }
                     break;
 
                 case GameState.LEVEL_COMPLETED:
@@ -191,8 +182,7 @@ namespace DungeonGunner
                     break;
 
                 case GameState.GAME_LOST:
-                    if (previousGameState != GameState.GAME_LOST)
-                    {
+                    if (previousGameState != GameState.GAME_LOST) {
                         StopAllCoroutines();
                         StartCoroutine(GameLostCoroutine());
                     }
@@ -202,6 +192,9 @@ namespace DungeonGunner
                     break;
 
                 case GameState.DUNGEON_OVERVIEW_MAP:
+                    if (Input.GetKeyUp(KeyCode.Tab)) {
+                        Map.Instance.HideMap();
+                    }
                     break;
 
                 case GameState.RESTART_GAME:
@@ -215,12 +208,10 @@ namespace DungeonGunner
 
 
 
-        private void PlayDungeonLevel(int _dungeonLevelIndex)
-        {
+        private void PlayDungeonLevel(int _dungeonLevelIndex) {
             bool dungeonBuiltSuccessfully = DungeonBuilder.Instance.GenerateDungeon(dungeonLevelList[_dungeonLevelIndex]);
 
-            if (!dungeonBuiltSuccessfully)
-            {
+            if (!dungeonBuiltSuccessfully) {
                 Debug.LogError("Couldn't build dungeon from specified rooms and node graphs");
             }
 
@@ -235,8 +226,7 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator FadeCoroutine(float _startAlpha, float _targetAlpha, float _fadeDuration, Color _backgroundColor)
-        {
+        private IEnumerator FadeCoroutine(float _startAlpha, float _targetAlpha, float _fadeDuration, Color _backgroundColor) {
             isFading = true;
 
             Image image = fadeScreenCanvasGroup.GetComponent<Image>();
@@ -244,8 +234,7 @@ namespace DungeonGunner
 
             float elapsedTime = 0f;
 
-            while (elapsedTime <= _fadeDuration)
-            {
+            while (elapsedTime <= _fadeDuration) {
                 elapsedTime += Time.deltaTime;
 
                 fadeScreenCanvasGroup.alpha = Mathf.Lerp(_startAlpha, _targetAlpha, (elapsedTime / _fadeDuration));
@@ -258,8 +247,7 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator DisplayDungeonLevelTextCoroutine()
-        {
+        private IEnumerator DisplayDungeonLevelTextCoroutine() {
             StartCoroutine(FadeCoroutine(0f, 1f, 0f, Color.black));
 
             GetCurrentPlayer().controllerHandler.DisableController();
@@ -275,25 +263,19 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator DisplayMessageCoroutine(string _message, Color _textColor, float _displayDuration)
-        {
+        private IEnumerator DisplayMessageCoroutine(string _message, Color _textColor, float _displayDuration) {
             messageTextMP.SetText(_message);
             messageTextMP.color = _textColor;
 
-            if (_displayDuration > 0)
-            {
+            if (_displayDuration > 0) {
                 float timer = _displayDuration;
 
-                while (timer > 0 && !Input.GetKeyDown(KeyCode.Return))
-                {
+                while (timer > 0 && !Input.GetKeyDown(KeyCode.Return)) {
                     timer -= Time.deltaTime;
                     yield return null;
                 }
-            }
-            else
-            {
-                while (!Input.GetKeyDown(KeyCode.Return))
-                {
+            } else {
+                while (!Input.GetKeyDown(KeyCode.Return)) {
                     yield return null;
                 }
             }
@@ -303,8 +285,7 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator BeginBossStageCoroutine()
-        {
+        private IEnumerator BeginBossStageCoroutine() {
             currentBossRoom.gameObject.SetActive(true);
 
             currentBossRoom.UnlockDoors(0f);
@@ -320,8 +301,7 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator LevelCompletedCoroutine()
-        {
+        private IEnumerator LevelCompletedCoroutine() {
             gameState = GameState.PLAYING_LEVEL;
 
             yield return new WaitForSeconds(2f);
@@ -331,8 +311,7 @@ namespace DungeonGunner
             yield return StartCoroutine(DisplayMessageCoroutine($"WELL DONE {GameResources.Instance.CurrentPlayer.playerName}! YOU'VE SURVIVED THIS DUNGEON LEVEL!", Color.white, 5f));
             yield return StartCoroutine(DisplayMessageCoroutine($"COLLECT ANY LOOT.... THEN PRESS RETURN\n\nTO DESCEND FURTHER INTO THE DUNGEON", Color.white, 5f));
 
-            while (!Input.GetKeyDown(KeyCode.Return))
-            {
+            while (!Input.GetKeyDown(KeyCode.Return)) {
                 yield return null;
             }
 
@@ -345,8 +324,7 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator GameWonCoroutine()
-        {
+        private IEnumerator GameWonCoroutine() {
             previousGameState = GameState.GAME_WON;
 
             GetCurrentPlayer().controllerHandler.DisableController();
@@ -362,8 +340,7 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator GameLostCoroutine()
-        {
+        private IEnumerator GameLostCoroutine() {
             previousGameState = GameState.GAME_LOST;
 
             GetCurrentPlayer().controllerHandler.DisableController();
@@ -374,8 +351,7 @@ namespace DungeonGunner
 
             Enemy[] enemyArray = GameObject.FindObjectsOfType<Enemy>();
 
-            foreach (Enemy enemy in enemyArray)
-            {
+            foreach (Enemy enemy in enemyArray) {
                 enemy.gameObject.SetActive(false);
             }
 
@@ -388,59 +364,49 @@ namespace DungeonGunner
 
 
 
-        private void RestartGame()
-        {
+        private void RestartGame() {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
 
 
-        public Room GetCurrentRoom()
-        {
+        public Room GetCurrentRoom() {
             return currentRoom;
         }
 
 
 
-        public void SetCurrentRoom(Room _room)
-        {
+        public void SetCurrentRoom(Room _room) {
             previousRoom = currentRoom;
             currentRoom = _room;
         }
 
 
 
-        private void RoomEnemiesDefeated()
-        {
+        private void RoomEnemiesDefeated() {
             // TODO: Handle this for Nuradiance later
             bool isDungeonClearFromCommonEnemies = true;
             currentBossRoom = null;
 
-            foreach (KeyValuePair<string, Room> roomDictionaryKVP in DungeonBuilder.Instance.roomDictionary)
-            {
-                if (roomDictionaryKVP.Value.roomNodeType.isBossRoom)
-                {
+            foreach (KeyValuePair<string, Room> roomDictionaryKVP in DungeonBuilder.Instance.roomDictionary) {
+                if (roomDictionaryKVP.Value.roomNodeType.isBossRoom) {
                     currentBossRoom = roomDictionaryKVP.Value.roomGameObject;
                     continue;
                 }
 
-                if (!roomDictionaryKVP.Value.isCleared)
-                {
+                if (!roomDictionaryKVP.Value.isCleared) {
                     isDungeonClearFromCommonEnemies = false;
                     break;
                 }
             }
 
             if ((isDungeonClearFromCommonEnemies && currentBossRoom == null)
-            || (isDungeonClearFromCommonEnemies && currentBossRoom.room.isCleared))
-            {
+            || (isDungeonClearFromCommonEnemies && currentBossRoom.room.isCleared)) {
                 if (currentDungeonLevelIndex < dungeonLevelList.Count - 1)
                     gameState = GameState.LEVEL_COMPLETED;
                 else
                     gameState = GameState.GAME_WON;
-            }
-            else if (isDungeonClearFromCommonEnemies)
-            {
+            } else if (isDungeonClearFromCommonEnemies) {
                 gameState = GameState.BOSS_STAGE;
 
                 StartCoroutine(BeginBossStageCoroutine());
@@ -449,22 +415,28 @@ namespace DungeonGunner
 
 
 
-        public Player GetCurrentPlayer()
-        {
+        private void DisplayMap() {
+            if (isFading)
+                return;
+
+            Map.Instance.DisplayMap();
+        }
+
+
+
+        public Player GetCurrentPlayer() {
             return currentPlayer;
         }
 
 
 
-        public Sprite GetCurrentPlayerMinimapIcon()
-        {
+        public Sprite GetCurrentPlayerMinimapIcon() {
             return currentPlayerDetail.minimapIconSprite;
         }
 
 
 
-        public DungeonLevelSO GetCurrentDungeonLevel()
-        {
+        public DungeonLevelSO GetCurrentDungeonLevel() {
             return dungeonLevelList[currentDungeonLevelIndex];
         }
 
@@ -472,8 +444,7 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckNullValue(this, nameof(messageTextMP), messageTextMP);
             HelperUtilities.CheckNullValue(this, nameof(fadeScreenCanvasGroup), fadeScreenCanvasGroup);
 

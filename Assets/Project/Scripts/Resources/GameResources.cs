@@ -77,6 +77,15 @@ namespace DungeonGunner {
         [Tooltip("Materialize Shader")]
         public Shader MaterializeShader;
 
+
+
+        [Space(10)]
+        [Header("Minimap")]
+        public GameObject MinimapSkullPrefab;
+
+
+
+
         #region Validation
 #if UNITY_EDITOR
         private void OnValidate() {

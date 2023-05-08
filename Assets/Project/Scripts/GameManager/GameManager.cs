@@ -226,7 +226,7 @@ namespace DungeonGunner {
 
 
 
-        private IEnumerator FadeCoroutine(float _startAlpha, float _targetAlpha, float _fadeDuration, Color _backgroundColor) {
+        public IEnumerator FadeCoroutine(float _startAlpha, float _targetAlpha, float _fadeDuration, Color _backgroundColor) {
             isFading = true;
 
             Image image = fadeScreenCanvasGroup.GetComponent<Image>();

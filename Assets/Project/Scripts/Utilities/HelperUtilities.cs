@@ -209,6 +209,27 @@ namespace DungeonGunner
             return error;
         }
 
+        
+        
+        public static bool CheckPositiveRange(UnityEngine.Object _thisObject, string _fieldNameMinimum, string _fieldNameMaximum, int _minimumValue, int _maximumValue, bool _isZeroAllowed = false)
+        {
+            bool error = false;
+
+            if (_minimumValue > _maximumValue)
+            {
+                Debug.Log($"{_fieldNameMinimum} is greater than {_fieldNameMaximum} in object {_thisObject.name.ToString()}");
+                error = true;
+            }
+
+            if (CheckPositiveValue(_thisObject, _fieldNameMinimum, _minimumValue, _isZeroAllowed))
+                error = true;
+
+            if (CheckPositiveValue(_thisObject, _fieldNameMaximum, _maximumValue, _isZeroAllowed))
+                error = true;
+
+            return error;
+        }
+
 
 
         public static Vector3 GetNearestSpawnPoint(Vector3 _position)

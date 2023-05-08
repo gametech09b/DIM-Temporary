@@ -40,7 +40,7 @@ namespace DungeonGunner {
 
 
 
-        private void Init(bool _isNeedMaterialize, int _ammoPercentReward, int _healthPercentReward, WeaponDetailSO _weaponDetailReward) {
+        public void Init(bool _isNeedMaterialize, int _ammoPercentReward, int _healthPercentReward, WeaponDetailSO _weaponDetailReward) {
             isEnabled = true;
 
             ammoPercentReward = _ammoPercentReward;

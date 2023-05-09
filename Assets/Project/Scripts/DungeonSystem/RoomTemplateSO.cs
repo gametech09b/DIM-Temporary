@@ -2,11 +2,9 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DungeonGunner {
     [CreateAssetMenu(fileName = "Room_", menuName = "Scriptable Objects/Dungeon/Room")]
-    public class RoomTemplateSO : ScriptableObject
-    {
+    public class RoomTemplateSO : ScriptableObject {
         [HideInInspector] public string id;
 
 
@@ -64,14 +62,20 @@ namespace DungeonGunner
 
 
 
+        [Space(10)]
+        [Header("Room Music")]
+
+
+        public MusicTrackSO ambientMusicTrack;
+        public MusicTrackSO battleMusicTrack;
+
 
 
 
         /// <summary>
         /// Returns the list of Entrances for the room template
         /// </summary>
-        public List<Doorway> GetDoorwayList()
-        {
+        public List<Doorway> GetDoorwayList() {
             return doorwayList;
         }
 
@@ -79,11 +83,9 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             // Set unique GUID, if empty or the prefab changes
-            if (id == "" || previousPrefab != prefab)
-            {
+            if (id == "" || previousPrefab != prefab) {
                 id = GUID.Generate().ToString();
                 previousPrefab = prefab;
                 EditorUtility.SetDirty(this);
@@ -95,13 +97,11 @@ namespace DungeonGunner
             HelperUtilities.CheckEnumerableValue(this, nameof(doorwayList), doorwayList);
             HelperUtilities.CheckEnumerableValue(this, nameof(spawnPositionArray), spawnPositionArray);
 
-            if (enemySpawnByLevelList.Count > 0 || roomEnemySpawnParameterList.Count > 0)
-            {
+            if (enemySpawnByLevelList.Count > 0 || roomEnemySpawnParameterList.Count > 0) {
                 HelperUtilities.CheckEnumerableValue(this, nameof(enemySpawnByLevelList), enemySpawnByLevelList);
                 HelperUtilities.CheckEnumerableValue(this, nameof(roomEnemySpawnParameterList), roomEnemySpawnParameterList);
 
-                foreach (RoomEnemySpawnParameter roomEnemySpawnParameter in roomEnemySpawnParameterList)
-                {
+                foreach (RoomEnemySpawnParameter roomEnemySpawnParameter in roomEnemySpawnParameterList) {
                     HelperUtilities.CheckNullValue(this, nameof(roomEnemySpawnParameter.dungeonLevel), roomEnemySpawnParameter.dungeonLevel);
 
                     HelperUtilities.CheckPositiveRange(
@@ -130,16 +130,14 @@ namespace DungeonGunner
 
                     bool isEnemyTypeListValid = false;
 
-                    foreach (SpawnableObjectsByLevel<EnemyDetailSO> enemiesSpawnByLevel in enemySpawnByLevelList)
-                    {
+                    foreach (SpawnableObjectsByLevel<EnemyDetailSO> enemiesSpawnByLevel in enemySpawnByLevelList) {
                         if (enemiesSpawnByLevel.dungeonLevel == roomEnemySpawnParameter.dungeonLevel
                         && enemiesSpawnByLevel.spawnableObjectRatioList.Count > 0)
                             isEnemyTypeListValid = true;
 
                         HelperUtilities.CheckNullValue(this, nameof(enemiesSpawnByLevel.dungeonLevel), enemiesSpawnByLevel.dungeonLevel);
 
-                        foreach (SpawnableObjectRatio<EnemyDetailSO> enemySpawnRatio in enemiesSpawnByLevel.spawnableObjectRatioList)
-                        {
+                        foreach (SpawnableObjectRatio<EnemyDetailSO> enemySpawnRatio in enemiesSpawnByLevel.spawnableObjectRatioList) {
                             HelperUtilities.CheckNullValue(this, nameof(enemySpawnRatio.spawnableObject), enemySpawnRatio.spawnableObject);
                             HelperUtilities.CheckPositiveValue(this, nameof(enemySpawnRatio.ratio), enemySpawnRatio.ratio);
                         }
@@ -149,6 +147,9 @@ namespace DungeonGunner
                     && roomEnemySpawnParameter.dungeonLevel != null)
                         Debug.LogError($"RoomTemplateSO: {name} has no enemies for dungeon level {roomEnemySpawnParameter.dungeonLevel.name}");
                 }
+
+                HelperUtilities.CheckNullValue(this, nameof(ambientMusicTrack), ambientMusicTrack);
+                HelperUtilities.CheckNullValue(this, nameof(battleMusicTrack), battleMusicTrack);
             }
         }
 

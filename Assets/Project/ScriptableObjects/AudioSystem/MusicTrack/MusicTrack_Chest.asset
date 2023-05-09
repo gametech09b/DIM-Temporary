@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0169d64dbb5cfa47bb575dca0eb0515, type: 3}
   m_Name: MusicTrack_Chest
   m_EditorClassIdentifier: 
-  musicTrackName: Ambient
-  audioClip: {fileID: 8300000, guid: cbebb64a953d47441be2e3a7eac340a8, type: 3}
+  musicTrackName: Chest
+  audioClip: {fileID: 8300000, guid: 7c65c6045b7ddae45aa34ecdc3810f34, type: 3}
   volume: 1

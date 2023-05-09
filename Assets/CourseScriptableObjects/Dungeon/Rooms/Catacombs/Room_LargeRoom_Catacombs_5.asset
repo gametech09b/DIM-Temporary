@@ -117,3 +117,5 @@ MonoBehaviour:
     maxConcurrentEnemy: 10
     minSpawnInterval: 1
     maxSpawnInterval: 4
+  ambientMusicTrack: {fileID: 11400000, guid: 54c0e0384c991eb46b49cbf6fccd3cb8, type: 2}
+  battleMusicTrack: {fileID: 11400000, guid: 6c8be3b325cddb043be9f589e854aaed, type: 2}

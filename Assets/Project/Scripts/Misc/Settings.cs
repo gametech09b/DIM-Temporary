@@ -129,5 +129,12 @@ namespace DungeonGunner {
         #region Contact Damage Settings
         public const float ContactDamageCooldown = 0.5f;
         #endregion
+
+
+
+        #region Audio System
+        public const float MusicTrackFadeInTime = 0.5f;
+        public const float MusicTrackFadeOutTime = 0.5f;
+        #endregion
     }
 }

@@ -2,25 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DungeonGunner {
     [DisallowMultipleComponent]
-    public class SoundEffectManager : SingletonMonobehaviour<SoundEffectManager>
-    {
+    public class SoundEffectManager : SingletonMonobehaviour<SoundEffectManager> {
 
         public int masterVolume = 8;
 
 
 
-        private void Start()
-        {
+        private void Start() {
             SetSoundVolume(masterVolume);
         }
 
 
 
-        public void PlaySoundEffect(SoundEffectSO _soundEffect)
-        {
+        public void PlaySoundEffect(SoundEffectSO _soundEffect) {
             SoundEffect soundEffectInstance = (SoundEffect)PoolManager.Instance.ReuseComponent(_soundEffect.prefab, Vector3.zero, Quaternion.identity);
             soundEffectInstance.SetSoundEffect(_soundEffect);
             soundEffectInstance.gameObject.SetActive(true);
@@ -30,26 +26,21 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator DisableSoundEffect(SoundEffect _soundEffect, float _delayTime)
-        {
+        private IEnumerator DisableSoundEffect(SoundEffect _soundEffect, float _delayTime) {
             yield return new WaitForSeconds(_delayTime);
             _soundEffect.gameObject.SetActive(false);
         }
 
 
 
-        public void SetSoundVolume(int _volume)
-        {
+        public void SetSoundVolume(int _volume) {
             float muteDecibel = -80f;
 
-            if (_volume == 0)
-            {
-                GameResources.Instance.AudioMixerGroup_Master.audioMixer.SetFloat("soundVolume", muteDecibel);
-            }
-            else
-            {
+            if (_volume == 0) {
+                AudioResources.Instance.AudioMixerGroup_Master.audioMixer.SetFloat("soundVolume", muteDecibel);
+            } else {
                 float decibel = HelperUtilities.ConvertLinearToDecibel(_volume);
-                GameResources.Instance.AudioMixerGroup_Master.audioMixer.SetFloat("soundVolume", decibel);
+                AudioResources.Instance.AudioMixerGroup_Master.audioMixer.SetFloat("soundVolume", decibel);
             }
         }
     }

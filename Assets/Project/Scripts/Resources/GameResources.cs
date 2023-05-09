@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.Audio;
 
 namespace DungeonGunner {
     public class GameResources : MonoBehaviour {
@@ -25,15 +24,6 @@ namespace DungeonGunner {
 
         public TileBase[] EnemyUnwalkableTileArray;
         public TileBase EnemyPreferredPathTile;
-
-
-
-        [Space(10)]
-        [Header("Audio")]
-
-
-        [Tooltip("Populate with the audio mixer group")]
-        public AudioMixerGroup AudioMixerGroup_Master;
 
 
 

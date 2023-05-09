@@ -528,6 +528,8 @@ namespace DungeonGunner
             room.spawnPositionArray = _roomTemplate.spawnPositionArray;
             room.childRoomIDList = CopyStringList(_roomNode.childRoomNodeIDList);
             room.doorwayList = CopyDoorwayList(_roomTemplate.GetDoorwayList());
+            room.ambientMusicTrack = _roomTemplate.ambientMusicTrack;
+            room.battleMusicTrack = _roomTemplate.battleMusicTrack;
 
             room.enemySpawnByLevelList = _roomTemplate.enemySpawnByLevelList;
             room.roomEnemySpawnParameterList = _roomTemplate.roomEnemySpawnParameterList;

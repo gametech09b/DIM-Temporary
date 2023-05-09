@@ -48,7 +48,7 @@ namespace DungeonGunner {
 
                 rb2D.mass = mass;
 
-                SoundEffectManager.Instance.PlaySoundEffect(SoundEffectResources.Instance.TableFlipSoundEffect);
+                SoundEffectManager.Instance.PlaySoundEffect(AudioResources.Instance.TableFlipSoundEffect);
 
                 isUsed = true;
             }

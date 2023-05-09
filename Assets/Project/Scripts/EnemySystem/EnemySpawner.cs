@@ -1,11 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DungeonGunner {
     [DisallowMultipleComponent]
-    public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
-    {
+    public class EnemySpawner : SingletonMonobehaviour<EnemySpawner> {
         private int totalToSpawn;
         private int currentCount;
         private int spawnedCount;
@@ -16,26 +14,25 @@ namespace DungeonGunner
 
 
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             DungeonStaticEvent.OnRoomChanged += DungeonStaticEvent_OnRoomChange;
         }
 
 
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
             DungeonStaticEvent.OnRoomChanged -= DungeonStaticEvent_OnRoomChange;
         }
 
 
 
-        private void DungeonStaticEvent_OnRoomChange(OnRoomChangedEventArgs _args)
-        {
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangedEventArgs _args) {
             currentCount = 0;
             spawnedCount = 0;
 
             currentRoom = _args.room;
+
+            MusicManager.Instance.PlayMusic(currentRoom.ambientMusicTrack, 0.2f, 2f);
 
             if (currentRoom.roomNodeType.isCorridorEW
             || currentRoom.roomNodeType.isCorridorNS
@@ -49,13 +46,14 @@ namespace DungeonGunner
 
             currentRoomEnemySpawnParameter = currentRoom.GetRoomEnemySpawnParameter(GameManager.Instance.GetCurrentDungeonLevel());
 
-            if (totalToSpawn == 0)
-            {
+            if (totalToSpawn == 0) {
                 currentRoom.isCleared = true;
                 return;
             }
 
             maxConcurrentSpawnCount = GetConcurrentSpawnCount();
+
+            MusicManager.Instance.PlayMusic(currentRoom.battleMusicTrack, 0.2f, 0.5f);
 
             currentRoom.roomGameObject.LockDoors();
 
@@ -64,16 +62,11 @@ namespace DungeonGunner
 
 
 
-        private void SpawnEnemy()
-        {
-            if (GameManager.Instance.gameState == GameState.BOSS_STAGE)
-            {
+        private void SpawnEnemy() {
+            if (GameManager.Instance.gameState == GameState.BOSS_STAGE) {
                 GameManager.Instance.previousGameState = GameState.BOSS_STAGE;
                 GameManager.Instance.gameState = GameState.ENGAGING_BOSS;
-            }
-
-            else if (GameManager.Instance.gameState == GameState.PLAYING_LEVEL)
-            {
+            } else if (GameManager.Instance.gameState == GameState.PLAYING_LEVEL) {
                 GameManager.Instance.previousGameState = GameState.PLAYING_LEVEL;
                 GameManager.Instance.gameState = GameState.ENGAGING_ENEMY;
             }
@@ -83,18 +76,14 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator SpawnEnemyCoroutine()
-        {
+        private IEnumerator SpawnEnemyCoroutine() {
             Grid grid = currentRoom.GetGrid();
 
             RandomSpawnableObject<EnemyDetailSO> randomSpawnableObject = new RandomSpawnableObject<EnemyDetailSO>(currentRoom.enemySpawnByLevelList);
 
-            if (currentRoom.spawnPositionArray.Length > 0)
-            {
-                for (int i = 0; i < totalToSpawn; i++)
-                {
-                    while (currentCount >= maxConcurrentSpawnCount)
-                    {
+            if (currentRoom.spawnPositionArray.Length > 0) {
+                for (int i = 0; i < totalToSpawn; i++) {
+                    while (currentCount >= maxConcurrentSpawnCount) {
                         yield return null;
                     }
 
@@ -109,22 +98,19 @@ namespace DungeonGunner
 
 
 
-        private float GetSpawnInterval()
-        {
+        private float GetSpawnInterval() {
             return Random.Range(currentRoomEnemySpawnParameter.minSpawnInterval, currentRoomEnemySpawnParameter.maxSpawnInterval);
         }
 
 
 
-        private int GetConcurrentSpawnCount()
-        {
+        private int GetConcurrentSpawnCount() {
             return Random.Range(currentRoomEnemySpawnParameter.minConcurrentEnemy, currentRoomEnemySpawnParameter.maxConcurrentEnemy);
         }
 
 
 
-        private void CreateEnemy(EnemyDetailSO _enemyDetail, Vector3 _position)
-        {
+        private void CreateEnemy(EnemyDetailSO _enemyDetail, Vector3 _position) {
             currentCount++;
             spawnedCount++;
 
@@ -141,8 +127,7 @@ namespace DungeonGunner
 
 
 
-        private void Enemy_DestroyedEvent_OnDestroyed(DestroyedEvent _sender, OnDestroyedEventArgs _args)
-        {
+        private void Enemy_DestroyedEvent_OnDestroyed(DestroyedEvent _sender, OnDestroyedEventArgs _args) {
             _sender.OnDestroyed -= Enemy_DestroyedEvent_OnDestroyed;
 
             currentCount--;
@@ -150,23 +135,20 @@ namespace DungeonGunner
             DungeonStaticEvent.CallOnPointScored(_args.point);
 
             if (currentCount <= 0
-            && spawnedCount == totalToSpawn)
-            {
+            && spawnedCount == totalToSpawn) {
                 currentRoom.isCleared = true;
 
-                if (GameManager.Instance.gameState == GameState.ENGAGING_ENEMY)
-                {
+                if (GameManager.Instance.gameState == GameState.ENGAGING_ENEMY) {
                     GameManager.Instance.previousGameState = GameState.ENGAGING_ENEMY;
                     GameManager.Instance.gameState = GameState.PLAYING_LEVEL;
-                }
-
-                else if (GameManager.Instance.gameState == GameState.ENGAGING_BOSS)
-                {
+                } else if (GameManager.Instance.gameState == GameState.ENGAGING_BOSS) {
                     GameManager.Instance.previousGameState = GameState.ENGAGING_BOSS;
                     GameManager.Instance.gameState = GameState.BOSS_STAGE;
                 }
 
                 currentRoom.roomGameObject.UnlockDoors(Settings.RoomUnlockDoorsDelay);
+
+                MusicManager.Instance.PlayMusic(currentRoom.ambientMusicTrack, 0.2f, 2f);
 
                 DungeonStaticEvent.CallOnRoomEnemiesDefeated(currentRoom);
             }

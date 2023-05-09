@@ -106,7 +106,7 @@ namespace DungeonGunner {
         private void OpenChest() {
             animator.SetBool(Settings.Use, true);
 
-            SoundEffectManager.Instance.PlaySoundEffect(SoundEffectResources.Instance.ChestOpenSoundEffect);
+            SoundEffectManager.Instance.PlaySoundEffect(AudioResources.Instance.ChestOpenSoundEffect);
 
             if (weaponDetailReward != null) {
                 if (GameManager.Instance.GetCurrentPlayer().IsWeaponInList(weaponDetailReward))
@@ -164,7 +164,7 @@ namespace DungeonGunner {
 
             currentPlayer.reloadEvent.CallOnReloadAction(currentPlayer.activeWeapon.GetCurrentWeapon(), ammoPercentReward);
 
-            SoundEffectManager.Instance.PlaySoundEffect(SoundEffectResources.Instance.ChestAmmoPickupSoundEffect);
+            SoundEffectManager.Instance.PlaySoundEffect(AudioResources.Instance.ChestAmmoPickupSoundEffect);
 
             ammoPercentReward = 0;
 
@@ -195,7 +195,7 @@ namespace DungeonGunner {
 
             currentPlayer.health.AddHealth(healthPercentReward);
 
-            SoundEffectManager.Instance.PlaySoundEffect(SoundEffectResources.Instance.ChestHealthPickupSoundEffect);
+            SoundEffectManager.Instance.PlaySoundEffect(AudioResources.Instance.ChestHealthPickupSoundEffect);
 
             healthPercentReward = 0;
 
@@ -226,7 +226,7 @@ namespace DungeonGunner {
             if (!currentPlayer.IsWeaponInList(weaponDetailReward)) {
                 currentPlayer.AddWeapon(weaponDetailReward);
 
-                SoundEffectManager.Instance.PlaySoundEffect(SoundEffectResources.Instance.ChestWeaponPickupSoundEffect);
+                SoundEffectManager.Instance.PlaySoundEffect(AudioResources.Instance.ChestWeaponPickupSoundEffect);
             } else {
                 StartCoroutine(ShowMessageCoroutine("You already have this weapon", 5f));
             }

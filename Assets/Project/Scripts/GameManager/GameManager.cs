@@ -19,6 +19,13 @@ namespace DungeonGunner {
 
 
         [Space(10)]
+        [Header("Pause Menu")]
+
+        [SerializeField] private GameObject pauseMenu;
+
+
+
+        [Space(10)]
         [Header("Dungeon Levels")]
 
 
@@ -161,15 +168,29 @@ namespace DungeonGunner {
                     break;
 
                 case GameState.PLAYING_LEVEL:
-                    if (Input.GetKeyDown(KeyCode.Tab)) {
+                    if (Input.GetKeyDown(KeyCode.Tab))
                         DisplayMap();
-                    }
+
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                        PauseGame();
+                    break;
+
+                case GameState.ENGAGING_ENEMY:
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                        PauseGame();
                     break;
 
                 case GameState.BOSS_STAGE:
-                    if (Input.GetKeyDown(KeyCode.Tab)) {
+                    if (Input.GetKeyDown(KeyCode.Tab))
                         DisplayMap();
-                    }
+
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                        PauseGame();
+                    break;
+
+                case GameState.ENGAGING_BOSS:
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                        PauseGame();
                     break;
 
                 case GameState.LEVEL_COMPLETED:
@@ -189,12 +210,14 @@ namespace DungeonGunner {
                     break;
 
                 case GameState.GAME_PAUSED:
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                        PauseGame();
                     break;
 
                 case GameState.DUNGEON_OVERVIEW_MAP:
-                    if (Input.GetKeyUp(KeyCode.Tab)) {
+                    if (Input.GetKeyUp(KeyCode.Tab))
                         Map.Instance.HideMap();
-                    }
+
                     break;
 
                 case GameState.RESTART_GAME:
@@ -415,6 +438,25 @@ namespace DungeonGunner {
 
 
 
+        public void PauseGame() {
+            if (gameState != GameState.GAME_PAUSED) {
+                pauseMenu.SetActive(true);
+                GetCurrentPlayer().controllerHandler.DisableController();
+
+                previousGameState = gameState;
+                gameState = GameState.GAME_PAUSED;
+            } else
+            if (gameState == GameState.GAME_PAUSED) {
+                pauseMenu.SetActive(false);
+                GetCurrentPlayer().controllerHandler.EnableController();
+
+                gameState = previousGameState;
+                previousGameState = GameState.GAME_PAUSED;
+            }
+        }
+
+
+
         private void DisplayMap() {
             if (isFading)
                 return;
@@ -445,6 +487,7 @@ namespace DungeonGunner {
         #region Validation
 #if UNITY_EDITOR
         private void OnValidate() {
+            HelperUtilities.CheckNullValue(this, nameof(pauseMenu), pauseMenu);
             HelperUtilities.CheckNullValue(this, nameof(messageTextMP), messageTextMP);
             HelperUtilities.CheckNullValue(this, nameof(fadeScreenCanvasGroup), fadeScreenCanvasGroup);
 

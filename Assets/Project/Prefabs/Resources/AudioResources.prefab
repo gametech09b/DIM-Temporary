@@ -56,3 +56,4 @@ MonoBehaviour:
   MusicSnapshot_OnFull: {fileID: 24500006, guid: 2ac509b551addfb48950fbdc0d9cefb4, type: 2}
   MusicSnapshot_OnLow: {fileID: 8893122114324796974, guid: 2ac509b551addfb48950fbdc0d9cefb4, type: 2}
   MusicSnapshot_Off: {fileID: -3084740370723268673, guid: 2ac509b551addfb48950fbdc0d9cefb4, type: 2}
+  MainMenuMusicTrack: {fileID: 11400000, guid: fa2a4b61d986cec489a600c4add0d12e, type: 2}

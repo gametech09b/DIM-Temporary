@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DungeonGunner {
     public class PauseMenuUI : MonoBehaviour {
@@ -25,6 +26,12 @@ namespace DungeonGunner {
 
         private void OnDisable() {
             Time.timeScale = 1;
+        }
+
+
+
+        public void LoadMainMenu() {
+            SceneManager.LoadScene("MainMenuScene");
         }
 
 

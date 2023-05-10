@@ -388,7 +388,7 @@ namespace DungeonGunner {
 
 
         private void RestartGame() {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene("MainMenuScene");
         }
 
 

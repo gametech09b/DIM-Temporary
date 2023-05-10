@@ -71,6 +71,13 @@ namespace DungeonGunner {
 
 
 
+        [Space(10)]
+        [Header("Main Menu Music")]
+
+
+        public MusicTrackSO MainMenuMusicTrack;
+
+
 
         #region Validation
 #if UNITY_EDITOR

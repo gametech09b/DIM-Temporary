@@ -6,12 +6,12 @@ namespace DungeonGunner {
     [DisallowMultipleComponent]
     public class SoundEffectManager : SingletonMonobehaviour<SoundEffectManager> {
 
-        public int masterVolume = 8;
+        public int volume = 8;
 
 
 
         private void Start() {
-            SetSoundVolume(masterVolume);
+            SetSoundVolume(volume);
         }
 
 
@@ -29,6 +29,32 @@ namespace DungeonGunner {
         private IEnumerator DisableSoundEffect(SoundEffect _soundEffect, float _delayTime) {
             yield return new WaitForSeconds(_delayTime);
             _soundEffect.gameObject.SetActive(false);
+        }
+
+
+
+        public void IncreaseSoundVolume() {
+            int maxSoundVolume = 20;
+
+            if (volume >= maxSoundVolume)
+                return;
+
+            volume++;
+
+            SetSoundVolume(volume);
+        }
+
+
+
+        public void DecreaseSoundVolume() {
+            int minSoundVolume = 0;
+
+            if (volume <= minSoundVolume)
+                return;
+
+            volume--;
+
+            SetSoundVolume(volume);
         }
 
 

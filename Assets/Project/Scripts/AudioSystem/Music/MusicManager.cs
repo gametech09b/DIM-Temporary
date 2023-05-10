@@ -75,6 +75,32 @@ namespace DungeonGunner {
 
 
 
+        public void IncreaseMusicVolume() {
+            int maxMusicVolume = 20;
+
+            if (volume >= maxMusicVolume)
+                return;
+
+            volume++;
+
+            SetMusicVolume(volume);
+        }
+
+
+
+        public void DecreaseMusicVolume() {
+            int minMusicVolume = 0;
+
+            if (volume <= minMusicVolume)
+                return;
+
+            volume--;
+
+            SetMusicVolume(volume);
+        }
+
+
+
         public void SetMusicVolume(int _volume) {
             float muteDecibel = -80f;
 

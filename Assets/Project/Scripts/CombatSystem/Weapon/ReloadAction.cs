@@ -43,88 +43,72 @@ namespace DungeonGunner
 
 
 
-        private void ActiveWeaponEvent_OnSetActiveWeapon(ActiveWeaponEvent sender, OnSetActiveWeaponArgs args)
+        private void ActiveWeaponEvent_OnSetActiveWeapon(ActiveWeaponEvent _sender, OnSetActiveWeaponArgs _args)
         {
-            if (args.weapon.isReloading)
+            if (_args.weapon.isReloading)
             {
                 if (reloadCoroutine != null)
-                {
                     StopCoroutine(reloadCoroutine);
-                }
 
-                reloadCoroutine = StartCoroutine(ReloadCoroutine(args.weapon, 0));
+                reloadCoroutine = StartCoroutine(ReloadCoroutine(_args.weapon, 0));
             }
         }
 
 
 
-        private void ReloadEvent_OnReloadAction(ReloadEvent sender, OnReloadActionArgs args)
+        private void ReloadEvent_OnReloadAction(ReloadEvent _sender, OnReloadActionArgs _args)
         {
-            Reload(args);
+            Reload(_args);
         }
 
 
 
-        private void Reload(OnReloadActionArgs args)
+        private void Reload(OnReloadActionArgs _args)
         {
             if (reloadCoroutine != null)
-            {
                 StopCoroutine(reloadCoroutine);
-            }
 
-            reloadCoroutine = StartCoroutine(ReloadCoroutine(args.weapon, args.reloadAmmoPercent));
+            reloadCoroutine = StartCoroutine(ReloadCoroutine(_args.weapon, _args.reloadAmmoPercent));
         }
 
 
 
-        private IEnumerator ReloadCoroutine(Weapon weapon, int reloadAmmoPercent)
+        private IEnumerator ReloadCoroutine(Weapon _weapon, int _reloadAmmoPercent)
         {
-            SoundEffectSO currentReloadSounfEffect = weapon.weaponDetail.reloadSoundEffect;
-            if (!weapon.isReloading && currentReloadSounfEffect != null)
-            {
+            SoundEffectSO currentReloadSounfEffect = _weapon.weaponDetail.reloadSoundEffect;
+            if (!_weapon.isReloading && currentReloadSounfEffect != null)
                 SoundEffectManager.Instance.PlaySoundEffect(currentReloadSounfEffect);
-            }
 
-            weapon.isReloading = true;
+            _weapon.isReloading = true;
 
-            while (weapon.reloadTimer < weapon.weaponDetail.reloadTime)
+            while (_weapon.reloadTimer < _weapon.weaponDetail.reloadTime)
             {
-                weapon.reloadTimer += Time.deltaTime;
+                _weapon.reloadTimer += Time.deltaTime;
                 yield return null;
             }
 
-            if (reloadAmmoPercent != 0)
+            if (_reloadAmmoPercent != 0)
             {
-                int reloadAmmoCount = Mathf.RoundToInt((weapon.weaponDetail.ammoCapacity * reloadAmmoPercent) / 100);
-                int totalAmmo = weapon.ammoRemaining + reloadAmmoCount;
+                int reloadAmmoCount = Mathf.RoundToInt((_weapon.weaponDetail.ammoCapacity * _reloadAmmoPercent) / 100);
+                int totalAmmo = _weapon.ammoRemaining + reloadAmmoCount;
 
-                if (totalAmmo > weapon.weaponDetail.ammoCapacity)
-                {
-                    weapon.ammoRemaining = weapon.weaponDetail.ammoCapacity;
-                }
+                if (totalAmmo > _weapon.weaponDetail.ammoCapacity)
+                    _weapon.ammoRemaining = _weapon.weaponDetail.ammoCapacity;
                 else
-                {
-                    weapon.ammoRemaining = totalAmmo;
-                }
+                    _weapon.ammoRemaining = totalAmmo;
             }
 
-            if (weapon.weaponDetail.isAmmoInfinite)
-            {
-                weapon.ammoPerClipRemaining = weapon.weaponDetail.ammoPerClipCapacity;
-            }
-            else if (weapon.ammoRemaining >= weapon.weaponDetail.ammoPerClipCapacity)
-            {
-                weapon.ammoPerClipRemaining = weapon.weaponDetail.ammoPerClipCapacity;
-            }
+            if (_weapon.weaponDetail.isAmmoInfinite)
+                _weapon.ammoPerClipRemaining = _weapon.weaponDetail.ammoPerClipCapacity;
+            else if (_weapon.ammoRemaining >= _weapon.weaponDetail.ammoPerClipCapacity)
+                _weapon.ammoPerClipRemaining = _weapon.weaponDetail.ammoPerClipCapacity;
             else
-            {
-                weapon.ammoPerClipRemaining = weapon.ammoRemaining;
-            }
+                _weapon.ammoPerClipRemaining = _weapon.ammoRemaining;
 
-            weapon.reloadTimer = 0;
-            weapon.isReloading = false;
+            _weapon.reloadTimer = 0;
+            _weapon.isReloading = false;
 
-            reloadEvent.CallOnReloaded(weapon);
+            reloadEvent.CallOnReloaded(_weapon);
         }
     }
 }

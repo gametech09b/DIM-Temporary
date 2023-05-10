@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 223aaa81165e4ec4483e30f308cce39f, type: 3}
+  m_Name: SoundEffect_HealthPickup
+  m_EditorClassIdentifier: 
+  soundEffectName: Health Pickup
+  prefab: {fileID: 6192850743870799467, guid: baf8604b058f691429c375471bb5f3d0, type: 3}
+  audioClip: {fileID: 8300000, guid: 69fdfaaa6c632454a9776c33e63326a7, type: 3}
+  minPitchVariation: 0.8
+  maxPitchVariation: 1
+  volume: 0.8

@@ -50,7 +50,7 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            HelperUtilities.ValidateCheckEmptyString(this, nameof(roomNodeTypeName), roomNodeTypeName);
+            HelperUtilities.CheckEmptyString(this, nameof(roomNodeTypeName), roomNodeTypeName);
         }
 #endif
         #endregion

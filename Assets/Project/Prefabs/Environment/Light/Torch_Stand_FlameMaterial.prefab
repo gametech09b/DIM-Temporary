@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7091011214791123366
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 724509636903860265, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 724509636903860265, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -653709415
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240523123810319167, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240523123810319167, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -653709415
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868778723081799546, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_PointLightInnerAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 2277678001236066763, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_Name
+      value: Torch_Stand_FlameMaterial
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299052633888569632, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299052633888569632, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299052633888569632, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299052633888569632, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299052633888569632, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299052633888569632, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299052633888569632, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299052633888569632, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299052633888569632, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299052633888569632, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299052633888569632, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3672342463513040280, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 3672342463513040280, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 5582926304287444083, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658796310668218542, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8a7ff3f01f8d4dc49b0d136d7002b53f, type: 3}
+    - target: {fileID: 8658796310668218542, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658796310668218542, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -653709415
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e541a80717ceb3488d9d54cbd0004e2, type: 3}

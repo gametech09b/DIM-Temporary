@@ -9,9 +9,9 @@ namespace DungeonGunner {
         public static UIResources Instance {
             get
             {
-                if (instance == null) {
+                if (instance == null)
                     instance = Resources.Load<UIResources>("UIResources");
-                }
+
                 return instance;
             }
         }
@@ -22,16 +22,32 @@ namespace DungeonGunner {
         [Space(10)]
         [Header("Weapon HUD")]
 
-        public GameObject ammoIconPrefab;
+        public GameObject AmmoIconPrefab;
 
 
 
-        #region Validation
-#if UNITY_EDITOR
-        private void OnValidate() {
+        [Space(10)]
+        [Header("Health HUD")]
 
-        }
-#endif
-        #endregion
+
+        public GameObject HealthIconPrefab;
+
+
+
+        [Space(10)]
+        [Header("Chest")]
+
+
+        public GameObject ChestItemPrefab;
+        public Sprite HeartIconSprite;
+        public Sprite BulletIconSprite;
+
+
+
+        [Space(10)]
+        [Header("Score")]
+
+
+        public GameObject ScoreGameObjectPrefab;
     }
 }

@@ -36,14 +36,13 @@ namespace DungeonGunner
         /// <summary>
         /// Get the room node by room node ID
         /// </summary>
-        /// <param name="roomNodeID"></param>
+        /// <param name="_roomNodeID"></param>
         /// <returns></returns>
-        public RoomNodeSO GetRoomNode(string roomNodeID)
+        public RoomNodeSO GetRoomNode(string _roomNodeID)
         {
-            if (roomNodeDictionary.TryGetValue(roomNodeID, out RoomNodeSO roomNode))
-            {
+            if (roomNodeDictionary.TryGetValue(_roomNodeID, out RoomNodeSO roomNode))
                 return roomNode;
-            }
+                
             return null;
         }
 
@@ -52,25 +51,23 @@ namespace DungeonGunner
         /// <summary>
         /// Get the room node by room node type
         /// </summary>
-        /// <param name="roomNodeType"></param>
+        /// <param name="_roomNodeType"></param>
         /// <returns></returns>
-        public RoomNodeSO GetRoomNode(RoomNodeTypeSO roomNodeType)
+        public RoomNodeSO GetRoomNode(RoomNodeTypeSO _roomNodeType)
         {
             foreach (RoomNodeSO roomNode in roomNodeList)
             {
-                if (roomNode.roomNodeType == roomNodeType)
-                {
+                if (roomNode.roomNodeType == _roomNodeType)
                     return roomNode;
-                }
             }
             return null;
         }
 
 
 
-        public IEnumerable<RoomNodeSO> GetChildRoomNodes(RoomNodeSO parentRoomNode)
+        public IEnumerable<RoomNodeSO> GetChildRoomNodes(RoomNodeSO _parentRoomNode)
         {
-            foreach (string childRoomNodeID in parentRoomNode.childRoomNodeIDList)
+            foreach (string childRoomNodeID in _parentRoomNode.childRoomNodeIDList)
             {
                 yield return GetRoomNode(childRoomNodeID);
             }
@@ -94,12 +91,12 @@ namespace DungeonGunner
         /// <summary>
         /// Set the room node to draw a connection line from
         /// </summary>
-        /// <param name="node"></param>
-        /// <param name="position"></param>
-        public void SetNodeToDrawConnectionLineFrom(RoomNodeSO node, Vector2 position)
+        /// <param name="_node"></param>
+        /// <param name="_position"></param>
+        public void SetNodeToDrawConnectionLineFrom(RoomNodeSO _node, Vector2 _position)
         {
-            roomNodeToDrawLineFrom = node;
-            linePosition = position;
+            roomNodeToDrawLineFrom = _node;
+            linePosition = _position;
         }
 #endif
         #endregion

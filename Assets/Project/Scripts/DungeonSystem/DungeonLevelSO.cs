@@ -35,9 +35,11 @@ namespace DungeonGunner
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            HelperUtilities.ValidateCheckEmptyString(this, nameof(levelName), levelName);
-            if (HelperUtilities.ValidateCheckEnumerableValues(this, nameof(roomTemplateList), roomTemplateList)) return;
-            if (HelperUtilities.ValidateCheckEnumerableValues(this, nameof(roomNodeGraphList), roomNodeGraphList)) return;
+            HelperUtilities.CheckEmptyString(this, nameof(levelName), levelName);
+            if (HelperUtilities.CheckEnumerableValue(this, nameof(roomTemplateList), roomTemplateList))
+                return;
+            if (HelperUtilities.CheckEnumerableValue(this, nameof(roomNodeGraphList), roomNodeGraphList))
+                return;
 
 
 
@@ -47,50 +49,50 @@ namespace DungeonGunner
 
             foreach (RoomTemplateSO roomTemplate in roomTemplateList)
             {
-                if (roomTemplate == null) return;
+                if (roomTemplate == null)
+                    return;
 
                 RoomNodeTypeSO roomNodeType = roomTemplate.roomNodeType;
-                if (roomNodeType.isCorridorEW) isCorridorEW = true;
-                if (roomNodeType.isCorridorNS) isCorridorNS = true;
-                if (roomNodeType.isEntrance) isEntrance = true;
+                if (roomNodeType.isCorridorEW)
+                    isCorridorEW = true;
+                if (roomNodeType.isCorridorNS)
+                    isCorridorNS = true;
+                if (roomNodeType.isEntrance)
+                    isEntrance = true;
             }
 
             if (!isCorridorEW)
-            {
                 Debug.LogError($"[{GetType().Name}] {nameof(roomTemplateList)} must contain a room template with a corridorEW room node type");
-            }
 
             if (!isCorridorNS)
-            {
                 Debug.LogError($"[{GetType().Name}] {nameof(roomTemplateList)} must contain a room template with a corridorNS room node type");
-            }
 
             if (!isEntrance)
-            {
                 Debug.LogError($"[{GetType().Name}] {nameof(roomTemplateList)} must contain a room template with an entrance room node type");
-            }
 
             foreach (RoomNodeGraphSO roomNodeGraph in roomNodeGraphList)
             {
-                if (roomNodeGraph == null) return;
+                if (roomNodeGraph == null)
+                    return;
 
                 foreach (RoomNodeSO roomNode in roomNodeGraph.roomNodeList)
                 {
-                    if (roomNode == null) continue;
+                    if (roomNode == null)
+                        continue;
 
                     RoomNodeTypeSO roomNodeType = roomNode.roomNodeType;
-                    if (
-                        roomNodeType.isEntrance ||
-                        roomNodeType.isCorridorEW ||
-                        roomNodeType.isCorridorNS ||
-                        roomNodeType.isCorridor ||
-                        roomNodeType.isNone
-                    ) continue;
+                    if (roomNodeType.isEntrance
+                    || roomNodeType.isCorridorEW
+                    || roomNodeType.isCorridorNS
+                    || roomNodeType.isCorridor
+                    || roomNodeType.isNone)
+                        continue;
 
                     bool isRoomTemplateFound = false;
                     foreach (RoomTemplateSO roomTemplate in roomTemplateList)
                     {
-                        if (roomTemplate == null) continue;
+                        if (roomTemplate == null)
+                            continue;
 
                         if (roomTemplate.roomNodeType == roomNodeType)
                         {

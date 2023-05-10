@@ -41,16 +41,16 @@ namespace DungeonGunner {
 
 
 
-        private void OnTriggerEnter2D(Collider2D other) {
-            if (other.CompareTag(Settings.PlayerTag) || other.CompareTag(Settings.PlayerWeaponTag)) {
+        private void OnTriggerEnter2D(Collider2D _other) {
+            if (_other.CompareTag(Settings.PlayerTag) || _other.CompareTag(Settings.PlayerWeaponTag))
                 OpenDoor();
-            }
         }
 
 
 
         private void OpenDoor() {
-            if (isOpen) return;
+            if (isOpen)
+                return;
 
             isOpen = true;
             isOpened = true;
@@ -58,7 +58,7 @@ namespace DungeonGunner {
             doorTrigger.enabled = false;
 
             animator.SetBool(Settings.IsOpen, true);
-            SoundEffectManager.Instance.PlaySoundEffect(SoundEffectResources.Instance.DoorOpenCloseSoundEffect);
+            SoundEffectManager.Instance.PlaySoundEffect(AudioResources.Instance.DoorOpenCloseSoundEffect);
         }
 
 
@@ -87,7 +87,7 @@ namespace DungeonGunner {
 
         #region Validation
         private void OnValidate() {
-            HelperUtilities.ValidateCheckNullValue(this, nameof(doorCollider), doorCollider);
+            HelperUtilities.CheckNullValue(this, nameof(doorCollider), doorCollider);
         }
         #endregion
     }

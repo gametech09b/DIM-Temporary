@@ -1,10 +1,8 @@
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DungeonGunner {
     [DisallowMultipleComponent]
-    public class AmmoGameObject : MonoBehaviour, IFireable
-    {
+    public class AmmoGameObject : MonoBehaviour, IFireable {
         [SerializeField] private TrailRenderer trailRenderer;
         private float range;
         private float speed;
@@ -17,52 +15,74 @@ namespace DungeonGunner
         private float chargeTimer;
         private bool isAmmoMaterialSet;
         private bool isOverrideAmmoMovement;
+        private bool isCollided;
 
 
 
-        private void Awake()
-        {
+        private void Awake() {
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
 
 
-        private void Update()
-        {
+        private void Update() {
             InitAmmoMaterial();
 
-            if (chargeTimer > 0)
-            {
+            if (chargeTimer > 0) {
                 ProcessChargeTimer();
                 return;
             }
 
-            Vector3 distanceVector = directionVector * speed * Time.deltaTime;
-            transform.position += distanceVector;
-            range -= distanceVector.magnitude;
+            if (!isOverrideAmmoMovement) {
+                Vector3 distanceVector = directionVector * speed * Time.deltaTime;
+                transform.position += distanceVector;
+                range -= distanceVector.magnitude;
 
-            if (range < 0)
-            {
-                DisableAmmo();
+                if (range < 0) {
+                    if (ammoDetail.isPlayerAmmo)
+                        DungeonStaticEvent.CallOnMultiplierChanged(false);
+
+                    DisableAmmo();
+                }
             }
         }
 
 
 
-        private void OnTriggerEnter2D(Collider2D other)
-        {
+        private void OnTriggerEnter2D(Collider2D _other) {
+            if (isCollided)
+                return;
+
+            DealDamage(_other);
             PlayHitEffect();
             DisableAmmo();
         }
 
 
 
-        private void InitAmmoMaterial()
-        {
-            if (isAmmoMaterialSet)
-            {
-                return;
+        private void DealDamage(Collider2D _other) {
+            Health collidedHealth = _other.GetComponent<Health>();
+
+            bool isHitEnemy = false;
+
+            if (collidedHealth != null) {
+                isCollided = true;
+                collidedHealth.TakeDamage(ammoDetail.damage);
+
+                if (collidedHealth.enemy != null) {
+                    isHitEnemy = true;
+                }
             }
+
+            if (ammoDetail.isPlayerAmmo)
+                DungeonStaticEvent.CallOnMultiplierChanged(isHitEnemy);
+        }
+
+
+
+        private void InitAmmoMaterial() {
+            if (isAmmoMaterialSet)
+                return;
 
             SetAmmoMaterial(ammoDetail.material);
             isAmmoMaterialSet = true;
@@ -70,85 +90,75 @@ namespace DungeonGunner
 
 
 
-        private void ProcessChargeTimer()
-        {
+        private void ProcessChargeTimer() {
             chargeTimer -= Time.deltaTime;
         }
 
 
 
-        public GameObject GetGameObject()
-        {
+        public GameObject GetGameObject() {
             return gameObject;
         }
 
 
 
-        public void Init(AmmoDetailSO ammoDetail, float ammoSpeed, float angle, float weaponAngle, Vector3 weaponDirectionVector, bool isOverrideAmmoMovement = false)
-        {
-            // ammo
-            this.ammoDetail = ammoDetail;
+        public void Init(AmmoDetailSO _ammoDetail, float _ammoSpeed, float _angle, float _weaponAngle, Vector3 _weaponDirectionVector, bool _isOverrideAmmoMovement = false) {
+            #region ammo
+            this.ammoDetail = _ammoDetail;
 
-            SetDirection(ammoDetail, angle, weaponAngle, weaponDirectionVector);
+            isCollided = false;
 
-            spriteRenderer.sprite = ammoDetail.sprite;
+            SetDirection(_ammoDetail, _angle, _weaponAngle, _weaponDirectionVector);
 
-            if (ammoDetail.chargeTime > 0)
-            {
-                chargeTimer = ammoDetail.chargeTime;
-                SetAmmoMaterial(ammoDetail.chargeMaterial);
+            spriteRenderer.sprite = _ammoDetail.sprite;
+
+            if (_ammoDetail.chargeTime > 0) {
+                chargeTimer = _ammoDetail.chargeTime;
+                SetAmmoMaterial(_ammoDetail.chargeMaterial);
                 isAmmoMaterialSet = false;
-            }
-            else
-            {
+            } else {
                 chargeTimer = 0;
-                SetAmmoMaterial(ammoDetail.material);
+                SetAmmoMaterial(_ammoDetail.material);
                 isAmmoMaterialSet = true;
             }
 
-            this.range = ammoDetail.range;
+            this.range = _ammoDetail.range;
 
-            this.speed = ammoSpeed;
+            this.speed = _ammoSpeed;
 
-            this.isOverrideAmmoMovement = isOverrideAmmoMovement;
+            this.isOverrideAmmoMovement = _isOverrideAmmoMovement;
 
             gameObject.SetActive(true);
+            #endregion
 
 
-
-            // trail
-            if (ammoDetail.isTrailEnabled)
-            {
+            #region trail
+            if (_ammoDetail.isTrailEnabled) {
                 trailRenderer.gameObject.SetActive(true);
                 trailRenderer.emitting = true;
-                trailRenderer.material = ammoDetail.trailMaterial;
-                trailRenderer.startWidth = ammoDetail.trailStartWidth;
-                trailRenderer.endWidth = ammoDetail.trailEndWidth;
-                trailRenderer.time = ammoDetail.trailLifetime;
-            }
-            else
-            {
+                trailRenderer.material = _ammoDetail.trailMaterial;
+                trailRenderer.startWidth = _ammoDetail.trailStartWidth;
+                trailRenderer.endWidth = _ammoDetail.trailEndWidth;
+                trailRenderer.time = _ammoDetail.trailLifetime;
+            } else {
                 trailRenderer.emitting = false;
                 trailRenderer.gameObject.SetActive(false);
             }
+            #endregion
         }
 
 
 
-        private void SetDirection(AmmoDetailSO ammoDetail, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
-        {
-            float randomSpread = Random.Range(ammoDetail.minSpread, ammoDetail.maxSpread);
+        private void SetDirection(AmmoDetailSO _ammoDetail, float _aimAngle, float _weaponAimAngle, Vector3 _weaponAimDirectionVector) {
+            float randomSpread = Random.Range(_ammoDetail.minSpread, _ammoDetail.maxSpread);
 
             // get a random spread toggle of 1 or -1
             int randomSpreadToggle = Random.Range(0, 2) == 0 ? 1 : -1;
 
-            if (weaponAimDirectionVector.magnitude < Settings.AimAngleDistance)
-            {
-                directionAngle = aimAngle;
-            }
-            else
-            {
-                directionAngle = weaponAimAngle;
+            if (_weaponAimDirectionVector.magnitude < Settings.AimAngleDistance) {
+                directionAngle = _aimAngle;
+            } else {
+                directionAngle = _weaponAimAngle;
             }
 
             directionAngle += randomSpread * randomSpreadToggle;
@@ -160,26 +170,22 @@ namespace DungeonGunner
 
 
 
-        private void DisableAmmo()
-        {
+        private void DisableAmmo() {
             gameObject.SetActive(false);
         }
 
 
 
-        private void SetAmmoMaterial(Material material)
-        {
-            spriteRenderer.material = material;
+        private void SetAmmoMaterial(Material _material) {
+            spriteRenderer.material = _material;
         }
 
 
 
-        private void PlayHitEffect()
-        {
+        private void PlayHitEffect() {
             HitEffectSO hitEffect = ammoDetail.hitEffect;
-            if (hitEffect != null && hitEffect.prefab != null)
-            {
-                HitEffect hitEffectInstance = (HitEffect) PoolManager.Instance.ReuseComponent(hitEffect.prefab, transform.position, Quaternion.identity);
+            if (hitEffect != null && hitEffect.prefab != null) {
+                HitEffect hitEffectInstance = (HitEffect)PoolManager.Instance.ReuseComponent(hitEffect.prefab, transform.position, Quaternion.identity);
 
                 hitEffectInstance.Init(hitEffect);
 
@@ -191,9 +197,8 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
-            HelperUtilities.ValidateCheckNullValue(this, nameof(trailRenderer), trailRenderer);
+        private void OnValidate() {
+            HelperUtilities.CheckNullValue(this, nameof(trailRenderer), trailRenderer);
         }
 #endif
         #endregion

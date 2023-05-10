@@ -11,7 +11,16 @@ namespace DungeonGunner {
 
 
         private void Start() {
+            if (PlayerPrefs.HasKey("soundVolume"))
+                volume = PlayerPrefs.GetInt("soundVolume");
+
             SetSoundVolume(volume);
+        }
+
+
+
+        private void OnDisable() {
+            PlayerPrefs.SetInt("soundVolume", volume);
         }
 
 

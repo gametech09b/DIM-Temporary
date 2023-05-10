@@ -22,7 +22,16 @@ namespace DungeonGunner {
 
 
         private void Start() {
+            if (PlayerPrefs.HasKey("musicVolume"))
+                volume = PlayerPrefs.GetInt("musicVolume");
+
             SetMusicVolume(volume);
+        }
+
+
+
+        private void OnDisable() {
+            PlayerPrefs.SetInt("musicVolume", volume);
         }
 
 

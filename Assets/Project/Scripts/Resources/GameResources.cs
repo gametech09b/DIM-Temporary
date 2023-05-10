@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -40,6 +41,9 @@ namespace DungeonGunner {
         [Header("Player")]
 
 
+        public List<PlayerDetailSO> PlayerDetailList;
+
+
         [Tooltip("Populate with the player CurrentPlayerSO")]
         public CurrentPlayerSO CurrentPlayer;
 
@@ -72,6 +76,14 @@ namespace DungeonGunner {
         [Space(10)]
         [Header("Minimap")]
         public GameObject MinimapSkullPrefab;
+
+
+
+        [Space(10)]
+        [Header("Player Selection")]
+
+
+        public GameObject PlayerSelectionPrefab;
 
 
 

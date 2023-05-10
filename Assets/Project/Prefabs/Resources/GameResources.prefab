@@ -48,11 +48,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 37e2c9e0227bfbc409cd632b9bd0c81f, type: 2}
   - {fileID: 11400000, guid: 98f177f8276c38b429705e6720c48672, type: 2}
   EnemyPreferredPathTile: {fileID: 11400000, guid: 3ce5fb260af53d24887b55c3d50041e2, type: 2}
-  AudioMixerGroup_Master: {fileID: -4734643798044506327, guid: 2ac509b551addfb48950fbdc0d9cefb4, type: 2}
   RoomNodeTypeList: {fileID: 11400000, guid: 0609dfb02986c1e42b35f8c34690337e, type: 2}
+  PlayerDetailList:
+  - {fileID: 11400000, guid: d440febb1d129bf48bec2bcc77aaff8d, type: 2}
+  - {fileID: 11400000, guid: 28b62030e7948784eaf4e71dc68140c7, type: 2}
+  - {fileID: 11400000, guid: ff1c458616937514a8c832ce8d2d6d1d, type: 2}
   CurrentPlayer: {fileID: 11400000, guid: 95960bf1ab8f048429a2de184b63c78d, type: 2}
   DimmedMaterial: {fileID: 2100000, guid: fd5ae752e16da36428c7ae98c49dc19e, type: 2}
   LitMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   VariableLitShader: {fileID: -6465566751694194690, guid: c3cbbd8ea69f0654e909045c7ccca513, type: 3}
   MaterializeShader: {fileID: -6465566751694194690, guid: 5fec8f8e6ea244648a3c6ede24a56288, type: 3}
   MinimapSkullPrefab: {fileID: 10579931087513602, guid: 9a39b678e700b4a46a8a0e6dc7edfaf0, type: 3}
+  PlayerSelectionPrefab: {fileID: 4228832101867735334, guid: 3e44010a24036df4d8b2c031a56c4925, type: 3}

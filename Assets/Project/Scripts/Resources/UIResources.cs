@@ -41,5 +41,13 @@ namespace DungeonGunner {
         public GameObject ChestItemPrefab;
         public Sprite HeartIconSprite;
         public Sprite BulletIconSprite;
+
+
+
+        [Space(10)]
+        [Header("Score")]
+
+
+        public GameObject ScoreGameObjectPrefab;
     }
 }

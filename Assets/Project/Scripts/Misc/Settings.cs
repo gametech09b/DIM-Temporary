@@ -136,5 +136,11 @@ namespace DungeonGunner {
         public const float MusicTrackFadeInTime = 0.5f;
         public const float MusicTrackFadeOutTime = 0.5f;
         #endregion
+
+
+
+        #region Score System
+        public const int ScoreMaxEntries = 10;
+        #endregion
     }
 }

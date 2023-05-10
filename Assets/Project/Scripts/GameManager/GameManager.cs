@@ -46,7 +46,7 @@ namespace DungeonGunner {
 
         [HideInInspector] public GameState gameState;
         [HideInInspector] public GameState previousGameState;
-        private long score;
+        private long gameScore;
         private int scoreMultiplier;
 
 
@@ -96,7 +96,7 @@ namespace DungeonGunner {
             previousGameState = GameState.GAME_STARTED;
             gameState = GameState.GAME_STARTED;
 
-            score = 0;
+            gameScore = 0;
             scoreMultiplier = 1;
 
             StartCoroutine(FadeCoroutine(0f, 1f, 0f, Color.black));
@@ -129,9 +129,9 @@ namespace DungeonGunner {
 
 
         private void DungeonStaticEvent_OnPointScored(OnPointScoredEventArgs _args) {
-            score += _args.point * scoreMultiplier;
+            gameScore += _args.point * scoreMultiplier;
 
-            DungeonStaticEvent.CallOnScoreChanged(score, scoreMultiplier);
+            DungeonStaticEvent.CallOnScoreChanged(gameScore, scoreMultiplier);
         }
 
 
@@ -143,7 +143,7 @@ namespace DungeonGunner {
                 scoreMultiplier--;
 
             scoreMultiplier = Mathf.Clamp(scoreMultiplier, 1, 30);
-            DungeonStaticEvent.CallOnScoreChanged(score, scoreMultiplier);
+            DungeonStaticEvent.CallOnScoreChanged(gameScore, scoreMultiplier);
         }
 
 
@@ -352,10 +352,27 @@ namespace DungeonGunner {
 
             GetCurrentPlayer().controllerHandler.DisableController();
 
+            int rank = HighScoreManager.Instance.GetRank(gameScore);
+
+            string rankText;
+
+            if (rank > 0
+            && rank <= Settings.ScoreMaxEntries) {
+                rankText = $"YOUR SCORE IS RANKED {rank.ToString("#0")} IN THE TOP {Settings.ScoreMaxEntries.ToString("#0")} SCORES";
+                string name = GameResources.Instance.CurrentPlayer.playerName;
+
+                if (name == "")
+                    name = "UNKNOWN";
+
+                HighScoreManager.Instance.AddScore(new Score(name, $"LEVEL {(currentDungeonLevelIndex + 1).ToString("#0")} - {GetCurrentDungeonLevel().levelName.ToUpper()}", gameScore));
+            } else {
+                rankText = $"YOUR SCORE IS NOT RANKED IN THE TOP {Settings.ScoreMaxEntries.ToString("#0")} SCORES";
+            }
+
             yield return StartCoroutine(FadeCoroutine(0f, 1f, 2f, Color.black));
 
             yield return StartCoroutine(DisplayMessageCoroutine($"WELL DONE {GameResources.Instance.CurrentPlayer.playerName}! YOU'VE DEFEATED ALL DUNGEONS!", Color.white, 3f));
-            yield return StartCoroutine(DisplayMessageCoroutine($"YOU SCORED {score.ToString("###,###0")} POINTS", Color.white, 4f));
+            yield return StartCoroutine(DisplayMessageCoroutine($"YOU SCORED {gameScore.ToString("###,###0")} POINTS\n\n{rankText}", Color.white, 4f));
             yield return StartCoroutine(DisplayMessageCoroutine($"PRESS RETURN TO RESTART THE GAME", Color.white, 0f));
 
             gameState = GameState.RESTART_GAME;
@@ -368,6 +385,23 @@ namespace DungeonGunner {
 
             GetCurrentPlayer().controllerHandler.DisableController();
 
+            int rank = HighScoreManager.Instance.GetRank(gameScore);
+
+            string rankText;
+
+            if (rank > 0
+            && rank <= Settings.ScoreMaxEntries) {
+                rankText = $"YOUR SCORE IS RANKED {rank.ToString("#0")} IN THE TOP {Settings.ScoreMaxEntries.ToString("#0")} SCORES";
+                string name = GameResources.Instance.CurrentPlayer.playerName;
+
+                if (name == "")
+                    name = "UNKNOWN";
+
+                HighScoreManager.Instance.AddScore(new Score(name, $"LEVEL {(currentDungeonLevelIndex + 1).ToString("#0")} - {GetCurrentDungeonLevel().levelName.ToUpper()}", gameScore));
+            } else {
+                rankText = $"YOUR SCORE IS NOT RANKED IN THE TOP {Settings.ScoreMaxEntries.ToString("#0")} SCORES";
+            }
+
             yield return new WaitForSeconds(1f);
 
             yield return StartCoroutine(FadeCoroutine(0f, 1f, 2f, Color.black));
@@ -379,7 +413,7 @@ namespace DungeonGunner {
             }
 
             yield return StartCoroutine(DisplayMessageCoroutine($"BAD LUCK {GameResources.Instance.CurrentPlayer.playerName}! YOU'VE BEEN DEFEATED!", Color.white, 3f));
-            yield return StartCoroutine(DisplayMessageCoroutine($"YOU SCORED {score.ToString("###,###0")} POINTS", Color.white, 4f));
+            yield return StartCoroutine(DisplayMessageCoroutine($"YOU SCORED {gameScore.ToString("###,###0")} POINTS\n\n{rankText}", Color.white, 4f));
             yield return StartCoroutine(DisplayMessageCoroutine($"PRESS RETURN TO RESTART THE GAME", Color.white, 0f));
 
             gameState = GameState.RESTART_GAME;

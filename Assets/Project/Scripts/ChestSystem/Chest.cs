@@ -2,7 +2,13 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.AudioSystem;
+using DIM.CombatSystem;
+using DIM.Effect;
+using DIM.Environment;
+using DIM.PlayerSystem;
+
+namespace DIM.ChestSystem {
     #region Requirement Components
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(SpriteRenderer))]
@@ -10,7 +16,6 @@ namespace DungeonGunner {
     [RequireComponent(typeof(MaterializeEffect))]
     #endregion
     public class Chest : MonoBehaviour, IUseable {
-
         private Animator animator;
         private SpriteRenderer spriteRenderer;
         private MaterializeEffect materializeEffect;
@@ -30,7 +35,7 @@ namespace DungeonGunner {
         private ChestItem chestItem;
         private TextMeshPro messageTextMP;
 
-
+        // ===================================================================
 
         private void Awake() {
             animator = GetComponent<Animator>();

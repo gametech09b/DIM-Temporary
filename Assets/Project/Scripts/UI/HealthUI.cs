@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.HealthSystem;
+
+namespace DIM.UI {
     [DisallowMultipleComponent]
     public class HealthUI : MonoBehaviour {
         private List<GameObject> heartIconList = new List<GameObject>();
 
-
+        // ===================================================================
 
         private void OnEnable() {
             GameManager.Instance.GetCurrentPlayer().healthEvent.OnHealthChanged += HealthEvent_OnHealthChange;

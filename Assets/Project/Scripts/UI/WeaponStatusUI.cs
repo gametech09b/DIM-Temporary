@@ -1,11 +1,13 @@
-using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DungeonGunner {
+using DIM.PlayerSystem;
+using DIM.CombatSystem;
+
+namespace DIM.UI {
     public class WeaponStatusUI : MonoBehaviour {
 
         [Space(10)]
@@ -31,7 +33,7 @@ namespace DungeonGunner {
         private Coroutine reloadingCoroutine;
         private Coroutine blinkingReloadingTextCoroutine;
 
-
+        // ===================================================================
 
         private void Awake() {
             player = GameManager.Instance.GetCurrentPlayer();

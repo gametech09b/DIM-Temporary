@@ -1,40 +1,31 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.DungeonSystem {
     [CreateAssetMenu(fileName = "DungeonLevel_", menuName = "Scriptable Objects/Dungeon/Dungeon Level")]
-    public class DungeonLevelSO : ScriptableObject
-    {
+    public class DungeonLevelSO : ScriptableObject {
         [Space(10)]
         [Header("Details")]
 
-        [Tooltip("The name of the level")]
         public string levelName;
-
 
 
         [Space(10)]
         [Header("Room Templates from RoomTemplateSO")]
 
-        [Tooltip("The list of room templates to use for this level")]
         public List<RoomTemplateSO> roomTemplateList;
-
 
 
         [Space(10)]
         [Header("Room Node Graph from RoomNodeGraphSO")]
 
-        [Tooltip("The list of room node graphs to use for this level")]
         public List<RoomNodeGraphSO> roomNodeGraphList;
 
-
+        // ===================================================================
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckEmptyString(this, nameof(levelName), levelName);
             if (HelperUtilities.CheckEnumerableValue(this, nameof(roomTemplateList), roomTemplateList))
                 return;
@@ -47,8 +38,7 @@ namespace DungeonGunner
             bool isCorridorNS = false;
             bool isEntrance = false;
 
-            foreach (RoomTemplateSO roomTemplate in roomTemplateList)
-            {
+            foreach (RoomTemplateSO roomTemplate in roomTemplateList) {
                 if (roomTemplate == null)
                     return;
 
@@ -70,13 +60,11 @@ namespace DungeonGunner
             if (!isEntrance)
                 Debug.LogError($"[{GetType().Name}] {nameof(roomTemplateList)} must contain a room template with an entrance room node type");
 
-            foreach (RoomNodeGraphSO roomNodeGraph in roomNodeGraphList)
-            {
+            foreach (RoomNodeGraphSO roomNodeGraph in roomNodeGraphList) {
                 if (roomNodeGraph == null)
                     return;
 
-                foreach (RoomNodeSO roomNode in roomNodeGraph.roomNodeList)
-                {
+                foreach (RoomNodeSO roomNode in roomNodeGraph.roomNodeList) {
                     if (roomNode == null)
                         continue;
 
@@ -89,20 +77,17 @@ namespace DungeonGunner
                         continue;
 
                     bool isRoomTemplateFound = false;
-                    foreach (RoomTemplateSO roomTemplate in roomTemplateList)
-                    {
+                    foreach (RoomTemplateSO roomTemplate in roomTemplateList) {
                         if (roomTemplate == null)
                             continue;
 
-                        if (roomTemplate.roomNodeType == roomNodeType)
-                        {
+                        if (roomTemplate.roomNodeType == roomNodeType) {
                             isRoomTemplateFound = true;
                             break;
                         }
                     }
 
-                    if (!isRoomTemplateFound)
-                    {
+                    if (!isRoomTemplateFound) {
                         Debug.LogError($"[{GetType().Name}] {nameof(roomTemplateList)} must contain a room template with a room node type of {roomNodeType.name}");
                     }
                 }

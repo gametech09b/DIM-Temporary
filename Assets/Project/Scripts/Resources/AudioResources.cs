@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace DungeonGunner {
+using DIM.AudioSystem;
+
+namespace DIM {
     public class AudioResources : MonoBehaviour {
         #region Singleton AudioResources
         private static AudioResources instance;
@@ -23,9 +23,8 @@ namespace DungeonGunner {
         [Space(10)]
         [Header("Audio Master")]
 
-
-        [Tooltip("Populate with the audio mixer group")]
         public AudioMixerGroup AudioMixerGroup_Master;
+
 
         [Space(10)]
         [Header("Sound Effects")]
@@ -36,14 +35,11 @@ namespace DungeonGunner {
         [Space(10)]
         [Header("Door SFX")]
 
-
         public SoundEffectSO DoorOpenCloseSoundEffect;
-
 
 
         [Space(10)]
         [Header("Table SFX")]
-
 
         public SoundEffectSO TableFlipSoundEffect;
 
@@ -51,7 +47,6 @@ namespace DungeonGunner {
 
         [Space(10)]
         [Header("Chest SFX")]
-
 
         public SoundEffectSO ChestOpenSoundEffect;
         public SoundEffectSO ChestAmmoPickupSoundEffect;
@@ -70,14 +65,12 @@ namespace DungeonGunner {
         public AudioMixerSnapshot MusicSnapshot_Off;
 
 
-
         [Space(10)]
         [Header("Main Menu Music")]
 
-
         public MusicTrackSO MainMenuMusicTrack;
 
-
+        // ===================================================================
 
         #region Validation
 #if UNITY_EDITOR

@@ -1,14 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.DungeonSystem {
     [DisallowMultipleComponent]
     public class RoomActivationHandler : MonoBehaviour {
         [SerializeField] private Camera minimapCamera;
         private Camera mainCamera;
 
-
+        // ===================================================================
 
         private void Start() {
             mainCamera = Camera.main;

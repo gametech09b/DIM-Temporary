@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.DungeonSystem;
+
+namespace DIM.MapSystem {
     public class Map : SingletonMonobehaviour<Map> {
         [SerializeField] private GameObject minimapUI;
         private Camera mainCamera;
         private Camera mapCamera;
 
-
+        // ===================================================================
 
         private void Start() {
             mainCamera = Camera.main;

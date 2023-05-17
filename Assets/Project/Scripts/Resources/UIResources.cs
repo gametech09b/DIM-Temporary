@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM {
     public class UIResources : MonoBehaviour {
         #region Singleton UIResources
         private static UIResources instance;

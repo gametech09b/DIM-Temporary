@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.AudioSystem;
+
+namespace DIM.DungeonSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Animator))]
@@ -11,20 +11,15 @@ namespace DungeonGunner {
         [Space(10)]
         [Header("Object References")]
 
-
-        [Tooltip("The collider of the door.")]
         [SerializeField] private BoxCollider2D doorCollider;
 
-
         [HideInInspector] public bool isBossRoomDoor;
-
-
         private Animator animator;
         private BoxCollider2D doorTrigger;
         private bool isOpen = false;
         private bool isOpened = false;
 
-
+        // ===================================================================
 
         private void Awake() {
             animator = GetComponent<Animator>();

@@ -1,7 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.AudioSystem;
+using DIM.EnemySystem;
+using DIM.SpawnSystem;
+
+namespace DIM.DungeonSystem {
     public class Room {
         public string id;
         public string templateID;
@@ -13,22 +17,17 @@ namespace DungeonGunner {
         public Vector2Int templateUpperBounds;
         public Vector2Int[] spawnPositionArray;
 
-
         public string parentRoomID;
         public List<string> childRoomIDList;
 
-
         public List<Doorway> doorwayList;
         public bool isPositioned;
-
 
         public bool isLit = false;
         public bool isCleared = false;
         public bool isVisited = false;
 
-
         public RoomGameObject roomGameObject;
-
 
         public List<SpawnableObjectsByLevel<EnemyDetailSO>> enemySpawnByLevelList;
         public List<RoomEnemySpawnParameter> roomEnemySpawnParameterList;
@@ -36,7 +35,7 @@ namespace DungeonGunner {
         public MusicTrackSO ambientMusicTrack;
         public MusicTrackSO battleMusicTrack;
 
-
+        // ===================================================================
 
         public Room() {
             childRoomIDList = new List<string>();

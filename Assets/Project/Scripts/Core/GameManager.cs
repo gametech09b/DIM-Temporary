@@ -5,17 +5,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace DungeonGunner {
+using DIM.DungeonSystem;
+using DIM.EnemySystem;
+using DIM.HealthSystem;
+using DIM.MapSystem;
+using DIM.PlayerSystem;
+using DIM.ScoreSystem;
+
+namespace DIM {
     [DisallowMultipleComponent]
     public class GameManager : SingletonMonobehaviour<GameManager> {
         [Space(10)]
         [Header("Message UI")]
 
-
         [SerializeField] private TextMeshProUGUI messageTextMP;
         [SerializeField] private CanvasGroup fadeScreenCanvasGroup;
         private bool isFading = false;
-
 
 
         [Space(10)]
@@ -24,17 +29,11 @@ namespace DungeonGunner {
         [SerializeField] private GameObject pauseMenu;
 
 
-
         [Space(10)]
         [Header("Dungeon Levels")]
 
-
-        [Tooltip("The list of dungeon levels to use for this game")]
         [SerializeField] private List<DungeonLevelSO> dungeonLevelList;
-
-        [Tooltip("The current dungeon level")]
         [SerializeField] private int currentDungeonLevelIndex;
-
 
 
         private Room currentRoom;
@@ -49,7 +48,7 @@ namespace DungeonGunner {
         private long gameScore;
         private int scoreMultiplier;
 
-
+        // ===================================================================
 
         protected override void Awake() {
             base.Awake();
@@ -107,11 +106,11 @@ namespace DungeonGunner {
         private void Update() {
             HandleGameState();
 
-            // FIXME: Development only
-            #region Development Only
-            if (Input.GetKeyDown(KeyCode.P))
-                gameState = GameState.GAME_STARTED;
-            #endregion
+            // // FIXME: Development only
+            // #region Development Only
+            // if (Input.GetKeyDown(KeyCode.P))
+            //     gameState = GameState.GAME_STARTED;
+            // #endregion
         }
 
 

@@ -2,11 +2,14 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.AudioSystem;
+using DIM.EnemySystem;
+using DIM.SpawnSystem;
+
+namespace DIM.DungeonSystem {
     [CreateAssetMenu(fileName = "Room_", menuName = "Scriptable Objects/Dungeon/Room")]
     public class RoomTemplateSO : ScriptableObject {
         [HideInInspector] public string id;
-
 
 
         [Space(10)]
@@ -16,8 +19,8 @@ namespace DungeonGunner {
         [Tooltip("The gameobject prefab for the room (this will contain all the tilemaps for the room and environment game objects")]
         #endregion
         public GameObject prefab;
-        [HideInInspector] public GameObject previousPrefab; // this is used to regenerate the guid if the SO is copied and the prefab is changed
 
+        [HideInInspector] public GameObject previousPrefab; // this is used to regenerate the guid if the SO is copied and the prefab is changed
 
 
         [Space(10)]
@@ -28,20 +31,24 @@ namespace DungeonGunner {
         #endregion
         public RoomNodeTypeSO roomNodeType;
 
+
         #region Tooltip
         [Tooltip("If you imagine a rectangle around the room tilemap that just completely encloses it, the room lower bounds represent the bottom left corner of that rectangle. This should be determined from the tilemap for the room (using the coordinate brush pointer to get the tilemap grid position for that bottom left corner (Note: this is the local tilemap position and NOT world position")]
         #endregion
         public Vector2Int lowerBounds;
+
 
         #region Tooltip
         [Tooltip("If you imagine a rectangle around the room tilemap that just completely encloses it, the room upper bounds represent the top right corner of that rectangle. This should be determined from the tilemap for the room (using the coordinate brush pointer to get the tilemap grid position for that top right corner (Note: this is the local tilemap position and NOT world position")]
         #endregion
         public Vector2Int upperBounds;
 
+
         #region Tooltip
         [Tooltip("There should be a maximum of four doorways for a room - one for each compass direction.  These should have a consistent 3 tile opening size, with the middle tile position being the doorway coordinate 'position'")]
         #endregion
         [SerializeField] private List<Doorway> doorwayList;
+
 
         #region Tooltip
         [Tooltip("Each possible spawn position (used for enemies and chests) for the room in tilemap coordinates should be added to this array")]
@@ -49,28 +56,20 @@ namespace DungeonGunner {
         public Vector2Int[] spawnPositionArray;
 
 
-
-
-
         [Space(10)]
         [Header("Enemies In Room Detail")]
 
-
         public List<SpawnableObjectsByLevel<EnemyDetailSO>> enemySpawnByLevelList;
-
         public List<RoomEnemySpawnParameter> roomEnemySpawnParameterList;
-
 
 
         [Space(10)]
         [Header("Room Music")]
 
-
         public MusicTrackSO ambientMusicTrack;
         public MusicTrackSO battleMusicTrack;
 
-
-
+        // ===================================================================
 
         /// <summary>
         /// Returns the list of Entrances for the room template

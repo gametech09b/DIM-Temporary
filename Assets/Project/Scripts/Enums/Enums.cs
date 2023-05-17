@@ -1,4 +1,4 @@
-﻿namespace DungeonGunner {
+﻿namespace DIM {
     public enum Orientation {
         NORTH,
         EAST,

@@ -1,10 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.PlayerSystem;
+
+namespace DIM.UI {
     [DisallowMultipleComponent]
     public class CharacterSelectorUI : MonoBehaviour {
         [SerializeField] private Transform characterSelectorTransform;
@@ -22,7 +23,7 @@ namespace DungeonGunner {
         private int selectedIndex = 0;
         private float offset = 4f;
 
-
+        // ===================================================================
 
         private void Awake() {
             playerDetailList = GameResources.Instance.PlayerDetailList;

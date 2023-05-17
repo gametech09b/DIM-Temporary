@@ -1,6 +1,9 @@
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.AudioSystem;
+using DIM.DungeonSystem;
+
+namespace DIM.Environment {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(BoxCollider2D))]
@@ -16,7 +19,7 @@ namespace DungeonGunner {
         private RoomGameObject roomGameObject;
         private Vector3 previousPosition;
 
-
+        // ===================================================================
 
         private void Awake() {
             boxCollider2D = GetComponent<BoxCollider2D>();

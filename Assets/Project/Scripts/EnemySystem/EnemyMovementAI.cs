@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
-using DungeonGunner.AStarPathfinding;
-using System.Collections;
+using DIM.AStarPathfinding;
+using DIM.MovementSystem;
+using DIM.DungeonSystem;
 
-namespace DungeonGunner {
+namespace DIM.EnemySystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Enemy))]
@@ -27,7 +29,7 @@ namespace DungeonGunner {
 
         private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
 
-
+        // ===================================================================
 
         private void Awake() {
             enemy = GetComponent<Enemy>();

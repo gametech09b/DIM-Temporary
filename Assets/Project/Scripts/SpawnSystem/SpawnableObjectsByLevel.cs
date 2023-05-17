@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
-namespace DungeonGunner
-{
+using DIM.DungeonSystem;
+
+namespace DIM.SpawnSystem {
     [System.Serializable]
-    public class SpawnableObjectsByLevel<T>
-    {
+    public class SpawnableObjectsByLevel<T> {
         public DungeonLevelSO dungeonLevel;
         public List<SpawnableObjectRatio<T>> spawnableObjectRatioList;
     }

@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.AudioSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(AudioSource))]
     #endregion
     public class SoundEffect : MonoBehaviour {
-
         private AudioSource audioSource;
 
-
+        // ===================================================================
 
         private void Awake() {
             audioSource = GetComponent<AudioSource>();

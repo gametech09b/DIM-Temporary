@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.AudioSystem {
     public class MusicManager : SingletonMonobehaviour<MusicManager> {
         private AudioSource audioSource;
         private AudioClip currentAudioClip;
@@ -9,7 +9,7 @@ namespace DungeonGunner {
         private Coroutine fadeInCoroutine;
         public int volume = 10;
 
-
+        // ===================================================================
 
         protected override void Awake() {
             base.Awake();

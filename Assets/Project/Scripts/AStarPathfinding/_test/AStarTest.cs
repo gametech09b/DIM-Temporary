@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace DungeonGunner
-{
-    public class AStarTest : MonoBehaviour
-    {
+using DIM.DungeonSystem;
+
+namespace DIM {
+    public class AStarTest : MonoBehaviour {
         private RoomGameObject roomGameObject;
         private Grid grid;
         private Tilemap frontTilemap;
@@ -21,31 +21,28 @@ namespace DungeonGunner
 
         private Stack<Vector3> pathStack;
 
+        // ===================================================================
 
-
-        private void OnEnable()
-        {
+        private void OnEnable() {
             DungeonStaticEvent.OnRoomChanged += DungeonStaticEvent_OnRoomChange;
         }
 
 
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
             DungeonStaticEvent.OnRoomChanged -= DungeonStaticEvent_OnRoomChange;
         }
 
 
-        private void Start()
-        {
+
+        private void Start() {
             startPathTile = GameResources.Instance.EnemyPreferredPathTile;
             finishPathTile = GameResources.Instance.EnemyUnwalkableTileArray[0];
         }
 
 
 
-        private void DungeonStaticEvent_OnRoomChange(OnRoomChangedEventArgs _args)
-        {
+        private void DungeonStaticEvent_OnRoomChange(OnRoomChangedEventArgs _args) {
             pathStack = null;
             roomGameObject = _args.room.roomGameObject;
             frontTilemap = roomGameObject.transform.Find("Grid/Tilemap4_Front").GetComponent<Tilemap>();
@@ -58,19 +55,15 @@ namespace DungeonGunner
 
 
 
-        private void SetUpPathTilemap()
-        {
+        private void SetUpPathTilemap() {
             Transform tilemapCloneTransform = roomGameObject.transform.Find("Grid/Tilemap4_Front(Clone)");
 
-            if (tilemapCloneTransform == null)
-            {
+            if (tilemapCloneTransform == null) {
                 pathTilemap = Instantiate(frontTilemap, grid.transform);
                 pathTilemap.GetComponent<TilemapRenderer>().sortingOrder = 2;
                 pathTilemap.GetComponent<TilemapRenderer>().material = GameResources.Instance.LitMaterial;
                 pathTilemap.gameObject.tag = "Untagged";
-            }
-            else
-            {
+            } else {
                 pathTilemap = roomGameObject.transform.Find("Grid/Tilemap4_Front(Clone)").GetComponent<Tilemap>();
                 pathTilemap.ClearAllTiles();
             }
@@ -78,39 +71,33 @@ namespace DungeonGunner
 
 
 
-        private void Update()
-        {
+        private void Update() {
             if (roomGameObject == null
             || startPathTile == null
             || finishPathTile == null
             || grid == null
             || pathTilemap == null)
-            {
                 return;
-            }
 
-            if (Input.GetKeyDown(KeyCode.I))
-            {
+
+            if (Input.GetKeyDown(KeyCode.I)) {
                 ClearPath();
                 SetStartPosition();
             }
 
-            if (Input.GetKeyDown(KeyCode.O))
-            {
+            if (Input.GetKeyDown(KeyCode.O)) {
                 ClearPath();
                 SetEndPosition();
             }
 
             if (Input.GetKeyDown(KeyCode.L))
-            {
                 DisplayPath();
-            }
+
         }
 
 
 
-        private bool IsPositionWithinBounds(Vector3Int _position)
-        {
+        private bool IsPositionWithinBounds(Vector3Int _position) {
             Vector2Int templateLowerBounds = roomGameObject.room.templateLowerBounds;
             Vector2Int templateUpperBounds = roomGameObject.room.templateUpperBounds;
 
@@ -118,31 +105,24 @@ namespace DungeonGunner
             || _position.x > templateUpperBounds.x
             || _position.y < templateLowerBounds.y
             || _position.y > templateUpperBounds.y)
-            {
                 return false;
-            }
 
             return true;
         }
 
 
 
-        private void SetStartPosition()
-        {
-            if (startGridPosition == noValue)
-            {
+        private void SetStartPosition() {
+            if (startGridPosition == noValue) {
                 startGridPosition = grid.WorldToCell(HelperUtilities.GetMouseWorldPosition());
 
-                if (!IsPositionWithinBounds(startGridPosition))
-                {
+                if (!IsPositionWithinBounds(startGridPosition)) {
                     startGridPosition = noValue;
                     return;
                 }
 
                 pathTilemap.SetTile(startGridPosition, startPathTile);
-            }
-            else
-            {
+            } else {
                 pathTilemap.SetTile(startGridPosition, null);
                 startGridPosition = noValue;
             }
@@ -150,22 +130,17 @@ namespace DungeonGunner
 
 
 
-        private void SetEndPosition()
-        {
-            if (endGridPosition == noValue)
-            {
+        private void SetEndPosition() {
+            if (endGridPosition == noValue) {
                 endGridPosition = grid.WorldToCell(HelperUtilities.GetMouseWorldPosition());
 
-                if (!IsPositionWithinBounds(endGridPosition))
-                {
+                if (!IsPositionWithinBounds(endGridPosition)) {
                     endGridPosition = noValue;
                     return;
                 }
 
                 pathTilemap.SetTile(endGridPosition, finishPathTile);
-            }
-            else
-            {
+            } else {
                 pathTilemap.SetTile(endGridPosition, null);
                 endGridPosition = noValue;
             }
@@ -173,12 +148,10 @@ namespace DungeonGunner
 
 
 
-        private void ClearPath()
-        {
+        private void ClearPath() {
             if (pathStack == null) return;
 
-            foreach (Vector3 cellWorldPosition in pathStack)
-            {
+            foreach (Vector3 cellWorldPosition in pathStack) {
                 pathTilemap.SetTile(grid.WorldToCell(cellWorldPosition), null);
             }
 
@@ -190,18 +163,17 @@ namespace DungeonGunner
 
 
 
-        private void DisplayPath()
-        {
+        private void DisplayPath() {
             if (startGridPosition == noValue
             || endGridPosition == noValue)
                 return;
 
             pathStack = AStarPathfinding.AStar.BuildPath(roomGameObject.room, startGridPosition, endGridPosition);
 
-            if (pathStack == null) return;
+            if (pathStack == null)
+                return;
 
-            foreach (Vector3 cellWorldPosition in pathStack)
-            {
+            foreach (Vector3 cellWorldPosition in pathStack) {
                 pathTilemap.SetTile(grid.WorldToCell(cellWorldPosition), startPathTile);
             }
         }

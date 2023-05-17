@@ -1,17 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+using DIM.AudioSystem;
+
+namespace DIM.CombatSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(ActiveWeapon))]
     [RequireComponent(typeof(FireEvent))]
     [RequireComponent(typeof(ReloadEvent))]
     #endregion
-    public class FireAction : MonoBehaviour
-    {
+    public class FireAction : MonoBehaviour {
         private ActiveWeapon activeWeapon;
         private FireEvent fireEvent;
         private ReloadEvent reloadEvent;
@@ -19,10 +18,9 @@ namespace DungeonGunner
         private float fireRateTimer = 0f;
         private float prefireTimer = 0f;
 
+        // ===================================================================
 
-
-        private void Awake()
-        {
+        private void Awake() {
             activeWeapon = GetComponent<ActiveWeapon>();
             fireEvent = GetComponent<FireEvent>();
             reloadEvent = GetComponent<ReloadEvent>();
@@ -30,43 +28,37 @@ namespace DungeonGunner
 
 
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             fireEvent.OnFireAction += FireEvent_OnFireAction;
         }
 
 
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
             fireEvent.OnFireAction -= FireEvent_OnFireAction;
         }
 
 
 
-        private void Update()
-        {
+        private void Update() {
             ProcessFireRateTimer();
         }
 
 
 
-        private void FireEvent_OnFireAction(FireEvent _sender, OnFireActionArgs _args)
-        {
+        private void FireEvent_OnFireAction(FireEvent _sender, OnFireActionArgs _args) {
             Fire(_args);
         }
 
 
 
-        private void ProcessFireRateTimer()
-        {
+        private void ProcessFireRateTimer() {
             fireRateTimer -= Time.deltaTime;
         }
 
 
 
-        private void Fire(OnFireActionArgs _args)
-        {
+        private void Fire(OnFireActionArgs _args) {
 
             ProcessPrefireTimer(_args);
 
@@ -84,10 +76,8 @@ namespace DungeonGunner
 
 
 
-        private void ProcessPrefireTimer(OnFireActionArgs _args)
-        {
-            if (_args.isFiringPreviousFrame)
-            {
+        private void ProcessPrefireTimer(OnFireActionArgs _args) {
+            if (_args.isFiringPreviousFrame) {
                 prefireTimer -= Time.deltaTime;
                 return;
             }
@@ -97,14 +87,12 @@ namespace DungeonGunner
 
 
 
-        private bool IsReadyToFire()
-        {
+        private bool IsReadyToFire() {
             Weapon currentWeapon = activeWeapon.GetCurrentWeapon();
 
             if (!currentWeapon.weaponDetail.isAmmoInfinite && currentWeapon.ammoRemaining <= 0) return false;
 
-            if (!currentWeapon.weaponDetail.isAmmoPerClipInfinite && currentWeapon.ammoPerClipRemaining <= 0)
-            {
+            if (!currentWeapon.weaponDetail.isAmmoPerClipInfinite && currentWeapon.ammoPerClipRemaining <= 0) {
                 reloadEvent.CallOnReloadAction(currentWeapon, 0);
                 return false;
             }
@@ -120,8 +108,7 @@ namespace DungeonGunner
 
 
 
-        private void FireAmmo(float _angle, float _weaponAngle, Vector3 _weaponDirectionVector)
-        {
+        private void FireAmmo(float _angle, float _weaponAngle, Vector3 _weaponDirectionVector) {
             AmmoDetailSO currentAmmoDetail = activeWeapon.GetAmmoDetail();
 
             if (currentAmmoDetail != null)
@@ -130,16 +117,14 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator FireAmmoCoroutine(AmmoDetailSO _ammoDetail, float _angle, float _weaponAngle, Vector3 _weaponDirectionVector)
-        {
+        private IEnumerator FireAmmoCoroutine(AmmoDetailSO _ammoDetail, float _angle, float _weaponAngle, Vector3 _weaponDirectionVector) {
             int ammoCounter = 0;
             int ammoPerShot = Random.Range(_ammoDetail.minSpawnCount, _ammoDetail.maxSpawnCount + 1);
             float ammoSpawnInterval = ammoPerShot > 1 ? Random.Range(_ammoDetail.minSpawnInterval, _ammoDetail.maxSpawnInterval) : 0f;
 
             Weapon currentWeapon = activeWeapon.GetCurrentWeapon();
 
-            while (ammoCounter < ammoPerShot)
-            {
+            while (ammoCounter < ammoPerShot) {
                 ammoCounter++;
 
                 GameObject ammoPrefab = _ammoDetail.prefabArray[Random.Range(0, _ammoDetail.prefabArray.Length)];
@@ -151,8 +136,7 @@ namespace DungeonGunner
                 yield return new WaitForSeconds(ammoSpawnInterval);
             }
 
-            if (!currentWeapon.weaponDetail.isAmmoPerClipInfinite)
-            {
+            if (!currentWeapon.weaponDetail.isAmmoPerClipInfinite) {
                 currentWeapon.ammoPerClipRemaining--;
                 currentWeapon.ammoRemaining--;
             }
@@ -164,26 +148,22 @@ namespace DungeonGunner
 
 
 
-        private void ResetFireRateTimer()
-        {
+        private void ResetFireRateTimer() {
             fireRateTimer = activeWeapon.GetCurrentWeapon().weaponDetail.fireRate;
         }
 
 
 
-        private void ResetPrechargeTimer()
-        {
+        private void ResetPrechargeTimer() {
             prefireTimer = activeWeapon.GetCurrentWeapon().weaponDetail.prefireDelay;
         }
 
 
 
-        private void PlayFireShootEffect(float _angle)
-        {
+        private void PlayFireShootEffect(float _angle) {
             ShootEffectSO currentWeaponShootEffect = activeWeapon.GetCurrentWeapon().weaponDetail.shootEffect;
 
-            if (currentWeaponShootEffect != null && currentWeaponShootEffect.prefab != null)
-            {
+            if (currentWeaponShootEffect != null && currentWeaponShootEffect.prefab != null) {
                 ShootEffect shootEffectInstance = (ShootEffect)PoolManager.Instance.ReuseComponent(currentWeaponShootEffect.prefab, activeWeapon.GetEffectPosition(), Quaternion.identity);
 
                 shootEffectInstance.Init(currentWeaponShootEffect, _angle);
@@ -194,8 +174,7 @@ namespace DungeonGunner
 
 
 
-        private void PlayFireSoundEffect()
-        {
+        private void PlayFireSoundEffect() {
             SoundEffectSO currentWeaponFireSoundEffect = activeWeapon.GetCurrentWeapon().weaponDetail.fireSoundEffect;
 
             if (currentWeaponFireSoundEffect != null)

@@ -1148,37 +1148,37 @@ MonoBehaviour:
   poolArray:
   - prefab: {fileID: 1338510408464095998, guid: 28ff258b1a898c5439eae21a09086e4b, type: 3}
     size: 30
-    componentType: IFireable
+    componentType: CombatSystem.IFireable
   - prefab: {fileID: 1338510408464095998, guid: 29fe0b11fbb341f4babc41f45f5e635e, type: 3}
     size: 30
-    componentType: IFireable
+    componentType: CombatSystem.IFireable
   - prefab: {fileID: 1338510408464095998, guid: 6f8c7003f920a9a49ac3fd5613902114, type: 3}
     size: 30
-    componentType: IFireable
+    componentType: CombatSystem.IFireable
   - prefab: {fileID: 1338510408464095998, guid: cea4b3d2d714e04439afdcbbd2c9c965, type: 3}
     size: 10
-    componentType: IFireable
+    componentType: CombatSystem.IFireable
   - prefab: {fileID: 6192850743870799467, guid: baf8604b058f691429c375471bb5f3d0, type: 3}
     size: 40
-    componentType: SoundEffect
+    componentType: AudioSystem.SoundEffect
   - prefab: {fileID: 6686628791664719542, guid: 4a4a3acd1a5f87d46944a3726bec32d6, type: 3}
     size: 20
-    componentType: ShootEffect
+    componentType: CombatSystem.ShootEffect
   - prefab: {fileID: 7853615770937549561, guid: 88405b8536eba52438d8de605fc0ecfb, type: 3}
     size: 20
-    componentType: ShootEffect
+    componentType: CombatSystem.ShootEffect
   - prefab: {fileID: 4845784685338801524, guid: ed69473cf5c5b564b917292f15ed4008, type: 3}
     size: 20
-    componentType: ShootEffect
+    componentType: CombatSystem.ShootEffect
   - prefab: {fileID: 7853615770937549561, guid: e74f81b6079a4d840b420fe33bacb07d, type: 3}
     size: 20
-    componentType: HitEffect
+    componentType: CombatSystem.HitEffect
   - prefab: {fileID: 1338510408464095998, guid: a191acab0d741b34f92d35b0c000ed2f, type: 3}
     size: 200
-    componentType: IFireable
+    componentType: CombatSystem.IFireable
   - prefab: {fileID: 2441378453221013712, guid: 77836486062a2bc4c87a231d6ed63183, type: 3}
     size: 10
-    componentType: IFireable
+    componentType: CombatSystem.IFireable
 --- !u!1 &218484985
 GameObject:
   m_ObjectHideFlags: 0

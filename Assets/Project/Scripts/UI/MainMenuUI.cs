@@ -1,17 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace DungeonGunner {
+using DIM.AudioSystem;
+
+namespace DIM.UI {
     public class MainMenuUI : MonoBehaviour {
         [SerializeField] private GameObject playButton;
         [SerializeField] private GameObject highScoreButton;
         [SerializeField] private GameObject returnToMainMenuButton;
         private bool isHighScoresSceneLoaded = false;
 
-
-
+        // ===================================================================
 
         private void Start() {
             MusicManager.Instance.PlayMusic(AudioResources.Instance.MainMenuMusicTrack, 0f, 2f);

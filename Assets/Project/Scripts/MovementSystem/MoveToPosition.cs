@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.MovementSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Rigidbody2D))]
@@ -10,7 +10,7 @@ namespace DungeonGunner {
         private Rigidbody2D rb2D;
         private MoveToPositionEvent moveToPositionEvent;
 
-
+        // ===================================================================
 
         private void Awake() {
             rb2D = GetComponent<Rigidbody2D>();

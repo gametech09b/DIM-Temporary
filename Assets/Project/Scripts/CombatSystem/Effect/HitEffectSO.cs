@@ -1,13 +1,10 @@
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.CombatSystem {
     [CreateAssetMenu(fileName = "HitEffect_", menuName = "Scriptable Objects/Effect/Hit Effect")]
-    public class HitEffectSO : ScriptableObject
-    {
+    public class HitEffectSO : ScriptableObject {
         [Space(10)]
         [Header("Hit Effect Detail")]
-
 
         public Gradient colorGradient;
         public float duration = 0.5f;
@@ -19,18 +16,23 @@ namespace DungeonGunner
         public int burstParticleNumber = 20;
         public float effectGravity = -0.01f;
 
+
+        [Space(10)]
+
         public Sprite sprite;
         public GameObject prefab;
+
+
+        [Space(10)]
 
         public Vector3 minVelocityOverLifetime;
         public Vector3 maxVelocityOverLifetime;
 
-
+        // ===================================================================
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckPositiveValue(this, nameof(duration), duration);
             HelperUtilities.CheckPositiveValue(this, nameof(startParticleSize), startParticleSize);
             HelperUtilities.CheckPositiveValue(this, nameof(startParticleSpeed), startParticleSpeed);

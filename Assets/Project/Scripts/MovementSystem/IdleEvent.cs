@@ -1,17 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.MovementSystem {
     [DisallowMultipleComponent]
-    public class IdleEvent : MonoBehaviour
-    {
+    public class IdleEvent : MonoBehaviour {
         public event Action<IdleEvent> OnIdle;
 
-        public void CallOnIdleEvent()
-        {
+        public void CallOnIdleEvent() {
             OnIdle?.Invoke(this);
         }
     }

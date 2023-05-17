@@ -1,6 +1,8 @@
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.HealthSystem;
+
+namespace DIM.CombatSystem {
     [DisallowMultipleComponent]
     public class AmmoGameObject : MonoBehaviour, IFireable {
         [SerializeField] private TrailRenderer trailRenderer;
@@ -17,7 +19,7 @@ namespace DungeonGunner {
         private bool isOverrideAmmoMovement;
         private bool isCollided;
 
-
+        // ===================================================================
 
         private void Awake() {
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -96,12 +98,6 @@ namespace DungeonGunner {
 
 
 
-        public GameObject GetGameObject() {
-            return gameObject;
-        }
-
-
-
         public void Init(AmmoDetailSO _ammoDetail, float _ammoSpeed, float _angle, float _weaponAngle, Vector3 _weaponDirectionVector, bool _isOverrideAmmoMovement = false) {
             #region ammo
             this.ammoDetail = _ammoDetail;
@@ -130,6 +126,7 @@ namespace DungeonGunner {
 
             gameObject.SetActive(true);
             #endregion
+
 
 
             #region trail

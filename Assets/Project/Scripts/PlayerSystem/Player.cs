@@ -1,9 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace DungeonGunner {
+using DIM.CombatSystem;
+using DIM.HealthSystem;
+using DIM.MovementSystem;
+
+namespace DIM.PlayerSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Animator))]
@@ -58,8 +61,7 @@ namespace DungeonGunner {
         [HideInInspector] public HealthEvent healthEvent;
         [HideInInspector] public DestroyedEvent destroyedEvent;
 
-
-
+        // ===================================================================
 
         private void Awake() {
             animator = GetComponent<Animator>();
@@ -143,7 +145,7 @@ namespace DungeonGunner {
         public bool IsWeaponInList(WeaponDetailSO _weaponDetail) {
             foreach (Weapon weapon in weaponList) {
                 if (weapon.weaponDetail == _weaponDetail)
-                return true;
+                    return true;
             }
 
             return false;

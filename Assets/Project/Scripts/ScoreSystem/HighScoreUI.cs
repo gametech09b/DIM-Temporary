@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
-    public class HighScoreUI : MonoBehaviour
-    {
+namespace DIM.ScoreSystem {
+    public class HighScoreUI : MonoBehaviour {
         [SerializeField] private Transform contentParentTransform;
 
-
+        // ===================================================================
 
         private void Start() {
             DisplayHighScore();

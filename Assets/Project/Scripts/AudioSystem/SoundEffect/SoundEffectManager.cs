@@ -1,14 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.AudioSystem {
     [DisallowMultipleComponent]
     public class SoundEffectManager : SingletonMonobehaviour<SoundEffectManager> {
-
         public int volume = 8;
 
-
+        // ===================================================================
 
         private void Start() {
             if (PlayerPrefs.HasKey("soundVolume"))

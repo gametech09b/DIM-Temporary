@@ -1,7 +1,8 @@
-using System;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.AudioSystem;
+
+namespace DIM.Environment {
     #region Requirement Components
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(BoxCollider2D))]
@@ -16,7 +17,7 @@ namespace DungeonGunner {
 
         private bool isUsed;
 
-
+        // ===================================================================
 
         private void Awake() {
             animator = GetComponent<Animator>();

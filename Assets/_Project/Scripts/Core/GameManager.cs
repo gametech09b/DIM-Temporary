@@ -160,10 +160,13 @@ namespace DIM {
         private void HandleGameState() {
             switch (gameState) {
                 case GameState.GAME_STARTED:
-                    PlayDungeonLevel(currentDungeonLevelIndex);
-                    gameState = GameState.PLAYING_LEVEL;
+                    if(dungeonLevelList.Count > 0) {
+                        PlayDungeonLevel(currentDungeonLevelIndex);
+                        gameState = GameState.PLAYING_LEVEL;
 
-                    RoomEnemiesDefeated();
+                        RoomEnemiesDefeated();
+                    }
+
                     break;
 
                 case GameState.PLAYING_LEVEL:

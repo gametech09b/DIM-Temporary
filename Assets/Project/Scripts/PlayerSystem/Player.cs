@@ -1,10 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace DungeonGunner
-{
+using DIM.CombatSystem;
+using DIM.HealthSystem;
+using DIM.MovementSystem;
+
+namespace DIM.PlayerSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Animator))]
@@ -37,8 +39,7 @@ namespace DungeonGunner
     [RequireComponent(typeof(ReloadEvent))]
     [RequireComponent(typeof(TakeContactDamage))]
     #endregion
-    public class Player : MonoBehaviour
-    {
+    public class Player : MonoBehaviour {
         [HideInInspector] public Animator animator;
         [HideInInspector] public SpriteRenderer spriteRenderer;
 
@@ -60,11 +61,9 @@ namespace DungeonGunner
         [HideInInspector] public HealthEvent healthEvent;
         [HideInInspector] public DestroyedEvent destroyedEvent;
 
+        // ===================================================================
 
-
-
-        private void Awake()
-        {
+        private void Awake() {
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -87,32 +86,27 @@ namespace DungeonGunner
 
 
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             healthEvent.OnHealthChanged += HealthEvent_OnHealthChange;
         }
 
 
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
             healthEvent.OnHealthChanged -= HealthEvent_OnHealthChange;
         }
 
 
 
-        private void HealthEvent_OnHealthChange(HealthEvent _sender, OnHealthChangedEventArgs _args)
-        {
-            if (_args.healthAmount <= 0f)
-            {
+        private void HealthEvent_OnHealthChange(HealthEvent _sender, OnHealthChangedEventArgs _args) {
+            if (_args.healthAmount <= 0f) {
                 destroyedEvent.CallOnDestroyed(true, 0);
             }
         }
 
 
 
-        public void Init(PlayerDetailSO _playerDetail)
-        {
+        public void Init(PlayerDetailSO _playerDetail) {
             this.playerDetail = _playerDetail;
 
             SetupHealth();
@@ -121,27 +115,23 @@ namespace DungeonGunner
 
 
 
-        private void SetupHealth()
-        {
+        private void SetupHealth() {
             health.SetStartingAmount(playerDetail.startingHealthAmount);
         }
 
 
 
-        private void SetupInitialWeapon()
-        {
+        private void SetupInitialWeapon() {
             weaponList.Clear();
 
-            foreach (WeaponDetailSO weaponDetail in playerDetail.initialWeaponsList)
-            {
+            foreach (WeaponDetailSO weaponDetail in playerDetail.initialWeaponsList) {
                 AddWeapon(weaponDetail);
             }
         }
 
 
 
-        public Weapon AddWeapon(WeaponDetailSO _weaponDetail)
-        {
+        public Weapon AddWeapon(WeaponDetailSO _weaponDetail) {
             Weapon weapon = new Weapon(_weaponDetail);
             weaponList.Add(weapon);
             weapon.indexOnList = weaponList.Count;
@@ -152,8 +142,18 @@ namespace DungeonGunner
 
 
 
-        public Vector3 GetPosition()
-        {
+        public bool IsWeaponInList(WeaponDetailSO _weaponDetail) {
+            foreach (Weapon weapon in weaponList) {
+                if (weapon.weaponDetail == _weaponDetail)
+                    return true;
+            }
+
+            return false;
+        }
+
+
+
+        public Vector3 GetPosition() {
             return transform.position;
         }
     }

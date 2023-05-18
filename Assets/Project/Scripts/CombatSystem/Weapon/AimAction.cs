@@ -1,56 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.CombatSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(AimEvent))]
     #endregion
-    public class AimAction : MonoBehaviour
-    {
-        [Tooltip("The transform of the player's weapon")]
+    public class AimAction : MonoBehaviour {
         [SerializeField] private Transform weaponRotationPointTransform;
 
         private AimEvent aimEvent;
 
+        // ===================================================================
 
-
-        private void Awake()
-        {
+        private void Awake() {
             aimEvent = GetComponent<AimEvent>();
         }
 
 
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             aimEvent.OnAimAction += AimEvent_OnAim;
         }
 
 
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
             aimEvent.OnAimAction -= AimEvent_OnAim;
         }
 
 
 
-        private void AimEvent_OnAim(AimEvent _aimEvent, AimEventArgs _aimEventArgs)
-        {
+        private void AimEvent_OnAim(AimEvent _aimEvent, AimEventArgs _aimEventArgs) {
             AimToMousePosition(_aimEventArgs.direction, _aimEventArgs.angle);
         }
 
 
 
-        private void AimToMousePosition(Direction _direction, float _angle)
-        {
+        private void AimToMousePosition(Direction _direction, float _angle) {
             weaponRotationPointTransform.eulerAngles = new Vector3(0f, 0f, _angle);
 
-            switch (_direction)
-            {
+            switch (_direction) {
                 case Direction.UP_LEFT:
                 case Direction.LEFT:
                     weaponRotationPointTransform.localScale = new Vector3(1f, -1f, 0);
@@ -68,8 +57,7 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckNullValue(this, nameof(weaponRotationPointTransform), weaponRotationPointTransform);
         }
 #endif

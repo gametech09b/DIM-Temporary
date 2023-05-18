@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-namespace DungeonGunner {
+namespace DIM {
     [RequireComponent(typeof(CinemachineTargetGroup))]
     public class CinemachineTarget : MonoBehaviour {
         private CinemachineTargetGroup cinemachineTargetGroup;

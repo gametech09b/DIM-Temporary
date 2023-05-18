@@ -1,15 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
-    public class UIResources : MonoBehaviour
-    {
+namespace DIM {
+    public class UIResources : MonoBehaviour {
         #region Singleton UIResources
         private static UIResources instance;
-        public static UIResources Instance
-        {
+        public static UIResources Instance {
             get
             {
                 if (instance == null)
@@ -25,7 +20,7 @@ namespace DungeonGunner
         [Space(10)]
         [Header("Weapon HUD")]
 
-        public GameObject ammoIconPrefab;
+        public GameObject AmmoIconPrefab;
 
 
 
@@ -33,6 +28,24 @@ namespace DungeonGunner
         [Header("Health HUD")]
 
 
-        public GameObject healthIconPrefab;
+        public GameObject HealthIconPrefab;
+
+
+
+        [Space(10)]
+        [Header("Chest")]
+
+
+        public GameObject ChestItemPrefab;
+        public Sprite HeartIconSprite;
+        public Sprite BulletIconSprite;
+
+
+
+        [Space(10)]
+        [Header("Score")]
+
+
+        public GameObject ScoreGameObjectPrefab;
     }
 }

@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using DIM.DungeonSystem;
 
-namespace DungeonGunner
-{
+namespace DIM.EnemySystem {
     [System.Serializable]
-    public struct EnemyHealthDetail
-    {
+    public struct EnemyHealthDetail {
         public DungeonLevelSO dungeonLevel;
         public int healthAmount;
     }

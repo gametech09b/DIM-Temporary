@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM {
     public static class Settings {
         #region Project Settings
-        public const string ProjectName = "DungeonGunner";
+        public const string ProjectName = "DIM";
         #endregion
 
 
@@ -82,6 +80,12 @@ namespace DungeonGunner {
 
 
 
+        #region Animator Parameters - Chest
+        public static int Use = Animator.StringToHash("use");
+        #endregion
+
+
+
         #region GameObject Tags
         public const string PlayerTag = "Player";
         public const string PlayerWeaponTag = "playerWeapon";
@@ -122,6 +126,19 @@ namespace DungeonGunner {
 
         #region Contact Damage Settings
         public const float ContactDamageCooldown = 0.5f;
+        #endregion
+
+
+
+        #region Audio System
+        public const float MusicTrackFadeInTime = 0.5f;
+        public const float MusicTrackFadeOutTime = 0.5f;
+        #endregion
+
+
+
+        #region Score System
+        public const int ScoreMaxEntries = 10;
         #endregion
     }
 }

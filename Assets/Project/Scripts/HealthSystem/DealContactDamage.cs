@@ -1,23 +1,17 @@
-using System.Threading;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.HealthSystem {
     [DisallowMultipleComponent]
-    public class DealContactDamage : MonoBehaviour
-    {
+    public class DealContactDamage : MonoBehaviour {
         [SerializeField] private int damageAmount;
 
         [SerializeField] private LayerMask layerMask;
 
         private bool isCollided = false;
 
+        // ===================================================================
 
-
-        private void OnTriggerEnter2D(Collider2D _other)
-        {
+        private void OnTriggerEnter2D(Collider2D _other) {
             if (isCollided)
                 return;
 
@@ -26,8 +20,7 @@ namespace DungeonGunner
 
 
 
-        private void OnTriggerStay2D(Collider2D _other)
-        {
+        private void OnTriggerStay2D(Collider2D _other) {
             if (isCollided)
                 return;
 
@@ -36,8 +29,7 @@ namespace DungeonGunner
 
 
 
-        private void DealDamage(Collider2D _other)
-        {
+        private void DealDamage(Collider2D _other) {
             int collisionLayerMaskBitshift = 1 << _other.gameObject.layer;
 
             if ((layerMask.value & collisionLayerMaskBitshift) == 0)
@@ -57,8 +49,7 @@ namespace DungeonGunner
 
 
 
-        private void ResetContactCollision()
-        {
+        private void ResetContactCollision() {
             isCollided = false;
         }
 
@@ -66,8 +57,7 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckPositiveValue(this, nameof(damageAmount), damageAmount, true);
         }
 #endif

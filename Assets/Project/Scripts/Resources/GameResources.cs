@@ -1,15 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.Audio;
 
-namespace DungeonGunner
-{
-    public class GameResources : MonoBehaviour
-    {
+using DIM.DungeonSystem;
+using DIM.PlayerSystem;
+
+namespace DIM {
+    public class GameResources : MonoBehaviour {
         #region Singleton GameResources
         private static GameResources instance;
-        public static GameResources Instance
-        {
+        public static GameResources Instance {
             get
             {
                 if (instance == null)
@@ -25,64 +25,53 @@ namespace DungeonGunner
         [Space(10)]
         [Header("AStar Tilemap")]
 
-
         public TileBase[] EnemyUnwalkableTileArray;
         public TileBase EnemyPreferredPathTile;
-
-
-
-        [Space(10)]
-        [Header("Audio")]
-
-
-        [Tooltip("Populate with the audio mixer group")]
-        public AudioMixerGroup AudioMixerGroup_Master;
-
 
 
         [Space(10)]
         [Header("Dungeon")]
 
-
-        [Tooltip("Populate with the dungeon RoomNodeTypeListSO")]
         public RoomNodeTypeListSO RoomNodeTypeList;
-
 
 
         [Space(10)]
         [Header("Player")]
 
-
-        [Tooltip("Populate with the player CurrentPlayerSO")]
+        public List<PlayerDetailSO> PlayerDetailList;
         public CurrentPlayerSO CurrentPlayer;
-
 
 
         [Space(10)]
         [Header("Materials")]
 
-
-        [Tooltip("Dimmed Material")]
         public Material DimmedMaterial;
-
-        [Tooltip("Sprite-Lit-Default Material")]
         public Material LitMaterial;
-
 
 
         [Space(10)]
         [Header("Shaders")]
 
-
-        [Tooltip("Variable-Lit Shader")]
         public Shader VariableLitShader;
+        public Shader MaterializeShader;
 
 
+        [Space(10)]
+        [Header("Minimap")]
+
+        public GameObject MinimapSkullPrefab;
+
+
+        [Space(10)]
+        [Header("Player Selection")]
+
+        public GameObject PlayerSelectionPrefab;
+
+        // ===================================================================
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckEnumerableValue(this, nameof(EnemyUnwalkableTileArray), EnemyUnwalkableTileArray);
             HelperUtilities.CheckNullValue(this, nameof(EnemyPreferredPathTile), EnemyPreferredPathTile);
 

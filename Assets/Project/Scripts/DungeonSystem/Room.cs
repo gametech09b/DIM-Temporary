@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
-    public class Room
-    {
+using DIM.AudioSystem;
+using DIM.EnemySystem;
+using DIM.SpawnSystem;
+
+namespace DIM.DungeonSystem {
+    public class Room {
         public string id;
         public string templateID;
         public GameObject prefab;
@@ -15,38 +17,34 @@ namespace DungeonGunner
         public Vector2Int templateUpperBounds;
         public Vector2Int[] spawnPositionArray;
 
-
         public string parentRoomID;
         public List<string> childRoomIDList;
 
-
         public List<Doorway> doorwayList;
         public bool isPositioned;
-
 
         public bool isLit = false;
         public bool isCleared = false;
         public bool isVisited = false;
 
-
         public RoomGameObject roomGameObject;
-
 
         public List<SpawnableObjectsByLevel<EnemyDetailSO>> enemySpawnByLevelList;
         public List<RoomEnemySpawnParameter> roomEnemySpawnParameterList;
 
+        public MusicTrackSO ambientMusicTrack;
+        public MusicTrackSO battleMusicTrack;
 
+        // ===================================================================
 
-        public Room()
-        {
+        public Room() {
             childRoomIDList = new List<string>();
             doorwayList = new List<Doorway>();
         }
 
 
 
-        public Vector3 GetMiddlePosition()
-        {
+        public Vector3 GetMiddlePosition() {
             Vector3 middlePosition = new Vector3();
             middlePosition.x = (lowerBounds.x + upperBounds.x) / 2f;
             middlePosition.y = (lowerBounds.y + upperBounds.y) / 2f;
@@ -56,17 +54,14 @@ namespace DungeonGunner
 
 
 
-        public Grid GetGrid()
-        {
+        public Grid GetGrid() {
             return roomGameObject.grid;
         }
 
 
 
-        public int GetNumberOfEnemyToSpawn(DungeonLevelSO _dungeonLevel)
-        {
-            foreach (RoomEnemySpawnParameter roomEnemySpawnParameter in roomEnemySpawnParameterList)
-            {
+        public int GetNumberOfEnemyToSpawn(DungeonLevelSO _dungeonLevel) {
+            foreach (RoomEnemySpawnParameter roomEnemySpawnParameter in roomEnemySpawnParameterList) {
                 if (roomEnemySpawnParameter.dungeonLevel == _dungeonLevel)
                     return Random.Range(roomEnemySpawnParameter.minTotalEnemy, roomEnemySpawnParameter.maxTotalEnemy);
             }
@@ -76,10 +71,8 @@ namespace DungeonGunner
 
 
 
-        public RoomEnemySpawnParameter GetRoomEnemySpawnParameter(DungeonLevelSO _dungeonLevel)
-        {
-            foreach (RoomEnemySpawnParameter roomEnemySpawnParameter in roomEnemySpawnParameterList)
-            {
+        public RoomEnemySpawnParameter GetRoomEnemySpawnParameter(DungeonLevelSO _dungeonLevel) {
+            foreach (RoomEnemySpawnParameter roomEnemySpawnParameter in roomEnemySpawnParameterList) {
                 if (roomEnemySpawnParameter.dungeonLevel == _dungeonLevel)
                     return roomEnemySpawnParameter;
             }

@@ -1,20 +1,16 @@
 using UnityEngine;
 
-namespace DungeonGunner
-{
-    public abstract class SingletonMonobehaviour<T> : MonoBehaviour where T : MonoBehaviour
-    {
+namespace DIM {
+    public abstract class SingletonMonobehaviour<T> : MonoBehaviour where T : MonoBehaviour {
         private static T instance;
-        public static T Instance
-        {
+        public static T Instance {
             get
             {
                 return instance;
             }
         }
 
-        protected virtual void Awake()
-        {
+        protected virtual void Awake() {
             if (instance == null)
                 instance = this as T;
             else

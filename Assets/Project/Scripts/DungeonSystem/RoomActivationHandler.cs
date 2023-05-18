@@ -1,19 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.DungeonSystem {
     [DisallowMultipleComponent]
-    public class RoomActivationHandler : MonoBehaviour
-    {
+    public class RoomActivationHandler : MonoBehaviour {
         [SerializeField] private Camera minimapCamera;
         private Camera mainCamera;
 
+        // ===================================================================
 
-
-        private void Start()
-        {
+        private void Start() {
             mainCamera = Camera.main;
 
             InvokeRepeating(nameof(EnableRooms), 0.5f, 0.75f);
@@ -21,18 +17,18 @@ namespace DungeonGunner
 
 
 
-        private void EnableRooms()
-        {
+        private void EnableRooms() {
+            if (GameManager.Instance.gameState == GameState.DUNGEON_OVERVIEW_MAP)
+                return;
+
             HelperUtilities.CameraWorldPositionBounds(minimapCamera, out Vector2Int minimapCameraLowerBounds, out Vector2Int minimapCameraUpperBounds);
             HelperUtilities.CameraWorldPositionBounds(mainCamera, out Vector2Int mainCameraLowerBounds, out Vector2Int mainCameraUpperBounds);
 
-            foreach (KeyValuePair<string, Room> roomDictionaryKVP in DungeonBuilder.Instance.roomDictionary)
-            {
+            foreach (KeyValuePair<string, Room> roomDictionaryKVP in DungeonBuilder.Instance.roomDictionary) {
                 Room room = roomDictionaryKVP.Value;
 
                 if ((room.lowerBounds.x <= minimapCameraUpperBounds.x && room.lowerBounds.y <= minimapCameraUpperBounds.y)
-                && (room.upperBounds.x >= minimapCameraLowerBounds.x && room.upperBounds.y >= minimapCameraLowerBounds.y))
-                {
+                && (room.upperBounds.x >= minimapCameraLowerBounds.x && room.upperBounds.y >= minimapCameraLowerBounds.y)) {
                     room.roomGameObject.gameObject.SetActive(true);
 
                     if ((room.lowerBounds.x <= mainCameraUpperBounds.x && room.lowerBounds.y <= mainCameraUpperBounds.y)
@@ -40,8 +36,7 @@ namespace DungeonGunner
                         room.roomGameObject.ActivateEnvironment();
                     else
                         room.roomGameObject.DeactivateEnvironment();
-                }
-                else
+                } else
                     room.roomGameObject.gameObject.SetActive(false);
             }
         }
@@ -50,8 +45,7 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckNullValue(this, nameof(minimapCamera), minimapCamera);
         }
 #endif

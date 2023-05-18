@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.CombatSystem {
     [DisallowMultipleComponent]
     public class ReloadEvent : MonoBehaviour {
         public event Action<ReloadEvent, OnReloadActionArgs> OnReloadAction;

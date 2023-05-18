@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.MovementSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(IdleEvent))]
@@ -12,7 +10,7 @@ namespace DungeonGunner {
         private Rigidbody2D rb2D;
         private IdleEvent idleEvent;
 
-
+        // ===================================================================
 
         private void Awake() {
             rb2D = GetComponent<Rigidbody2D>();

@@ -1,26 +1,22 @@
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.CombatSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(ParticleSystem))]
     #endregion
-    public class ShootEffect : MonoBehaviour
-    {
+    public class ShootEffect : MonoBehaviour {
         private ParticleSystem particleSystemComponent;
 
+        // ===================================================================
 
-
-        private void Awake()
-        {
+        private void Awake() {
             particleSystemComponent = GetComponent<ParticleSystem>();
         }
 
 
 
-        public void Init(ShootEffectSO _shootEffect, float _angle)
-        {
+        public void Init(ShootEffectSO _shootEffect, float _angle) {
             SetColorGradient(_shootEffect.colorGradient);
 
             SetParticleStartingValues(_shootEffect.duration, _shootEffect.startParticleSize, _shootEffect.startParticleSpeed, _shootEffect.startLifetime, _shootEffect.effectGravity, _shootEffect.maxParticleNumber);
@@ -36,16 +32,14 @@ namespace DungeonGunner
 
 
 
-        private void SetColorGradient(Gradient _colorGradient)
-        {
+        private void SetColorGradient(Gradient _colorGradient) {
             ParticleSystem.ColorOverLifetimeModule colorOverLifetime = particleSystemComponent.colorOverLifetime;
             colorOverLifetime.color = _colorGradient;
         }
 
 
 
-        private void SetParticleStartingValues(float _duration, float _startParticleSize, float _startParticleSpeed, float _startLifetime, float _effectGravity, int _maxParticles)
-        {
+        private void SetParticleStartingValues(float _duration, float _startParticleSize, float _startParticleSpeed, float _startLifetime, float _effectGravity, int _maxParticles) {
             ParticleSystem.MainModule mainModule = particleSystemComponent.main;
 
             mainModule.duration = _duration;
@@ -57,8 +51,7 @@ namespace DungeonGunner
 
 
 
-        private void SetEmissionRate(int _maxEmissionRate, int _burstParticleNumber)
-        {
+        private void SetEmissionRate(int _maxEmissionRate, int _burstParticleNumber) {
             ParticleSystem.EmissionModule emissionModule = particleSystemComponent.emission;
 
             emissionModule.rateOverTime = _maxEmissionRate;
@@ -69,15 +62,13 @@ namespace DungeonGunner
 
 
 
-        private void SetEmitterRotation(float _angle)
-        {
+        private void SetEmitterRotation(float _angle) {
             transform.eulerAngles = new Vector3(0, 0, _angle);
         }
 
 
 
-        private void SetParticleSprite(Sprite _sprite)
-        {
+        private void SetParticleSprite(Sprite _sprite) {
             ParticleSystem.TextureSheetAnimationModule textureSheetAnimationModule = particleSystemComponent.textureSheetAnimation;
 
             textureSheetAnimationModule.SetSprite(0, _sprite);
@@ -85,8 +76,7 @@ namespace DungeonGunner
 
 
 
-        private void SetVelocityOverLifetime(Vector3 _minVelocityOverLifetime, Vector3 _maxVelocityOverLifetime)
-        {
+        private void SetVelocityOverLifetime(Vector3 _minVelocityOverLifetime, Vector3 _maxVelocityOverLifetime) {
             ParticleSystem.VelocityOverLifetimeModule velocityOverLifetimeModule = particleSystemComponent.velocityOverLifetime;
 
             ParticleSystem.MinMaxCurve x = new ParticleSystem.MinMaxCurve();

@@ -1,8 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+using DIM.AudioSystem;
+using DIM.HealthSystem;
+
+namespace DIM.Environment {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Animator))]
@@ -12,8 +14,7 @@ namespace DungeonGunner
     [RequireComponent(typeof(HealthEvent))]
     [RequireComponent(typeof(TakeContactDamage))]
     #endregion
-    public class DestroyableItem : MonoBehaviour
-    {
+    public class DestroyableItem : MonoBehaviour {
         [SerializeField] private int startingHealthAmount = 1;
         [SerializeField] private SoundEffectSO destroySoundEffect;
 
@@ -24,10 +25,9 @@ namespace DungeonGunner
         private HealthEvent healthEvent;
         private TakeContactDamage takeContactDamage;
 
+        // ===================================================================
 
-
-        private void Awake()
-        {
+        private void Awake() {
             animator = GetComponent<Animator>();
             boxCollider2D = GetComponent<BoxCollider2D>();
 
@@ -38,50 +38,42 @@ namespace DungeonGunner
 
 
 
-        private void Start()
-        {
+        private void Start() {
             health.SetStartingAmount(startingHealthAmount);
         }
 
 
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
         }
 
 
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
             healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
         }
 
 
 
-        private void HealthEvent_OnHealthChanged(HealthEvent _sender, OnHealthChangedEventArgs _args)
-        {
-            if (_args.healthAmount <= 0f)
-            {
+        private void HealthEvent_OnHealthChanged(HealthEvent _sender, OnHealthChangedEventArgs _args) {
+            if (_args.healthAmount <= 0f) {
                 StartCoroutine(DestroyedAnimationCoroutine());
             }
         }
 
 
 
-        private IEnumerator DestroyedAnimationCoroutine()
-        {
+        private IEnumerator DestroyedAnimationCoroutine() {
             Destroy(boxCollider2D);
 
-            if (destroySoundEffect != null)
-            {
+            if (destroySoundEffect != null) {
                 SoundEffectManager.Instance.PlaySoundEffect(destroySoundEffect);
             }
 
             animator.SetBool(Settings.Destroy, true);
 
-            while (!animator.GetCurrentAnimatorStateInfo(0).IsName(Settings.DestroyedState))
-            {
+            while (!animator.GetCurrentAnimatorStateInfo(0).IsName(Settings.DestroyedState)) {
                 yield return null;
             }
 

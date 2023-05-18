@@ -1,26 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.AudioSystem {
     [DisallowMultipleComponent]
-    public class SoundEffectManager : SingletonMonobehaviour<SoundEffectManager>
-    {
+    public class SoundEffectManager : SingletonMonobehaviour<SoundEffectManager> {
+        public int volume = 8;
 
-        public int masterVolume = 8;
+        // ===================================================================
 
+        private void Start() {
+            if (PlayerPrefs.HasKey("soundVolume"))
+                volume = PlayerPrefs.GetInt("soundVolume");
 
-
-        private void Start()
-        {
-            SetSoundVolume(masterVolume);
+            SetSoundVolume(volume);
         }
 
 
 
-        public void PlaySoundEffect(SoundEffectSO _soundEffect)
-        {
+        private void OnDisable() {
+            PlayerPrefs.SetInt("soundVolume", volume);
+        }
+
+
+
+        public void PlaySoundEffect(SoundEffectSO _soundEffect) {
             SoundEffect soundEffectInstance = (SoundEffect)PoolManager.Instance.ReuseComponent(_soundEffect.prefab, Vector3.zero, Quaternion.identity);
             soundEffectInstance.SetSoundEffect(_soundEffect);
             soundEffectInstance.gameObject.SetActive(true);
@@ -30,26 +33,47 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator DisableSoundEffect(SoundEffect _soundEffect, float _delayTime)
-        {
+        private IEnumerator DisableSoundEffect(SoundEffect _soundEffect, float _delayTime) {
             yield return new WaitForSeconds(_delayTime);
             _soundEffect.gameObject.SetActive(false);
         }
 
 
 
-        public void SetSoundVolume(int _volume)
-        {
+        public void IncreaseSoundVolume() {
+            int maxSoundVolume = 20;
+
+            if (volume >= maxSoundVolume)
+                return;
+
+            volume++;
+
+            SetSoundVolume(volume);
+        }
+
+
+
+        public void DecreaseSoundVolume() {
+            int minSoundVolume = 0;
+
+            if (volume <= minSoundVolume)
+                return;
+
+            volume--;
+
+            SetSoundVolume(volume);
+        }
+
+
+
+        public void SetSoundVolume(int _volume) {
             float muteDecibel = -80f;
 
-            if (_volume == 0)
-            {
-                GameResources.Instance.AudioMixerGroup_Master.audioMixer.SetFloat("soundVolume", muteDecibel);
-            }
-            else
-            {
+            if (_volume == 0) {
+                AudioResources.Instance.AudioMixerGroup_Master.audioMixer.SetFloat("soundVolume", muteDecibel);
+            } else {
                 float decibel = HelperUtilities.ConvertLinearToDecibel(_volume);
-                GameResources.Instance.AudioMixerGroup_Master.audioMixer.SetFloat("soundVolume", decibel);
+                AudioResources.Instance.AudioMixerGroup_Master.audioMixer.SetFloat("soundVolume", decibel);
             }
         }
     }

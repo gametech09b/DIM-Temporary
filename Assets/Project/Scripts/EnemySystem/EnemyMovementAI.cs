@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
-using DungeonGunner.AStarPathfinding;
-using System.Collections;
+using DIM.AStarPathfinding;
+using DIM.MovementSystem;
+using DIM.DungeonSystem;
 
-namespace DungeonGunner {
+namespace DIM.EnemySystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Enemy))]
@@ -25,9 +27,9 @@ namespace DungeonGunner {
 
         [HideInInspector] public int updateAtFrame = 1;
 
-        private List<Vector2Int> surroundingPositionList;
+        private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
 
-
+        // ===================================================================
 
         private void Awake() {
             enemy = GetComponent<Enemy>();
@@ -68,7 +70,8 @@ namespace DungeonGunner {
             if (Time.frameCount % Settings.AStarTargetFrameRate != updateAtFrame)
                 return;
 
-            if (rebuildPathCooldownTimer <= 0f || Vector3.Distance(referenceTargetPosition, currentTargetPosition) > Settings.AStarPlayerDistanceToRebuildPath) {
+            if (rebuildPathCooldownTimer <= 0f
+            || Vector3.Distance(referenceTargetPosition, currentTargetPosition) > Settings.AStarPlayerDistanceToRebuildPath) {
                 rebuildPathCooldownTimer = Settings.AStarEnemyRebuildCooldown;
 
                 referenceTargetPosition = currentTargetPosition;
@@ -122,48 +125,40 @@ namespace DungeonGunner {
             int itemObstaclePenalty = _currentRoom.roomGameObject.GetAStarItemObstaclePenalty(adjustedTargetCellPosition.x, adjustedTargetCellPosition.y);
             int penalty = Mathf.Min(movementPenalty, itemObstaclePenalty);
 
-            if (penalty != 0)
+            if (penalty != 0) {
                 return targetCellPosition;
+            } else {
+                surroundingPositionList.Clear();
 
-            return FindNonObstacleTargetPosition(_currentRoom, targetCellPosition, adjustedTargetCellPosition);
-        }
+                for (int x = -1; x <= 1; x++) {
+                    for (int y = -1; y <= 1; y++) {
 
+                        if (y == 0 && x == 0)
+                            continue;
 
-
-        private Vector3Int FindNonObstacleTargetPosition(Room _currentRoom, Vector3Int _targetCellPosition, Vector2Int _adjustedTargetCellPosition) {
-            surroundingPositionList.Clear();
-
-            for (int i = -1; i <= 1; i++) {
-                for (int j = -1; i <= 1; j++) {
-
-                    if (j == 0 && i == 0)
-                        continue;
-
-                    surroundingPositionList.Add(new Vector2Int(i, j));
-                }
-            }
-
-            for (int l = 0; l < 8; l++) {
-                int index = Random.Range(0, surroundingPositionList.Count);
-
-                try {
-
-                    int movementPenalty = _currentRoom.roomGameObject.GetAStarMovementPenalty(_adjustedTargetCellPosition.x + surroundingPositionList[index].x, _adjustedTargetCellPosition.y + surroundingPositionList[index].y);
-                    int itemObstaclePenalty = _currentRoom.roomGameObject.GetAStarItemObstaclePenalty(_adjustedTargetCellPosition.x + surroundingPositionList[index].x, _adjustedTargetCellPosition.y + surroundingPositionList[index].y);
-
-                    int penalty = Mathf.Min(movementPenalty, itemObstaclePenalty);
-
-                    if (penalty != 0)
-                        return new Vector3Int(_targetCellPosition.x + surroundingPositionList[index].x, _targetCellPosition.y + surroundingPositionList[index].y, 0);
-                } catch (System.Exception) {
-
-                    throw;
+                        surroundingPositionList.Add(new Vector2Int(x, y));
+                    }
                 }
 
-                surroundingPositionList.RemoveAt(index);
-            }
+                for (int iterator = 0; iterator < 8; iterator++) {
+                    int index = Random.Range(0, surroundingPositionList.Count);
 
-            return (Vector3Int)_currentRoom.spawnPositionArray[Random.Range(0, _currentRoom.spawnPositionArray.Length)];
+                    try {
+
+                        movementPenalty = _currentRoom.roomGameObject.GetAStarMovementPenalty(adjustedTargetCellPosition.x + surroundingPositionList[index].x, adjustedTargetCellPosition.y + surroundingPositionList[index].y);
+                        itemObstaclePenalty = _currentRoom.roomGameObject.GetAStarItemObstaclePenalty(adjustedTargetCellPosition.x + surroundingPositionList[index].x, adjustedTargetCellPosition.y + surroundingPositionList[index].y);
+
+                        penalty = Mathf.Min(movementPenalty, itemObstaclePenalty);
+
+                        if (penalty != 0)
+                            return new Vector3Int(targetCellPosition.x + surroundingPositionList[index].x, targetCellPosition.y + surroundingPositionList[index].y, 0);
+                    } catch (System.Exception) { }
+
+                    surroundingPositionList.RemoveAt(index);
+                }
+
+                return (Vector3Int)_currentRoom.spawnPositionArray[Random.Range(0, _currentRoom.spawnPositionArray.Length)];
+            }
         }
 
 

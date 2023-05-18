@@ -1,12 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-using DungeonGunner.EnemySystem;
+using DIM.CombatSystem;
+using DIM.DungeonSystem;
+using DIM.Effect;
+using DIM.HealthSystem;
+using DIM.MovementSystem;
 
-namespace DungeonGunner
-{
+namespace DIM.EnemySystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Animator))]
@@ -38,8 +40,7 @@ namespace DungeonGunner
     [RequireComponent(typeof(ReloadAction))]
     [RequireComponent(typeof(ReloadEvent))]
     #endregion
-    public class Enemy : MonoBehaviour
-    {
+    public class Enemy : MonoBehaviour {
         [HideInInspector] public Animator animator;
         private CircleCollider2D circleCollider2D;
         private PolygonCollider2D polygonCollider2D;
@@ -61,10 +62,9 @@ namespace DungeonGunner
 
         private MaterializeEffect materializeEffect;
 
+        // ===================================================================
 
-
-        private void Awake()
-        {
+        private void Awake() {
             animator = GetComponent<Animator>();
             circleCollider2D = GetComponent<CircleCollider2D>();
             polygonCollider2D = GetComponent<PolygonCollider2D>();
@@ -87,32 +87,27 @@ namespace DungeonGunner
 
 
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             healthEvent.OnHealthChanged += HealthEvent_OnHealthChange;
         }
 
 
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
             healthEvent.OnHealthChanged -= HealthEvent_OnHealthChange;
         }
 
 
 
-        private void HealthEvent_OnHealthChange(HealthEvent _sender, OnHealthChangedEventArgs _args)
-        {
-            if (_args.healthAmount <= 0)
-            {
+        private void HealthEvent_OnHealthChange(HealthEvent _sender, OnHealthChangedEventArgs _args) {
+            if (_args.healthAmount <= 0) {
                 DestroyGameObject();
             }
         }
 
 
 
-        public void Init(EnemyDetailSO _enemyDetail, int _spawnedCount, DungeonLevelSO _dungeonLevel)
-        {
+        public void Init(EnemyDetailSO _enemyDetail, int _spawnedCount, DungeonLevelSO _dungeonLevel) {
             this.enemyDetail = _enemyDetail;
 
             SetupAnimationSpeed();
@@ -128,26 +123,21 @@ namespace DungeonGunner
 
 
 
-        private void SetupAnimationSpeed()
-        {
+        private void SetupAnimationSpeed() {
             animator.speed = enemyMovementAI.moveSpeed / Settings.BaseSpeedForEnemyAnimation;
         }
 
 
 
-        private void SetMovePathfindingUpdateFrame(int _spawnedCount)
-        {
+        private void SetMovePathfindingUpdateFrame(int _spawnedCount) {
             enemyMovementAI.SetUpdateAtFrame(_spawnedCount % Settings.AStarTargetFrameRate);
         }
 
 
 
-        private void SetStartingHealth(DungeonLevelSO _dungeonLevel)
-        {
-            foreach (EnemyHealthDetail enemyHealthDetail in enemyDetail.enemyHealthDetailArray)
-            {
-                if (enemyHealthDetail.dungeonLevel == _dungeonLevel)
-                {
+        private void SetStartingHealth(DungeonLevelSO _dungeonLevel) {
+            foreach (EnemyHealthDetail enemyHealthDetail in enemyDetail.enemyHealthDetailArray) {
+                if (enemyHealthDetail.dungeonLevel == _dungeonLevel) {
                     health.SetStartingAmount(enemyHealthDetail.healthAmount);
                     break;
                 }
@@ -158,10 +148,8 @@ namespace DungeonGunner
 
 
 
-        private void SetStartingWeapon()
-        {
-            if (enemyDetail.weaponDetail != null)
-            {
+        private void SetStartingWeapon() {
+            if (enemyDetail.weaponDetail != null) {
                 Weapon weapon = new Weapon(enemyDetail.weaponDetail);
 
                 activeWeaponEvent.CallOnSetActiveWeapon(weapon);
@@ -170,8 +158,7 @@ namespace DungeonGunner
 
 
 
-        private IEnumerator MaterializeCoroutine()
-        {
+        private IEnumerator MaterializeCoroutine() {
             SetEnable(false);
 
             yield return StartCoroutine(materializeEffect.MaterializeCoroutine(enemyDetail.materializeShader, enemyDetail.materializeColor, enemyDetail.materializeDuration, spriteRendererArray, enemyDetail.standardMaterial));
@@ -181,8 +168,7 @@ namespace DungeonGunner
 
 
 
-        private void SetEnable(bool _isEnable)
-        {
+        private void SetEnable(bool _isEnable) {
             circleCollider2D.enabled = _isEnable;
             polygonCollider2D.enabled = _isEnable;
 
@@ -192,8 +178,7 @@ namespace DungeonGunner
 
 
 
-        private void DestroyGameObject()
-        {
+        private void DestroyGameObject() {
             DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
             destroyedEvent.CallOnDestroyed(false, health.GetStartingAmount());
         }

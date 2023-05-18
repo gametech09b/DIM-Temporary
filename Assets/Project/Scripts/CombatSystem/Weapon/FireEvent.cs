@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.CombatSystem {
     [DisallowMultipleComponent]
     public class FireEvent : MonoBehaviour {
         public event Action<FireEvent, OnFireActionArgs> OnFireAction;

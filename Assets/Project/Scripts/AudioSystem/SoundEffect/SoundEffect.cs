@@ -1,42 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.AudioSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(AudioSource))]
     #endregion
     public class SoundEffect : MonoBehaviour {
+        private AudioSource audioSource;
 
-        private AudioSource audioSourceComponent;
-
-
+        // ===================================================================
 
         private void Awake() {
-            audioSourceComponent = GetComponent<AudioSource>();
+            audioSource = GetComponent<AudioSource>();
         }
 
 
 
         private void OnEnable() {
-            if (audioSourceComponent.clip == null) return;
+            if (audioSource.clip == null) return;
 
-            audioSourceComponent.Play();
+            audioSource.Play();
         }
 
 
 
         private void OnDisable() {
-            audioSourceComponent.Stop();
+            audioSource.Stop();
         }
 
 
 
         public void SetSoundEffect(SoundEffectSO _soundEffect) {
-            audioSourceComponent.clip = _soundEffect.audioClip;
-            audioSourceComponent.volume = _soundEffect.volume;
-            audioSourceComponent.pitch = Random.Range(_soundEffect.minPitchVariation, _soundEffect.maxPitchVariation);
+            audioSource.clip = _soundEffect.audioClip;
+            audioSource.volume = _soundEffect.volume;
+            audioSource.pitch = Random.Range(_soundEffect.minPitchVariation, _soundEffect.maxPitchVariation);
         }
     }
 }

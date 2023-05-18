@@ -1,15 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.CombatSystem {
     [CreateAssetMenu(fileName = "ShootEffect_", menuName = "Scriptable Objects/Effect/Shoot Effect")]
-    public class ShootEffectSO : ScriptableObject
-    {
+    public class ShootEffectSO : ScriptableObject {
         [Space(10)]
         [Header("Shoot Effect Detail")]
-
 
         public Gradient colorGradient;
         public float duration = 0.5f;
@@ -21,18 +16,23 @@ namespace DungeonGunner
         public int burstParticleNumber = 20;
         public float effectGravity = -0.01f;
 
+
+        [Space(10)]
+
         public Sprite sprite;
         public GameObject prefab;
+
+
+        [Space(10)]
 
         public Vector3 minVelocityOverLifetime;
         public Vector3 maxVelocityOverLifetime;
 
-
+        // ===================================================================
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckPositiveValue(this, nameof(duration), duration);
             HelperUtilities.CheckPositiveValue(this, nameof(startParticleSize), startParticleSize);
             HelperUtilities.CheckPositiveValue(this, nameof(startParticleSpeed), startParticleSpeed);

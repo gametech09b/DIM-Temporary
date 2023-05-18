@@ -1,19 +1,15 @@
 using System;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.HealthSystem {
     [DisallowMultipleComponent]
-    public class HealthEvent : MonoBehaviour
-    {
+    public class HealthEvent : MonoBehaviour {
         public event Action<HealthEvent, OnHealthChangedEventArgs> OnHealthChanged;
 
-        public void CallOnHealthChanged(float _healthPercent, int _healthAmount, int _damageAmount)
-        {
+        public void CallOnHealthChanged(float _healthPercent, int _healthAmount, int _damageAmount) {
             OnHealthChanged?.Invoke(
                 this,
-                new OnHealthChangedEventArgs
-                {
+                new OnHealthChangedEventArgs {
                     healthPercent = _healthPercent,
                     healthAmount = _healthAmount,
                     damageAmount = _damageAmount
@@ -23,8 +19,7 @@ namespace DungeonGunner
 
 
 
-    public class OnHealthChangedEventArgs : EventArgs
-    {
+    public class OnHealthChangedEventArgs : EventArgs {
         public float healthPercent;
         public int healthAmount;
         public int damageAmount;

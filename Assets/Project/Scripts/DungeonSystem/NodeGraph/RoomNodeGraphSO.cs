@@ -1,19 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.DungeonSystem {
     [CreateAssetMenu(fileName = "RoomNodeGraphSO_", menuName = "Scriptable Objects/Dungeon/Room Node Graph")]
-    public class RoomNodeGraphSO : ScriptableObject
-    {
+    public class RoomNodeGraphSO : ScriptableObject {
         [HideInInspector] public RoomNodeTypeListSO roomNodeTypeList;
         [HideInInspector] public List<RoomNodeSO> roomNodeList = new List<RoomNodeSO>();
         [HideInInspector] public Dictionary<string, RoomNodeSO> roomNodeDictionary = new Dictionary<string, RoomNodeSO>();
 
+        // ===================================================================
 
-
-        private void Awake()
-        {
+        private void Awake() {
             LoadRoomNodeDictionary();
         }
 
@@ -22,12 +19,10 @@ namespace DungeonGunner
         /// <summary>
         /// Load the room node dictionary
         /// </summary>
-        private void LoadRoomNodeDictionary()
-        {
+        private void LoadRoomNodeDictionary() {
             roomNodeDictionary.Clear();
 
-            foreach (RoomNodeSO roomNode in roomNodeList)
-            {
+            foreach (RoomNodeSO roomNode in roomNodeList) {
                 roomNodeDictionary.Add(roomNode.id, roomNode);
             }
         }
@@ -38,11 +33,10 @@ namespace DungeonGunner
         /// </summary>
         /// <param name="_roomNodeID"></param>
         /// <returns></returns>
-        public RoomNodeSO GetRoomNode(string _roomNodeID)
-        {
+        public RoomNodeSO GetRoomNode(string _roomNodeID) {
             if (roomNodeDictionary.TryGetValue(_roomNodeID, out RoomNodeSO roomNode))
                 return roomNode;
-                
+
             return null;
         }
 
@@ -53,10 +47,8 @@ namespace DungeonGunner
         /// </summary>
         /// <param name="_roomNodeType"></param>
         /// <returns></returns>
-        public RoomNodeSO GetRoomNode(RoomNodeTypeSO _roomNodeType)
-        {
-            foreach (RoomNodeSO roomNode in roomNodeList)
-            {
+        public RoomNodeSO GetRoomNode(RoomNodeTypeSO _roomNodeType) {
+            foreach (RoomNodeSO roomNode in roomNodeList) {
                 if (roomNode.roomNodeType == _roomNodeType)
                     return roomNode;
             }
@@ -65,10 +57,13 @@ namespace DungeonGunner
 
 
 
-        public IEnumerable<RoomNodeSO> GetChildRoomNodes(RoomNodeSO _parentRoomNode)
-        {
-            foreach (string childRoomNodeID in _parentRoomNode.childRoomNodeIDList)
-            {
+        /// <summary>
+        /// Get every child RoomNode ID in parentRoomNode
+        /// </summary>
+        /// <param name="_parentRoomNode"></param>
+        /// <returns></returns>
+        public IEnumerable<RoomNodeSO> GetChildRoomNodes(RoomNodeSO _parentRoomNode) {
+            foreach (string childRoomNodeID in _parentRoomNode.childRoomNodeIDList) {
                 yield return GetRoomNode(childRoomNodeID);
             }
         }
@@ -79,10 +74,9 @@ namespace DungeonGunner
         [HideInInspector] public RoomNodeSO roomNodeToDrawLineFrom;
         [HideInInspector] public Vector2 linePosition;
 
+        // ===================================================================
 
-
-        public void OnValidate()
-        {
+        public void OnValidate() {
             LoadRoomNodeDictionary();
         }
 
@@ -93,8 +87,7 @@ namespace DungeonGunner
         /// </summary>
         /// <param name="_node"></param>
         /// <param name="_position"></param>
-        public void SetNodeToDrawConnectionLineFrom(RoomNodeSO _node, Vector2 _position)
-        {
+        public void SetNodeToDrawConnectionLineFrom(RoomNodeSO _node, Vector2 _position) {
             roomNodeToDrawLineFrom = _node;
             linePosition = _position;
         }

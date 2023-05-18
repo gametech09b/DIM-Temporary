@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+using DIM.CombatSystem;
+
+namespace DIM.EnemySystem {
     [CreateAssetMenu(fileName = "EnemyDetail_", menuName = "Scriptable Objects/Enemy/Enemy Detail")]
-    public class EnemyDetailSO : ScriptableObject
-    {
+    public class EnemyDetailSO : ScriptableObject {
         [Space(10)]
         [Header("Base Enemy Detail")]
-
 
         public string enemyName;
         public GameObject prefab;
@@ -17,12 +14,10 @@ namespace DungeonGunner
         public float chaseDistance = 50f;
 
 
-
         [Space(10)]
         [Header("Enemy Material")]
 
         public Material standardMaterial;
-
 
 
         [Space(10)]
@@ -33,10 +28,8 @@ namespace DungeonGunner
         [ColorUsage(true, true)] public Color materializeColor;
 
 
-
         [Space(10)]
         [Header("Enemy Weapon Setting")]
-
 
         public WeaponDetailSO weaponDetail;
         public float minFireInterval = 0.1f;
@@ -46,10 +39,8 @@ namespace DungeonGunner
         public bool isRequireTargetOnSight = true;
 
 
-
         [Space(10)]
         [Header("Enemy Health")]
-
 
         public bool isHealthBarEnabled = false;
         public EnemyHealthDetail[] enemyHealthDetailArray;
@@ -60,8 +51,7 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckEmptyString(this, nameof(enemyName), enemyName);
             HelperUtilities.CheckNullValue(this, nameof(prefab), prefab);
             HelperUtilities.CheckPositiveValue(this, nameof(chaseDistance), chaseDistance);

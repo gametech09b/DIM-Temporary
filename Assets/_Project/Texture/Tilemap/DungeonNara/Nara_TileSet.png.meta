@@ -3241,7 +3241,7 @@ TextureImporter:
       Nara_TileSet_126: 773095326
       Nara_TileSet_20: -335638753
       Nara_TileSet_60: -659437114
-      Nara_TileSet_143: 1001109393
+      Nara_TileSet_129: 99181964
       Nara_TileSet_2: -235890419
       Nara_TileSet_91: -1980932202
       Nara_TileSet_138: -1650061937
@@ -3375,16 +3375,16 @@ TextureImporter:
       Nara_TileSet_24: 710183443
       Nara_TileSet_6: 911740046
       Nara_TileSet_89: 372426820
+      Nara_TileSet_143: 1001109393
       Nara_TileSet_34: -496596752
-      Nara_TileSet_49: -620434987
       Nara_TileSet_55: 1295607000
-      Nara_TileSet_46: -454290485
-      Nara_TileSet_40: 379051025
-      Nara_TileSet_80: 702700143
-      Nara_TileSet_129: 99181964
-      Nara_TileSet_83: -1251580777
-      Nara_TileSet_105: -1508877492
+      Nara_TileSet_49: -620434987
       Nara_TileSet_124: 322014157
+      Nara_TileSet_40: 379051025
+      Nara_TileSet_46: -454290485
+      Nara_TileSet_83: -1251580777
+      Nara_TileSet_80: 702700143
+      Nara_TileSet_105: -1508877492
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

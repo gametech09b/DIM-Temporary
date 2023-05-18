@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace DungeonGunner {
+using DIM.Environment;
+
+namespace DIM.DungeonSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(BoxCollider2D))]
@@ -29,7 +31,7 @@ namespace DungeonGunner {
 
         [SerializeField] private GameObject environmentParentGameObject;
 
-
+        // ===================================================================
 
         private void Awake() {
             roomCollider = GetComponent<BoxCollider2D>();

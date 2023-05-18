@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DungeonGunner {
+namespace DIM.ScoreSystem {
     [System.Serializable]
     public class HighScore {
         public List<Score> scoreList = new List<Score>();

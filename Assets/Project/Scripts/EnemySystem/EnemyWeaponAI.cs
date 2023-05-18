@@ -1,15 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.EnemySystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Enemy))]
     #endregion
-    public class EnemyWeaponAI : MonoBehaviour
-    {
+    public class EnemyWeaponAI : MonoBehaviour {
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private Transform weaponShootPointTransform;
 
@@ -19,17 +15,15 @@ namespace DungeonGunner
         private float fireIntervalTimer;
         private float fireDurationTimer;
 
+        // ===================================================================
 
-
-        private void Awake()
-        {
+        private void Awake() {
             enemy = GetComponent<Enemy>();
         }
 
 
 
-        private void Start()
-        {
+        private void Start() {
             enemyDetail = enemy.enemyDetail;
 
             fireIntervalTimer = GetFireInterval();
@@ -38,19 +32,14 @@ namespace DungeonGunner
 
 
 
-        private void Update()
-        {
+        private void Update() {
             fireIntervalTimer -= Time.deltaTime;
 
-            if (fireIntervalTimer < -0f)
-            {
-                if (fireDurationTimer >= 0)
-                {
+            if (fireIntervalTimer < -0f) {
+                if (fireDurationTimer >= 0) {
                     fireDurationTimer -= Time.deltaTime;
                     Fire();
-                }
-                else
-                {
+                } else {
                     fireIntervalTimer = GetFireInterval();
                     fireDurationTimer = GetFireDuration();
                 }
@@ -59,22 +48,19 @@ namespace DungeonGunner
 
 
 
-        private float GetFireInterval()
-        {
+        private float GetFireInterval() {
             return Random.Range(enemyDetail.minFireInterval, enemyDetail.maxFireInterval);
         }
 
 
 
-        private float GetFireDuration()
-        {
+        private float GetFireDuration() {
             return Random.Range(enemyDetail.minFireDuration, enemyDetail.maxFireDuration);
         }
 
 
 
-        private void Fire()
-        {
+        private void Fire() {
             Vector3 playerDirectionVector = GameManager.Instance.GetCurrentPlayer().GetPosition() - transform.position;
             Vector3 weaponDirectionVector = GameManager.Instance.GetCurrentPlayer().GetPosition() - weaponShootPointTransform.position;
 
@@ -85,12 +71,10 @@ namespace DungeonGunner
 
             enemy.aimEvent.CallOnAimAction(direction, angle, weaponAngle, weaponDirectionVector);
 
-            if (enemyDetail.weaponDetail != null)
-            {
+            if (enemyDetail.weaponDetail != null) {
                 float ammoRange = enemyDetail.weaponDetail.ammoDetail.range;
 
-                if (playerDirectionVector.magnitude <= ammoRange)
-                {
+                if (playerDirectionVector.magnitude <= ammoRange) {
                     if (enemyDetail.isRequireTargetOnSight
                     && !IsTargetOnSight(weaponDirectionVector, ammoRange))
                         return;
@@ -102,8 +86,7 @@ namespace DungeonGunner
 
 
 
-        private bool IsTargetOnSight(Vector3 _weaponDirectionVector, float _ammoRange)
-        {
+        private bool IsTargetOnSight(Vector3 _weaponDirectionVector, float _ammoRange) {
             RaycastHit2D raycastHit2D = Physics2D.Raycast(weaponShootPointTransform.position, (Vector2)_weaponDirectionVector, _ammoRange, layerMask);
 
             if (raycastHit2D
@@ -117,8 +100,7 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckNullValue(this, nameof(weaponShootPointTransform), weaponShootPointTransform);
         }
 #endif

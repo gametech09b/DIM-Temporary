@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.UI {
     [DisallowMultipleComponent]
     public class PlayerSelection : MonoBehaviour {
         public SpriteRenderer handSpriteRenderer;
@@ -10,7 +8,7 @@ namespace DungeonGunner {
         public SpriteRenderer weaponSpriteRenderer;
         public Animator animator;
 
-
+        // ===================================================================
 
         #region Validation
 #if UNITY_EDITOR

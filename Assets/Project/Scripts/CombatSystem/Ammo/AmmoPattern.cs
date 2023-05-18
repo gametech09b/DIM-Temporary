@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.CombatSystem {
     public class AmmoPattern : MonoBehaviour, IFireable {
         [SerializeField] private AmmoGameObject[] ammoGameObjectArray;
 
@@ -13,7 +13,7 @@ namespace DungeonGunner {
         private AmmoDetailSO ammoDetail;
         private float chargeTimer;
 
-
+        // ===================================================================
 
         private void Update() {
             if (chargeTimer > 0f) {
@@ -34,10 +34,6 @@ namespace DungeonGunner {
         }
 
 
-
-        public GameObject GetGameObject() {
-            return gameObject;
-        }
 
         public void Init(AmmoDetailSO _ammoDetail, float _ammoSpeed, float _angle, float _weaponAngle, Vector3 _weaponDirectionVector, bool _isOverrideAmmoMovement = false) {
             this.ammoDetail = _ammoDetail;

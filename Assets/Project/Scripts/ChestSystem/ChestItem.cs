@@ -2,7 +2,9 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.Effect;
+
+namespace DIM.ChestSystem {
     #region Requirement Components
     [RequireComponent(typeof(MaterializeEffect))]
     #endregion
@@ -13,7 +15,7 @@ namespace DungeonGunner {
 
         [HideInInspector] public bool isMaterialized = false;
 
-
+        // ===================================================================
 
         private void Awake() {
             spriteRenderer = GetComponent<SpriteRenderer>();

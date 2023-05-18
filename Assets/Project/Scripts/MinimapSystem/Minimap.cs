@@ -1,15 +1,14 @@
 using Cinemachine;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.MinimapSystem {
     [DisallowMultipleComponent]
     public class Minimap : MonoBehaviour {
-
         [SerializeField] private GameObject playerIcon;
 
         private Transform playerTransform;
 
-
+        // ===================================================================
 
         private void Start() {
             playerTransform = GameManager.Instance.GetCurrentPlayer().transform;

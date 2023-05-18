@@ -1,7 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.PlayerSystem;
+using DIM.EnemySystem;
+
+namespace DIM.HealthSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(HealthEvent))]
@@ -26,7 +29,7 @@ namespace DungeonGunner {
 
         private HealthBar healthBar;
 
-
+        // ===================================================================
 
         private void Awake() {
             healthEvent = GetComponent<HealthEvent>();

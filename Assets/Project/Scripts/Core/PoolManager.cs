@@ -1,38 +1,32 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM {
     [DisallowMultipleComponent]
-    public class PoolManager : SingletonMonobehaviour<PoolManager>
-    {
+    public class PoolManager : SingletonMonobehaviour<PoolManager> {
         [Tooltip("The pools to be created")]
         [SerializeField] private Pool[] poolArray = null;
 
         private Transform objectPoolTransform;
         private Dictionary<int, Queue<Component>> poolDictionary;
 
+        // ===================================================================
 
-
-        private void Start()
-        {
+        private void Start() {
             objectPoolTransform = this.transform;
             poolDictionary = new Dictionary<int, Queue<Component>>();
 
 
 
-            foreach (Pool pool in poolArray)
-            {
+            foreach (Pool pool in poolArray) {
                 CreatePool(pool.prefab, pool.size, pool.componentType);
             }
         }
 
 
 
-        private void CreatePool(GameObject _prefab, int _size, string _componentType)
-        {
+        private void CreatePool(GameObject _prefab, int _size, string _componentType) {
             int key = _prefab.GetInstanceID();
 
             string poolName = $"{_prefab.name} Pool";
@@ -40,12 +34,10 @@ namespace DungeonGunner
             GameObject parentPoolGameObject = new GameObject(poolName);
             parentPoolGameObject.transform.SetParent(objectPoolTransform);
 
-            if (!poolDictionary.ContainsKey(key))
-            {
+            if (!poolDictionary.ContainsKey(key)) {
                 poolDictionary.Add(key, new Queue<Component>());
 
-                for (int i = 0; i < _size; i++)
-                {
+                for (int i = 0; i < _size; i++) {
                     GameObject newPoolGameObject = Instantiate(_prefab, parentPoolGameObject.transform) as GameObject;
 
                     newPoolGameObject.SetActive(false);
@@ -59,12 +51,10 @@ namespace DungeonGunner
 
 
 
-        public Component ReuseComponent(GameObject _prefab, Vector3 _position, Quaternion _rotation)
-        {
+        public Component ReuseComponent(GameObject _prefab, Vector3 _position, Quaternion _rotation) {
             int key = _prefab.GetInstanceID();
 
-            if (poolDictionary.ContainsKey(key))
-            {
+            if (poolDictionary.ContainsKey(key)) {
                 Component componentToReuse = GetComponentFromPool(key);
 
                 ResetObject(componentToReuse, _prefab, _position, _rotation);
@@ -78,8 +68,7 @@ namespace DungeonGunner
 
 
 
-        private Component GetComponentFromPool(int _key)
-        {
+        private Component GetComponentFromPool(int _key) {
             Component componentToReuse = poolDictionary[_key].Dequeue();
 
             poolDictionary[_key].Enqueue(componentToReuse);
@@ -92,8 +81,7 @@ namespace DungeonGunner
 
 
 
-        private void ResetObject(Component _componentToReuse, GameObject _prefab, Vector3 _position, Quaternion _rotation)
-        {
+        private void ResetObject(Component _componentToReuse, GameObject _prefab, Vector3 _position, Quaternion _rotation) {
             _componentToReuse.transform.position = _position;
             _componentToReuse.transform.rotation = _rotation;
             _componentToReuse.transform.localScale = _prefab.transform.localScale;
@@ -103,8 +91,7 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckEnumerableValue(this, nameof(poolArray), poolArray);
         }
 #endif
@@ -114,8 +101,7 @@ namespace DungeonGunner
 
 
     [System.Serializable]
-    public struct Pool
-    {
+    public struct Pool {
         public GameObject prefab;
         public int size;
         public string componentType;

@@ -1,30 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.HealthSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Health))]
     #endregion
-    public class TakeContactDamage : MonoBehaviour
-    {
+    public class TakeContactDamage : MonoBehaviour {
         [SerializeField] private int damageAmount;
 
         private Health health;
 
 
 
-        private void Awake()
-        {
+        private void Awake() {
             health = GetComponent<Health>();
         }
 
 
 
-        public void TakeDamage(int _damageAmount = 0)
-        {
+        public void TakeDamage(int _damageAmount = 0) {
             if (damageAmount > 0)
                 _damageAmount = damageAmount;
 
@@ -35,8 +29,7 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckPositiveValue(this, nameof(damageAmount), damageAmount, true);
         }
 #endif

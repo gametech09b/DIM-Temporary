@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.CombatSystem {
     [DisallowMultipleComponent]
     public class ActiveWeaponEvent : MonoBehaviour {
         public event Action<ActiveWeaponEvent, OnSetActiveWeaponArgs> OnSetActiveWeapon;

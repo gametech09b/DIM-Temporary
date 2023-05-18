@@ -1,8 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.CombatSystem;
+using DIM.Environment;
+using DIM.MovementSystem;
+
+namespace DIM.PlayerSystem {
     [DisallowMultipleComponent]
     #region Requirement Components
     [RequireComponent(typeof(Player))]
@@ -23,7 +26,7 @@ namespace DungeonGunner {
 
         private bool isDisabled = false;
 
-
+        // ===================================================================
 
         private void Awake() {
             player = GetComponent<Player>();

@@ -1,41 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner
-{
+namespace DIM.MovementSystem {
     [CreateAssetMenu(fileName = "MovementDetail_", menuName = "Scriptable Objects/Movement/Movement Detail")]
-    public class MovementDetailSO : ScriptableObject
-    {
+    public class MovementDetailSO : ScriptableObject {
         [Space(10)]
         [Header("Movement Detail")]
 
-
-        [Tooltip("The minimum speed")]
         [SerializeField] private float minSpeed = 8f;
-
-        [Tooltip("The maximum speed")]
         [SerializeField] private float maxSpeed = 8f;
 
 
-
         [Space(10)]
-        [Header("Player Only")]
 
-
-        [Tooltip("The speed of the player when dash")]
         public float dashSpeed;
-
-        [Tooltip("The dash distance of the player")]
         public float dashDistance;
-
-        [Tooltip("The dash cooldown time of the player")]
         public float dashCooldownTime;
 
+        // ===================================================================
 
-
-        public float GetMoveSpeed()
-        {
+        public float GetMoveSpeed() {
             if (minSpeed == maxSpeed)
                 return minSpeed;
 
@@ -46,12 +29,10 @@ namespace DungeonGunner
 
         #region Validation
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
+        private void OnValidate() {
             HelperUtilities.CheckPositiveRange(this, nameof(minSpeed), nameof(maxSpeed), minSpeed, maxSpeed);
 
-            if (dashSpeed != 0 || dashDistance != 0 || dashCooldownTime != 0)
-            {
+            if (dashSpeed != 0 || dashDistance != 0 || dashCooldownTime != 0) {
                 HelperUtilities.CheckPositiveValue(this, nameof(dashSpeed), dashSpeed);
                 HelperUtilities.CheckPositiveValue(this, nameof(dashDistance), dashDistance);
                 HelperUtilities.CheckPositiveValue(this, nameof(dashCooldownTime), dashCooldownTime);

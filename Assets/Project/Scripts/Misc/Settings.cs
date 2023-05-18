@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM {
     public static class Settings {
         #region Project Settings
-        public const string ProjectName = "DungeonGunner";
+        public const string ProjectName = "DIM";
         #endregion
 
 

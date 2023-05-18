@@ -1,15 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.MovementSystem {
     [DisallowMultipleComponent]
     public class MoveByVelocityEvent : MonoBehaviour {
         public event Action<MoveByVelocityEvent, MoveByVelocityEventArgs> OnMoveByVelocity;
-
-
-
         public void CallOnMoveByVelocity(Vector2 _directionVector, float _speed) {
             OnMoveByVelocity?.Invoke(
                 this,

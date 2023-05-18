@@ -1,8 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.CombatSystem;
+using DIM.DungeonSystem;
+using DIM.SpawnSystem;
+
+namespace DIM.ChestSystem {
     public class ChestSpawner : MonoBehaviour {
         [System.Serializable]
         public struct RangeByLevel {
@@ -32,7 +35,7 @@ namespace DungeonGunner {
         private bool isChestSpawned = false;
         private Room chestRoom;
 
-
+        // ===================================================================
 
         private void OnEnable() {
             DungeonStaticEvent.OnRoomChanged += DungeonStaticEvent_OnRoomChanged;

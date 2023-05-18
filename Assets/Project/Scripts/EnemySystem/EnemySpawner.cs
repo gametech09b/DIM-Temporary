@@ -1,7 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-namespace DungeonGunner {
+using DIM.DungeonSystem;
+using DIM.AudioSystem;
+using DIM.SpawnSystem;
+using DIM.HealthSystem;
+
+namespace DIM.EnemySystem {
     [DisallowMultipleComponent]
     public class EnemySpawner : SingletonMonobehaviour<EnemySpawner> {
         private int totalToSpawn;
@@ -12,7 +17,7 @@ namespace DungeonGunner {
         private Room currentRoom;
         private RoomEnemySpawnParameter currentRoomEnemySpawnParameter;
 
-
+        // ===================================================================
 
         private void OnEnable() {
             DungeonStaticEvent.OnRoomChanged += DungeonStaticEvent_OnRoomChange;

@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner {
+namespace DIM.ScoreSystem {
     public class HighScoreManager : SingletonMonobehaviour<HighScoreManager> {
         private HighScore highScore = new HighScore();
 
-
+        // ===================================================================
 
         protected override void Awake() {
             base.Awake();

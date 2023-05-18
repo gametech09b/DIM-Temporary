@@ -3,12 +3,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace DungeonGunner {
+using DIM.AudioSystem;
+
+namespace DIM.UI {
     public class PauseMenuUI : MonoBehaviour {
         [SerializeField] private TextMeshProUGUI musicVolumeText;
         [SerializeField] private TextMeshProUGUI soundVolumeText;
 
-
+        // ===================================================================
 
         private void Start() {
             gameObject.SetActive(false);

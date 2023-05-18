@@ -1,9 +1,5 @@
-using UnityEngine;
-
-namespace DungeonGunner
-{
-    public class Weapon
-    {
+namespace DIM.CombatSystem {
+    public class Weapon {
         public WeaponDetailSO weaponDetail;
         public int indexOnList;
         public int ammoRemaining;
@@ -11,10 +7,9 @@ namespace DungeonGunner
         public bool isReloading;
         public float reloadTimer;
 
+        // ===================================================================
 
-
-        public Weapon(WeaponDetailSO _weaponDetail)
-        {
+        public Weapon(WeaponDetailSO _weaponDetail) {
             this.weaponDetail = _weaponDetail;
             this.ammoRemaining = _weaponDetail.ammoCapacity;
             this.ammoPerClipRemaining = _weaponDetail.ammoPerClipCapacity;

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonGunner.AStarPathfinding {
+using DIM.DungeonSystem;
+
+namespace DIM.AStarPathfinding {
     public static class AStar {
         public static Stack<Vector3> BuildPath(Room _room, Vector3Int _startGridPosition, Vector3Int _endGridPosition) {
             _startGridPosition -= (Vector3Int)_room.templateLowerBounds;

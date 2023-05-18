@@ -40,6 +40,7 @@ namespace DIM {
         public static int AimRight = Animator.StringToHash("aimRight");
         public static int AimDown = Animator.StringToHash("aimDown");
         public static int AimLeft = Animator.StringToHash("aimLeft");
+    
 
         public static int IsIdle = Animator.StringToHash("isIdle");
         public static int IsMoving = Animator.StringToHash("isMoving");

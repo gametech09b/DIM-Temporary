@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WeaponDetail_MP7
   m_EditorClassIdentifier: 
   weaponName: MP7
-  sprite: {fileID: 21300000, guid: a735f74a317b5f944929af56be472cb7, type: 3}
+  sprite: {fileID: 859070802, guid: 899f682a93f1be745a313bd18eb06a0a, type: 3}
   shootPosition: {x: 1.146, y: 0.277, z: 0}
   ammoDetail: {fileID: 11400000, guid: 4c99bd3c59dfae840a507710fe8238e1, type: 2}
   shootEffect: {fileID: 11400000, guid: 687c28850d68e7642b304026e64cfde2, type: 2}

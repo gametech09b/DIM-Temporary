@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 81662affb1f10254cae02fdd3df85966
+guid: 92fbd1256a4001347bd0555fe8ed8577
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -113,17 +113,41 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Run_0
+      name: Enemy_Nara_Pemadam_AnimationSheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +155,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6290d0f793bbcc44cb909be114255ea1
-      internalID: 1356404522
+      spriteID: c5dbc42b12be23b45bf875bbe5dc8d2e
+      internalID: -1766695630
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Run_1
+      name: Enemy_Nara_Pemadam_AnimationSheet_1
       rect:
         serializedVersion: 2
-        x: 128
+        x: 48
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +176,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1fbe5323e5e86f54793cc11b1b3ff0b0
-      internalID: 917544929
+      spriteID: 01bf5ee44b17dbb41b8e0901af527718
+      internalID: -2131867365
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Run_2
+      name: Enemy_Nara_Pemadam_AnimationSheet_2
       rect:
         serializedVersion: 2
-        x: 256
+        x: 96
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +197,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ac2029cf085f5164191abe7e6d927d40
-      internalID: 631954073
+      spriteID: 2cf409217660f3946917f8a77cd499a1
+      internalID: 1972396292
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Run_3
+      name: Enemy_Nara_Pemadam_AnimationSheet_3
       rect:
         serializedVersion: 2
-        x: 384
+        x: 144
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +218,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab06fbbe22dc4644697c00fc65e6c46c
-      internalID: -1491376232
+      spriteID: 962a5bd70abe66d4d974b7139926d6a5
+      internalID: -1021580699
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Run_4
+      name: Enemy_Nara_Pemadam_AnimationSheet_4
       rect:
         serializedVersion: 2
-        x: 512
+        x: 192
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,20 +239,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a13a7d684b9af14482c0d936e26663b
-      internalID: -132612562
+      spriteID: 8062fce59f3fdf341bc4c86829971eac
+      internalID: -1935239698
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Run_5
+      name: Enemy_Nara_Pemadam_AnimationSheet_5
       rect:
         serializedVersion: 2
-        x: 640
+        x: 240
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,20 +260,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7eaf96728ad4124bbdd4897783604a0
-      internalID: 1390295625
+      spriteID: 749907588e04f5d4b95a99d61a9d6223
+      internalID: 846368381
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Run_6
+      name: Enemy_Nara_Pemadam_AnimationSheet_6
       rect:
         serializedVersion: 2
-        x: 768
+        x: 288
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,20 +281,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a2e2a2b713b88e64a85566a643619744
-      internalID: -614096275
+      spriteID: 29b25dde4124157459ce792f8eb70831
+      internalID: 351726911
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Run_7
+      name: Enemy_Nara_Pemadam_AnimationSheet_7
       rect:
         serializedVersion: 2
-        x: 896
+        x: 336
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,8 +302,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60c9dc3e8fda5e84185cc071379c080e
-      internalID: -696722880
+      spriteID: f9b53f46106239546b7f93b926ea2912
+      internalID: -2115394226
       vertices: []
       indices: 
       edges: []
@@ -295,14 +319,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Enemy_Nara_Pemadam_AnimationSheet-Run_2: 631954073
-      Enemy_Nara_Pemadam_AnimationSheet-Run_6: -614096275
-      Enemy_Nara_Pemadam_AnimationSheet-Run_3: -1491376232
-      Enemy_Nara_Pemadam_AnimationSheet-Run_5: 1390295625
-      Enemy_Nara_Pemadam_AnimationSheet-Run_1: 917544929
-      Enemy_Nara_Pemadam_AnimationSheet-Run_4: -132612562
-      Enemy_Nara_Pemadam_AnimationSheet-Run_7: -696722880
-      Enemy_Nara_Pemadam_AnimationSheet-Run_0: 1356404522
+      Enemy_Nara_Pemadam_AnimationSheet_1: -2131867365
+      Enemy_Nara_Pemadam_AnimationSheet_3: -1021580699
+      Enemy_Nara_Pemadam_AnimationSheet_7: -2115394226
+      Enemy_Nara_Pemadam_AnimationSheet_5: 846368381
+      Enemy_Nara_Pemadam_AnimationSheet_2: 1972396292
+      Enemy_Nara_Pemadam_AnimationSheet_6: 351726911
+      Enemy_Nara_Pemadam_AnimationSheet_0: -1766695630
+      Enemy_Nara_Pemadam_AnimationSheet_4: -1935239698
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

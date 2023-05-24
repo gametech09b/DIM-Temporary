@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ebd7ff933619c7842880fcb495b66f92
+guid: 0fb002022dff54b45b66eb211ac4ac6c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -113,17 +113,41 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Death_0
+      name: Enemy_Nara_Pemadam_AnimationShee_Deatht_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +155,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b8a9e5f4f7ab904586e181150fbb22f
-      internalID: -1034529871
+      spriteID: 640844c14d035de4ba62f28eb281b1ac
+      internalID: 2136419662
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Death_1
+      name: Enemy_Nara_Pemadam_AnimationShee_Deatht_1
       rect:
         serializedVersion: 2
-        x: 128
+        x: 48
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +176,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60b98a4582f88934f8bdd185604a1583
-      internalID: 435337131
+      spriteID: a57cd948be8a6c3478ce12b338559ff2
+      internalID: 102201401
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Death_2
+      name: Enemy_Nara_Pemadam_AnimationShee_Deatht_2
       rect:
         serializedVersion: 2
-        x: 256
+        x: 96
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +197,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db502e2840c4a6e4ea89506dd61dec84
-      internalID: -1593231994
+      spriteID: 3f5589ae61e370a4994cebd10ab13be7
+      internalID: -420476572
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Death_3
+      name: Enemy_Nara_Pemadam_AnimationShee_Deatht_3
       rect:
         serializedVersion: 2
-        x: 384
+        x: 144
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +218,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f59ae935335ecd4c956fbc08013e383
-      internalID: 1596878144
+      spriteID: 932150ad93a35694b8e8ad93f79989e1
+      internalID: -74492
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Death_4
+      name: Enemy_Nara_Pemadam_AnimationShee_Deatht_4
       rect:
         serializedVersion: 2
-        x: 512
+        x: 192
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,20 +239,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51adcea7c5aa98343bd718329fd9e1da
-      internalID: -1958744469
+      spriteID: b1055f894630c4345b7579fc5259293b
+      internalID: -554798105
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Death_5
+      name: Enemy_Nara_Pemadam_AnimationShee_Deatht_5
       rect:
         serializedVersion: 2
-        x: 640
+        x: 240
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,20 +260,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41e5a07fa71e9c749b2d261e8576c936
-      internalID: -1276060277
+      spriteID: a3c0b29ff8756884ebded1decbcc47f9
+      internalID: -616206073
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Death_6
+      name: Enemy_Nara_Pemadam_AnimationShee_Deatht_6
       rect:
         serializedVersion: 2
-        x: 768
+        x: 288
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,20 +281,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab0b2537b38be4448882e2e783252522
-      internalID: 418844705
+      spriteID: c964d594885866a4daa55c7020527e5f
+      internalID: -388567833
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Nara_Pemadam_AnimationSheet-Death_7
+      name: Enemy_Nara_Pemadam_AnimationShee_Deatht_7
       rect:
         serializedVersion: 2
-        x: 896
+        x: 336
         y: 0
-        width: 128
-        height: 128
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,8 +302,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44f80f9bdad431541ba2d0df812f3e7e
-      internalID: -360674884
+      spriteID: 5be1b0b6c1d5b244ba36020e55c7f80c
+      internalID: 217403951
       vertices: []
       indices: 
       edges: []
@@ -295,14 +319,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Enemy_Nara_Pemadam_AnimationSheet-Death_5: -1276060277
-      Enemy_Nara_Pemadam_AnimationSheet-Death_3: 1596878144
-      Enemy_Nara_Pemadam_AnimationSheet-Death_7: -360674884
-      Enemy_Nara_Pemadam_AnimationSheet-Death_0: -1034529871
-      Enemy_Nara_Pemadam_AnimationSheet-Death_1: 435337131
-      Enemy_Nara_Pemadam_AnimationSheet-Death_6: 418844705
-      Enemy_Nara_Pemadam_AnimationSheet-Death_4: -1958744469
-      Enemy_Nara_Pemadam_AnimationSheet-Death_2: -1593231994
+      Enemy_Nara_Pemadam_AnimationShee_Deatht_4: -554798105
+      Enemy_Nara_Pemadam_AnimationShee_Deatht_2: -420476572
+      Enemy_Nara_Pemadam_AnimationShee_Deatht_0: 2136419662
+      Enemy_Nara_Pemadam_AnimationShee_Deatht_6: -388567833
+      Enemy_Nara_Pemadam_AnimationShee_Deatht_5: -616206073
+      Enemy_Nara_Pemadam_AnimationShee_Deatht_1: 102201401
+      Enemy_Nara_Pemadam_AnimationShee_Deatht_3: -74492
+      Enemy_Nara_Pemadam_AnimationShee_Deatht_7: 217403951
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

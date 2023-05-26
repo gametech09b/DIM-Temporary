@@ -7,6 +7,7 @@ using DIM.DungeonSystem;
 using DIM.Effect;
 using DIM.HealthSystem;
 using DIM.MovementSystem;
+using DIM.EnemySystem;
 
 namespace DIM.EnemySystem {
     [DisallowMultipleComponent]
@@ -34,6 +35,8 @@ namespace DIM.EnemySystem {
     [RequireComponent(typeof(HealthEvent))]
     [RequireComponent(typeof(Idle))]
     [RequireComponent(typeof(IdleEvent))]
+    [RequireComponent(typeof(Death))]
+    [RequireComponent(typeof(DeathEvent))]
     [RequireComponent(typeof(MaterializeEffect))]
     [RequireComponent(typeof(MoveToPosition))]
     [RequireComponent(typeof(MoveToPositionEvent))]
@@ -55,10 +58,12 @@ namespace DIM.EnemySystem {
         [HideInInspector] public AimEvent aimEvent;
         [HideInInspector] public FireEvent fireEvent;
         [HideInInspector] public IdleEvent idleEvent;
+        [HideInInspector] public DeathEvent deathEvent;
         [HideInInspector] public MoveToPositionEvent moveToPositionEvent;
 
         private Health health;
         private HealthEvent healthEvent;
+        private EnemyAnimatorHandler enemyAnimatorHandler;
 
         private MaterializeEffect materializeEffect;
 
@@ -77,6 +82,7 @@ namespace DIM.EnemySystem {
             aimEvent = GetComponent<AimEvent>();
             fireEvent = GetComponent<FireEvent>();
             idleEvent = GetComponent<IdleEvent>();
+            deathEvent = GetComponent<DeathEvent>();
             moveToPositionEvent = GetComponent<MoveToPositionEvent>();
 
             health = GetComponent<Health>();
@@ -89,19 +95,22 @@ namespace DIM.EnemySystem {
 
         private void OnEnable() {
             healthEvent.OnHealthChanged += HealthEvent_OnHealthChange;
+            
         }
 
 
 
         private void OnDisable() {
             healthEvent.OnHealthChanged -= HealthEvent_OnHealthChange;
+            
         }
 
 
 
         private void HealthEvent_OnHealthChange(HealthEvent _sender, OnHealthChangedEventArgs _args) {
             if (_args.healthAmount <= 0) {
-                DestroyGameObject();
+                deathEvent.CallOnDeathEvent();
+                // DestroyGameObject();
             }
         }
 

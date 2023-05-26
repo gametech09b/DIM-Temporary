@@ -1,7 +1,8 @@
 using UnityEngine;
-
 using DIM.CombatSystem;
 using DIM.MovementSystem;
+using System;
+using System.Collections;
 
 namespace DIM.EnemySystem {
     [DisallowMultipleComponent]
@@ -10,11 +11,13 @@ namespace DIM.EnemySystem {
     #endregion
     public class EnemyAnimatorHandler : MonoBehaviour {
         private Enemy enemy;
+        [HideInInspector] public SpriteRenderer[] spriteRendererArray;
 
         // ===================================================================
 
         private void Awake() {
             enemy = GetComponent<Enemy>();
+            spriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
         }
 
 
@@ -23,20 +26,24 @@ namespace DIM.EnemySystem {
             enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
             enemy.moveToPositionEvent.OnMoveToPosition += MoveToPositionEvent_OnMoveToPosition;
             enemy.aimEvent.OnAimAction += AimEvent_OnAimAction;
+            enemy.deathEvent.OnDeath += DeathEvent_OnDeath;
         }
-
-
-
+       
         private void OnDisable() {
             enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
             enemy.moveToPositionEvent.OnMoveToPosition -= MoveToPositionEvent_OnMoveToPosition;
             enemy.aimEvent.OnAimAction -= AimEvent_OnAimAction;
+            enemy.deathEvent.OnDeath -= DeathEvent_OnDeath;
         }
 
 
 
         private void IdleEvent_OnIdle(IdleEvent _sender) {
             SetIdleAnimationParameters();
+        }
+
+        private void DeathEvent_OnDeath(DeathEvent _sender) {
+            SetDeathAnimationParameters();
         }
 
 
@@ -59,6 +66,20 @@ namespace DIM.EnemySystem {
             enemy.animator.SetBool(Settings.IsIdle, true);
             enemy.animator.SetBool(Settings.IsMoving, false);
         }
+        public void SetDeathAnimationParameters(){
+            enemy.animator.SetBool(Settings.IsDeath, true);
+            Debug.Log("TOL");
+            StartCoroutine(coroutineA());
+            
+
+        }
+
+        IEnumerator coroutineA()
+    {
+        // wait for 1 second
+        yield return new WaitForSeconds(1.0f);
+        Destroy(gameObject);
+    }
 
 
 

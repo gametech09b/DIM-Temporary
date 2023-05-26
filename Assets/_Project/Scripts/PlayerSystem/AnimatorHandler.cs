@@ -125,9 +125,9 @@ namespace DIM.PlayerSystem {
 
         private void DisableRollAnimationParameters() {
             player.animator.SetBool(Settings.RollUp, false);
-            player.animator.SetBool(Settings.RollRight, false);
+            // player.animator.SetBool(Settings.RollRight, false);
             player.animator.SetBool(Settings.RollDown, false);
-            player.animator.SetBool(Settings.RollLeft, false);
+            // player.animator.SetBool(Settings.RollLeft, false);
         }
 
 

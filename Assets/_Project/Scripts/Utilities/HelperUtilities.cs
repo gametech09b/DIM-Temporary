@@ -47,28 +47,28 @@ namespace DIM {
         public static Direction GetDirectionFromAngle(float _angleDegree) {
             Direction direction;
 
-            if (_angleDegree >= 22f
-            && _angleDegree <= 67f)
-                direction = Direction.UP_RIGHT;
+           /* if (_angleDegree >= 22f
+            && _angleDegree <= 89.5f)
+                direction = Direction.UP_RIGHT;*/ 
 
-            else if (_angleDegree > 67f
+            /*else if (_angleDegree > 67f
                  && _angleDegree <= 112f)
-                direction = Direction.UP;
+                direction = Direction.UP;*/
 
-            else if (_angleDegree > 112f
+            /*else if (_angleDegree > 89.5f
                  && _angleDegree <= 158f)
-                direction = Direction.UP_LEFT;
+                direction = Direction.UP_LEFT;*/ 
 
-            else if ((_angleDegree <= 180f && _angleDegree > 158f)
-                 || (_angleDegree > -180f && _angleDegree <= -135f))
+             if ((_angleDegree <= 180f && _angleDegree > 90f)
+                 || (_angleDegree > -180f && _angleDegree <= -90f))
                 direction = Direction.LEFT;
 
-            else if (_angleDegree > -135f
+            /*else if (_angleDegree > -135f
                  && _angleDegree <= -45f)
-                direction = Direction.DOWN;
+                direction = Direction.DOWN;*/
 
-            else if ((_angleDegree > -45f && _angleDegree <= 0f)
-                 || (_angleDegree > 0 && _angleDegree < 22f))
+            else if ((_angleDegree > -90f && _angleDegree <= 0f)
+                 || (_angleDegree > 0 && _angleDegree < 90f))
                 direction = Direction.RIGHT;
 
             else

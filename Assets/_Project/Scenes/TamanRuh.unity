@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7384928123513935488, guid: 760d7ff69983f2e418a8372d2d732121, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7384928123513935488, guid: 760d7ff69983f2e418a8372d2d732121, type: 3}
       propertyPath: m_LocalPosition.x
@@ -298,3 +298,60 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1001 &1986495990
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1515500806228471132, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515500806228471132, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515500806228471132, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515500806228471132, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515500806228471132, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515500806228471132, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515500806228471132, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515500806228471132, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515500806228471132, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515500806228471132, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515500806228471132, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1617777996040264495, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}
+      propertyPath: m_Name
+      value: TamanRuh
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d435ed4ee9a075f40ae83d14cc0422b8, type: 3}

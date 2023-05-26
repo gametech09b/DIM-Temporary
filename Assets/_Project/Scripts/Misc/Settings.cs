@@ -43,6 +43,7 @@ namespace DIM {
     
 
         public static int IsIdle = Animator.StringToHash("isIdle");
+        public static int IsDeath = Animator.StringToHash("isDeath");
         public static int IsMoving = Animator.StringToHash("isMoving");
 
         public static int RollUp = Animator.StringToHash("rollUp");

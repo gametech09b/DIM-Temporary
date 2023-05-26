@@ -82,10 +82,10 @@ PrefabInstance:
     - target: {fileID: 6323716623834929745, guid: cef4e046720e0c5468deb522a37d1a33, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1356404522, guid: 81662affb1f10254cae02fdd3df85966, type: 3}
+      objectReference: {fileID: -1766695630, guid: 92fbd1256a4001347bd0555fe8ed8577, type: 3}
     - target: {fileID: 6323716623834929745, guid: cef4e046720e0c5468deb522a37d1a33, type: 3}
       propertyPath: m_WasSpriteAssigned
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7697408492666851500, guid: cef4e046720e0c5468deb522a37d1a33, type: 3}
       propertyPath: m_Offset.x

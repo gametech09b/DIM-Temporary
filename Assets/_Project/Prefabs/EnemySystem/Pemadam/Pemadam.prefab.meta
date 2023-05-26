@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/_Project/Prefabs/EnemySystem/Pemadam/Pemadam.prefab.meta
 guid: a391512b8ce2dbd419720f7f9849e74b
 PrefabImporter:
+========
+guid: 7216aa14449ac2e4880ab7ab5920ce5f
+folderAsset: yes
+DefaultImporter:
+>>>>>>>> pr/3:Assets/Room.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

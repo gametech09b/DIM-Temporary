@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439fa2ebc068543409cd80707d9b3b40, type: 3}
+  m_Name: PlayerDetail_Cahya
+  m_EditorClassIdentifier: 
+  characterName: Cahya
+  characterPrefab: {fileID: 8618245335948929404, guid: 6713df189290ecb4caae890247fea213, type: 3}
+  runtimeAnimatorController: {fileID: 9100000, guid: 8e7654db912cd4845b5a14b9322acde5, type: 2}
+  startingHealthAmount: 100
+  isImmuneAfterHit: 1
+  immuneDuration: 3
+  minimapIconSprite: {fileID: 21300000, guid: 709f49100a0267f419aa33d571fb9d25, type: 3}
+  handSprite: {fileID: 21300000, guid: a8c352369ed75924d84743672d1ab512, type: 3}
+  initialWeapon: {fileID: 11400000, guid: 4d7d5a6a0d6dd3e4eabc5dc39b8722b6, type: 2}
+  initialWeaponsList:
+  - {fileID: 11400000, guid: 4d7d5a6a0d6dd3e4eabc5dc39b8722b6, type: 2}

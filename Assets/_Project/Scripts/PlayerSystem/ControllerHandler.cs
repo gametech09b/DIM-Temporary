@@ -111,6 +111,15 @@ namespace DIM.PlayerSystem {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
 
+            if(Input.GetKeyDown(KeyCode.A))
+            {
+                player.animator.SetBool(Settings.FlipLeft, true);
+            }
+            else if(Input.GetKeyDown(KeyCode.D))
+            {
+                player.animator.SetBool(Settings.FlipLeft, false);
+            }
+
             Vector2 directionVector = new Vector2(horizontalInput, verticalInput).normalized;
 
             if (directionVector != Vector2.zero) {

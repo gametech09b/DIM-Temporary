@@ -43,6 +43,7 @@ namespace DIM.EnemySystem {
         }
 
         private void DeathEvent_OnDeath(DeathEvent _sender) {
+            enemy.isDeath = true;
             SetDeathAnimationParameters();
         }
 
@@ -63,10 +64,14 @@ namespace DIM.EnemySystem {
 
 
         private void SetIdleAnimationParameters() {
+            if(!enemy.isDeath)
             enemy.animator.SetBool(Settings.IsIdle, true);
+
             enemy.animator.SetBool(Settings.IsMoving, false);
         }
         public void SetDeathAnimationParameters(){
+            enemy.animator.SetBool(Settings.IsIdle, false);
+            enemy.animator.SetBool(Settings.IsMoving, false);
             enemy.animator.SetBool(Settings.IsDeath, true);
             Debug.Log("TOL");
             StartCoroutine(coroutineA());
@@ -76,19 +81,18 @@ namespace DIM.EnemySystem {
 
         IEnumerator coroutineA()
     {
-        // wait for 1 second
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(enemy.animator.GetCurrentAnimatorStateInfo(0).length);
         Destroy(gameObject);
     }
 
 
 
         private void DisableAllAimAnimationParameters() {
-            enemy.animator.SetBool(Settings.AimUp, false);
-            enemy.animator.SetBool(Settings.AimUpRight, false);
-            enemy.animator.SetBool(Settings.AimUpLeft, false);
+            // enemy.animator.SetBool(Settings.AimUp, false);
+            // enemy.animator.SetBool(Settings.AimUpRight, false);
+            // enemy.animator.SetBool(Settings.AimUpLeft, false);
             enemy.animator.SetBool(Settings.AimRight, false);
-            enemy.animator.SetBool(Settings.AimDown, false);
+            // enemy.animator.SetBool(Settings.AimDown, false);
             enemy.animator.SetBool(Settings.AimLeft, false);
         }
 
@@ -97,19 +101,19 @@ namespace DIM.EnemySystem {
         private void SetAimAnimationParameters(Direction _direction) {
             switch (_direction) {
                 case Direction.UP:
-                    enemy.animator.SetBool(Settings.AimUp, true);
+                    enemy.animator.SetBool(Settings.AimRight, true);
                     break;
                 case Direction.UP_RIGHT:
-                    enemy.animator.SetBool(Settings.AimUpRight, true);
+                    enemy.animator.SetBool(Settings.AimRight, true);
                     break;
                 case Direction.UP_LEFT:
-                    enemy.animator.SetBool(Settings.AimUpLeft, true);
+                    enemy.animator.SetBool(Settings.AimLeft, true);
                     break;
                 case Direction.RIGHT:
                     enemy.animator.SetBool(Settings.AimRight, true);
                     break;
                 case Direction.DOWN:
-                    enemy.animator.SetBool(Settings.AimDown, true);
+                    enemy.animator.SetBool(Settings.AimLeft, true);
                     break;
                 case Direction.LEFT:
                     enemy.animator.SetBool(Settings.AimLeft, true);
@@ -121,7 +125,9 @@ namespace DIM.EnemySystem {
 
         private void SetMoveAnimationParameters() {
             enemy.animator.SetBool(Settings.IsIdle, false);
-            enemy.animator.SetBool(Settings.IsMoving, true);
+
+            if (!enemy.isDeath)
+                enemy.animator.SetBool(Settings.IsMoving, true);
         }
     }
 }

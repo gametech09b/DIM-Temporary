@@ -67,6 +67,8 @@ namespace DIM.EnemySystem {
 
         private MaterializeEffect materializeEffect;
 
+        public bool isDeath = false;
+
         // ===================================================================
 
         private void Awake() {

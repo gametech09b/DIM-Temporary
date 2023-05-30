@@ -81,11 +81,11 @@ namespace DIM.PlayerSystem {
 
 
         private void DisableAllAimAnimationParameters() {
-            player.animator.SetBool(Settings.AimUp, false);
-            player.animator.SetBool(Settings.AimUpRight, false);
-            player.animator.SetBool(Settings.AimUpLeft, false);
+            // player.animator.SetBool(Settings.AimUp, false);
+            // player.animator.SetBool(Settings.AimUpRight, false);
+            // player.animator.SetBool(Settings.AimUpLeft, false);
             player.animator.SetBool(Settings.AimRight, false);
-            player.animator.SetBool(Settings.AimDown, false);
+            // player.animator.SetBool(Settings.AimDown, false);
             player.animator.SetBool(Settings.AimLeft, false);
         }
 
@@ -94,19 +94,19 @@ namespace DIM.PlayerSystem {
         private void SetAimAnimationParameters(Direction _direction) {
             switch (_direction) {
                 case Direction.UP:
-                    player.animator.SetBool(Settings.AimUp, true);
+                    player.animator.SetBool(Settings.AimRight, true);
                     break;
                 case Direction.UP_RIGHT:
-                    player.animator.SetBool(Settings.AimUpRight, true);
+                    player.animator.SetBool(Settings.AimRight, true);
                     break;
                 case Direction.UP_LEFT:
-                    player.animator.SetBool(Settings.AimUpLeft, true);
+                    player.animator.SetBool(Settings.AimLeft, true);
                     break;
                 case Direction.RIGHT:
                     player.animator.SetBool(Settings.AimRight, true);
                     break;
                 case Direction.DOWN:
-                    player.animator.SetBool(Settings.AimDown, true);
+                    player.animator.SetBool(Settings.AimLeft, true);
                     break;
                 case Direction.LEFT:
                     player.animator.SetBool(Settings.AimLeft, true);

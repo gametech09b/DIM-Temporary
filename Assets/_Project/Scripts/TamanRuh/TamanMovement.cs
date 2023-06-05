@@ -22,7 +22,8 @@ namespace DIM
         {
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
-            transform.position += new Vector3 (horizontal, vertical, 0) * Time.deltaTime * MovementSpeed;
+            transform.position += new Vector3(horizontal, vertical, 0).normalized * Time.deltaTime * MovementSpeed;
+
 
             if (horizontal == 0f && vertical == 0f)
             {

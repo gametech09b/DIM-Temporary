@@ -36,7 +36,7 @@ MonoBehaviour:
   - dungeonLevel: {fileID: 11400000, guid: cd72760585491f64b879d9eff76a03a7, type: 2}
     healthAmount: 40
   - dungeonLevel: {fileID: 11400000, guid: 3cc665a5674e03041aa51bf9857b5ee9, type: 2}
-    healthAmount: 40
+    healthAmount: 45
   - dungeonLevel: {fileID: 11400000, guid: 871557923b0bdb4438b6524dade0b8f9, type: 2}
     healthAmount: 50
   isImmuneAfterHit: 0

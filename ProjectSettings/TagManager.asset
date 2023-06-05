@@ -14,6 +14,7 @@ TagManager:
   - roomTilemap
   - miniMapPlayer
   - playerWeapon
+  - Portal
   layers:
   - Default
   - TransparentFX

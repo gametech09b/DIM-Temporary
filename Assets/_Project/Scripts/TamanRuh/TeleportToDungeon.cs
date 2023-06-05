@@ -3,14 +3,43 @@ using UnityEngine.SceneManagement;
 
 public class TeleportToDungeon : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D coll)
+    public Scene mainGameScene;
+    public bool isInside;
+
+    private void Update() 
     {
-            if(coll.gameObject.tag == "Player")
+        if (Input.GetKeyDown(KeyCode.N) && isInside)
         {
-            // && Input.GetKeyDown(KeyCode.N)
-            Debug.Log("Mantap cuuii");
-            // SceneManager.LoadScene(0); 
+            SceneManager.LoadScene(0); 
         }
     }
+ 
+
+    private void OnTriggerEnter2D(Collider2D coll)
+    {
+        if(coll.gameObject.tag == "Player")
+        {
+            isInside = true; 
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D coll)
+    {
+        if(coll.gameObject.tag == "Player")
+        {
+            isInside = false; 
+        }
+    }
+
+    // private void OnTriggerStay2D(Collider2D coll)
+    // {
+        
+    //     if(coll.gameObject.tag == "Player")
+    //     {
+    //         SceneManager.LoadScene(0); 
+    //     }
+    
+        
+    // }
 }
 

@@ -43,17 +43,17 @@ namespace DIM
 
         private void PlayerAnimController()
         {
-            if (horizontal >= 0f)
+            if (Input.GetKeyDown(KeyCode.D))
             {
                 animator.SetBool("aimRight", true);
-                // animator.SetBool("flipLeft", false);
-
+                animator.SetBool("aimLeft", false);
+                animator.SetBool("flipLeft", false);
             }
-            else if (horizontal < 0f)
+            else if (Input.GetKeyDown(KeyCode.A))
             {
                 animator.SetBool("aimLeft", true);
-                // animator.SetBool("flipLeft", true);
-
+                animator.SetBool("aimRight", false);
+                animator.SetBool("flipLeft", true);
             }
         }
 
